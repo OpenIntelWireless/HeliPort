@@ -31,19 +31,19 @@ class NetworkInfo {
         self.rssi = rssi
     }
 
-    @objc func setPassword(password: String) {
+    func setPassword(password: String) {
         self.password = password
     }
 
-    @objc func connect() {
-        print("connect ", ssid, password)
+    func connect() -> Bool {
+        StatusBarIcon.connecting()
         var networkInfoStruct = network_info_t()
         strncpy(&networkInfoStruct.SSID.0, ssid, Int(MAX_SSID_LENGTH))
         networkInfoStruct.is_connected = false
         networkInfoStruct.is_encrypted = isEncrypted
         strncpy(&networkInfoStruct.password.0, password, Int(MAX_PASSWORD_LENGTH))
         networkInfoStruct.RSSI = Int32(rssi)
-        connect_network(&networkInfoStruct)
+        return connect_network(&networkInfoStruct)
     }
 
     class func scanNetwork() -> [NetworkInfo] {

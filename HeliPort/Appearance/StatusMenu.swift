@@ -23,6 +23,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     var timer: Timer?
     var showAllOptions: Bool = false
     var networkCount:Int = 0
+
+    var statusItem: NSMenuItem?
     
     override init(title: String) {
         super.init(title: title)
@@ -40,12 +42,17 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(withTitle: "创建诊断报告...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: "打开无线诊断...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(NSMenuItem.separator())
-        var platformInfo = platform_info_t()
-        get_platform_info(&platformInfo)
-        addItem(withTitle: String(cString: &platformInfo.device_info_str.0) + " " + String(cString: &platformInfo.driver_info_str.0), action: nil, keyEquivalent: "").isEnabled = false
+
+        statusItem = addItem(withTitle: "不可用", action: nil, keyEquivalent: "")
+        statusItem?.isEnabled = false
         addItem(withTitle: "关闭Wi-Fi", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(NSMenuItem.separator())
+
         headerLength = items.count
+
+        addItem(withTitle: "无可用网络", action: nil, keyEquivalent: "").isEnabled = false
+        networkCount = 1
+
         addItem(NSMenuItem.separator())
         addItem(withTitle: "加入其他网络...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: "创建网络...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
@@ -130,17 +137,34 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc func updateNetworkList() {
-        DispatchQueue.main.async {
+        DispatchQueue.global(qos: .background).async {
+            var statusText = "状态信息不可用"
+            var platformInfo = platform_info_t()
+            if get_platform_info(&platformInfo) {
+                statusText = String(cString: &platformInfo.device_info_str.0) + " " + String(cString: &platformInfo.driver_info_str.0)
+            }
+            DispatchQueue.main.async {
+                self.statusItem?.title = statusText
+            }
+        }
+        DispatchQueue.global(qos: .background).async {
             let networkList = NetworkInfo.scanNetwork().reversed()
-            if (self.networkCount > 0) {
-                for _ in 1...self.networkCount {
-                    self.removeItem(at: self.headerLength)
+            DispatchQueue.main.async {
+                if (self.networkCount > 0) {
+                    for _ in 1...self.networkCount {
+                        self.removeItem(at: self.headerLength)
+                    }
+                }
+                if networkList.count > 0 {
+                    for networkInfo in networkList {
+                        self.addNetworkItem(wifi: networkInfo)
+                    }
+                    self.networkCount = networkList.count
+                } else {
+                    self.insertItem(withTitle: "无可用网络", action: nil, keyEquivalent: "", at: self.headerLength).isEnabled = false
+                    self.networkCount = 1
                 }
             }
-            for networkInfo in networkList {
-                self.addNetworkItem(wifi: networkInfo)
-            }
-            self.networkCount = networkList.count
         }
     }
     

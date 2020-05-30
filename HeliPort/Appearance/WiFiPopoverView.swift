@@ -147,8 +147,16 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
 
     @objc func connect(_ sender: Any?) {
         networkInfo?.setPassword(password: passwdInputBox!.stringValue);
-        networkInfo?.connect()
-        StatusBarIcon.on()
+        DispatchQueue.global(qos: .background).async {
+            let result = self.networkInfo?.connect()
+            DispatchQueue.main.async {
+                if result! {
+                    StatusBarIcon.connected()
+                } else {
+                    StatusBarIcon.disconnected()
+                }
+            }
+        }
         popWindow?.close()
     }
     

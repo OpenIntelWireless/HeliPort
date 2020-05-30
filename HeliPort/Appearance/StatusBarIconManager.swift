@@ -20,21 +20,37 @@ class StatusBarIcon: NSObject {
     static var timer: Timer?
     static var count:Int = 8
     static func on() {
+        timer?.invalidate()
+        connecting()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+           disconnected()
+        }
+    }
+
+    class func off() {
+        timer?.invalidate()
+        statusBar.button?.image = NSImage.init(named: "AirPortOff")
+    }
+
+    class func connected() {
+        timer?.invalidate()
+        statusBar.button?.image = NSImage.init(named: "AirPort4")
+    }
+
+    class func disconnected() {
+        timer?.invalidate()
+        statusBar.button?.image = NSImage.init(named: "AirPortInMenu0")
+    }
+
+    class func connecting() {
         let queue = DispatchQueue.global(qos: .default)
-        queue.async { //[unowned self] in
-            self.timer = nil
+        queue.async {
+            self.timer?.invalidate()
             self.timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
             let currentRunLoop = RunLoop.current
             currentRunLoop.add(self.timer!, forMode: .common)
             currentRunLoop.run()
         }
-    }
-    
-    class func off() {
-        if count != 8 {
-            count = 0
-        }
-        statusBar.button?.image = NSImage.init(named: "AirPortOff")
     }
     
     @objc class func tick() {
@@ -58,19 +74,7 @@ class StatusBarIcon: NSObject {
                 break
             case 2:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
-                break
-            case 1:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning1")
-                break
-            case 0:
                 StatusBarIcon.count = 8
-                StatusBarIcon.timer?.invalidate()
-                statusBar.button?.image = NSImage.init(named: "AirPort4")
-                break
-            case -1:
-                StatusBarIcon.count = 8
-                StatusBarIcon.timer?.invalidate()
-                statusBar.button?.image = NSImage.init(named: "AirPortOff")
                 break
             default:
                 return
