@@ -127,7 +127,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
     @objc func updateNetworkList() {
         DispatchQueue.main.async {
-            let networkList = NetworkInfo.scanNetwork()
+            let networkList = NetworkInfo.scanNetwork().reversed()
             if (self.networkCount > 0) {
                 for _ in 1...self.networkCount {
                     self.removeItem(at: self.headerLength)

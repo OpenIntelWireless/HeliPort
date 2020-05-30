@@ -46,14 +46,22 @@ bool get_platform_info(platform_info_t *info) {
 bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
     // test
-    list->count = 2;
+    list->count = 3;
     strcpy(list->networks[0].SSID, "test0");
     list->networks[0].is_connected = true;
     list->networks[0].is_encrypted = true;
+    list->networks[0].RSSI = -40;
 
     strcpy(list->networks[1].SSID, "test2");
     list->networks[1].is_connected = false;
     list->networks[1].is_encrypted = true;
+    list->networks[1].RSSI = -30;
+
+    strcpy(list->networks[2].SSID, "test3");
+    list->networks[2].is_connected = false;
+    list->networks[2].is_encrypted = true;
+    list->networks[2].RSSI = -20;
+
     return true;
 }
 

@@ -21,14 +21,14 @@ class NetworkInfo {
     var ssid: String = ""
     var isConnected: Bool = false
     var isEncrypted: Bool = false
-    var signal: Int = 0
+    var rssi: Int = 0
     private var password: String = ""
 
-    init (ssid: String, connected: Bool, encrypted: Bool, signal: Int) {
+    init (ssid: String, connected: Bool, encrypted: Bool, rssi: Int) {
         self.ssid = ssid
         self.isConnected = connected
         self.isEncrypted = encrypted
-        self.signal = signal
+        self.rssi = rssi
     }
 
     @objc func setPassword(password: String) {
@@ -51,10 +51,10 @@ class NetworkInfo {
             }
             i += 1
             var network = element as? network_info_t
-            let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, encrypted: network!.is_encrypted, signal: Int(network!.RSSI))
+            let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, encrypted: network!.is_encrypted, rssi: Int(network!.RSSI))
             networkInfoList.append(networkInfo)
         }
-        return networkInfoList
+        return networkInfoList.sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected }
     }
 
     class func count() {
