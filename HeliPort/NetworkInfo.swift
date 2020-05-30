@@ -37,6 +37,13 @@ class NetworkInfo {
 
     @objc func connect() {
         print("connect ", ssid, password)
+        var networkInfoStruct = network_info_t()
+        strncpy(&networkInfoStruct.SSID.0, ssid, Int(MAX_SSID_LENGTH))
+        networkInfoStruct.is_connected = false
+        networkInfoStruct.is_encrypted = isEncrypted
+        strncpy(&networkInfoStruct.password.0, password, Int(MAX_PASSWORD_LENGTH))
+        networkInfoStruct.RSSI = Int32(rssi)
+        connect_network(&networkInfoStruct)
     }
 
     class func scanNetwork() -> [NetworkInfo] {

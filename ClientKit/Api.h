@@ -23,6 +23,8 @@
 #include <string.h>
 
 #define MAX_NETWORK_LIST_LENGTH 50
+#define MAX_SSID_LENGTH 32
+#define MAX_PASSWORD_LENGTH 63
 
 typedef struct {
     char device_info_str[32];
@@ -30,11 +32,11 @@ typedef struct {
 } platform_info_t;
 
 typedef struct {
-    char SSID[32];
+    char SSID[MAX_SSID_LENGTH];
     bool is_connected;
     bool is_encrypted;
     int RSSI;
-    char password[63];
+    char password[MAX_PASSWORD_LENGTH];
 } network_info_t;
 
 typedef struct {
@@ -49,5 +51,7 @@ void disconnect_driver(void);
 bool get_platform_info(platform_info_t *result);
 
 bool get_network_list(network_info_list_t *list);
+
+bool connect_network(network_info_t *info);
 
 #endif /* Api_h */

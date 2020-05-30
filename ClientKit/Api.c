@@ -65,6 +65,11 @@ bool get_network_list(network_info_list_t *list) {
     return true;
 }
 
+bool connect_network(network_info_t *info) {
+    printf("connect %s %s", info->SSID, info->password);
+    return true;
+}
+
 void disconnect_driver(void) {
     IOServiceClose(driver_connection);
     IOObjectRelease(service);
