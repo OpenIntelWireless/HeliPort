@@ -1,0 +1,651 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkInfo.swift */; };
+		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
+		BCA4DFA724385F73002A862A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFA624385F73002A862A /* KeychainManager.swift */; };
+		BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */; };
+		BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
+		BCA4DFAF243A58B5002A862A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAE243A58B5002A862A /* Functions.swift */; };
+		BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */; };
+		BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */; };
+		BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */; };
+		BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */; };
+		BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EC2424D2BF00E23603 /* Assets.xcassets */; };
+		BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EE2424D2BF00E23603 /* MainMenu.xib */; };
+		F84E327924457FAE00D07895 /* ItlNetworkUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */; };
+		F86A8960243CD13300CBABC2 /* TestService.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F86A895F243CD13300CBABC2 /* TestService.hpp */; };
+		F86A8962243CD13400CBABC2 /* TestService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F86A8961243CD13400CBABC2 /* TestService.cpp */; };
+		F86A896E243CD1B500CBABC2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F86A896D243CD1B500CBABC2 /* main.cpp */; };
+		F86A897B243CD6EA00CBABC2 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = F86A8972243CD40800CBABC2 /* Common.h */; };
+		F86A897D243CD72700CBABC2 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = F86A8972243CD40800CBABC2 /* Common.h */; };
+		F86E286E247288F600F0B03C /* ItlNetworkUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */; };
+		F8800632247BAEB6001CD3FB /* FakeNetworkInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = F8800631247BAEB6001CD3FB /* FakeNetworkInterface.h */; };
+		F8C4BDFF247B8E4800FC5539 /* IO80211Interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C4BDFD247B8E4800FC5539 /* IO80211Interface.cpp */; };
+		F8C4BE00247B8E4800FC5539 /* IO80211Interface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F8C4BDFE247B8E4800FC5539 /* IO80211Interface.hpp */; };
+		F8F6CF0C243D675800965B43 /* Api.h in Headers */ = {isa = PBXBuildFile; fileRef = F8F6CF0A243D675800965B43 /* Api.h */; };
+		F8F6CF0D243D675800965B43 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F86A8975243CD44B00CBABC2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BCFA32DF2424D2BE00E23603 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F86A896A243CD1B500CBABC2;
+			remoteInfo = ClientKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F86A8969243CD1B500CBABC2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		75FDF38A2481D22000B2A601 /* NetworkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInfo.swift; sourceTree = "<group>"; };
+		BCA4DFA624385F73002A862A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiPopoverView.swift; sourceTree = "<group>"; };
+		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
+		BCA4DFAE243A58B5002A862A /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPopWindow.swift; sourceTree = "<group>"; };
+		BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemView.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
+		BCFA32E72424D2BE00E23603 /* HeliPort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeliPort.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BCFA32EC2424D2BF00E23603 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BCFA32EF2424D2BF00E23603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BCFA32F12424D2BF00E23603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BCFA32F22424D2BF00E23603 /* Catch_Bat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Catch_Bat.entitlements; sourceTree = "<group>"; };
+		F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ItlNetworkUserClient.cpp; sourceTree = "<group>"; };
+		F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ItlNetworkUserClient.hpp; sourceTree = "<group>"; };
+		F86A895D243CD13000CBABC2 /* TestService.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestService.kext; sourceTree = BUILT_PRODUCTS_DIR; };
+		F86A895F243CD13300CBABC2 /* TestService.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestService.hpp; sourceTree = "<group>"; };
+		F86A8961243CD13400CBABC2 /* TestService.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestService.cpp; sourceTree = "<group>"; };
+		F86A8963243CD13400CBABC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F86A896B243CD1B500CBABC2 /* ClientKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ClientKit; sourceTree = BUILT_PRODUCTS_DIR; };
+		F86A896D243CD1B500CBABC2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F86A8972243CD40800CBABC2 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		F8800631247BAEB6001CD3FB /* FakeNetworkInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FakeNetworkInterface.h; sourceTree = "<group>"; };
+		F8C4BDFD247B8E4800FC5539 /* IO80211Interface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO80211Interface.cpp; sourceTree = "<group>"; };
+		F8C4BDFE247B8E4800FC5539 /* IO80211Interface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IO80211Interface.hpp; sourceTree = "<group>"; };
+		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
+		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
+		F8F6CF0E243D67D800965B43 /* IoctlId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IoctlId.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BCFA32E42424D2BE00E23603 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86A895A243CD13000CBABC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86A8968243CD1B500CBABC2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BCF712FA243C9EB100BE3C05 /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				BCFA32EE2424D2BF00E23603 /* MainMenu.xib */,
+				BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */,
+				BCA4DFAC243A307B002A862A /* StatusMenu.swift */,
+				BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */,
+				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
+				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
+			);
+			path = Appearance;
+			sourceTree = "<group>";
+		};
+		BCFA32DE2424D2BE00E23603 = {
+			isa = PBXGroup;
+			children = (
+				F86A897A243CD5F500CBABC2 /* Common */,
+				BCFA32E92424D2BE00E23603 /* HeliPort */,
+				F86A895E243CD13100CBABC2 /* TestService */,
+				F86A896C243CD1B500CBABC2 /* ClientKit */,
+				BCFA32E82424D2BE00E23603 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BCFA32E82424D2BE00E23603 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BCFA32E72424D2BE00E23603 /* HeliPort.app */,
+				F86A895D243CD13000CBABC2 /* TestService.kext */,
+				F86A896B243CD1B500CBABC2 /* ClientKit */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BCFA32E92424D2BE00E23603 /* HeliPort */ = {
+			isa = PBXGroup;
+			children = (
+				BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */,
+				BCFA32EC2424D2BF00E23603 /* Assets.xcassets */,
+				BCFA32F12424D2BF00E23603 /* Info.plist */,
+				BCF712FA243C9EB100BE3C05 /* Appearance */,
+				BCA4DFAE243A58B5002A862A /* Functions.swift */,
+				75FDF38A2481D22000B2A601 /* NetworkInfo.swift */,
+				BCA4DFA624385F73002A862A /* KeychainManager.swift */,
+				BCFA32F22424D2BF00E23603 /* Catch_Bat.entitlements */,
+			);
+			path = HeliPort;
+			sourceTree = "<group>";
+		};
+		F86A895E243CD13100CBABC2 /* TestService */ = {
+			isa = PBXGroup;
+			children = (
+				F86A895F243CD13300CBABC2 /* TestService.hpp */,
+				F86A8961243CD13400CBABC2 /* TestService.cpp */,
+				F86A8963243CD13400CBABC2 /* Info.plist */,
+				F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */,
+				F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */,
+				F8C4BDFD247B8E4800FC5539 /* IO80211Interface.cpp */,
+				F8C4BDFE247B8E4800FC5539 /* IO80211Interface.hpp */,
+				F8800631247BAEB6001CD3FB /* FakeNetworkInterface.h */,
+			);
+			path = TestService;
+			sourceTree = "<group>";
+		};
+		F86A896C243CD1B500CBABC2 /* ClientKit */ = {
+			isa = PBXGroup;
+			children = (
+				F86A896D243CD1B500CBABC2 /* main.cpp */,
+				F8F6CF0A243D675800965B43 /* Api.h */,
+				F8F6CF0B243D675800965B43 /* Api.c */,
+			);
+			path = ClientKit;
+			sourceTree = "<group>";
+		};
+		F86A897A243CD5F500CBABC2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				F86A8972243CD40800CBABC2 /* Common.h */,
+				F8F6CF0E243D67D800965B43 /* IoctlId.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F86A8958243CD13000CBABC2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8800632247BAEB6001CD3FB /* FakeNetworkInterface.h in Headers */,
+				F84E327924457FAE00D07895 /* ItlNetworkUserClient.hpp in Headers */,
+				F8C4BE00247B8E4800FC5539 /* IO80211Interface.hpp in Headers */,
+				F86A897B243CD6EA00CBABC2 /* Common.h in Headers */,
+				F86A8960243CD13300CBABC2 /* TestService.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86A897C243CD72000CBABC2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F86A897D243CD72700CBABC2 /* Common.h in Headers */,
+				F8F6CF0C243D675800965B43 /* Api.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		BCFA32E62424D2BE00E23603 /* HeliPort */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BCFA32F52424D2BF00E23603 /* Build configuration list for PBXNativeTarget "HeliPort" */;
+			buildPhases = (
+				BCFA32E32424D2BE00E23603 /* Sources */,
+				BCFA32E42424D2BE00E23603 /* Frameworks */,
+				BCFA32E52424D2BE00E23603 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F86A8976243CD44B00CBABC2 /* PBXTargetDependency */,
+			);
+			name = HeliPort;
+			productName = "Catch Bat";
+			productReference = BCFA32E72424D2BE00E23603 /* HeliPort.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F86A895C243CD13000CBABC2 /* TestService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F86A8966243CD13400CBABC2 /* Build configuration list for PBXNativeTarget "TestService" */;
+			buildPhases = (
+				F86A8958243CD13000CBABC2 /* Headers */,
+				F86A8959243CD13000CBABC2 /* Sources */,
+				F86A895A243CD13000CBABC2 /* Frameworks */,
+				F86A895B243CD13000CBABC2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestService;
+			productName = TestService;
+			productReference = F86A895D243CD13000CBABC2 /* TestService.kext */;
+			productType = "com.apple.product-type.kernel-extension";
+		};
+		F86A896A243CD1B500CBABC2 /* ClientKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F86A896F243CD1B500CBABC2 /* Build configuration list for PBXNativeTarget "ClientKit" */;
+			buildPhases = (
+				F86A897C243CD72000CBABC2 /* Headers */,
+				F86A8967243CD1B500CBABC2 /* Sources */,
+				F86A8968243CD1B500CBABC2 /* Frameworks */,
+				F86A8969243CD1B500CBABC2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ClientKit;
+			productName = ClientKit;
+			productReference = F86A896B243CD1B500CBABC2 /* ClientKit */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BCFA32DF2424D2BE00E23603 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = OpenIntelWireless;
+				TargetAttributes = {
+					BCFA32E62424D2BE00E23603 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					F86A895C243CD13000CBABC2 = {
+						CreatedOnToolsVersion = 11.1;
+					};
+					F86A896A243CD1B500CBABC2 = {
+						CreatedOnToolsVersion = 11.1;
+					};
+				};
+			};
+			buildConfigurationList = BCFA32E22424D2BE00E23603 /* Build configuration list for PBXProject "HeliPort" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BCFA32DE2424D2BE00E23603;
+			productRefGroup = BCFA32E82424D2BE00E23603 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BCFA32E62424D2BE00E23603 /* HeliPort */,
+				F86A895C243CD13000CBABC2 /* TestService */,
+				F86A896A243CD1B500CBABC2 /* ClientKit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BCFA32E52424D2BE00E23603 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */,
+				BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86A895B243CD13000CBABC2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BCFA32E32424D2BE00E23603 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75FDF38C2481D25A00B2A601 /* Api.c in Sources */,
+				BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */,
+				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
+				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
+				BCA4DFAF243A58B5002A862A /* Functions.swift in Sources */,
+				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
+				BCA4DFA724385F73002A862A /* KeychainManager.swift in Sources */,
+				BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */,
+				75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */,
+				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86A8959243CD13000CBABC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8C4BDFF247B8E4800FC5539 /* IO80211Interface.cpp in Sources */,
+				F86E286E247288F600F0B03C /* ItlNetworkUserClient.cpp in Sources */,
+				F86A8962243CD13400CBABC2 /* TestService.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F86A8967243CD1B500CBABC2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8F6CF0D243D675800965B43 /* Api.c in Sources */,
+				F86A896E243CD1B500CBABC2 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F86A8976243CD44B00CBABC2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F86A896A243CD1B500CBABC2 /* ClientKit */;
+			targetProxy = F86A8975243CD44B00CBABC2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BCFA32EE2424D2BF00E23603 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCFA32EF2424D2BF00E23603 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BCFA32F32424D2BF00E23603 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BCFA32F42424D2BF00E23603 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		BCFA32F62424D2BF00E23603 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = HeliPort/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhy.HeliPort;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		BCFA32F72424D2BF00E23603 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = HeliPort/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lhy.HeliPort;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		F86A8964243CD13400CBABC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = TestService/Info.plist;
+				MODULE_NAME = com.zxystd.TestService;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.TestService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Debug;
+		};
+		F86A8965243CD13400CBABC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = TestService/Info.plist;
+				MODULE_NAME = com.zxystd.TestService;
+				MODULE_VERSION = 1.0.0d1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.TestService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = kext;
+			};
+			name = Release;
+		};
+		F86A8970243CD1B500CBABC2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.clientkittest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F86A8971243CD1B500CBABC2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.clientkittest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BCFA32E22424D2BE00E23603 /* Build configuration list for PBXProject "HeliPort" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCFA32F32424D2BF00E23603 /* Debug */,
+				BCFA32F42424D2BF00E23603 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BCFA32F52424D2BF00E23603 /* Build configuration list for PBXNativeTarget "HeliPort" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BCFA32F62424D2BF00E23603 /* Debug */,
+				BCFA32F72424D2BF00E23603 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F86A8966243CD13400CBABC2 /* Build configuration list for PBXNativeTarget "TestService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F86A8964243CD13400CBABC2 /* Debug */,
+				F86A8965243CD13400CBABC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F86A896F243CD1B500CBABC2 /* Build configuration list for PBXNativeTarget "ClientKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F86A8970243CD1B500CBABC2 /* Debug */,
+				F86A8971243CD1B500CBABC2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BCFA32DF2424D2BE00E23603 /* Project object */;
+}
