@@ -1,5 +1,7 @@
 # HeliPort
 
+![GiHub Actions](https://github.com/williambj1/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
+
 Intel WiFi Client for [itlwm](https://github.com/zxystd/itlwm) with native macOS appearance
 
 ## Chat
