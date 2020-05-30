@@ -2,7 +2,7 @@
 
 ![GiHub Actions](https://github.com/williambj1/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
 
-Intel WiFi Client for [itlwm](https://github.com/zxystd/itlwm) with native macOS appearance
+Intel WiFi Client for [itlwm](https://github.com/zxystd/itlwm)
 
 ## Chat
 
@@ -17,6 +17,8 @@ This project is currently in the early stage of development, nothing except the 
 - [ ] I18n
 - [ ] EAP auth
 - [ ] Hidden network connecting
+
+Visit [Projects](https://github.com/zxystd/HeliPort/projects) for more information
 
 ## Issues
 
