@@ -38,7 +38,7 @@ public:
     IOReturn setMulticastMode(IOEnetMulticastMode mode) override;
     IOReturn setMulticastList(IOEthernetAddress* addr, UInt32 len) override;
     bool configureInterface(IONetworkInterface *netif) override;
-    virtual IONetworkInterface * createInterface() override;
+//    virtual IONetworkInterface * createInterface() override;
     
     bool setupUserClient();
     bool createMediumTables(const IONetworkMedium **primary);
@@ -46,6 +46,6 @@ public:
     void releaseAll();
     
 protected:
-    IO80211Interface *fNetIf;
+    IOEthernetInterface *fNetIf;
     IONetworkStats *fpNetStats;
 };

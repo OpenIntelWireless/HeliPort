@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
     io_service_t        service = 0;
     kern_return_t       kr;
 
-    matchingDict = IOServiceMatching("ItlNetworkUserClient");
+    matchingDict = IOServiceMatching("TestService");
     kr = IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iter);
     if (kr != KERN_SUCCESS)
         return -1;

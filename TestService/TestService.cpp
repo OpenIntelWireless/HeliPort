@@ -78,7 +78,7 @@ bool TestService::createMediumTables(const IONetworkMedium **primary)
     
     medium = IONetworkMedium::medium(kIOMediumEthernet1000BaseT | kIOMediumOptionFullDuplex | kIOMediumOptionFlowControl, 1000 * 1000000);
     IONetworkMedium::addMedium(mediumDict, medium);
-    medium->release();  // 'mediumDict' holds a ref now.
+    medium->release();
     if (primary) {
         *primary = medium;
     }
@@ -87,9 +87,7 @@ bool TestService::createMediumTables(const IONetworkMedium **primary)
     if (!result) {
         IOLog("Cannot publish medium dictionary!\n");
     }
-
-    // Per comment for 'publishMediumDictionary' in NetworkController.h, the
-    // medium dictionary is copied and may be safely relseased after the call.
+    
     mediumDict->release();
     return result;
 }
@@ -123,17 +121,17 @@ bool TestService::configureInterface(IONetworkInterface *netif) {
     return true;
 }
 
-IONetworkInterface * TestService::createInterface()
-{
-    IO80211Interface * netif = new IO80211Interface;
-
-    if ( netif && ( netif->init( this ) == false ) )
-    {
-        netif->release();
-        netif = 0;
-    }
-    return netif;
-}
+//IONetworkInterface * TestService::createInterface()
+//{
+//    IO80211Interface * netif = new IO80211Interface;
+//
+//    if ( netif && ( netif->init( this ) == false ) )
+//    {
+//        netif->release();
+//        netif = 0;
+//    }
+//    return netif;
+//}
 
 IOReturn TestService::disable(IONetworkInterface *netif)
 {
