@@ -1,6 +1,7 @@
 name: Build and Test
 
-on: [push, pull_request]
+#on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   build:
@@ -41,8 +42,8 @@ jobs:
         
         echo "::set-env name=NewVer::$NewVer"
         
-        #cd build/Products/
-        cd build/Products/Debug
+        #cd build/Build/Products/Release
+        cd build/Build/Products/Debug
         zip -qr HeliPort-v${NewVer}.zip *.app
         cd -
         
@@ -52,7 +53,7 @@ jobs:
     - name: GH Release
       uses: ncipollo/release-action@v1
       with:
-        artifact: "build/Products/Debug/*.zip"
+        artifact: "build/Build/Products/Debug/*.zip"
         bodyFile: ReleaseNotes.md
         replacesArtifacts: true
         draft: true
