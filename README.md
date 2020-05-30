@@ -10,6 +10,12 @@ If you have any questions or feedback, feel free to [![Join the chat at https://
 
 This project is currently in the early stage of development, nothing except the User Interface works.
 
+### To-Do's
+
+- [ ] I18n
+- [ ] EAP auth
+- [ ] Hidden network connecting
+
 ## Issues
 
 Issues for this project are for bug tracking and feature requests only, please carefully fill in all the blanks in the correct Issue Template.

@@ -52,12 +52,12 @@ bool get_network_list(network_info_list_t *list) {
     list->networks[0].is_encrypted = true;
     list->networks[0].RSSI = -40;
 
-    strcpy(list->networks[1].SSID, "test2");
+    strcpy(list->networks[1].SSID, "test2😂");
     list->networks[1].is_connected = false;
     list->networks[1].is_encrypted = true;
     list->networks[1].RSSI = -30;
 
-    strcpy(list->networks[2].SSID, "test3");
+    strcpy(list->networks[2].SSID, "test3中文");
     list->networks[2].is_connected = false;
     list->networks[2].is_encrypted = true;
     list->networks[2].RSSI = -20;

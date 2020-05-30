@@ -112,7 +112,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             joinPop.makeKeyAndOrderFront(self)
         case "打开网络偏好设置...":
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
-        case "放走Bat":
+        case "退出":
             exit(0)
         default:
             print("Default")
