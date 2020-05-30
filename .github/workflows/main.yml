@@ -20,10 +20,10 @@ jobs:
     #  run: |
     #    xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
-    #- name: Swiftlint
-    #  run: |
-    #    brew install swiftlint
-    #    swiftlint
+    - name: Swiftlint
+      run: |
+        brew install swiftlint
+        swiftlint
 
     - name: Prepare GH Release
       run: |
@@ -53,7 +53,7 @@ jobs:
     - name: GH Release
       uses: ncipollo/release-action@v1
       with:
-        artifact: "build/Build/Products/Debug/*.zip"
+        artifacts: "build/Build/Products/Debug/*.zip"
         bodyFile: ReleaseNotes.md
         replacesArtifacts: true
         draft: true
