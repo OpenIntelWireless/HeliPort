@@ -16,12 +16,12 @@
 import Cocoa
 
 var statusBar:NSStatusItem!
-let WiFiPopup:NSAlert = NSAlert()
+let wifiPop:NSAlert = NSAlert()
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
-    var Password:String = ""
+    var password:String = ""
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application

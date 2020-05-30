@@ -37,6 +37,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
     var joinButton: NSButton?
     var cancelButton: NSButton?
     
+    // swiftlint:disable function_body_length
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
         view = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
@@ -196,6 +197,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         level = .floating
         center()
     }
+    // swiftlint:enable function_body_length
     
     @objc func security(_ sender: Any?) {
         switch (securityPop?.indexOfSelectedItem)! {
@@ -208,17 +210,17 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
             isShowPasswd?.isHidden = true
             ssidBox?.becomeFirstResponder()
             if frame.height == 317 {
-                let Frame = NSRect(x: frame.minX, y: frame.minY + 48, width: 450, height: 269)
-                setFrame(Frame, display: false, animate: true)
+                let frameSize = NSRect(x: frame.minX, y: frame.minY + 48, width: 450, height: 269)
+                setFrame(frameSize, display: false, animate: true)
             }
             if frame.height == 345 {
-                let Frame = NSRect(x: frame.minX, y: frame.minY + 76, width: 450, height: 269)
-                setFrame(Frame, display: false, animate: true)
+                let frameSize = NSRect(x: frame.minX, y: frame.minY + 76, width: 450, height: 269)
+                setFrame(frameSize, display: false, animate: true)
             }
         case 2, 3, 4, 5:
             if frame.height == 269 {
-                let Frame = NSRect(x: frame.minX, y: frame.minY - 48, width: 450, height: 317)
-                setFrame(Frame, display: false, animate: true)
+                let frameSize = NSRect(x: frame.minX, y: frame.minY - 48, width: 450, height: 317)
+                setFrame(frameSize, display: false, animate: true)
             }
             usernameLabel?.isHidden = true
             usernameBox?.isHidden = true
@@ -227,18 +229,18 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdInputBox1?.isHidden = true
             isShowPasswd?.isHidden = false
             if frame.height == 345 {
-                let Frame = NSRect(x: frame.minX, y: frame.minY + 28, width: 450, height: 317)
-                setFrame(Frame, display: false, animate: true)
+                let frameSize = NSRect(x: frame.minX, y: frame.minY + 28, width: 450, height: 317)
+                setFrame(frameSize, display: false, animate: true)
             }
             JoinPopWindow.passwdInputBox?.becomeFirstResponder()
         case 7, 8, 9, 10:
             if frame.height == 269 {
-                let Frame = NSRect(x: frame.minX, y: frame.minY - 76, width: 450, height: 345)
-                setFrame(Frame, display: false, animate: true)
+                let frameSize = NSRect(x: frame.minX, y: frame.minY - 76, width: 450, height: 345)
+                setFrame(frameSize, display: false, animate: true)
             }
             if frame.height == 317 {
-                let Frame = NSRect(x: frame.minX, y: frame.minY - 28, width: 450, height: 345)
-                setFrame(Frame, display: false, animate: true)
+                let frameSize = NSRect(x: frame.minX, y: frame.minY - 28, width: 450, height: 345)
+                setFrame(frameSize, display: false, animate: true)
             }
             usernameLabel?.isHidden = false
             usernameBox?.isHidden = false
