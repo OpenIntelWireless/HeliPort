@@ -77,15 +77,15 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
     
     func buildNormalMenu() {
-        for i in 0...5 {
-            items[i].isHidden = true
+        for idx in 0...5 {
+            items[idx].isHidden = true
         }
         items[items.count - 1].isHidden = true
     }
     
     func buildOptionMenu() {
-        for i in 0...5 {
-            items[i].isHidden = false
+        for idx in 0...5 {
+            items[idx].isHidden = false
         }
         items[items.count - 1].isHidden = false
     }
@@ -122,7 +122,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func addNetworkItem(wifi: NetworkInfo) {
-        insertItem(withTitle: "Foo", action: #selector(clickMenuItem(_:)), keyEquivalent: "", at: headerLength).view = wifiMenuItemView.createItem(frame: NSRect(x: 0, y: 0, width: 285, height: 20), wifi: wifi)
+        insertItem(withTitle: "Foo",
+                   action: #selector(clickMenuItem(_:)),
+                   keyEquivalent: "",
+                   at: headerLength).view =
+            WifiMenuItemView.createItem(frame: NSRect(x: 0, y: 0, width: 285, height: 20), wifi: wifi)
     }
 
     @objc func updateNetworkList() {

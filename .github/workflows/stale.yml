@@ -1,0 +1,22 @@
+name: Mark and close stale issues
+
+on:
+  schedule:
+  - cron: "0 8 * * *"
+
+jobs:
+  stale:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Close Stale Issues
+      uses: actions/stale@v3.0.5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        stale-issue-message: Closed because this Issue is no longer active
+        days-before-stale: 30
+        days-before-close: 5
+        stale-issue-label: stale
+        exempt-issue-labels: "bug,enhancement"

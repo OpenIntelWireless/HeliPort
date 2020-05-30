@@ -51,12 +51,12 @@ class NetworkInfo {
         get_network_list(&list)
         networkInfoList.removeAll()
         let networks = Mirror(reflecting: list.networks).children.map({ $0.value })
-        var i = 1
+        var idx = 1
         for element in networks {
-            if i > list.count {
+            if idx > list.count {
                 break;
             }
-            i += 1
+            idx += 1
             var network = element as? network_info_t
             let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, encrypted: network!.is_encrypted, rssi: Int(network!.RSSI))
             networkInfoList.append(networkInfo)

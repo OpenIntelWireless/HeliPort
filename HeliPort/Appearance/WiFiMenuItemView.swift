@@ -17,7 +17,7 @@ import Foundation
 import Cocoa
 
 
-class wifiMenuItemView: NSView {
+class WifiMenuItemView: NSView {
     var popWindow: NSWindow?
     var menuItemView: NSVisualEffectView?//NSView?
     var statusImage: NSImageView?
@@ -81,8 +81,8 @@ class wifiMenuItemView: NSView {
         menuItemView?.autoresizingMask = [.width, .height]
     }
 
-    static func createItem(frame: NSRect, wifi: NetworkInfo) -> wifiMenuItemView {
-        let item = wifiMenuItemView(frame: frame)
+    static func createItem(frame: NSRect, wifi: NetworkInfo) -> WifiMenuItemView {
+        let item = WifiMenuItemView(frame: frame)
         item.networkInfo = wifi
         item.initView()
         return item
@@ -143,7 +143,7 @@ class wifiMenuItemView: NSView {
     }
 
     
-    override func draw(_ Rect: NSRect) {
+    override func draw(_ rect: NSRect) {
         if isDarkMode(view: menuItemView!) {
             highlightColor = NSColor.white
             normalColor = NSColor.white

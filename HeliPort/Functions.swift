@@ -18,7 +18,7 @@ import Cocoa
 
 
 class Functions {
-    class func WiFiPop() {
+    class func wifiPop() {
         var popWindow: NSWindow?
         var view: NSView?
         var icon: NSImageView?

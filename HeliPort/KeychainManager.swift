@@ -78,7 +78,9 @@ class KeychainManager: NSObject {
         // 通过查询是否存储在数据
         let readStatus = withUnsafeMutablePointer(to: &queryResult) { SecItemCopyMatching(keyChainReadmutableDictionary, UnsafeMutablePointer($0))}
         if readStatus == errSecSuccess {
+            // swiftlint:disable force_cast
             if let data = queryResult as! NSData? {
+            // swiftlint:enable force_cast
                 idObject = NSKeyedUnarchiver.unarchiveObject(with: data as Data) as Any
             }
         }
