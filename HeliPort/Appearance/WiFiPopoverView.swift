@@ -54,14 +54,14 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
         icon?.image = NSImage.init(named: "WiFi")
         view?.addSubview(icon!)
         
-        title?.stringValue = "Wi-Fi网络 " + self.networkInfo!.ssid + " 需要密码。"
+        title?.stringValue = NSLocalizedString("Wi-Fi Network \"", comment: "")/*"Wi-Fi网络 "*/ + self.networkInfo!.ssid + NSLocalizedString("\" Requires Password", comment: "")/*" 需要密码。"*/
         title?.drawsBackground = false
         title?.isBordered = false
         title?.isSelectable = false
         title?.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
         view?.addSubview(title!)
         
-        passwdLabel?.string = "密码："
+        passwdLabel?.string = NSLocalizedString("Password: ", comment: "")/*"密码："*/
         passwdLabel?.drawsBackground = false
         passwdLabel?.isEditable = false
         passwdLabel?.isSelectable = false
@@ -72,7 +72,7 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
         passwdInputBoxCell?.allowedInputSourceLocales = [NSAllRomanInputSourcesLocaleIdentifier]
         passwdInputBoxCell?.isBordered = true
         passwdInputBox?.stringValue = ""
-        passwdInputBox?.drawsBackground = true
+        //passwdInputBox?.drawsBackground = true
         passwdInputBox?.isEditable = true
         passwdInputBox?.isSelectable = true
         passwdInputBox?.font = NSFont.systemFont(ofSize: 13)
@@ -91,26 +91,26 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
         view?.addSubview(passwdInputBox1!)
         
         isShowPasswd?.setButtonType(.switch)
-        isShowPasswd?.title = "显示密码"
+        isShowPasswd?.title = NSLocalizedString("Show Password", comment: "")/*"显示密码"*/
         isShowPasswd?.target = self
         isShowPasswd?.action = #selector(showPasswd(_:))
         view?.addSubview(isShowPasswd!)
         
         isSave?.setButtonType(.switch)
-        isSave?.title = "记住该网络"
+        isSave?.title = NSLocalizedString("Remember This Network", comment: "")/*"记住该网络"*/
         isSave?.target = self
         isSave?.action = #selector(saveWiFi(_:))
         view?.addSubview(isSave!)
         
         joinButton?.bezelStyle = NSButton.BezelStyle.rounded
-        joinButton?.title = "加入"
+        joinButton?.title = NSLocalizedString("Join", comment: "")/*"加入"*/
         joinButton?.target = self
         joinButton?.isEnabled = false
         joinButton?.action = #selector(connect(_:))
         view?.addSubview(joinButton!)
         
         cancelButton?.bezelStyle = .rounded
-        cancelButton?.title = "取消"
+        cancelButton?.title = NSLocalizedString("Cancel", comment: "")/*"取消"*/
         cancelButton?.target = self
         cancelButton?.action = #selector(cancel(_:))
         view?.addSubview(cancelButton!)
