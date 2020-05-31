@@ -13,7 +13,7 @@
  * https://opensource.org/licenses/BSD-3-Clause
  */
 
-#define API_TEST
+//#define API_TEST
 
 #include "Api.h"
 
@@ -23,7 +23,7 @@ static io_connect_t driver_connection;
 bool connect_driver(void) {
     printf("connecting driver\n");
 
-    service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("ItlNetworkUserClient"));
+    service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("TestService"));
     if (service == IO_OBJECT_NULL) {
         printf("could not find any service matching\n");
         return false;
@@ -31,9 +31,12 @@ bool connect_driver(void) {
 
     if (IOServiceOpen(service, mach_task_self(), 0, &driver_connection) != KERN_SUCCESS) {
         printf("could not open service\n");
+        IOObjectRelease(service);
         return false;
     }
 
+    printf("open service\n");
+    IOObjectRelease(service);
     return true;
 }
 
@@ -96,5 +99,4 @@ bool connect_network(network_info_t *info) {
 
 void disconnect_driver(void) {
     IOServiceClose(driver_connection);
-    IOObjectRelease(service);
 }

@@ -38,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-        // TODO: disconnect_driver();
+        disconnect_driver();
     }
     
 }
