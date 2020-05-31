@@ -28,10 +28,9 @@ function checkEnv() {
     fi
 }
 
-function main() {
-    checkEnv
 
-    cd $(dirname $0:A)
+
+function main() {
     STRINGS="$(grep "NSLocalizedString(" *.swift)"
     STRINGS="$(echo "$STRINGS" | sed -e "s/.*NSLocalizedString(//g" | sed -e "s/, comment.*//g")"
     STRINGS="$(echo "$STRINGS" | xargs -I {} echo \"{}\" = \"{}\"\; &>/dev/null | sort | uniq)"
@@ -41,4 +40,6 @@ function main() {
     osascript -e 'tell application (path to frontmost application as text) to display dialog "Open an external editor and resolve conflicts for the .strings files" buttons {"OK"} with icon caution' &>/dev/null
     echo 'DONE!'
 }
+checkEnv
+cd $(dirname $0:A)
 main
