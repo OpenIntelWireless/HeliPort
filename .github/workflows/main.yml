@@ -9,7 +9,7 @@ on:
     - master
 
 jobs:
-  build:
+  CI:
 
     runs-on: macos-latest
 
@@ -20,7 +20,7 @@ jobs:
       run: |
         xcodebuild -scheme HeliPort -configuration Debug -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
-    # Uncomment until ClientKit DSYM generation gets fixed
+    # Uncomment when ClientKit DSYM generation gets fixed
     #- name: Release Build
     #  run: |
     #    xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
@@ -36,17 +36,19 @@ jobs:
         eval $(grep -m 1 "MARKETING_VERSION" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
         
         # Unless this project becomes insane, there's no chance that the version number will be larger than 9.9.9
-        if [[ ${MARKETING_VERSION##*.} == 9 ]]; then
-            if [[ ${MARKETING_VERSION:2:1} == 9 ]]; then
-                NewVer="$((${MARKETING_VERSION:0:1}+1)).0.0"
-            else
-                NewVer="${MARKETING_VERSION:0:1}.$((${MARKETING_VERSION:2:1}+1)).0"
-            fi
-        else
-            NewVer="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
-        fi
+        # Don't bump version for tag since we're using keywords for releases (Drafts can't be overridden in GH Actions)
+        #if [[ ${MARKETING_VERSION##*.} == 9 ]]; then
+        #    if [[ ${MARKETING_VERSION:2:1} == 9 ]]; then
+        #        NewVer="$((${MARKETING_VERSION:0:1}+1)).0.0"
+        #    else
+        #        NewVer="${MARKETING_VERSION:0:1}.$((${MARKETING_VERSION:2:1}+1)).0"
+        #    fi
+        #else
+        #    NewVer="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
+        #fi
         
-        echo "::set-env name=NewVer::$NewVer"
+        #echo "::set-env name=NewVer::$NewVer"
+        echo "::set-env name=NewVer::$MARKETING_VERSION"
         
         #cd build/Build/Products/Release
         cd build/Build/Products/Debug
