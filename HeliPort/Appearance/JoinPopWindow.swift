@@ -44,19 +44,19 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         buttonView = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 175))
         icon = NSImageView(frame: NSRect(x: 25, y: 167, width: 64, height: 64))
         titleLabel = NSTextField(frame: NSRect(x: 105, y: 212, width: 345, height: 16))
-        subTitleLabel = NSTextField(frame: NSRect(x: 105, y: 200, width: 250, height: 14))
-        ssidLabel = NSTextField(frame: NSRect(x: 100, y: 132, width: 70, height: 19))
+        subTitleLabel = NSTextField(frame: NSRect(x: 105, y: 170, width: 310, height: 32))
+        ssidLabel = NSTextField(frame: NSRect(x: 70, y: 132, width: 100, height: 19))
         ssidBox = NSTextField(frame: NSRect(x: 173, y: 132, width: 255, height: 21))
-        securityLabel = NSTextField(frame: NSRect(x: 113, y: 103, width: 70, height: 19))
+        securityLabel = NSTextField(frame: NSRect(x: 100, y: 103, width: 70, height: 19))
         securityPop = NSPopUpButton(frame: NSRect(x: 171, y: 100, width: 260, height: 26))
-        usernameLabel = NSTextField(frame: NSRect(x: 113, y: 150, width: 70, height: 19))
+        usernameLabel = NSTextField(frame: NSRect(x: 100, y: 150, width: 70, height: 19))
         usernameBox = NSTextField(frame: NSRect(x: 173, y: 151, width: 255, height: 21))
-        passwdLabel = NSTextView(frame: NSRect(x: 124, y: 121, width: 100, height: 19))
+        passwdLabel = NSTextView(frame: NSRect(x: 93, y: 121, width: 80, height: 19))
         JoinPopWindow.passwdInputBox = NSTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
         passwdInputBoxCell = NSTextFieldCell.init()
         JoinPopWindow.passwdInputBox1 = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
-        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 100, height: 18))
-        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 100, height: 18))
+        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 255, height: 18))
+        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 255, height: 18))
         joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
         cancelButton = NSButton(frame: NSRect(x: 269, y: 18, width: 85, height: 22))
         
@@ -79,6 +79,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         
         ssidLabel?.stringValue = NSLocalizedString("Network Name:", comment: "")
         ssidLabel?.drawsBackground = false
+        ssidLabel?.alignment = .right
         ssidLabel?.isBordered = false
         ssidLabel?.isSelectable = false
         ssidLabel?.font = NSFont.systemFont(ofSize: 13)
@@ -94,6 +95,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         
         securityLabel?.stringValue = NSLocalizedString("Security:", comment: "")
         securityLabel?.drawsBackground = false
+        securityLabel?.alignment = .right
         securityLabel?.isBordered = false
         securityLabel?.isSelectable = false
         securityLabel?.font = .systemFont(ofSize: 13)
@@ -118,6 +120,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         
         usernameLabel?.stringValue = NSLocalizedString("Username:", comment: "")
         usernameLabel?.drawsBackground = false
+        usernameLabel?.alignment = .right
         usernameLabel?.isBordered = false
         usernameLabel?.isSelectable = false
         usernameLabel?.font = .systemFont(ofSize: 13)
@@ -134,8 +137,9 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         usernameBox?.isHidden = true
         buttonView?.addSubview(usernameBox!)
         
-        passwdLabel?.string = NSLocalizedString("Password", comment: "")
+        passwdLabel?.string = NSLocalizedString("Password:", comment: "")
         passwdLabel?.drawsBackground = false
+        passwdLabel?.alignment = .right
         passwdLabel?.isEditable = false
         passwdLabel?.isSelectable = false
         passwdLabel?.font = NSFont.systemFont(ofSize: 13)

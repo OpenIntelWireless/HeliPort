@@ -1,3 +1,4 @@
+"\" Requires Password" = "\" 需要密码";
 "Address: aa:bb:cc:dd:ee:ff" = "地址：aa:bb:cc:dd:ee:ff";
 "Cancel" = "取消";
 "Create Diagnostics Report..." = "创建诊断报告...";
@@ -35,5 +36,6 @@
 "WPA2/WPA3 Personal" = "WPA2/WPA3个人级";
 "WPA3 Enterprise" = "WPA3企业级";
 "WPA3 Personal" = "WPA3个人级";
+"Wi-Fi Network \"" = "Wi-Fi网络 \"";
 "Wi-Fi: Off" = "Wi-Fi: 关闭";
 "Wi-Fi: On" = "Wi-Fi: 开启";

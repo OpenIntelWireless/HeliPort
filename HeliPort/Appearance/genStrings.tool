@@ -1,7 +1,7 @@
 #!/bin/zsh
 
 #
-#  genLocalization.sh
+#  genStrings.tool
 #  HeliPort
 #
 #  Created by Bat.bat on 2020/5/31.
@@ -27,8 +27,6 @@ function checkEnv() {
         abort "non zsh shells"
     fi
 }
-
-
 
 function main() {
     STRINGS="$(grep "NSLocalizedString(" *.swift)"
