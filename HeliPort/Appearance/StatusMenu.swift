@@ -36,28 +36,28 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func setupMenuHeaderAndFooter() {
-        addItem(withTitle: "接口名称： en1", action: nil, keyEquivalent: "").isHidden = true
-        addItem(withTitle: "地址： aa:bb:cc:dd:ee:ff", action: nil, keyEquivalent: "").isHidden = true
-        addItem(withTitle: "启用Wi-Fi记录", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: "创建诊断报告...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: "打开无线诊断...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Interface Name: en1", comment: ""), action: nil, keyEquivalent: "").isHidden = true
+        addItem(withTitle: NSLocalizedString("Address: aa:bb:cc:dd:ee:ff", comment: ""), action: nil, keyEquivalent: "").isHidden = true
+        addItem(withTitle: NSLocalizedString("Enable Wi-Fi Logging", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Create Diagnostics Report...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Open Wireless Diagnostics...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(NSMenuItem.separator())
 
-        statusItem = addItem(withTitle: "不可用", action: nil, keyEquivalent: "")
+        statusItem = addItem(withTitle: NSLocalizedString("Unavaliable", comment: ""), action: nil, keyEquivalent: "")
         statusItem?.isEnabled = false
-        addItem(withTitle: "关闭Wi-Fi", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Turn Wi-Fi Off", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(NSMenuItem.separator())
 
         headerLength = items.count
 
-        addItem(withTitle: "无可用网络", action: nil, keyEquivalent: "").isEnabled = false
+        addItem(withTitle: NSLocalizedString("No Network Avaliable", comment: ""), action: nil, keyEquivalent: "").isEnabled = false
         networkCount = 1
 
         addItem(NSMenuItem.separator())
-        addItem(withTitle: "加入其他网络...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: "创建网络...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: "打开网络偏好设置...", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: "退出", action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Join Other Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Create Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
     }
     
     func menuWillOpen(_ menu: NSMenu) {
@@ -100,26 +100,26 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     @objc func clickMenuItem(_ sender:NSMenuItem){
         print(sender.title)
         switch sender.title {
-        case "开启Wi-Fi":
-            //items[6].title = "Wi-Fi: 开启"
-            //items[7].title = "关闭Wi-Fi"
+        case NSLocalizedString("Turn Wi-Fi On", comment: ""):
+            //items[6].title = NSLocalizedString("Wi-Fi: On", comment: "")
+            //items[7].title = NSLocalizedString("Turn Wi-Fi Off", comment: "")
             StatusBarIcon.on()
-        case "关闭Wi-Fi":
-            //items[6].title = "Wi-Fi: 关闭"
-            //items[7].title = "开启Wi-Fi"
+        case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
+            //items[6].title = NSLocalizedString("Wi-Fi: Off", comment: "")
+            //items[7].title = NSLocalizedString("Turn Wi-Fi On", comment: "")
             //timer?.invalidate()
             //timer = nil
             //StatusBarIcon.off()
             let alert = NSAlert()
-            alert.messageText = "功能尚未实现"
+            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
             alert.alertStyle = NSAlert.Style.critical
             alert.runModal()
-        case "加入其他网络...":
+        case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
             joinPop.makeKeyAndOrderFront(self)
-        case "打开网络偏好设置...":
+        case NSLocalizedString("Open Network Preferences...", comment: ""):
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
-        case "退出":
+        case NSLocalizedString("Quit HeliPort", comment: ""):
             exit(0)
         default:
             print("Default")
@@ -138,7 +138,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
     @objc func updateNetworkList() {
         DispatchQueue.global(qos: .background).async {
-            var statusText = "状态信息不可用"
+            var statusText = NSLocalizedString("No Status Information Avaliable", comment: "")
             var platformInfo = platform_info_t()
             if get_platform_info(&platformInfo) {
                 statusText = String(cString: &platformInfo.device_info_str.0) + " " + String(cString: &platformInfo.driver_info_str.0)
@@ -161,7 +161,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                     }
                     self.networkCount = networkList.count
                 } else {
-                    self.insertItem(withTitle: "无可用网络", action: nil, keyEquivalent: "", at: self.headerLength).isEnabled = false
+                    self.insertItem(withTitle: NSLocalizedString("No Network Avaliable", comment: ""), action: nil, keyEquivalent: "", at: self.headerLength).isEnabled = false
                     self.networkCount = 1
                 }
             }

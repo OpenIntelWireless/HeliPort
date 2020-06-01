@@ -41,27 +41,28 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
 
         view = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
         icon = NSImageView(frame: NSRect(x: 25, y: 165, width: 64, height: 64))
-        title = NSTextField(frame: NSRect(x: 105, y: 210, width: 345, height: 16))
-        passwdLabel = NSTextView(frame: NSRect(x: 128, y: 124, width: 100, height: 19))
+        title = NSTextField(frame: NSRect(x: 105, y: 160, width: 300, height: 64))
+        passwdLabel = NSTextView(frame: NSRect(x: 73, y: 124, width: 100, height: 19))
         passwdInputBox = NSTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
         passwdInputBoxCell = NSTextFieldCell.init()
         passwdInputBox1 = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
-        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 100, height: 18))
-        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 100, height: 18))
+        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 170, height: 18))
+        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 170, height: 18))
         joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
         cancelButton = NSButton(frame: NSRect(x: 269, y: 18, width: 85, height: 22))
         
         icon?.image = NSImage.init(named: "WiFi")
         view?.addSubview(icon!)
         
-        title?.stringValue = "Wi-Fi网络 " + self.networkInfo!.ssid + " 需要密码。"
+        title?.stringValue = NSLocalizedString("Wi-Fi Network \"", comment: "") + self.networkInfo!.ssid + NSLocalizedString("\" Requires Password", comment: "")
         title?.drawsBackground = false
         title?.isBordered = false
         title?.isSelectable = false
         title?.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
         view?.addSubview(title!)
         
-        passwdLabel?.string = "密码："
+        passwdLabel?.string = NSLocalizedString("Password:", comment: "")
+        passwdLabel?.alignment = .right
         passwdLabel?.drawsBackground = false
         passwdLabel?.isEditable = false
         passwdLabel?.isSelectable = false
@@ -72,7 +73,7 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
         passwdInputBoxCell?.allowedInputSourceLocales = [NSAllRomanInputSourcesLocaleIdentifier]
         passwdInputBoxCell?.isBordered = true
         passwdInputBox?.stringValue = ""
-        passwdInputBox?.drawsBackground = true
+        //passwdInputBox?.drawsBackground = true
         passwdInputBox?.isEditable = true
         passwdInputBox?.isSelectable = true
         passwdInputBox?.font = NSFont.systemFont(ofSize: 13)
@@ -91,26 +92,26 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
         view?.addSubview(passwdInputBox1!)
         
         isShowPasswd?.setButtonType(.switch)
-        isShowPasswd?.title = "显示密码"
+        isShowPasswd?.title = NSLocalizedString("Show password", comment: "")
         isShowPasswd?.target = self
         isShowPasswd?.action = #selector(showPasswd(_:))
         view?.addSubview(isShowPasswd!)
         
         isSave?.setButtonType(.switch)
-        isSave?.title = "记住该网络"
+        isSave?.title = NSLocalizedString("Remember this network", comment: "")
         isSave?.target = self
         isSave?.action = #selector(saveWiFi(_:))
         view?.addSubview(isSave!)
         
         joinButton?.bezelStyle = NSButton.BezelStyle.rounded
-        joinButton?.title = "加入"
+        joinButton?.title = NSLocalizedString("Join", comment: "")
         joinButton?.target = self
         joinButton?.isEnabled = false
         joinButton?.action = #selector(connect(_:))
         view?.addSubview(joinButton!)
         
         cancelButton?.bezelStyle = .rounded
-        cancelButton?.title = "取消"
+        cancelButton?.title = NSLocalizedString("Cancel", comment: "")
         cancelButton?.target = self
         cancelButton?.action = #selector(cancel(_:))
         view?.addSubview(cancelButton!)

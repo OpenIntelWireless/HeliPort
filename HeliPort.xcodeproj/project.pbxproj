@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		508D9C6D248393910025701D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 508D9C6F248393910025701D /* Localizable.strings */; };
 		7562BBE424826103008A9BD2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7562BBE324826102008A9BD2 /* README.md */; };
 		75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkInfo.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
@@ -57,6 +58,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		508D9C6724838D540025701D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
+		508D9C6E248393910025701D /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInfo.swift; sourceTree = "<group>"; };
 		BCA4DFA624385F73002A862A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 				BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */,
 				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
 				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
+				508D9C6F248393910025701D /* Localizable.strings */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -307,6 +311,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = BCFA32DE2424D2BE00E23603;
 			productRefGroup = BCFA32E82424D2BE00E23603 /* Products */;
@@ -325,6 +330,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				508D9C6D248393910025701D /* Localizable.strings in Resources */,
 				7562BBE424826103008A9BD2 /* README.md in Resources */,
 				BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */,
 				BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */,
@@ -388,10 +394,19 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		508D9C6F248393910025701D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				508D9C6E248393910025701D /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		BCFA32EE2424D2BF00E23603 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				BCFA32EF2424D2BF00E23603 /* Base */,
+				508D9C6724838D540025701D /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -403,6 +418,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -463,6 +479,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
