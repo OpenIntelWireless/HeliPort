@@ -100,3 +100,13 @@ bool connect_network(network_info_t *info) {
 void disconnect_driver(void) {
     IOServiceClose(driver_connection);
 }
+
+bool ioctl_set(int ctl, void *data) {
+    ctl |= IOCTL_MASK;
+    return true;
+}
+
+bool ioctl_get(int ctl, void *data) {
+    
+    return true;
+}

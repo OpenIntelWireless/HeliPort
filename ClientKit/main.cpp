@@ -24,17 +24,6 @@
 
 #include "Api.h"
 
-IONotificationPortRef gAsyncNotificationPort = NULL;
-
-IONotificationPortRef MyDriverGetAsyncCompletionPort()
-{
-    if (gAsyncNotificationPort != NULL)
-        return gAsyncNotificationPort;
-
-    gAsyncNotificationPort = IONotificationPortCreate(kIOMasterPortDefault);
-    return gAsyncNotificationPort;
-}
-
 int main(int argc, const char * argv[]) {
     CFDictionaryRef     matchingDict = NULL;
     io_iterator_t       iter = 0;
@@ -58,22 +47,9 @@ int main(int argc, const char * argv[]) {
                            &driverConnection);
         if (kr == KERN_SUCCESS)
         {
-            IONotificationPortRef   notificationPort;
-            notificationPort = MyDriverGetAsyncCompletionPort();
-            if (notificationPort)
-            {
-                CFRunLoopSourceRef      runLoopSource;
-                runLoopSource = IONotificationPortGetRunLoopSource(notificationPort);
-                CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
-            }
-
-            kr = IOConnectCallAsyncScalarMethod(driverConnection, IOCTL_80211_TEST, IONotificationPortGetMachPort(gAsyncNotificationPort), NULL, kIOAsyncCalloutCount, NULL, 1, NULL, NULL);
+            kr = IOConnectCallMethod(driverConnection, IOCTL_80211_TEST, NULL, 0, NULL, 0, NULL, NULL, NULL, NULL);
             printf("IOCTL_80211_TEST - %08x\n", kr);
-
-            CFRunLoopRun();
-
-            IONotificationPortDestroy(gAsyncNotificationPort);
-            gAsyncNotificationPort = NULL;
+            
             IOServiceClose(driverConnection);
         }
 

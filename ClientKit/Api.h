@@ -44,9 +44,15 @@ typedef struct {
     network_info_t networks[MAX_NETWORK_LIST_LENGTH];
 } network_info_list_t;
 
+#define IOCTL_MASK 0x800000
+
 bool connect_driver(void);
 
 void disconnect_driver(void);
+
+bool ioctl_get(int ctl, void *data);
+
+bool ioctl_set(int ctl, void *data);
 
 bool get_platform_info(platform_info_t *result);
 
