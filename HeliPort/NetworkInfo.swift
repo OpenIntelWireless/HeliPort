@@ -22,7 +22,6 @@ class NetworkInfo {
     var isConnected: Bool = false
     var isEncrypted: Bool = false
     var rssi: Int = 0
-    private var password: String = ""
 
     init (ssid: String, connected: Bool, encrypted: Bool, rssi: Int) {
         self.ssid = ssid
@@ -31,18 +30,22 @@ class NetworkInfo {
         self.rssi = rssi
     }
 
-    func setPassword(password: String) {
-        self.password = password
-    }
-
-    func connect() -> Bool {
+    func connect(auth: NetworkAuth) -> Bool {
         StatusBarIcon.connecting()
         var networkInfoStruct = network_info_t()
         strncpy(&networkInfoStruct.SSID.0, ssid, Int(MAX_SSID_LENGTH))
         networkInfoStruct.is_connected = false
         networkInfoStruct.is_encrypted = isEncrypted
-        strncpy(&networkInfoStruct.password.0, password, Int(MAX_PASSWORD_LENGTH))
         networkInfoStruct.RSSI = Int32(rssi)
+
+        networkInfoStruct.auth.security = auth.security
+        networkInfoStruct.auth.option = auth.option
+        networkInfoStruct.auth.identity = UnsafeMutablePointer<UInt8>.allocate(capacity: auth.identity.count)
+        networkInfoStruct.auth.identity.initialize(from: &auth.identity, count: auth.identity.count)
+        networkInfoStruct.auth.identity_length = UInt32(auth.identity.count)
+        networkInfoStruct.auth.username = UnsafeMutablePointer<Int8>(mutating: (auth.username as NSString).utf8String)
+        networkInfoStruct.auth.password = UnsafeMutablePointer<Int8>(mutating: (auth.passward as NSString).utf8String)
+
         return connect_network(&networkInfoStruct)
     }
 
@@ -67,4 +70,12 @@ class NetworkInfo {
     class func count() {
 
     }
+}
+
+class NetworkAuth {
+    var security: UInt8 = 0
+    var option: UInt64 = 0
+    var identity = [UInt8]()
+    var username: String = ""
+    var passward: String = ""
 }

@@ -87,7 +87,7 @@ bool get_network_list(network_info_list_t *list) {
 
 bool connect_network(network_info_t *info) {
 #ifdef API_TEST
-    printf("connect %s %s", info->SSID, info->password);
+    printf("connect %s %s\n", info->SSID, info->auth.password);
     sleep(4);
     return true;
 #endif
