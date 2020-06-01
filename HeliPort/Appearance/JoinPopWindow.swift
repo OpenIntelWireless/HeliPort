@@ -44,41 +44,42 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         buttonView = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 175))
         icon = NSImageView(frame: NSRect(x: 25, y: 167, width: 64, height: 64))
         titleLabel = NSTextField(frame: NSRect(x: 105, y: 212, width: 345, height: 16))
-        subTitleLabel = NSTextField(frame: NSRect(x: 105, y: 200, width: 250, height: 14))
-        ssidLabel = NSTextField(frame: NSRect(x: 100, y: 132, width: 70, height: 19))
+        subTitleLabel = NSTextField(frame: NSRect(x: 105, y: 170, width: 310, height: 32))
+        ssidLabel = NSTextField(frame: NSRect(x: 70, y: 132, width: 100, height: 19))
         ssidBox = NSTextField(frame: NSRect(x: 173, y: 132, width: 255, height: 21))
-        securityLabel = NSTextField(frame: NSRect(x: 113, y: 103, width: 70, height: 19))
+        securityLabel = NSTextField(frame: NSRect(x: 100, y: 103, width: 70, height: 19))
         securityPop = NSPopUpButton(frame: NSRect(x: 171, y: 100, width: 260, height: 26))
-        usernameLabel = NSTextField(frame: NSRect(x: 113, y: 150, width: 70, height: 19))
+        usernameLabel = NSTextField(frame: NSRect(x: 100, y: 150, width: 70, height: 19))
         usernameBox = NSTextField(frame: NSRect(x: 173, y: 151, width: 255, height: 21))
-        passwdLabel = NSTextView(frame: NSRect(x: 124, y: 121, width: 100, height: 19))
+        passwdLabel = NSTextView(frame: NSRect(x: 93, y: 121, width: 80, height: 19))
         JoinPopWindow.passwdInputBox = NSTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
         passwdInputBoxCell = NSTextFieldCell.init()
         JoinPopWindow.passwdInputBox1 = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
-        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 100, height: 18))
-        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 100, height: 18))
+        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 255, height: 18))
+        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 255, height: 18))
         joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
         cancelButton = NSButton(frame: NSRect(x: 269, y: 18, width: 85, height: 22))
         
         icon?.image = NSImage.init(named: "WiFi")
         view?.addSubview(icon!)
         
-        titleLabel?.stringValue = "查找并加入Wi-Fi网络。"
+        titleLabel?.stringValue = NSLocalizedString("Find and join a Wi-Fi network.", comment: "")
         titleLabel?.drawsBackground = false
         titleLabel?.isBordered = false
         titleLabel?.isSelectable = false
         titleLabel?.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
         view?.addSubview(titleLabel!)
         
-        subTitleLabel?.stringValue = "输入您想要加入的网络的名称和安全性类型。"
+        subTitleLabel?.stringValue = NSLocalizedString("Enter the name and security type of the network you want to join.", comment: "")
         subTitleLabel?.drawsBackground = false
         subTitleLabel?.isBordered = false
         subTitleLabel?.isSelectable = false
         subTitleLabel?.font = NSFont.systemFont(ofSize: 11)
         view?.addSubview(subTitleLabel!)
         
-        ssidLabel?.stringValue = "网络名称："
+        ssidLabel?.stringValue = NSLocalizedString("Network Name:", comment: "")
         ssidLabel?.drawsBackground = false
+        ssidLabel?.alignment = .right
         ssidLabel?.isBordered = false
         ssidLabel?.isSelectable = false
         ssidLabel?.font = NSFont.systemFont(ofSize: 13)
@@ -92,30 +93,34 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         ssidBox?.delegate = self
         view?.addSubview(ssidBox!)
         
-        securityLabel?.stringValue = "安全性："
+        securityLabel?.stringValue = NSLocalizedString("Security:", comment: "")
         securityLabel?.drawsBackground = false
+        securityLabel?.alignment = .right
         securityLabel?.isBordered = false
         securityLabel?.isSelectable = false
         securityLabel?.font = .systemFont(ofSize: 13)
         view?.addSubview(securityLabel!)
         
-        securityPop?.addItem(withTitle: "无")
+        securityPop?.addItem(withTitle: NSLocalizedString("None", comment: ""))
         securityPop?.menu?.addItem(.separator())
-        securityPop?.addItem(withTitle: "WEP")
-        securityPop?.addItem(withTitle: "WPA/WPA2个人级")
-        securityPop?.addItem(withTitle: "WPA2/WPA3个人级")
-        securityPop?.addItem(withTitle: "WPA3个人级")
+        //securityPop?.addItem(withTitle: NSLocalizedString("WEP", comment: ""))
+        securityPop?.addItem(withTitle: NSLocalizedString("WPA/WPA2 Personal", comment: ""))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Personal", comment: ""))
+        securityPop?.addItem(withTitle: NSLocalizedString("WPA2 Personal", comment: ""))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA3 Personal", comment: ""))
         securityPop?.menu?.addItem(.separator())
-        securityPop?.addItem(withTitle: "动态WEP")
-        securityPop?.addItem(withTitle: "WPA/WPA2企业级")
-        securityPop?.addItem(withTitle: "WPA2企业级")
-        securityPop?.addItem(withTitle: "WPA3企业级")
+        //securityPop?.addItem(withTitle: NSLocalizedString("Dynamic WEP", comment: ""))
+        securityPop?.addItem(withTitle: NSLocalizedString("WPA/WPA2 Enterprise", comment: ""))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Enterprise", comment: ""))
+        securityPop?.addItem(withTitle: NSLocalizedString("WPA2 Enterprise", comment: ""))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA3 Enterprise", comment: ""))
         securityPop?.target = self
         securityPop?.action = #selector(security(_:))
         view?.addSubview(securityPop!)
         
-        usernameLabel?.stringValue = "用户名："
+        usernameLabel?.stringValue = NSLocalizedString("Username:", comment: "")
         usernameLabel?.drawsBackground = false
+        usernameLabel?.alignment = .right
         usernameLabel?.isBordered = false
         usernameLabel?.isSelectable = false
         usernameLabel?.font = .systemFont(ofSize: 13)
@@ -132,8 +137,9 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         usernameBox?.isHidden = true
         buttonView?.addSubview(usernameBox!)
         
-        passwdLabel?.string = "密码："
+        passwdLabel?.string = NSLocalizedString("Password:", comment: "")
         passwdLabel?.drawsBackground = false
+        passwdLabel?.alignment = .right
         passwdLabel?.isEditable = false
         passwdLabel?.isSelectable = false
         passwdLabel?.font = NSFont.systemFont(ofSize: 13)
@@ -162,27 +168,27 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         buttonView?.addSubview(JoinPopWindow.passwdInputBox1!)
         
         isShowPasswd?.setButtonType(.switch)
-        isShowPasswd?.title = "显示密码"
+        isShowPasswd?.title = NSLocalizedString("Show password", comment: "")
         isShowPasswd?.target = self
         isShowPasswd?.action = #selector(showPasswd(_:))
         isShowPasswd?.isHidden = true
         buttonView?.addSubview(isShowPasswd!)
         
         isSave?.setButtonType(.switch)
-        isSave?.title = "记住该网络"
+        isSave?.title = NSLocalizedString("Remember this network", comment: "")
         isSave?.target = self
         isSave?.action = #selector(saveWiFi(_:))
         buttonView?.addSubview(isSave!)
         
         joinButton?.bezelStyle = NSButton.BezelStyle.rounded
-        joinButton?.title = "加入"
+        joinButton?.title = NSLocalizedString("Join", comment: "")
         joinButton?.target = self
         joinButton?.isEnabled = false
         //joinButton?.action = #selector()
         buttonView?.addSubview(joinButton!)
         
         cancelButton?.bezelStyle = .rounded
-        cancelButton?.title = "取消"
+        cancelButton?.title = NSLocalizedString("Cancel", comment: "")
         cancelButton?.target = self
         cancelButton?.action = #selector(cancel(_:))
         buttonView?.addSubview(cancelButton!)
@@ -201,7 +207,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
     
     @objc func security(_ sender: Any?) {
         switch (securityPop?.indexOfSelectedItem)! {
-        case 0:
+        case 0: // Encryption: None
             usernameLabel?.isHidden = true
             usernameBox?.isHidden = true
             passwdLabel?.isHidden = true
@@ -217,7 +223,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY + 76, width: 450, height: 269)
                 setFrame(frameSize, display: false, animate: true)
             }
-        case 2, 3, 4, 5:
+        case 2, 3: // Encryption: Personal
             if frame.height == 269 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY - 48, width: 450, height: 317)
                 setFrame(frameSize, display: false, animate: true)
@@ -233,7 +239,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
                 setFrame(frameSize, display: false, animate: true)
             }
             JoinPopWindow.passwdInputBox?.becomeFirstResponder()
-        case 7, 8, 9, 10:
+        case 5, 6: // Encryption: Enterprise
             if frame.height == 269 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY - 76, width: 450, height: 345)
                 setFrame(frameSize, display: false, animate: true)

@@ -24,7 +24,6 @@
 
 #define MAX_NETWORK_LIST_LENGTH 50
 #define MAX_SSID_LENGTH 32
-#define MAX_PASSWORD_LENGTH 63
 
 typedef struct {
     char device_info_str[32];
@@ -32,11 +31,20 @@ typedef struct {
 } platform_info_t;
 
 typedef struct {
-    char SSID[MAX_SSID_LENGTH];
+    uint8_t security;
+    uint64_t option;
+    uint8_t *identity;
+    uint32_t identity_length;
+    char *username;
+    char *password;
+} network_auth_t;
+
+typedef struct {
+    char SSID[MAX_SSID_LENGTH + 1];
     bool is_connected;
     bool is_encrypted;
     int RSSI;
-    char password[MAX_PASSWORD_LENGTH];
+    network_auth_t auth;
 } network_info_t;
 
 typedef struct {
