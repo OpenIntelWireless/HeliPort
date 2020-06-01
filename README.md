@@ -14,7 +14,7 @@ This project is currently in the early stage of development, nothing except the 
 
 ### To-Do's
 
-- [ ] I18n
+- [ ] Save user network info
 - [ ] EAP auth
 - [ ] Hidden network connecting
 
