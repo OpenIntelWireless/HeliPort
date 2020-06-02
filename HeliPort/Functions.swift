@@ -39,7 +39,7 @@ class Functions {
         title?.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
         view?.addSubview(title!)
         
-        view?.addSubview(WiFiPopoverSubview(frame: NSRect(x: 128, y: 18, width: 322, height: 125)))
+        //view?.addSubview(WiFiPopoverSubview(frame: NSRect(x: 128, y: 18, width: 322, height: 125)))
         
         popWindow?.center()
         popWindow?.isOpaque = false

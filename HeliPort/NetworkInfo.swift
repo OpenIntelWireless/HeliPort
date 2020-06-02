@@ -130,9 +130,7 @@ class NetworkManager {
             getAuthInfoCallback(networkInfo.auth)
         } else {
             let popWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
-            let wifiPopView: WiFiPopoverSubview = WiFiPopoverSubview()
-            wifiPopView.initViews(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback)
-            wifiPopView.popWindow = popWindow
+            let wifiPopView: WiFiPopoverSubview = WiFiPopoverSubview(popWindow: popWindow, networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback)
             popWindow.contentView = wifiPopView
             popWindow.isReleasedWhenClosed = false
             popWindow.level = .floating
