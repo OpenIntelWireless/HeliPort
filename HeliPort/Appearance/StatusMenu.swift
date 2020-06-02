@@ -117,6 +117,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
             joinPop.makeKeyAndOrderFront(self)
+        case NSLocalizedString("Create Network...", comment: ""):
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
+            alert.alertStyle = NSAlert.Style.critical
+            alert.runModal()
         case NSLocalizedString("Open Network Preferences...", comment: ""):
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
         case NSLocalizedString("Quit HeliPort", comment: ""):
