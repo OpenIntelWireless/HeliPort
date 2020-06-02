@@ -74,7 +74,7 @@
 		BCFA32EC2424D2BF00E23603 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BCFA32EF2424D2BF00E23603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BCFA32F12424D2BF00E23603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BCFA32F22424D2BF00E23603 /* Catch_Bat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Catch_Bat.entitlements; sourceTree = "<group>"; };
+		BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort.entitlements; sourceTree = "<group>"; };
 		F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ItlNetworkUserClient.cpp; sourceTree = "<group>"; };
 		F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ItlNetworkUserClient.hpp; sourceTree = "<group>"; };
 		F86A895D243CD13000CBABC2 /* TestService.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestService.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,7 +163,7 @@
 				BCA4DFAE243A58B5002A862A /* Functions.swift */,
 				75FDF38A2481D22000B2A601 /* NetworkInfo.swift */,
 				BCA4DFA624385F73002A862A /* KeychainManager.swift */,
-				BCFA32F22424D2BF00E23603 /* Catch_Bat.entitlements */,
+				BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */,
 			);
 			path = HeliPort;
 			sourceTree = "<group>";
@@ -243,7 +243,7 @@
 				F86A8976243CD44B00CBABC2 /* PBXTargetDependency */,
 			);
 			name = HeliPort;
-			productName = "Catch Bat";
+			productName = "HeliPort";
 			productReference = BCFA32E72424D2BE00E23603 /* HeliPort.app */;
 			productType = "com.apple.product-type.application";
 		};
