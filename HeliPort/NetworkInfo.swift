@@ -70,7 +70,7 @@ class NetworkAuth {
     var option: UInt64 = 0
     var identity = [UInt8]()
     var username: String = ""
-    var passward: String = ""
+    var password: String = ""
 }
 
 class NetworkManager {
@@ -110,7 +110,7 @@ class NetworkManager {
             networkInfoStruct.auth.identity.initialize(from: &auth.identity, count: auth.identity.count)
             networkInfoStruct.auth.identity_length = UInt32(auth.identity.count)
             networkInfoStruct.auth.username = UnsafeMutablePointer<Int8>(mutating: (auth.username as NSString).utf8String)
-            networkInfoStruct.auth.password = UnsafeMutablePointer<Int8>(mutating: (auth.passward as NSString).utf8String)
+            networkInfoStruct.auth.password = UnsafeMutablePointer<Int8>(mutating: (auth.password as NSString).utf8String)
 
             StatusBarIcon.connecting()
             DispatchQueue.global(qos: .background).async {
@@ -126,7 +126,7 @@ class NetworkManager {
         }
 
         if (networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue) {
-            networkInfo.auth.passward = ""
+            networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth)
         } else {
             let popWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)

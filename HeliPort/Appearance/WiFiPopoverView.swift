@@ -149,7 +149,7 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
     }
 
     @objc func connect(_ sender: Any?) {
-        networkInfo!.auth.passward = passwdInputBox!.stringValue;
+        networkInfo!.auth.password = passwdInputBox!.stringValue;
         getAuthInfoCallback!(networkInfo!.auth)
         popWindow?.close()
     }
