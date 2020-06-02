@@ -31,13 +31,15 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
     var cancelButton: NSButton?
 
     var networkInfo: NetworkInfo?
+    var getAuthInfoCallback: ((_ auth: NetworkAuth) -> ())?
     
     override init(frame: NSRect) {
         super.init(frame: frame)
     }
 
-    func initViews(networkInfo: NetworkInfo) {
+    func initViews(networkInfo: NetworkInfo, getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> ()) {
         self.networkInfo = networkInfo
+        self.getAuthInfoCallback = getAuthInfoCallback
 
         view = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
         icon = NSImageView(frame: NSRect(x: 25, y: 165, width: 64, height: 64))
@@ -147,17 +149,8 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
     }
 
     @objc func connect(_ sender: Any?) {
-        networkInfo?.auth.passward = passwdInputBox!.stringValue;
-        DispatchQueue.global(qos: .background).async {
-            let result = self.networkInfo?.connect()
-            DispatchQueue.main.async {
-                if result! {
-                    StatusBarIcon.connected()
-                } else {
-                    StatusBarIcon.disconnected()
-                }
-            }
-        }
+        networkInfo!.auth.passward = passwdInputBox!.stringValue;
+        getAuthInfoCallback!(networkInfo!.auth)
         popWindow?.close()
     }
     

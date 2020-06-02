@@ -18,7 +18,6 @@ import Cocoa
 
 
 class WifiMenuItemView: NSView {
-    var popWindow: NSWindow?
     var menuItemView: NSVisualEffectView?//NSView?
     var statusImage: NSImageView?
     var ssidLabel: NSTextView?
@@ -117,21 +116,7 @@ class WifiMenuItemView: NSView {
         lockImage?.contentTintColor = normalColor
         signalImage?.contentTintColor = normalColor
         statusBar.menu?.cancelTracking()
-        if (networkInfo!.isConnected) {
-            return
-        }
-
-        popWindow?.close()
-        popWindow = nil
-        popWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
-        let wifiPopView: WiFiPopoverSubview = WiFiPopoverSubview()
-        wifiPopView.initViews(networkInfo: networkInfo!)
-        wifiPopView.popWindow = popWindow
-        popWindow?.contentView = wifiPopView
-        popWindow?.isReleasedWhenClosed = false
-        popWindow?.level = .floating
-        popWindow?.makeKeyAndOrderFront(self)
-        popWindow?.center()
+        NetworkManager.connect(networkInfo: networkInfo!)
     }
     
     override func viewWillMove(toWindow newWindow: NSWindow?) {
