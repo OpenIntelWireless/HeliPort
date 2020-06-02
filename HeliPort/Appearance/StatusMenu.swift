@@ -133,12 +133,12 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    func addNetworkItem(wifi: NetworkInfo) {
+    func addNetworkItem(networkInfo: NetworkInfo) {
         insertItem(withTitle: "Foo",
                    action: #selector(clickMenuItem(_:)),
                    keyEquivalent: "",
                    at: headerLength).view =
-            WifiMenuItemView.createItem(frame: NSRect(x: 0, y: 0, width: 285, height: 20), wifi: wifi)
+            WifiMenuItemView(frame: NSRect(x: 0, y: 0, width: 285, height: 20), networkInfo: networkInfo)
     }
 
     @objc func updateNetworkList() {
@@ -162,7 +162,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 }
                 if networkList.count > 0 {
                     for networkInfo in networkList {
-                        self.addNetworkItem(wifi: networkInfo)
+                        self.addNetworkItem(networkInfo: networkInfo)
                     }
                     self.networkCount = networkList.count
                 } else {
