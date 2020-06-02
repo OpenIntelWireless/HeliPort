@@ -17,8 +17,6 @@ import Foundation
 import Cocoa
 
 class NetworkInfo {
-    static var networkInfoList = [NetworkInfo]()
-
     var ssid: String = ""
     var isConnected: Bool = false
     var isEncrypted: Bool = false
@@ -43,26 +41,6 @@ class NetworkInfo {
         self.isEncrypted = encrypted
         self.rssi = rssi
     }
-
-    class func scanNetwork() -> [NetworkInfo] {
-        var list = network_info_list_t()
-        get_network_list(&list)
-        networkInfoList.removeAll()
-        let networks = Mirror(reflecting: list.networks).children.map({ $0.value })
-        var idx = 1
-        for element in networks {
-            if idx > list.count {
-                break;
-            }
-            idx += 1
-            var network = element as? network_info_t
-            let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, encrypted: network!.is_encrypted, rssi: Int(network!.RSSI))
-            networkInfo.auth.security = network?.auth.security ?? 0
-            networkInfo.auth.option = network?.auth.option ?? 0
-            networkInfoList.append(networkInfo)
-        }
-        return networkInfoList.sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected }
-    }
 }
 
 class NetworkAuth {
@@ -74,6 +52,7 @@ class NetworkAuth {
 }
 
 class NetworkManager {
+    static var networkInfoList = [NetworkInfo]()
 
     static let supportedSecurityMode = [
         NetworkInfo.AuthSecurity.NONE.rawValue,
@@ -136,6 +115,29 @@ class NetworkManager {
             popWindow.level = .floating
             popWindow.makeKeyAndOrderFront(self)
             popWindow.center()
+        }
+    }
+
+    class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> ()) {
+        DispatchQueue.global(qos: .background).async {
+            var list = network_info_list_t()
+            get_network_list(&list)
+            networkInfoList.removeAll()
+            let networks = Mirror(reflecting: list.networks).children.map({ $0.value })
+            var idx = 1
+            for element in networks {
+                if idx > list.count {
+                    break;
+                }
+                idx += 1
+                var network = element as? network_info_t
+                let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, encrypted: network!.is_encrypted, rssi: Int(network!.RSSI))
+                networkInfo.auth.security = network?.auth.security ?? 0
+                networkInfo.auth.option = network?.auth.option ?? 0
+                networkInfoList.append(networkInfo)
+            }
+            networkInfoList = networkInfoList.sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected }
+            callback(networkInfoList)
         }
     }
 }

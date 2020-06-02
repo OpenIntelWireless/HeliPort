@@ -152,8 +152,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 self.statusItem?.title = statusText
             }
         }
-        DispatchQueue.global(qos: .background).async {
-            let networkList = NetworkInfo.scanNetwork().reversed()
+
+        NetworkManager.scanNetwork(callback: { networkList in
+            let networkList = networkList.reversed()
             DispatchQueue.main.async {
                 if (self.networkCount > 0) {
                     for _ in 1...self.networkCount {
@@ -170,7 +171,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                     self.networkCount = 1
                 }
             }
-        }
+        })
     }
     
     required init(coder: NSCoder) {
