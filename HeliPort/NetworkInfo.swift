@@ -23,6 +23,19 @@ class NetworkInfo {
     var isEncrypted: Bool = false
     var rssi: Int = 0
 
+    var auth = NetworkAuth()
+
+    enum AuthSecurity: UInt8 {
+        case NONE
+        case WEP
+        case MIXED_WPA_WP2_PERSONAL
+        case WPA2_PERSONAL
+        case DYNAMIC_WEP
+        case MIXED_WPA_WP2_ENTERPRISE
+        case WPA2_ENTERPRISE
+        case WPA3_ENTERPRISE
+    }
+
     init (ssid: String, connected: Bool, encrypted: Bool, rssi: Int) {
         self.ssid = ssid
         self.isConnected = connected
@@ -30,7 +43,7 @@ class NetworkInfo {
         self.rssi = rssi
     }
 
-    func connect(auth: NetworkAuth) -> Bool {
+    func connect() -> Bool {
         StatusBarIcon.connecting()
         var networkInfoStruct = network_info_t()
         strncpy(&networkInfoStruct.SSID.0, ssid, Int(MAX_SSID_LENGTH))
@@ -62,6 +75,8 @@ class NetworkInfo {
             idx += 1
             var network = element as? network_info_t
             let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, encrypted: network!.is_encrypted, rssi: Int(network!.RSSI))
+            networkInfo.auth.security = network?.auth.security ?? 0
+            networkInfo.auth.option = network?.auth.option ?? 0
             networkInfoList.append(networkInfo)
         }
         return networkInfoList.sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected }

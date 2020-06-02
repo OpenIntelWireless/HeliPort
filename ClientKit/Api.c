@@ -61,21 +61,30 @@ bool get_network_list(network_info_list_t *list) {
 
 #ifdef API_TEST
     // test
-    list->count = 3;
-    strcpy(list->networks[0].SSID, "test0");
+    list->count = 4;
+    strcpy(list->networks[0].SSID, "test0_WPA2");
     list->networks[0].is_connected = true;
     list->networks[0].is_encrypted = true;
     list->networks[0].RSSI = -40;
+    list->networks[0].auth.security = NETWORK_AUTH_SECURITY_WPA2_PERSONAL;
 
-    strcpy(list->networks[1].SSID, "test2😂");
+    strcpy(list->networks[1].SSID, "test2😂_NONE");
     list->networks[1].is_connected = false;
     list->networks[1].is_encrypted = true;
     list->networks[1].RSSI = -30;
+    list->networks[1].auth.security = NETWORK_AUTH_SECURITY_NONE;
 
-    strcpy(list->networks[2].SSID, "test3中文");
+    strcpy(list->networks[2].SSID, "test3中文_WEP");
     list->networks[2].is_connected = false;
     list->networks[2].is_encrypted = true;
     list->networks[2].RSSI = -20;
+    list->networks[2].auth.security = NETWORK_AUTH_SECURITY_WEP;
+
+    strcpy(list->networks[3].SSID, "test4_WPA2");
+    list->networks[3].is_connected = false;
+    list->networks[3].is_encrypted = true;
+    list->networks[3].RSSI = -20;
+    list->networks[3].auth.security = NETWORK_AUTH_SECURITY_WPA2_PERSONAL;
     sleep(2);
     return true;
 #endif
@@ -87,7 +96,7 @@ bool get_network_list(network_info_list_t *list) {
 
 bool connect_network(network_info_t *info) {
 #ifdef API_TEST
-    printf("connect %s %s\n", info->SSID, info->auth.password);
+    printf("connect %s %d %s\n", info->SSID, info->auth.security, info->auth.password);
     sleep(4);
     return true;
 #endif
