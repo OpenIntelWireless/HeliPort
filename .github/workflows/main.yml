@@ -18,6 +18,7 @@ jobs:
 
     - name: Debug Build
       run: |
+        brew install swiftlint
         xcodebuild -scheme HeliPort -configuration Debug -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
     # Uncomment when ClientKit DSYM generation gets fixed
