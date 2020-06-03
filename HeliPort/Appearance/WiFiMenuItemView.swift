@@ -28,8 +28,8 @@ class WifiMenuItemView: NSView {
     var isMouseOver: Bool = false
 
     var networkInfo: NetworkInfo
-    
-    init(frame: NSRect, networkInfo: NetworkInfo) {
+
+    init(networkInfo: NetworkInfo) {
         self.networkInfo = networkInfo
         menuItemView = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 285, height: 20))
         statusImage = NSImageView(frame: NSRect(x: 3, y: 0, width: 18, height: 18))
@@ -41,7 +41,7 @@ class WifiMenuItemView: NSView {
         highlightColor = NSColor.white
         normalColor = NSColor.black
 
-        super.init(frame: frame)
+        super.init(frame: NSRect(x: 0, y: 0, width: 285, height: 20))
 
         if isDarkMode(view: menuItemView) {
             highlightColor = NSColor.white
@@ -67,7 +67,7 @@ class WifiMenuItemView: NSView {
         menuItemView.addSubview(ssidLabel)
 
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
-        lockImage.isHidden = !networkInfo.isEncrypted
+        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
         menuItemView.addSubview(lockImage)
 
         signalImage.image = NSImage.init(named: "AirPortInMenu4")
@@ -79,6 +79,21 @@ class WifiMenuItemView: NSView {
         autoresizesSubviews = true
         autoresizingMask = [.width, .height]
         menuItemView.autoresizingMask = [.width, .height]
+    }
+
+    func updateNetworkInfo(networkInfo: NetworkInfo) {
+        self.networkInfo = networkInfo
+        statusImage.isHidden = !networkInfo.isConnected
+        ssidLabel.string = networkInfo.ssid
+        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
+    }
+
+    func show() {
+        setFrameSize(NSSize(width: 285, height: 20))
+    }
+
+    func hide() {
+        setFrameSize(NSSize(width: 285, height: 0))
     }
     
     override func mouseEntered(with event: NSEvent) {
@@ -100,7 +115,7 @@ class WifiMenuItemView: NSView {
         signalImage.contentTintColor = normalColor
         isMouseOver = false
     }
-    
+
     override func mouseUp(with event: NSEvent) {
         menuItemView.material = .popover
         menuItemView.isEmphasized = false

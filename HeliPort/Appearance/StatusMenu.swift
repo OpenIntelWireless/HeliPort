@@ -22,9 +22,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     var headerLength: Int = 0
     var timer: Timer?
     var showAllOptions: Bool = false
-    var networkCount:Int = 0
 
     var statusItem: NSMenuItem?
+    var networkItemList = [NSMenuItem]()
+    let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
+    var networkItemListSeparator: NSMenuItem?
     
     override init(title: String) {
         super.init(title: title)
@@ -50,10 +52,14 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
         headerLength = items.count
 
-        addItem(withTitle: NSLocalizedString("No Network Avaliable", comment: ""), action: nil, keyEquivalent: "").isEnabled = false
-        networkCount = 1
+        for _ in 1...maxNetworkListLength {
+            networkItemList.append(addNetworkItemPlaceholder())
+        }
 
-        addItem(NSMenuItem.separator())
+        networkItemListSeparator = NSMenuItem.separator()
+        networkItemListSeparator?.isHidden = true
+        addItem(networkItemListSeparator!)
+
         addItem(withTitle: NSLocalizedString("Join Other Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Create Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
@@ -133,12 +139,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    func addNetworkItem(networkInfo: NetworkInfo) {
-        insertItem(withTitle: "Foo",
-                   action: #selector(clickMenuItem(_:)),
-                   keyEquivalent: "",
-                   at: headerLength).view =
-            WifiMenuItemView(frame: NSRect(x: 0, y: 0, width: 285, height: 20), networkInfo: networkInfo)
+    func addNetworkItemPlaceholder() -> NSMenuItem {
+        let item = addItem(withTitle: "placeholder", action: #selector(clickMenuItem(_:)), keyEquivalent: "")
+        item.view = WifiMenuItemView(networkInfo: NetworkInfo(ssid: "placeholder", connected: false, encrypted: false, rssi: 0))
+        (item.view as! WifiMenuItemView).hide()
+        return item
     }
 
     @objc func updateNetworkList() {
@@ -154,26 +159,26 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
 
         NetworkManager.scanNetwork(callback: { networkList in
-            let networkList = networkList.reversed()
             DispatchQueue.main.async {
-                if (self.networkCount > 0) {
-                    for _ in 1...self.networkCount {
-                        self.removeItem(at: self.headerLength)
-                    }
-                }
                 if networkList.count > 0 {
-                    for networkInfo in networkList {
-                        self.addNetworkItem(networkInfo: networkInfo)
+                    var networkList = networkList
+                    for i in 0 ... self.networkItemList.count - 1 {
+                        let view = self.networkItemList[i].view as! WifiMenuItemView
+                        if networkList.count > 0 {
+                            view.updateNetworkInfo(networkInfo: networkList.removeFirst())
+                            view.show()
+                        } else {
+                            view.hide()
+                        }
                     }
-                    self.networkCount = networkList.count
+                    self.networkItemListSeparator?.isHidden = false
                 } else {
-                    self.insertItem(withTitle: NSLocalizedString("No Network Avaliable", comment: ""), action: nil, keyEquivalent: "", at: self.headerLength).isEnabled = false
-                    self.networkCount = 1
+                    self.networkItemListSeparator?.isHidden = true
                 }
             }
         })
     }
-    
+
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
