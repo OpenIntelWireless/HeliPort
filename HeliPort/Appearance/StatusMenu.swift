@@ -27,7 +27,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     var networkItemList = [NSMenuItem]()
     let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
     var networkItemListSeparator: NSMenuItem?
-    
+
     override init(title: String) {
         super.init(title: title)
         minimumWidth = CGFloat(285.0)
@@ -65,9 +65,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
     }
-    
+
     func menuWillOpen(_ menu: NSMenu) {
-        
+
         showAllOptions = (NSApp.currentEvent?.modifierFlags.contains(.option))!
 
         let queue = DispatchQueue.global(qos: .default)
@@ -78,7 +78,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.run()
         }
 
-        if (showAllOptions) {
+        if showAllOptions {
             buildOptionMenu()
         } else {
             buildNormalMenu()
@@ -88,22 +88,22 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     func menuDidClose(_ menu: NSMenu) {
         timer?.invalidate()
     }
-    
+
     func buildNormalMenu() {
         for idx in 0...5 {
             items[idx].isHidden = true
         }
         items[items.count - 1].isHidden = true
     }
-    
+
     func buildOptionMenu() {
         for idx in 0...5 {
             items[idx].isHidden = false
         }
         items[items.count - 1].isHidden = false
     }
-    
-    @objc func clickMenuItem(_ sender:NSMenuItem){
+
+    @objc func clickMenuItem(_ sender: NSMenuItem) {
         print(sender.title)
         switch sender.title {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
@@ -142,7 +142,10 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     func addNetworkItemPlaceholder() -> NSMenuItem {
         let item = addItem(withTitle: "placeholder", action: #selector(clickMenuItem(_:)), keyEquivalent: "")
         item.view = WifiMenuItemView(networkInfo: NetworkInfo(ssid: "placeholder", connected: false, encrypted: false, rssi: 0))
-        (item.view as! WifiMenuItemView).hide()
+        guard let view = item.view as? WifiMenuItemView else {
+            return item
+        }
+        view.hide()
         return item
     }
 
@@ -162,8 +165,10 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             DispatchQueue.main.async {
                 if networkList.count > 0 {
                     var networkList = networkList
-                    for i in 0 ... self.networkItemList.count - 1 {
-                        let view = self.networkItemList[i].view as! WifiMenuItemView
+                    for index in 0 ... self.networkItemList.count - 1 {
+                        guard let view = self.networkItemList[index].view as? WifiMenuItemView else {
+                            continue
+                        }
                         if networkList.count > 0 {
                             view.updateNetworkInfo(networkInfo: networkList.removeFirst())
                             view.show()

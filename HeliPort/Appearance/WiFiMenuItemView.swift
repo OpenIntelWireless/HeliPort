@@ -16,7 +16,6 @@
 import Foundation
 import Cocoa
 
-
 class WifiMenuItemView: NSView {
     var menuItemView: NSVisualEffectView
     var statusImage: NSImageView
@@ -67,7 +66,7 @@ class WifiMenuItemView: NSView {
         menuItemView.addSubview(ssidLabel)
 
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
-        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
+        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.none.rawValue
         menuItemView.addSubview(lockImage)
 
         signalImage.image = NSImage.init(named: "AirPortInMenu4")
@@ -85,7 +84,7 @@ class WifiMenuItemView: NSView {
         self.networkInfo = networkInfo
         statusImage.isHidden = !networkInfo.isConnected
         ssidLabel.string = networkInfo.ssid
-        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
+        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.none.rawValue
     }
 
     func show() {
@@ -95,7 +94,7 @@ class WifiMenuItemView: NSView {
     func hide() {
         setFrameSize(NSSize(width: 285, height: 0))
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         menuItemView.material = .selection
         menuItemView.isEmphasized = true
@@ -105,7 +104,7 @@ class WifiMenuItemView: NSView {
         signalImage.contentTintColor = highlightColor
         isMouseOver = true
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         menuItemView.material = .popover
         menuItemView.isEmphasized = false
@@ -127,7 +126,7 @@ class WifiMenuItemView: NSView {
         statusBar.menu?.cancelTracking()
         NetworkManager.connect(networkInfo: networkInfo)
     }
-    
+
     override func viewWillMove(toWindow newWindow: NSWindow?) {
         //Fix mouseUp event after losing focus
         //https://stackoverflow.com/questions/15075033/weird-issue-with-nsmenuitem-custom-view-and-mouseup
@@ -136,7 +135,6 @@ class WifiMenuItemView: NSView {
         updateTrackingAreas()
     }
 
-    
     override func draw(_ rect: NSRect) {
         if isDarkMode(view: menuItemView) {
             highlightColor = NSColor.white
@@ -153,14 +151,14 @@ class WifiMenuItemView: NSView {
         }
         //menuItemView?.isHidden = !(enclosingMenuItem?.isHighlighted ?? false)
     }
-    
+
     func isDarkMode(view: NSView) -> Bool {
         if #available(OSX 10.14, *) {
             return view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
         }
         return false
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

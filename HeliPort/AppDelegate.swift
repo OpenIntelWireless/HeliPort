@@ -15,21 +15,21 @@
 
 import Cocoa
 
-var statusBar:NSStatusItem!
-let wifiPop:NSAlert = NSAlert()
+var statusBar: NSStatusItem!
+let wifiPop: NSAlert = NSAlert()
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
-    var password:String = ""
-    
+    var password: String = ""
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
 
-        if (!connect_driver()) {
+        if !connect_driver() {
             //exit(0);
         }
-        
+
         statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusBar.button?.image = NSImage.init(named: "AirPortInMenu0")
         statusBar.button?.image?.isTemplate = true
@@ -38,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-        disconnect_driver();
+        disconnect_driver()
     }
-    
+
 }

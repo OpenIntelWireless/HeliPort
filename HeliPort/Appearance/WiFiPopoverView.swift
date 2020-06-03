@@ -16,7 +16,7 @@
 import Foundation
 import Cocoa
 
-class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
+class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
     var popWindow: NSWindow
     var view: NSView
     var icon: NSImageView
@@ -26,14 +26,14 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
     var passwdInputBoxCell: NSTextFieldCell
     var passwdInputBox1: NSSecureTextField
     var isShowPasswd: NSButton
-    var isSave:NSButton
+    var isSave: NSButton
     var joinButton: NSButton
     var cancelButton: NSButton
 
     var networkInfo: NetworkInfo
-    var getAuthInfoCallback: ((_ auth: NetworkAuth) -> ())
+    var getAuthInfoCallback: ((_ auth: NetworkAuth) -> Void)
 
-    init(popWindow: NSWindow, networkInfo: NetworkInfo, getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> ()) {
+    init(popWindow: NSWindow, networkInfo: NetworkInfo, getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> Void) {
         self.popWindow = popWindow
         self.networkInfo = networkInfo
         self.getAuthInfoCallback = getAuthInfoCallback
@@ -119,7 +119,7 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
 
         addSubview(view)
     }
-    
+
     @objc func showPasswd(_ sender: Any?) {
         if isShowPasswd.state.rawValue == 0 {
             passwdInputBox1.stringValue = (passwdInputBox.stringValue)
@@ -138,21 +138,21 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
             passwdInputBox.currentEditor()?.selectedRange = NSRange(location: "\((passwdInputBox))".count, length: 0)
         }
     }
-    
+
     @objc func saveWiFi(_ sender: Any?) {
 
     }
-    
+
     @objc func cancel(_ sender: Any?) {
         popWindow.close()
     }
 
     @objc func connect(_ sender: Any?) {
-        networkInfo.auth.password = passwdInputBox.stringValue;
+        networkInfo.auth.password = passwdInputBox.stringValue
         getAuthInfoCallback(networkInfo.auth)
         popWindow.close()
     }
-    
+
     func controlTextDidChange(_ obj: Notification) {
         if passwdInputBox.isHidden == false {
             passwdInputBox1.stringValue = (passwdInputBox.stringValue)
@@ -173,7 +173,7 @@ class WiFiPopoverSubview: NSView,NSWindowDelegate, NSTextFieldDelegate{
             passwdInputBox.stringValue = String((passwdInputBox.stringValue[..<index]))
         }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -18,7 +18,7 @@ import Cocoa
 
 class StatusBarIcon: NSObject {
     static var timer: Timer?
-    static var count:Int = 8
+    static var count: Int = 8
     static func on() {
         timer?.invalidate()
         connecting()
@@ -46,36 +46,31 @@ class StatusBarIcon: NSObject {
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
             self.timer?.invalidate()
-            self.timer = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(self.tick), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(timeInterval: 0.3, target: self,
+                                              selector: #selector(self.tick), userInfo: nil, repeats: true)
             let currentRunLoop = RunLoop.current
             currentRunLoop.add(self.timer!, forMode: .common)
             currentRunLoop.run()
         }
     }
-    
+
     @objc class func tick() {
         DispatchQueue.main.async {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
             case 7:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning1")
-                break
             case 6:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
-                break
             case 5:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning3")
-                break
             case 4:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning4")
-                break
             case 3:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning3")
-                break
             case 2:
                 statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
                 StatusBarIcon.count = 8
-                break
             default:
                 return
             }

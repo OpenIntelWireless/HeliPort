@@ -16,7 +16,7 @@
 import Foundation
 import Cocoa
 
-class JoinPopWindow:NSWindow, NSTextFieldDelegate {
+class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     var view: NSView?
     var buttonView: NSView?
     var icon: NSImageView?
@@ -36,7 +36,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
     var isSave: NSButton?
     var joinButton: NSButton?
     var cancelButton: NSButton?
-    
+
     // swiftlint:disable function_body_length
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
@@ -59,24 +59,24 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 255, height: 18))
         joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
         cancelButton = NSButton(frame: NSRect(x: 269, y: 18, width: 85, height: 22))
-        
+
         icon?.image = NSImage.init(named: "WiFi")
         view?.addSubview(icon!)
-        
+
         titleLabel?.stringValue = NSLocalizedString("Find and join a Wi-Fi network.", comment: "")
         titleLabel?.drawsBackground = false
         titleLabel?.isBordered = false
         titleLabel?.isSelectable = false
         titleLabel?.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
         view?.addSubview(titleLabel!)
-        
+
         subTitleLabel?.stringValue = NSLocalizedString("Enter the name and security type of the network you want to join.", comment: "")
         subTitleLabel?.drawsBackground = false
         subTitleLabel?.isBordered = false
         subTitleLabel?.isSelectable = false
         subTitleLabel?.font = NSFont.systemFont(ofSize: 11)
         view?.addSubview(subTitleLabel!)
-        
+
         ssidLabel?.stringValue = NSLocalizedString("Network Name:", comment: "")
         ssidLabel?.drawsBackground = false
         ssidLabel?.alignment = .right
@@ -84,7 +84,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         ssidLabel?.isSelectable = false
         ssidLabel?.font = NSFont.systemFont(ofSize: 13)
         view?.addSubview(ssidLabel!)
-        
+
         ssidBox?.stringValue = ""
         ssidBox?.drawsBackground = true
         ssidBox?.isEditable = true
@@ -92,7 +92,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         ssidBox?.font = .systemFont(ofSize: 13)
         ssidBox?.delegate = self
         view?.addSubview(ssidBox!)
-        
+
         securityLabel?.stringValue = NSLocalizedString("Security:", comment: "")
         securityLabel?.drawsBackground = false
         securityLabel?.alignment = .right
@@ -100,7 +100,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         securityLabel?.isSelectable = false
         securityLabel?.font = .systemFont(ofSize: 13)
         view?.addSubview(securityLabel!)
-        
+
         securityPop?.addItem(withTitle: NSLocalizedString("None", comment: ""))
         securityPop?.menu?.addItem(.separator())
         //securityPop?.addItem(withTitle: NSLocalizedString("WEP", comment: ""))
@@ -117,7 +117,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         securityPop?.target = self
         securityPop?.action = #selector(security(_:))
         view?.addSubview(securityPop!)
-        
+
         usernameLabel?.stringValue = NSLocalizedString("Username:", comment: "")
         usernameLabel?.drawsBackground = false
         usernameLabel?.alignment = .right
@@ -126,7 +126,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         usernameLabel?.font = .systemFont(ofSize: 13)
         usernameLabel?.isHidden = true
         buttonView?.addSubview(usernameLabel!)
-        
+
         usernameBox?.stringValue = ""
         usernameBox?.drawsBackground = true
         usernameBox?.isBordered = true
@@ -136,7 +136,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         usernameBox?.delegate = self
         usernameBox?.isHidden = true
         buttonView?.addSubview(usernameBox!)
-        
+
         passwdLabel?.string = NSLocalizedString("Password:", comment: "")
         passwdLabel?.drawsBackground = false
         passwdLabel?.alignment = .right
@@ -145,7 +145,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         passwdLabel?.font = NSFont.systemFont(ofSize: 13)
         passwdLabel?.isHidden = true
         buttonView?.addSubview(passwdLabel!)
-        
+
         JoinPopWindow.passwdInputBox?.cell = passwdInputBoxCell
         passwdInputBoxCell?.allowedInputSourceLocales = [NSAllRomanInputSourcesLocaleIdentifier]
         passwdInputBoxCell?.isBordered = true
@@ -157,7 +157,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         JoinPopWindow.passwdInputBox?.delegate = self
         JoinPopWindow.passwdInputBox?.isHidden = true
         buttonView?.addSubview(JoinPopWindow.passwdInputBox!)
-        
+
         JoinPopWindow.passwdInputBox1?.stringValue = ""
         JoinPopWindow.passwdInputBox1?.drawsBackground = true
         JoinPopWindow.passwdInputBox1?.isEditable = true
@@ -166,36 +166,36 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         JoinPopWindow.passwdInputBox1?.delegate = self
         JoinPopWindow.passwdInputBox1?.isHidden = true
         buttonView?.addSubview(JoinPopWindow.passwdInputBox1!)
-        
+
         isShowPasswd?.setButtonType(.switch)
         isShowPasswd?.title = NSLocalizedString("Show password", comment: "")
         isShowPasswd?.target = self
         isShowPasswd?.action = #selector(showPasswd(_:))
         isShowPasswd?.isHidden = true
         buttonView?.addSubview(isShowPasswd!)
-        
+
         isSave?.setButtonType(.switch)
         isSave?.title = NSLocalizedString("Remember this network", comment: "")
         isSave?.target = self
         isSave?.action = #selector(saveWiFi(_:))
         buttonView?.addSubview(isSave!)
-        
+
         joinButton?.bezelStyle = NSButton.BezelStyle.rounded
         joinButton?.title = NSLocalizedString("Join", comment: "")
         joinButton?.target = self
         joinButton?.isEnabled = false
         //joinButton?.action = #selector()
         buttonView?.addSubview(joinButton!)
-        
+
         cancelButton?.bezelStyle = .rounded
         cancelButton?.title = NSLocalizedString("Cancel", comment: "")
         cancelButton?.target = self
         cancelButton?.action = #selector(cancel(_:))
         buttonView?.addSubview(cancelButton!)
-        
+
         view?.autoresizingMask = .minYMargin
         buttonView?.autoresizingMask = .maxYMargin
-        
+
         preservesContentDuringLiveResize = true
         contentView?.addSubview(view!)
         contentView?.addSubview(buttonView!)
@@ -204,7 +204,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
         center()
     }
     // swiftlint:enable function_body_length
-    
+
     @objc func security(_ sender: Any?) {
         switch (securityPop?.indexOfSelectedItem)! {
         case 0: // Encryption: None
@@ -259,7 +259,7 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
             return
         }
     }
-    
+
     @objc func showPasswd(_ sender: Any?) {
         if isShowPasswd?.state.rawValue == 0 {
             JoinPopWindow.passwdInputBox1?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
@@ -278,19 +278,19 @@ class JoinPopWindow:NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdInputBox?.currentEditor()?.selectedRange = NSRange(location: "\((JoinPopWindow.passwdInputBox)!)".count, length: 0)
         }
     }
-    
+
     @objc func saveWiFi(_ sender: Any?) {
         if isSave?.state.rawValue == 0 {
         }
         if isSave?.state.rawValue == 1 {
         }
-        
+
     }
-    
+
     @objc func cancel(_ sender: Any?) {
         close()
     }
-    
+
     func controlTextDidChange(_ obj: Notification) {
         if JoinPopWindow.passwdInputBox?.isHidden == false {
             JoinPopWindow.passwdInputBox1?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!

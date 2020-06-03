@@ -25,14 +25,14 @@ class NetworkInfo {
     var auth = NetworkAuth()
 
     enum AuthSecurity: UInt8 {
-        case NONE
+        case none
         case WEP
-        case MIXED_WPA_WP2_PERSONAL
-        case WPA2_PERSONAL
-        case DYNAMIC_WEP
-        case MIXED_WPA_WP2_ENTERPRISE
-        case WPA2_ENTERPRISE
-        case WPA3_ENTERPRISE
+        case mixedWPAWP2Personal
+        case WPA2Personal
+        case dynamicWEP
+        case mixedWPAWP2Enterprise
+        case WPA2Enterprise
+        case WPA3Enterprise
     }
 
     init (ssid: String, connected: Bool, encrypted: Bool, rssi: Int) {
@@ -55,18 +55,18 @@ class NetworkManager {
     static var networkInfoList = [NetworkInfo]()
 
     static let supportedSecurityMode = [
-        NetworkInfo.AuthSecurity.NONE.rawValue,
-        NetworkInfo.AuthSecurity.MIXED_WPA_WP2_PERSONAL.rawValue,
-        NetworkInfo.AuthSecurity.WPA2_PERSONAL.rawValue,
+        NetworkInfo.AuthSecurity.none.rawValue,
+        NetworkInfo.AuthSecurity.mixedWPAWP2Personal.rawValue,
+        NetworkInfo.AuthSecurity.WPA2Personal.rawValue
     ]
 
     class func connect(networkInfo: NetworkInfo) {
-        if (networkInfo.isConnected) {
+        if networkInfo.isConnected {
             return
         }
-        if (!supportedSecurityMode.contains(networkInfo.auth.security)) {
+        if !supportedSecurityMode.contains(networkInfo.auth.security) {
             let alert = NSAlert()
-            let labelName = String(describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ?? NetworkInfo.AuthSecurity.NONE)
+            let labelName = String(describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ?? NetworkInfo.AuthSecurity.none)
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + labelName
             alert.alertStyle = NSAlert.Style.critical
@@ -76,7 +76,7 @@ class NetworkManager {
             return
         }
 
-        let getAuthInfoCallback: (_ auth: NetworkAuth) -> () = { auth in
+        let getAuthInfoCallback: (_ auth: NetworkAuth) -> Void = { auth in
             var networkInfoStruct = network_info_t()
             strncpy(&networkInfoStruct.SSID.0, networkInfo.ssid, Int(MAX_SSID_LENGTH))
             networkInfoStruct.is_connected = false
@@ -104,7 +104,7 @@ class NetworkManager {
             }
         }
 
-        if (networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue) {
+        if networkInfo.auth.security == NetworkInfo.AuthSecurity.none.rawValue {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth)
         } else {
@@ -118,7 +118,7 @@ class NetworkManager {
         }
     }
 
-    class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> ()) {
+    class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {
         DispatchQueue.global(qos: .background).async {
             var list = network_info_list_t()
             get_network_list(&list)
@@ -127,7 +127,7 @@ class NetworkManager {
             var idx = 1
             for element in networks {
                 if idx > list.count {
-                    break;
+                    break
                 }
                 idx += 1
                 var network = element as? network_info_t

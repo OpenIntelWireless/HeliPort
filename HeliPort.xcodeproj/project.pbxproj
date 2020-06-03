@@ -236,6 +236,7 @@
 				BCFA32E32424D2BE00E23603 /* Sources */,
 				BCFA32E42424D2BE00E23603 /* Frameworks */,
 				BCFA32E52424D2BE00E23603 /* Resources */,
+				75E3976A2487FAF600E84DB8 /* Lint */,
 			);
 			buildRules = (
 			);
@@ -243,7 +244,7 @@
 				F86A8976243CD44B00CBABC2 /* PBXTargetDependency */,
 			);
 			name = HeliPort;
-			productName = "HeliPort";
+			productName = HeliPort;
 			productReference = BCFA32E72424D2BE00E23603 /* HeliPort.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -345,6 +346,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		75E3976A2487FAF600E84DB8 /* Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Lint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "swiftlint\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BCFA32E32424D2BE00E23603 /* Sources */ = {
