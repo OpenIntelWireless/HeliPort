@@ -16,10 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Swiftlint
+    - name: Prepare Env
       run: |
         brew install swiftlint
-        swiftlint
 
     - name: Debug Build
       run: |
