@@ -13,7 +13,7 @@
  * https://opensource.org/licenses/BSD-3-Clause
  */
 
-//#define API_TEST
+#define API_TEST
 
 #include "Api.h"
 
@@ -53,7 +53,7 @@ bool get_platform_info(platform_info_t *info) {
 
     size_t output_size;
     // sync call
-    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_CONFIGURATION, NULL, 0, info, &output_size) == KERN_SUCCESS;
+    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_DRIVER_INFO, NULL, 0, info, &output_size) == KERN_SUCCESS;
 }
 
 bool get_network_list(network_info_list_t *list) {
@@ -91,7 +91,7 @@ bool get_network_list(network_info_list_t *list) {
 
     size_t output_size;
     // sync call
-    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_BSSID_LIST_SCAN, NULL, 0, list, &output_size) == KERN_SUCCESS;
+    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_SCAN, NULL, 0, list, &output_size) == KERN_SUCCESS;
 }
 
 bool connect_network(network_info_t *info) {
@@ -103,7 +103,7 @@ bool connect_network(network_info_t *info) {
 
     size_t output_size;
     // sync call
-    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_ASSOCIATION_INFORMATION, info, 1, info, &output_size) == KERN_SUCCESS;
+    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_ASSOCIATE, info, 1, info, &output_size) == KERN_SUCCESS;
 }
 
 void disconnect_driver(void) {
@@ -116,6 +116,12 @@ bool ioctl_set(int ctl, void *data) {
 }
 
 bool ioctl_get(int ctl, void *data) {
+    
+    return true;
+}
+
+bool open_adapter(void *con)
+{
     
     return true;
 }

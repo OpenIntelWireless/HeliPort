@@ -22,6 +22,12 @@
 #include "TestService.hpp"
 #include "Common.h"
 
+typedef IOReturn (*IOControlMethodAction)(OSObject * target, void *data, bool isSet);
+struct IOControlMethod {
+    IOControlMethodAction function;
+    
+};
+
 class ItlNetworkUserClient : public IOUserClient {
     
     OSDeclareDefaultStructors( ItlNetworkUserClient );
@@ -37,9 +43,19 @@ public:
     virtual IOReturn externalMethod( uint32_t selector, IOExternalMethodArguments * arguments, IOExternalMethodDispatch * dispatch = 0, OSObject * target = 0, void * reference = 0 ) override;
     
 private:
-    static IOReturn sTest(OSObject* target, void* reference, IOExternalMethodArguments* arguments);
-    static IOReturn sBSSID(OSObject* target, void* reference, IOExternalMethodArguments* arguments);
-    static const IOExternalMethodDispatch sMethods[IOCTL_ID_MAX];
+    static IOReturn sDRIVER_INFO(OSObject* target, void* data, bool isSet);
+    static IOReturn sSTA_INFO(OSObject* target, void* data, bool isSet);
+    static IOReturn sPOWER(OSObject* target, void* data, bool isSet);
+    static IOReturn sSTATE(OSObject* target, void* data, bool isSet);
+    static IOReturn sNW_ID(OSObject* target, void* data, bool isSet);
+    static IOReturn sWPA_KEY(OSObject* target, void* data, bool isSet);
+    static IOReturn sASSOCIATE(OSObject* target, void* data, bool isSet);
+    static IOReturn sDISASSOCIATE(OSObject* target, void* data, bool isSet);
+    static IOReturn sJOIN(OSObject* target, void* data, bool isSet);
+    static IOReturn sSCAN(OSObject* target, void* data, bool isSet);
+    static IOReturn sSCAN_RESULT(OSObject* target, void* data, bool isSet);
+    static IOReturn sTX_POWER_LEVEL(OSObject* target, void* data, bool isSet);
+    static const IOControlMethodAction sMethods[IOCTL_ID_MAX];
     
 private:
     task_t fTask;

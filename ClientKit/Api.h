@@ -17,6 +17,7 @@
 #define Api_h
 
 #include <IOKit/IOKitLib.h>
+#include <IOKit/IOTypes.h>
 #include "Common.h"
 #include <inttypes.h>
 #include <stdlib.h>
@@ -63,11 +64,11 @@ typedef struct {
     network_info_t networks[MAX_NETWORK_LIST_LENGTH];
 } network_info_list_t;
 
-#define IOCTL_MASK 0x800000
-
 bool connect_driver(void);
 
 void disconnect_driver(void);
+
+bool open_adapter(void *con);
 
 bool ioctl_get(int ctl, void *data);
 

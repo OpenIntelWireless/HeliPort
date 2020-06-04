@@ -21,8 +21,10 @@
 #include <sys/ioctl.h>
 #include <sys/kern_event.h>
 #include <sys/kern_control.h>
-
+ 
+extern "C" {
 #include "Api.h"
+}
 
 int main(int argc, const char * argv[]) {
     CFDictionaryRef     matchingDict = NULL;
@@ -47,9 +49,14 @@ int main(int argc, const char * argv[]) {
                            &driverConnection);
         if (kr == KERN_SUCCESS)
         {
-            kr = IOConnectCallMethod(driverConnection, IOCTL_80211_TEST, NULL, 0, NULL, 0, NULL, NULL, NULL, NULL);
+            ioctl_driver_info drv_info;
+            size_t cnt = sizeof(ioctl_driver_info);
+            kr = IOConnectCallStructMethod(driverConnection, IOCTL_80211_DRIVER_INFO, NULL, 0, &drv_info, &cnt);
+            if (kr == kIOReturnSuccess) {
+                printf("aaa\n");
+            }
             printf("IOCTL_80211_TEST - %08x\n", kr);
-            
+            printf("ioctl_driver_info %s %s\n", drv_info.fw_version, drv_info.bsd_name);
             IOServiceClose(driverConnection);
         }
 
