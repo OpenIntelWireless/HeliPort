@@ -37,7 +37,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     var joinButton: NSButton?
     var cancelButton: NSButton?
 
-    // swiftlint:disable function_body_length
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
         NSApplication.shared.activate(ignoringOtherApps: true)
@@ -204,7 +203,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         level = .floating
         center()
     }
-    // swiftlint:enable function_body_length
 
     @objc func security(_ sender: Any?) {
         switch (securityPop?.indexOfSelectedItem)! {
