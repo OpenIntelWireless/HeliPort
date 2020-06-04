@@ -52,6 +52,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
 
         super.init(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
 
+        NSApplication.shared.activate(ignoringOtherApps: true)
         icon.image = NSImage.init(named: "WiFi")
         view.addSubview(icon)
 

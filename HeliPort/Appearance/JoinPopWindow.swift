@@ -40,6 +40,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     // swiftlint:disable function_body_length
     override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
         super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
+        NSApplication.shared.activate(ignoringOtherApps: true)
         view = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
         buttonView = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 175))
         icon = NSImageView(frame: NSRect(x: 25, y: 167, width: 64, height: 64))
