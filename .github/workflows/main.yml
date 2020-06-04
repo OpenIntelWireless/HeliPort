@@ -16,20 +16,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Debug Build
+    - name: Swiftlint
       run: |
         brew install swiftlint
+        swiftlint
+
+    - name: Debug Build
+      run: |
         xcodebuild -scheme HeliPort -configuration Debug -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
     # Uncomment when ClientKit DSYM generation gets fixed
     #- name: Release Build
     #  run: |
     #    xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
-
-    - name: Swiftlint
-      run: |
-        brew install swiftlint
-        swiftlint
 
     - name: Prepare GH Release
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
