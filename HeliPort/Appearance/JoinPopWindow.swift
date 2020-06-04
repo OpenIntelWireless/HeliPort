@@ -31,7 +31,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     var passwdLabel: NSTextView?
     static var passwdInputBox: NSTextField?
     var passwdInputBoxCell: NSTextFieldCell?
-    static var passwdInputBox1: NSSecureTextField?
+    static var passwdSecureBox: NSSecureTextField?
     var isShowPasswd: NSButton?
     var isSave: NSButton?
     var joinButton: NSButton?
@@ -54,7 +54,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         passwdLabel = NSTextView(frame: NSRect(x: 93, y: 121, width: 80, height: 19))
         JoinPopWindow.passwdInputBox = NSTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
         passwdInputBoxCell = NSTextFieldCell.init()
-        JoinPopWindow.passwdInputBox1 = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
+        JoinPopWindow.passwdSecureBox = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
         isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 255, height: 18))
         isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 255, height: 18))
         joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
@@ -158,14 +158,14 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         JoinPopWindow.passwdInputBox?.isHidden = true
         buttonView?.addSubview(JoinPopWindow.passwdInputBox!)
 
-        JoinPopWindow.passwdInputBox1?.stringValue = ""
-        JoinPopWindow.passwdInputBox1?.drawsBackground = true
-        JoinPopWindow.passwdInputBox1?.isEditable = true
-        JoinPopWindow.passwdInputBox1?.isSelectable = true
-        JoinPopWindow.passwdInputBox1?.font = NSFont.systemFont(ofSize: 13)
-        JoinPopWindow.passwdInputBox1?.delegate = self
-        JoinPopWindow.passwdInputBox1?.isHidden = true
-        buttonView?.addSubview(JoinPopWindow.passwdInputBox1!)
+        JoinPopWindow.passwdSecureBox?.stringValue = ""
+        JoinPopWindow.passwdSecureBox?.drawsBackground = true
+        JoinPopWindow.passwdSecureBox?.isEditable = true
+        JoinPopWindow.passwdSecureBox?.isSelectable = true
+        JoinPopWindow.passwdSecureBox?.font = NSFont.systemFont(ofSize: 13)
+        JoinPopWindow.passwdSecureBox?.delegate = self
+        JoinPopWindow.passwdSecureBox?.isHidden = true
+        buttonView?.addSubview(JoinPopWindow.passwdSecureBox!)
 
         isShowPasswd?.setButtonType(.switch)
         isShowPasswd?.title = NSLocalizedString("Show password", comment: "")
@@ -212,7 +212,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             usernameBox?.isHidden = true
             passwdLabel?.isHidden = true
             JoinPopWindow.passwdInputBox?.isHidden = true
-            JoinPopWindow.passwdInputBox1?.isHidden = true
+            JoinPopWindow.passwdSecureBox?.isHidden = true
             isShowPasswd?.isHidden = true
             ssidBox?.becomeFirstResponder()
             if frame.height == 317 {
@@ -231,14 +231,14 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             usernameLabel?.isHidden = true
             usernameBox?.isHidden = true
             passwdLabel?.isHidden = false
-            JoinPopWindow.passwdInputBox?.isHidden = false
-            JoinPopWindow.passwdInputBox1?.isHidden = true
+            JoinPopWindow.passwdInputBox?.isHidden = true
+            JoinPopWindow.passwdSecureBox?.isHidden = false
             isShowPasswd?.isHidden = false
             if frame.height == 345 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY + 28, width: 450, height: 317)
                 setFrame(frameSize, display: false, animate: true)
             }
-            JoinPopWindow.passwdInputBox?.becomeFirstResponder()
+            JoinPopWindow.passwdSecureBox?.becomeFirstResponder()
         case 5, 6: // Encryption: Enterprise
             if frame.height == 269 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY - 76, width: 450, height: 345)
@@ -251,8 +251,8 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             usernameLabel?.isHidden = false
             usernameBox?.isHidden = false
             passwdLabel?.isHidden = false
-            JoinPopWindow.passwdInputBox?.isHidden = false
-            JoinPopWindow.passwdInputBox1?.isHidden = true
+            JoinPopWindow.passwdInputBox?.isHidden = true
+            JoinPopWindow.passwdSecureBox?.isHidden = false
             isShowPasswd?.isHidden = false
             usernameBox?.becomeFirstResponder()
         default:
@@ -262,17 +262,17 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
 
     @objc func showPasswd(_ sender: Any?) {
         if isShowPasswd?.state.rawValue == 0 {
-            JoinPopWindow.passwdInputBox1?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
+            JoinPopWindow.passwdSecureBox?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
             JoinPopWindow.passwdInputBox?.isHidden = true
-            JoinPopWindow.passwdInputBox1?.isHidden = false
-            JoinPopWindow.passwdInputBox1?.becomeFirstResponder()
-            JoinPopWindow.passwdInputBox1?.selectText(self)
-            JoinPopWindow.passwdInputBox1?.currentEditor()?.selectedRange = NSRange(location: "\((JoinPopWindow.passwdInputBox1)!)".count, length: 0)
+            JoinPopWindow.passwdSecureBox?.isHidden = false
+            JoinPopWindow.passwdSecureBox?.becomeFirstResponder()
+            JoinPopWindow.passwdSecureBox?.selectText(self)
+            JoinPopWindow.passwdSecureBox?.currentEditor()?.selectedRange = NSRange(location: "\((JoinPopWindow.passwdSecureBox)!)".count, length: 0)
         }
         if isShowPasswd?.state.rawValue == 1 {
-            JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdInputBox1?.stringValue)!
+            JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
             JoinPopWindow.passwdInputBox?.isHidden = false
-            JoinPopWindow.passwdInputBox1?.isHidden = true
+            JoinPopWindow.passwdSecureBox?.isHidden = true
             JoinPopWindow.passwdInputBox?.becomeFirstResponder()
             JoinPopWindow.passwdInputBox?.selectText(self)
             JoinPopWindow.passwdInputBox?.currentEditor()?.selectedRange = NSRange(location: "\((JoinPopWindow.passwdInputBox)!)".count, length: 0)
@@ -293,18 +293,18 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
 
     func controlTextDidChange(_ obj: Notification) {
         if JoinPopWindow.passwdInputBox?.isHidden == false {
-            JoinPopWindow.passwdInputBox1?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
+            JoinPopWindow.passwdSecureBox?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
         } else {
-            JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdInputBox1?.stringValue)!
+            JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
         }
-        if (JoinPopWindow.passwdInputBox1?.stringValue.count)! < 8 && (JoinPopWindow.passwdInputBox?.stringValue.count)! < 8 {
+        if (JoinPopWindow.passwdSecureBox?.stringValue.count)! < 8 && (JoinPopWindow.passwdInputBox?.stringValue.count)! < 8 {
             joinButton?.isEnabled = false
         } else {
             joinButton?.isEnabled = true
         }
-        if (JoinPopWindow.passwdInputBox1?.stringValue.count)! > 64 {
-            let index = JoinPopWindow.passwdInputBox1?.stringValue.index((JoinPopWindow.passwdInputBox1?.stringValue.startIndex)!, offsetBy: 64)
-            JoinPopWindow.passwdInputBox1?.stringValue = String((JoinPopWindow.passwdInputBox1?.stringValue[..<index!])!)
+        if (JoinPopWindow.passwdSecureBox?.stringValue.count)! > 64 {
+            let index = JoinPopWindow.passwdSecureBox?.stringValue.index((JoinPopWindow.passwdSecureBox?.stringValue.startIndex)!, offsetBy: 64)
+            JoinPopWindow.passwdSecureBox?.stringValue = String((JoinPopWindow.passwdSecureBox?.stringValue[..<index!])!)
         }
         if (JoinPopWindow.passwdInputBox?.stringValue.count)! > 64 {
             let index = JoinPopWindow.passwdInputBox?.stringValue.index((JoinPopWindow.passwdInputBox?.stringValue.startIndex)!, offsetBy: 64)
