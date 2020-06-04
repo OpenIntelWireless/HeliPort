@@ -13,8 +13,6 @@
  * https://opensource.org/licenses/BSD-3-Clause
  */
 
-#define API_TEST
-
 #include "Api.h"
 
 static io_service_t service;
@@ -110,18 +108,86 @@ void disconnect_driver(void) {
     IOServiceClose(driver_connection);
 }
 
-bool ioctl_set(int ctl, void *data) {
-    ctl |= IOCTL_MASK;
-    return true;
-}
-
-bool ioctl_get(int ctl, void *data) {
-    
-    return true;
-}
-
-bool open_adapter(void *con)
+static bool isSupportService(const char *name)
 {
-    
+    if (memcmp(name, "TestService", strlen("TestService") - 1)
+#ifndef API_TEST
+        || memcmp(name, "itlwmx", strlen("itlwmx") - 1) || memcmp(name, "itlwm", strlen("itlwm") - 1)
+#endif
+        ) {
+        return false;
+    }
     return true;
+}
+
+bool open_adapter(io_connect_t *connection_t)
+{
+    kern_return_t kr;
+    io_iterator_t iter;
+    bool found = false;
+    io_service_t service;
+    mach_port_name_t port;
+    uint32_t type = 0;
+    char nn[20];
+    if (IOMasterPort(0, &port)) {
+        return false;
+    }
+    CFMutableDictionaryRef matchingDict = IOServiceMatching("IOEthernetController");
+    kr = IOServiceGetMatchingServices(port, matchingDict, &iter);
+    mach_port_deallocate(mach_task_self(), port);
+    if (kr != KERN_SUCCESS)
+        return false;
+    while ((service = IOIteratorNext(iter))) {
+        CFTypeRef type_ref = IORegistryEntryCreateCFProperty(service, CFSTR("IOClass"), kCFAllocatorDefault, 0);
+        if (type_ref) {
+            const char *name = CFStringGetCStringPtr(type_ref, 0);
+            if (!name) {
+                name = nn;
+                CFStringGetCString(type_ref, nn, 20, 0);
+            }
+            if (isSupportService(name)) {
+                if (IOServiceOpen(service, mach_task_self(), type, connection_t) == KERN_SUCCESS) {
+                    found = true;
+                    IOObjectRelease(service);
+                    CFRelease(type_ref);
+                    break;
+                }
+            }
+        }
+    }
+    IOObjectRelease(iter);
+    return found;
+}
+
+void close_adapter(io_connect_t connection)
+{
+    if (connection) {
+        IOServiceClose(connection);
+    }
+}
+
+static bool _ioctl(int ctl, bool is_get, void *data, size_t data_len)
+{
+    io_connect_t con;
+    if (!open_adapter(&con)) {
+        return false;
+    }
+    if (!is_get) {
+        ctl |= IOCTL_MASK;
+    }
+    if (is_get) {
+        IOConnectCallStructMethod(con, ctl, NULL, 0, data, &data_len);
+    } else {
+        IOConnectCallStructMethod(con, ctl, data, data_len, NULL, 0);
+    }
+    close_adapter(con);
+    return true;
+}
+    
+bool ioctl_set(int ctl, void *data, size_t data_len) {
+    return _ioctl(ctl, false, data, data_len);
+}
+
+bool ioctl_get(int ctl, void *data, size_t data_len) {
+    return _ioctl(ctl, true, data, data_len);
 }

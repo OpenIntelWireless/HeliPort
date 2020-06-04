@@ -68,11 +68,13 @@ bool connect_driver(void);
 
 void disconnect_driver(void);
 
-bool open_adapter(void *con);
+bool open_adapter(io_connect_t *connection_t);
 
-bool ioctl_get(int ctl, void *data);
+void close_adapter(io_connect_t connection);
 
-bool ioctl_set(int ctl, void *data);
+bool ioctl_get(int ctl, void *data, size_t data_len);
+
+bool ioctl_set(int ctl, void *data, size_t data_len);
 
 bool get_platform_info(platform_info_t *result);
 

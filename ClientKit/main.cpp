@@ -21,48 +21,18 @@
 #include <sys/ioctl.h>
 #include <sys/kern_event.h>
 #include <sys/kern_control.h>
- 
+
 extern "C" {
 #include "Api.h"
 }
 
 int main(int argc, const char * argv[]) {
-    CFDictionaryRef     matchingDict = NULL;
-    io_iterator_t       iter = 0;
-    io_service_t        service = 0;
     kern_return_t       kr;
-
-    matchingDict = IOServiceMatching("TestService");
-    kr = IOServiceGetMatchingServices(kIOMasterPortDefault, matchingDict, &iter);
-    if (kr != KERN_SUCCESS)
-        return -1;
-    while ((service = IOIteratorNext(iter)) != 0)
-    {
-        task_port_t     owningTask = mach_task_self();
-        uint32_t        type = 0;
-        io_connect_t    driverConnection;
-
-        kr = IOServiceOpen(
-                           service,
-                           owningTask,
-                           type,
-                           &driverConnection);
-        if (kr == KERN_SUCCESS)
-        {
-            ioctl_driver_info drv_info;
-            size_t cnt = sizeof(ioctl_driver_info);
-            kr = IOConnectCallStructMethod(driverConnection, IOCTL_80211_DRIVER_INFO, NULL, 0, &drv_info, &cnt);
-            if (kr == kIOReturnSuccess) {
-                printf("aaa\n");
-            }
-            printf("IOCTL_80211_TEST - %08x\n", kr);
-            printf("ioctl_driver_info %s %s\n", drv_info.fw_version, drv_info.bsd_name);
-            IOServiceClose(driverConnection);
-        }
-
-        IOObjectRelease(service);
-    }
-    IOObjectRelease(iter);
+    ioctl_driver_info drv_info;
+    size_t cnt = sizeof(ioctl_driver_info);
+    
+    kr = ioctl_get(IOCTL_80211_DRIVER_INFO, &drv_info, cnt);
+    printf("ioctl_driver_info %s %s\n", drv_info.fw_version, drv_info.bsd_name);
 
     std::cout << "Hello, World!\n";
     return 0;

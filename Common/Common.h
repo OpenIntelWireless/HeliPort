@@ -18,6 +18,8 @@
 
 #include "IoctlId.h"
 
+#define API_TEST
+
 #define IOCTL_MASK 0x800000
 #define IOCTL_VERSION 1
 #define NWID_LEN 32
