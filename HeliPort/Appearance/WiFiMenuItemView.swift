@@ -99,9 +99,11 @@ class WifiMenuItemView: NSView {
         menuItemView.material = .selection
         menuItemView.isEmphasized = true
         ssidLabel.textColor = highlightColor
-        statusImage.contentTintColor = highlightColor
-        lockImage.contentTintColor = highlightColor
-        signalImage.contentTintColor = highlightColor
+        if #available(OSX 10.14, *) {
+            statusImage.contentTintColor = highlightColor
+            lockImage.contentTintColor = highlightColor
+            signalImage.contentTintColor = highlightColor
+        }
         isMouseOver = true
     }
 
@@ -109,9 +111,11 @@ class WifiMenuItemView: NSView {
         menuItemView.material = .popover
         menuItemView.isEmphasized = false
         ssidLabel.textColor = normalColor
-        statusImage.contentTintColor = normalColor
-        lockImage.contentTintColor = normalColor
-        signalImage.contentTintColor = normalColor
+        if #available(OSX 10.14, *) {
+            statusImage.contentTintColor = normalColor
+            lockImage.contentTintColor = normalColor
+            signalImage.contentTintColor = normalColor
+        }
         isMouseOver = false
     }
 
@@ -120,9 +124,11 @@ class WifiMenuItemView: NSView {
         menuItemView.isEmphasized = false
         isMouseOver = false // NSWindow pop up could escape mouseExit
         ssidLabel.textColor = normalColor
-        statusImage.contentTintColor = normalColor
-        lockImage.contentTintColor = normalColor
-        signalImage.contentTintColor = normalColor
+        if #available(OSX 10.14, *) {
+            statusImage.contentTintColor = normalColor
+            lockImage.contentTintColor = normalColor
+            signalImage.contentTintColor = normalColor
+        }
         statusBar.menu?.cancelTracking()
         NetworkManager.connect(networkInfo: networkInfo)
     }
@@ -145,9 +151,11 @@ class WifiMenuItemView: NSView {
         }
         if !isMouseOver {
             ssidLabel.textColor = normalColor
-            statusImage.contentTintColor = normalColor
-            lockImage.contentTintColor = normalColor
-            signalImage.contentTintColor = normalColor
+            if #available(OSX 10.14, *) {
+                statusImage.contentTintColor = normalColor
+                lockImage.contentTintColor = normalColor
+                signalImage.contentTintColor = normalColor
+            }
         }
         //menuItemView?.isHidden = !(enclosingMenuItem?.isHighlighted ?? false)
     }
