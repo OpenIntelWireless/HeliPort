@@ -94,18 +94,21 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         view.addSubview(passwdSecureBox)
 
         isShowPasswd.setButtonType(.switch)
+        isShowPasswd.font = .systemFont(ofSize: 13)
         isShowPasswd.title = NSLocalizedString("Show password", comment: "")
         isShowPasswd.target = self
         isShowPasswd.action = #selector(showPasswd(_:))
         view.addSubview(isShowPasswd)
 
         isSave.setButtonType(.switch)
+        isSave.font = .systemFont(ofSize: 13)
         isSave.title = NSLocalizedString("Remember this network", comment: "")
         isSave.target = self
         isSave.action = #selector(saveWiFi(_:))
         view.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded
+        joinButton.font = .systemFont(ofSize: 13)
         joinButton.title = NSLocalizedString("Join", comment: "")
         joinButton.target = self
         joinButton.isEnabled = false
@@ -113,6 +116,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         view.addSubview(joinButton)
 
         cancelButton.bezelStyle = .rounded
+        cancelButton.font = .systemFont(ofSize: 13)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = #selector(cancel(_:))

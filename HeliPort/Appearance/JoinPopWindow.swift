@@ -175,12 +175,14 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         buttonView?.addSubview(isShowPasswd!)
 
         isSave?.setButtonType(.switch)
+        isSave?.font = .systemFont(ofSize: 13)
         isSave?.title = NSLocalizedString("Remember this network", comment: "")
         isSave?.target = self
         isSave?.action = #selector(saveWiFi(_:))
         buttonView?.addSubview(isSave!)
 
         joinButton?.bezelStyle = NSButton.BezelStyle.rounded
+        joinButton?.font = .systemFont(ofSize: 13)
         joinButton?.title = NSLocalizedString("Join", comment: "")
         joinButton?.target = self
         joinButton?.isEnabled = false
@@ -188,6 +190,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         buttonView?.addSubview(joinButton!)
 
         cancelButton?.bezelStyle = .rounded
+        cancelButton?.font = .systemFont(ofSize: 13)
         cancelButton?.title = NSLocalizedString("Cancel", comment: "")
         cancelButton?.target = self
         cancelButton?.action = #selector(cancel(_:))
