@@ -14,98 +14,57 @@
  */
 
 #include "Api.h"
+#include "mach/mach_port.h"
 
-static io_service_t service;
-static io_connect_t driver_connection;
-
-bool connect_driver(void) {
-    printf("connecting driver\n");
-
-    service = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("TestService"));
-    if (service == IO_OBJECT_NULL) {
-        printf("could not find any service matching\n");
-        return false;
-    }
-
-    if (IOServiceOpen(service, mach_task_self(), 0, &driver_connection) != KERN_SUCCESS) {
-        printf("could not open service\n");
-        IOObjectRelease(service);
-        return false;
-    }
-
-    printf("open service\n");
-    IOObjectRelease(service);
-    return true;
-}
 
 bool get_platform_info(platform_info_t *info) {
     memset(info, 0, sizeof(platform_info_t));
 
-#ifdef API_TEST
-    // test
-    strcpy(info->device_info_str, "Intel");
-    strcpy(info->driver_info_str, "itlwm v1.0.0");
-    sleep(1);
-    return true;
-#endif
+    struct ioctl_driver_info driver_info;
+    if (ioctl_get(IOCTL_80211_DRIVER_INFO, &driver_info, sizeof(struct ioctl_driver_info)) != KERN_SUCCESS) {
+        goto error;
+    }
 
-    size_t output_size;
-    // sync call
-    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_DRIVER_INFO, NULL, 0, info, &output_size) == KERN_SUCCESS;
+    strcpy(info->device_info_str, driver_info.bsd_name);
+    strcpy(info->driver_info_str, driver_info.driver_version);
+    strcat(info->driver_info_str, " ");
+    strcat(info->driver_info_str, driver_info.fw_version);
+    return true;
+
+error:
+    return false;
 }
 
 bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
 
-#ifdef API_TEST
-    // test
-    list->count = 4;
-    strcpy(list->networks[0].SSID, "test0_WPA2");
-    list->networks[0].is_connected = true;
-    list->networks[0].is_encrypted = true;
-    list->networks[0].RSSI = -40;
-    list->networks[0].auth.security = NETWORK_AUTH_SECURITY_WPA2_PERSONAL;
+    struct ioctl_scan scan;
+    struct ioctl_network_info network_info_ret;
+    scan.version = IOCTL_VERSION;
+    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
+        goto error;
+    }
 
-    strcpy(list->networks[1].SSID, "test2😂_NONE");
-    list->networks[1].is_connected = false;
-    list->networks[1].is_encrypted = true;
-    list->networks[1].RSSI = -30;
-    list->networks[1].auth.security = NETWORK_AUTH_SECURITY_NONE;
+    sleep(5);
+    while (ioctl_get(IOCTL_80211_SCAN_RESULT, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
+        if (list->count >= MAX_NETWORK_LIST_LENGTH) {
+            break;
+        }
+        network_info_t *info = &list->networks[list->count++];
+        strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
+        info->RSSI = network_info_ret.rssi;
+        info->auth.security = network_info_ret.ni_rsncipher;
+    }
 
-    strcpy(list->networks[2].SSID, "test3中文_WEP");
-    list->networks[2].is_connected = false;
-    list->networks[2].is_encrypted = true;
-    list->networks[2].RSSI = -20;
-    list->networks[2].auth.security = NETWORK_AUTH_SECURITY_WEP;
-
-    strcpy(list->networks[3].SSID, "test4_WPA2");
-    list->networks[3].is_connected = false;
-    list->networks[3].is_encrypted = true;
-    list->networks[3].RSSI = -20;
-    list->networks[3].auth.security = NETWORK_AUTH_SECURITY_WPA2_PERSONAL;
-    sleep(2);
     return true;
-#endif
 
-    size_t output_size;
-    // sync call
-    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_SCAN, NULL, 0, list, &output_size) == KERN_SUCCESS;
+error:
+    return false;
 }
 
 bool connect_network(network_info_t *info) {
-#ifdef API_TEST
-    printf("connect %s %d %s\n", info->SSID, info->auth.security, info->auth.password);
-    sleep(4);
-    return true;
-#endif
-
-    size_t output_size;
-    // sync call
-    return IOConnectCallStructMethod(driver_connection, IOCTL_80211_ASSOCIATE, info, 1, info, &output_size) == KERN_SUCCESS;
-}
-
-void disconnect_driver(void) {
-    IOServiceClose(driver_connection);
+error:
+    return false;
 }
 
 static bool isSupportService(const char *name)
@@ -166,28 +125,29 @@ void close_adapter(io_connect_t connection)
     }
 }
 
-static bool _ioctl(int ctl, bool is_get, void *data, size_t data_len)
+static kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len)
 {
     io_connect_t con;
     if (!open_adapter(&con)) {
-        return false;
+        return KERN_FAILURE;
     }
     if (!is_get) {
         ctl |= IOCTL_MASK;
     }
+    kern_return_t ret;
     if (is_get) {
-        IOConnectCallStructMethod(con, ctl, NULL, 0, data, &data_len);
+        ret = IOConnectCallStructMethod(con, ctl, NULL, 0, data, &data_len);
     } else {
-        IOConnectCallStructMethod(con, ctl, data, data_len, NULL, 0);
+        ret = IOConnectCallStructMethod(con, ctl, data, data_len, NULL, 0);
     }
     close_adapter(con);
-    return true;
+    return ret;
 }
     
-bool ioctl_set(int ctl, void *data, size_t data_len) {
+kern_return_t ioctl_set(int ctl, void *data, size_t data_len) {
     return _ioctl(ctl, false, data, data_len);
 }
 
-bool ioctl_get(int ctl, void *data, size_t data_len) {
+kern_return_t ioctl_get(int ctl, void *data, size_t data_len) {
     return _ioctl(ctl, true, data, data_len);
 }

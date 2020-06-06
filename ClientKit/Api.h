@@ -26,24 +26,13 @@
 #define MAX_NETWORK_LIST_LENGTH 50
 #define MAX_SSID_LENGTH 32
 
-enum network_auth_security_mode {
-    NETWORK_AUTH_SECURITY_NONE,
-    NETWORK_AUTH_SECURITY_WEP,
-    NETWORK_AUTH_SECURITY_MIXED_WPA_WP2_PERSONAL,
-    NETWORK_AUTH_SECURITY_WPA2_PERSONAL,
-    NETWORK_AUTH_SECURITY_DYNAMIC_WEP,
-    NETWORK_AUTH_SECURITY_MIXED_WPA_WP2_ENTERPRISE,
-    NETWORK_AUTH_SECURITY_WPA2_ENTERPRISE,
-    NETWORK_AUTH_SECURITY_WPA3_ENTERPRISE,
-};
-
 typedef struct {
     char device_info_str[32];
     char driver_info_str[32];
 } platform_info_t;
 
 typedef struct {
-    uint8_t security;
+    uint32_t security;
     uint64_t option;
     uint8_t *identity;
     uint32_t identity_length;
@@ -54,7 +43,6 @@ typedef struct {
 typedef struct {
     char SSID[MAX_SSID_LENGTH + 1];
     bool is_connected;
-    bool is_encrypted;
     int RSSI;
     network_auth_t auth;
 } network_info_t;
@@ -64,17 +52,14 @@ typedef struct {
     network_info_t networks[MAX_NETWORK_LIST_LENGTH];
 } network_info_list_t;
 
-bool connect_driver(void);
-
-void disconnect_driver(void);
 
 bool open_adapter(io_connect_t *connection_t);
 
 void close_adapter(io_connect_t connection);
 
-bool ioctl_get(int ctl, void *data, size_t data_len);
+kern_return_t ioctl_get(int ctl, void *data, size_t data_len);
 
-bool ioctl_set(int ctl, void *data, size_t data_len);
+kern_return_t ioctl_set(int ctl, void *data, size_t data_len);
 
 bool get_platform_info(platform_info_t *result);
 

@@ -66,7 +66,7 @@ class WifiMenuItemView: NSView {
         menuItemView.addSubview(ssidLabel)
 
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
-        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.none.rawValue
+        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
         menuItemView.addSubview(lockImage)
 
         signalImage.image = NSImage.init(named: "AirPortInMenu4")
@@ -84,7 +84,7 @@ class WifiMenuItemView: NSView {
         self.networkInfo = networkInfo
         statusImage.isHidden = !networkInfo.isConnected
         ssidLabel.string = networkInfo.ssid
-        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.none.rawValue
+        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
     }
 
     func show() {

@@ -17,7 +17,7 @@ import Foundation
 import Cocoa
 
 class StatusMenu: NSMenu, NSMenuDelegate {
-    let networkListUpdatePeriod: Double = 5
+    let networkListUpdatePeriod: Double = 10
 
     var headerLength: Int = 0
     var timer: Timer?
@@ -141,7 +141,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
     func addNetworkItemPlaceholder() -> NSMenuItem {
         let item = addItem(withTitle: "placeholder", action: #selector(clickMenuItem(_:)), keyEquivalent: "")
-        item.view = WifiMenuItemView(networkInfo: NetworkInfo(ssid: "placeholder", connected: false, encrypted: false, rssi: 0))
+        item.view = WifiMenuItemView(networkInfo: NetworkInfo(ssid: "placeholder", connected: false, rssi: 0))
         guard let view = item.view as? WifiMenuItemView else {
             return item
         }
