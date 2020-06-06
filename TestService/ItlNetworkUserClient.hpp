@@ -60,6 +60,12 @@ private:
 private:
     task_t fTask;
     TestService *fDriver;
+
+protected:
+#ifdef API_TEST
+    bool isEnd;
+    int state;
+#endif
 };
 
 

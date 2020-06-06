@@ -110,9 +110,9 @@ void disconnect_driver(void) {
 
 static bool isSupportService(const char *name)
 {
-    if (memcmp(name, "TestService", strlen("TestService") - 1)
+    if (memcmp(name, "TestService", strlen("TestService"))
 #ifndef API_TEST
-        || memcmp(name, "itlwmx", strlen("itlwmx") - 1) || memcmp(name, "itlwm", strlen("itlwm") - 1)
+        || memcmp(name, "itlwmx", strlen("itlwmx")) || memcmp(name, "itlwm", strlen("itlwm"))
 #endif
         ) {
         return false;

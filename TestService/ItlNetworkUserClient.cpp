@@ -151,12 +151,36 @@ sJOIN(OSObject* target, void* data, bool isSet)
 IOReturn ItlNetworkUserClient::
 sSCAN(OSObject* target, void* data, bool isSet)
 {
+    ItlNetworkUserClient *that = OSDynamicCast(ItlNetworkUserClient, target);
+#ifdef API_TEST
+    that->isEnd = false;
+#endif
     return kIOReturnSuccess;
 }
 
 IOReturn ItlNetworkUserClient::
 sSCAN_RESULT(OSObject* target, void* data, bool isSet)
 {
+    ItlNetworkUserClient *that = OSDynamicCast(ItlNetworkUserClient, target);
+    struct ioctl_network_info *ni = (struct ioctl_network_info *)data;
+#ifdef API_TEST
+    if (that->isEnd) {
+        return kIONoScanResult;
+    }
+    ni->bssid[0] = 0x12;
+    ni->bssid[1] = 0x23;
+    ni->bssid[2] = 0x33;
+    ni->bssid[3] = 0x44;
+    ni->bssid[4] = 0x55;
+    ni->bssid[5] = 0x66;
+    ni->channel = 149;
+    ni->ni_rsncaps = 0;
+    ni->ni_rsncipher = ITL80211_CIPHER_CCMP;
+    ni->noise = -100;
+    ni->rssi = -66;
+    memcpy(ni->ssid, "这是一首简单的小情歌", sizeof(ni->ssid));
+    that->isEnd = true;
+#endif
     return kIOReturnSuccess;
 }
 

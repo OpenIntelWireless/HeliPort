@@ -29,11 +29,16 @@ extern "C" {
 int main(int argc, const char * argv[]) {
     kern_return_t       kr;
     ioctl_driver_info drv_info;
+    ioctl_scan scan;
+    ioctl_network_info ni;
     size_t cnt = sizeof(ioctl_driver_info);
     
     kr = ioctl_get(IOCTL_80211_DRIVER_INFO, &drv_info, cnt);
     printf("ioctl_driver_info %s %s\n", drv_info.fw_version, drv_info.bsd_name);
-
+    scan.version = IOCTL_VERSION;
+    kr = ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(ioctl_scan));
+    kr = ioctl_get(IOCTL_80211_SCAN_RESULT, &ni, sizeof(ioctl_network_info));
+    printf("%s\n", ni.ssid);
     std::cout << "Hello, World!\n";
     return 0;
 }
