@@ -1,6 +1,6 @@
 # HeliPort
 
-![GiHub Actions](https://github.com/williambj1/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
+![GiHub Actions](https://github.com/zxystd/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
 
 Intel WiFi Client for [itlwm](https://github.com/zxystd/itlwm)
 
@@ -30,9 +30,9 @@ The following types of "Issues" will be considered as invalid and will be closed
 - Duplicated issues
 - Urging updates
 - Spam
-- non-English or non-Chinese content
+- Non-English or non-Chinese content
 - Easy "Googleable" questions
-  > how to build etc.
+  > How to build etc.
 - Off-topic discussion
   > Including mentioning and distributing closed-source, non-official Intel Wi-Fi Projects.
 
