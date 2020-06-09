@@ -21,6 +21,7 @@
 		BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */; };
 		BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EC2424D2BF00E23603 /* Assets.xcassets */; };
 		BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EE2424D2BF00E23603 /* MainMenu.xib */; };
+		D47DD664F9B2939B57C54DF4 /* Pods_HeliPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */; };
 		F84E327924457FAE00D07895 /* ItlNetworkUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */; };
 		F86A8960243CD13300CBABC2 /* TestService.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F86A895F243CD13300CBABC2 /* TestService.hpp */; };
 		F86A8962243CD13400CBABC2 /* TestService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F86A8961243CD13400CBABC2 /* TestService.cpp */; };
@@ -58,6 +59,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.release.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.release.xcconfig"; sourceTree = "<group>"; };
 		508D9C6724838D540025701D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		508D9C6E248393910025701D /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 		BCFA32EF2424D2BF00E23603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BCFA32F12424D2BF00E23603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort.entitlements; sourceTree = "<group>"; };
+		DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeliPort.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ItlNetworkUserClient.cpp; sourceTree = "<group>"; };
 		F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ItlNetworkUserClient.hpp; sourceTree = "<group>"; };
 		F86A895D243CD13000CBABC2 /* TestService.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestService.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +93,7 @@
 		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
 		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
 		F8F6CF0E243D67D800965B43 /* IoctlId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IoctlId.h; sourceTree = "<group>"; };
+		FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.debug.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47DD664F9B2939B57C54DF4 /* Pods_HeliPort.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +122,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27E333CBDEE9F043281383C3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */,
+				2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		A3DAA5EDB2CAD33F8A53CAD7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		BCF712FA243C9EB100BE3C05 /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +163,8 @@
 				F86A895E243CD13100CBABC2 /* TestService */,
 				F86A896C243CD1B500CBABC2 /* ClientKit */,
 				BCFA32E82424D2BE00E23603 /* Products */,
+				27E333CBDEE9F043281383C3 /* Pods */,
+				A3DAA5EDB2CAD33F8A53CAD7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -233,10 +258,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BCFA32F52424D2BF00E23603 /* Build configuration list for PBXNativeTarget "HeliPort" */;
 			buildPhases = (
+				D0F7C8CBDEABDEEE298EDA22 /* [CP] Check Pods Manifest.lock */,
 				BCFA32E32424D2BE00E23603 /* Sources */,
 				BCFA32E42424D2BE00E23603 /* Frameworks */,
 				BCFA32E52424D2BE00E23603 /* Resources */,
 				75E3976A2487FAF600E84DB8 /* Lint */,
+				06A84524B547923DB0EAD0C7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -348,6 +375,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		06A84524B547923DB0EAD0C7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HeliPort/Pods-HeliPort-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HeliPort/Pods-HeliPort-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HeliPort/Pods-HeliPort-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		75E3976A2487FAF600E84DB8 /* Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -365,6 +409,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
+		};
+		D0F7C8CBDEABDEEE298EDA22 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HeliPort-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -553,6 +619,7 @@
 		};
 		BCFA32F62424D2BF00E23603 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
@@ -576,6 +643,7 @@
 		};
 		BCFA32F72424D2BF00E23603 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
