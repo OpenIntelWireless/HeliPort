@@ -97,14 +97,18 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         for idx in 0...5 {
             items[idx].isHidden = true
         }
-        items[items.count - 1].isHidden = true
+        for idx in 1...2 {
+            items[items.count - idx].isHidden = true
+        }
     }
 
     func buildOptionMenu() {
         for idx in 0...5 {
             items[idx].isHidden = false
         }
-        items[items.count - 1].isHidden = false
+        for idx in 1...2 {
+            items[items.count - idx].isHidden = false
+        }
     }
 
     @objc func clickMenuItem(_ sender: NSMenuItem) {

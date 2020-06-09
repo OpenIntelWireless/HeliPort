@@ -34,5 +34,9 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>https://github.com/zxystd/HeliPort/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>ktrt51VPmrIyECEE/mqZCmOSNFBX6HLCpP+OB1V6G28=</string>
 </dict>
 </plist>
