@@ -15,8 +15,11 @@
 
 import Foundation
 import Cocoa
+import Sparkle
 
 class StatusMenu: NSMenu, NSMenuDelegate {
+    let heliPortUpdater = SUUpdater()
+
     let networkListUpdatePeriod: Double = 10
 
     var headerLength: Int = 0
@@ -63,6 +66,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(withTitle: NSLocalizedString("Join Other Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Create Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Check for Updates...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
     }
 
@@ -130,6 +134,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             alert.runModal()
         case NSLocalizedString("Open Network Preferences...", comment: ""):
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
+        case NSLocalizedString("Check for Updates...", comment: ""):
+            heliPortUpdater.checkForUpdates(self)
         case NSLocalizedString("Quit HeliPort", comment: ""):
             exit(0)
         default:
