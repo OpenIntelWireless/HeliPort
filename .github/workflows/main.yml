@@ -33,30 +33,7 @@ jobs:
     - name: Prepare GH Release
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
       run: |
-        eval $(grep -m 1 "MARKETING_VERSION" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
-        
-        # Unless this project becomes insane, there's no chance that the version number will be larger than 9.9.9
-        # Don't bump version for tag since we're using keywords for releases (Drafts can't be overridden in GH Actions)
-        #if [[ ${MARKETING_VERSION##*.} == 9 ]]; then
-        #    if [[ ${MARKETING_VERSION:2:1} == 9 ]]; then
-        #        NewVer="$((${MARKETING_VERSION:0:1}+1)).0.0"
-        #    else
-        #        NewVer="${MARKETING_VERSION:0:1}.$((${MARKETING_VERSION:2:1}+1)).0"
-        #    fi
-        #else
-        #    NewVer="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
-        #fi
-        
-        #echo "::set-env name=NewVer::$NewVer"
-        echo "::set-env name=NewVer::$MARKETING_VERSION"
-        
-        #cd build/Build/Products/Release
-        cd build/Build/Products/Debug
-        zip -qr HeliPort-v${NewVer}.zip *.app
-        cd -
-        
-        git log -"$(git rev-list --count $(git rev-list --tags | head -n 1)..HEAD)" --format="- %H %s" | grep -v 'gitignore\|Repo\|Docs\|Merge\|yml\|CI\|Commit\|commit\|attributes' | sed  '/^$/d' >> ReleaseNotes.md
-
+        zsh .github/prepRelease.sh
 
     - name: GH Release
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')

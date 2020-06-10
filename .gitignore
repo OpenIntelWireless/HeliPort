@@ -47,3 +47,6 @@ Pods/
 # Temp files
 TMP.strings
 NEW.strings
+Artifacts/
+sparkle/
+ReleaseNotes.md
