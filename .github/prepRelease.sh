@@ -16,6 +16,7 @@
 #
 
 cd $GITHUB_WORKSPACE
+
 eval $(grep -m 1 "MARKETING_VERSION" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
 
 echo "::set-env name=NEWVER::$MARKETING_VERSION"

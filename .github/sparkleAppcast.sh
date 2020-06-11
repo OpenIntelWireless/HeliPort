@@ -32,13 +32,13 @@ APPCAST=(
     '            ]]>'
     '            </description>'
     "            <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>"
-    "            <enclosure url=\"https://github.com/zxystd/HeliPort/releases/latest/download/HeliPort.zip\" sparkle:version=\"${NEWVER}\" sparkle:shortVersionString=\"${NEWVER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.zip)/>"
+    "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/zxystd/HeliPort/releases/latest/download/HeliPort.zip\" sparkle:version=\"${NEWVER}\" sparkle:shortVersionString=\"${NEWVER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.zip)/>"
     '        </item>'
     '    </channel>'
     '</rss>'
 )
 
-sleep 10
+sleep 5
 
 for appcast in "${APPCAST[@]}"; do
     echo "${appcast}" >> ./Artifacts/appcast.xml
