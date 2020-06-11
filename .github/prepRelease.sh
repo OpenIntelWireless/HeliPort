@@ -18,18 +18,18 @@
 cd $GITHUB_WORKSPACE
 eval $(grep -m 1 "MARKETING_VERSION" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
 
-echo "::set-env name=NewVer::$MARKETING_VERSION"
+echo "::set-env name=NEWVER::$MARKETING_VERSION"
 
 # Unless this project becomes insane, there's no chance that the version number will be larger than 9.9.9
 # Don't bump version for tag since we're using keywords for releases (Drafts can't be overridden in GH Actions)
 #if [[ ${MARKETING_VERSION##*.} == 9 ]]; then
 #    if [[ ${MARKETING_VERSION:2:1} == 9 ]]; then
-#        NewVer="$((${MARKETING_VERSION:0:1}+1)).0.0"
+#        NEWVER="$((${MARKETING_VERSION:0:1}+1)).0.0"
 #    else
-#        NewVer="${MARKETING_VERSION:0:1}.$((${MARKETING_VERSION:2:1}+1)).0"
+#        NEWVER="${MARKETING_VERSION:0:1}.$((${MARKETING_VERSION:2:1}+1)).0"
 #    fi
 #else
-#    NewVer="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
+#    NEWVER="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
 #fi
 
 #cd build/Build/Products/Release
@@ -49,24 +49,3 @@ URL="https://github.com$(one=${"$(curl -L --silent "${rawURL}" | grep '/download
 curl -#LO "${URL}"
 tar xvf *.xz >/dev/null 2>&1
 cd ..
-
-TIME="$(date +"%a, %d %b %Y %T %z")"
-
-APPCAST=(
-    '<?xml version="1.0" standalone="yes"?>'
-    '<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">'
-    '    <channel>'
-    '        <title>HeliPort</title>'
-    '        <item>'
-    "            <title>${MARKETING_VERSION}</title>"
-    "            <pubDate>${TIME}</pubDate>"
-    "            <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>"
-    "            <enclosure url=\"https://github.com/zxystd/HeliPort/releases/latest/download/HeliPort.zip\" sparkle:version=\"${MARKETING_VERSION}\" sparkle:shortVersionString=\"${MARKETING_VERSION}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.zip)/>"
-    '        </item>'
-    '    </channel>'
-    '</rss>'
-)
-
-for appcast in "${APPCAST[@]}"; do
-    echo "${appcast}" >> ./Artifacts/appcast.xml
-done

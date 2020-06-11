@@ -35,13 +35,28 @@ jobs:
       run: |
         zsh .github/prepRelease.sh
 
+    - name: Init GH Release
+      if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
+      uses: ncipollo/release-action@v1
+      with:
+        bodyFile: ReleaseNotes.md
+        replacesArtifacts: false
+        tag: "v${{ env.NEWVER }}"
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate Sparkle Appcast
+      if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
+      run: |
+        zsh .github/sparkleAppcast.sh
+      env:
+          NEWVER: ${{ env.NEWVER }}
+
     - name: GH Release
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "build/Build/Products/Debug/*.zip"
-        bodyFile: ReleaseNotes.md
-        replacesArtifacts: false
-        draft: false
-        tag: "v${{ env.NewVer }}"
+        allowUpdates: true
+        replacesArtifacts: true
+        artifacts: "./Artifacts/*"
+        tag: "v${{ env.NEWVER }}"
         token: ${{ secrets.GITHUB_TOKEN }}
