@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>
@@ -34,5 +34,9 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>SUFeedURL</key>
+	<string>https://heliport.bat-bat.workers.dev/https://github.com/zxystd/HeliPort/releases/latest/download/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>ktrt51VPmrIyECEE/mqZCmOSNFBX6HLCpP+OB1V6G28=</string>
 </dict>
 </plist>
