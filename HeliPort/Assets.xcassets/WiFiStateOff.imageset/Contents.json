@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "AirPort4.png",
+      "filename" : "WiFiStateOff.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AirPort4@2x.png",
+      "filename" : "WiFiStateOff@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -69,7 +69,7 @@ class WifiMenuItemView: NSView {
         lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
         menuItemView.addSubview(lockImage)
 
-        signalImage.image = NSImage.init(named: "AirPortInMenu4")
+        signalImage.image = NSImage.init(named: "WiFiSignalStrengthExcellent")
         //signalImage?.contentTintColor =
         menuItemView.addSubview(signalImage)
 

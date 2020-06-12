@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Insert code here to initialize your application
 
         statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusBar.button?.image = NSImage.init(named: "AirPortInMenu0")
+        statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
         statusBar.button?.image?.isTemplate = true
         statusBar.menu = StatusMenu.init(title: "")
     }

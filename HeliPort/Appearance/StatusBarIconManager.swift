@@ -29,17 +29,17 @@ class StatusBarIcon: NSObject {
 
     class func off() {
         timer?.invalidate()
-        statusBar.button?.image = NSImage.init(named: "AirPortOff")
+        statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
     }
 
     class func connected() {
         timer?.invalidate()
-        statusBar.button?.image = NSImage.init(named: "AirPort4")
+        statusBar.button?.image = NSImage.init(named: "WiFiStateOn")
     }
 
     class func disconnected() {
         timer?.invalidate()
-        statusBar.button?.image = NSImage.init(named: "AirPortInMenu0")
+        statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
     }
 
     class func connecting() {
@@ -59,17 +59,17 @@ class StatusBarIcon: NSObject {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
             case 7:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning1")
+                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthPoor")
             case 6:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
+                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthFair")
             case 5:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning3")
+                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthGood")
             case 4:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning4")
+                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthExcellent")
             case 3:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning3")
+                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthGood")
             case 2:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
+                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthFair")
                 StatusBarIcon.count = 8
             default:
                 return

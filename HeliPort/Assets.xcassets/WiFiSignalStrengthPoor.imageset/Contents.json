@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "AirPortScanning3.png",
+      "filename" : "WiFiSignalStrengthPoor.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "AirPortScanning3@2x.png",
+      "filename" : "WiFiSignalStrengthPoor@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
