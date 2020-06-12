@@ -15,8 +15,6 @@
 
 import Cocoa
 
-var statusBar: NSStatusItem!
-let wifiPop: NSAlert = NSAlert()
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
@@ -26,10 +24,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
 
-        statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
         statusBar.button?.image?.isTemplate = true
         statusBar.menu = StatusMenu.init(title: "")
+
+        StatusBarIcon.statusBar = statusBar
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

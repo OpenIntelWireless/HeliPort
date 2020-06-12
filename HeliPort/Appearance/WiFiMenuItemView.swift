@@ -139,7 +139,7 @@ class WifiMenuItemView: NSView {
             lockImage.contentTintColor = normalColor
             signalImage.contentTintColor = normalColor
         }
-        statusBar.menu?.cancelTracking()
+        enclosingMenuItem?.menu?.cancelTracking()
         NetworkManager.connect(networkInfo: networkInfo)
     }
 

@@ -17,6 +17,7 @@ import Foundation
 import Cocoa
 
 class StatusBarIcon: NSObject {
+    static var statusBar: NSStatusItem!
     static var timer: Timer?
     static var count: Int = 8
     static func on() {
