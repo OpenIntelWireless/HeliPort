@@ -25,6 +25,8 @@ class WifiMenuItemView: NSView {
     var highlightColor: NSColor
     var normalColor: NSColor
     var isMouseOver: Bool = false
+    var visible: Bool = true
+    var currentWindow: NSWindow?
 
     var networkInfo: NetworkInfo
 
@@ -89,34 +91,42 @@ class WifiMenuItemView: NSView {
 
     func show() {
         setFrameSize(NSSize(width: 285, height: 20))
+        visible = true
     }
 
     func hide() {
         setFrameSize(NSSize(width: 285, height: 0))
+        visible = false
     }
 
-    override func mouseEntered(with event: NSEvent) {
-        menuItemView.material = .selection
-        menuItemView.isEmphasized = true
-        ssidLabel.textColor = highlightColor
-        if #available(OSX 10.14, *) {
-            statusImage.contentTintColor = highlightColor
-            lockImage.contentTintColor = highlightColor
-            signalImage.contentTintColor = highlightColor
+    func checkHighlight() {
+        if visible, let position = currentWindow?.mouseLocationOutsideOfEventStream {
+            setHighlight(bounds.contains(convert(position, from: nil)))
         }
-        isMouseOver = true
     }
 
-    override func mouseExited(with event: NSEvent) {
-        menuItemView.material = .popover
-        menuItemView.isEmphasized = false
-        ssidLabel.textColor = normalColor
-        if #available(OSX 10.14, *) {
-            statusImage.contentTintColor = normalColor
-            lockImage.contentTintColor = normalColor
-            signalImage.contentTintColor = normalColor
+    func setHighlight(_ isHighlighted: Bool) {
+        if isHighlighted {
+            menuItemView.material = .selection
+            menuItemView.isEmphasized = true
+            ssidLabel.textColor = highlightColor
+            if #available(OSX 10.14, *) {
+                statusImage.contentTintColor = highlightColor
+                lockImage.contentTintColor = highlightColor
+                signalImage.contentTintColor = highlightColor
+            }
+            isMouseOver = true
+        } else {
+            menuItemView.material = .popover
+            menuItemView.isEmphasized = false
+            ssidLabel.textColor = normalColor
+            if #available(OSX 10.14, *) {
+                statusImage.contentTintColor = normalColor
+                lockImage.contentTintColor = normalColor
+                signalImage.contentTintColor = normalColor
+            }
+            isMouseOver = false
         }
-        isMouseOver = false
     }
 
     override func mouseUp(with event: NSEvent) {
@@ -139,6 +149,7 @@ class WifiMenuItemView: NSView {
         super.viewWillMove(toWindow: newWindow)
         newWindow?.becomeKey()
         updateTrackingAreas()
+        currentWindow = newWindow
     }
 
     override func draw(_ rect: NSRect) {

@@ -71,6 +71,14 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
     }
 
+    func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
+        for item in networkItemList {
+            if let view = item.view as? WifiMenuItemView {
+                view.checkHighlight()
+            }
+        }
+    }
+
     func menuWillOpen(_ menu: NSMenu) {
 
         showAllOptions = (NSApp.currentEvent?.modifierFlags.contains(.option))!
