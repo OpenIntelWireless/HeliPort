@@ -142,7 +142,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Check for Updates...", comment: ""):
             heliPortUpdater.checkForUpdates(self)
         case NSLocalizedString("About HeliPort", comment: ""):
-            AboutWindow.show()
+            NSApplication.shared.orderFrontStandardAboutPanel()
+            NSApplication.shared.activate(ignoringOtherApps: true)
         case NSLocalizedString("Quit HeliPort", comment: ""):
             exit(0)
         default:
