@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		508D9C6D248393910025701D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 508D9C6F248393910025701D /* Localizable.strings */; };
+		7557CDF12492A6EA000F0F71 /* AboutWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7557CDF02492A6EA000F0F71 /* AboutWindow.swift */; };
 		7562BBE424826103008A9BD2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7562BBE324826102008A9BD2 /* README.md */; };
 		75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkInfo.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
@@ -62,6 +63,7 @@
 		2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.release.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.release.xcconfig"; sourceTree = "<group>"; };
 		508D9C6724838D540025701D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		508D9C6E248393910025701D /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7557CDF02492A6EA000F0F71 /* AboutWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindow.swift; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInfo.swift; sourceTree = "<group>"; };
 		BCA4DFA624385F73002A862A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
 				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
 				508D9C6F248393910025701D /* Localizable.strings */,
+				7557CDF02492A6EA000F0F71 /* AboutWindow.swift */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCA4DFAF243A58B5002A862A /* Functions.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
+				7557CDF12492A6EA000F0F71 /* AboutWindow.swift in Sources */,
 				BCA4DFA724385F73002A862A /* KeychainManager.swift in Sources */,
 				BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */,

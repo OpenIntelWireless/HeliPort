@@ -67,6 +67,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(withTitle: NSLocalizedString("Create Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Check for Updates...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("About HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
     }
 
@@ -97,7 +98,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         for idx in 0...5 {
             items[idx].isHidden = true
         }
-        for idx in 1...2 {
+        for idx in 1...3 {
             items[items.count - idx].isHidden = true
         }
     }
@@ -106,7 +107,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         for idx in 0...5 {
             items[idx].isHidden = false
         }
-        for idx in 1...2 {
+        for idx in 1...3 {
             items[items.count - idx].isHidden = false
         }
     }
@@ -140,6 +141,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
         case NSLocalizedString("Check for Updates...", comment: ""):
             heliPortUpdater.checkForUpdates(self)
+        case NSLocalizedString("About HeliPort", comment: ""):
+            AboutWindow.show()
         case NSLocalizedString("Quit HeliPort", comment: ""):
             exit(0)
         default:
