@@ -132,7 +132,9 @@ class NetworkManager {
                 networkInfo.auth.option = network?.auth.option ?? 0
                 networkInfoList.append(networkInfo)
             }
+            var ssidSet = Set<String>()
             networkInfoList = networkInfoList.sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected }
+                .filter { $0.ssid != "" && ssidSet.insert($0.ssid).0 }
             callback(networkInfoList)
         }
     }

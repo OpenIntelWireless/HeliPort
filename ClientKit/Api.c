@@ -47,7 +47,7 @@ bool get_network_list(network_info_list_t *list) {
     }
     sleep(5);
     if (!open_adapter(&con)) {
-        return KERN_FAILURE;
+        goto error;
     }
     int oid = IOCTL_80211_SCAN_RESULT;
     while (_nake_ioctl(con, &oid, true, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
