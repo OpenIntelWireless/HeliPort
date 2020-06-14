@@ -61,6 +61,10 @@ kern_return_t ioctl_get(int ctl, void *data, size_t data_len);
 
 kern_return_t ioctl_set(int ctl, void *data, size_t data_len);
 
+kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len);
+
+kern_return_t _nake_ioctl(io_connect_t con, int *ctl, bool is_get, void *data, size_t data_len);
+
 bool get_platform_info(platform_info_t *result);
 
 bool get_network_list(network_info_list_t *list);

@@ -40,13 +40,17 @@ bool get_network_list(network_info_list_t *list) {
 
     struct ioctl_scan scan;
     struct ioctl_network_info network_info_ret;
+    io_connect_t con;
     scan.version = IOCTL_VERSION;
     if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
         goto error;
     }
-
     sleep(5);
-    while (ioctl_get(IOCTL_80211_SCAN_RESULT, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
+    if (!open_adapter(&con)) {
+        return KERN_FAILURE;
+    }
+    int oid = IOCTL_80211_SCAN_RESULT;
+    while (_nake_ioctl(con, &oid, true, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
         if (list->count >= MAX_NETWORK_LIST_LENGTH) {
             break;
         }
@@ -55,7 +59,7 @@ bool get_network_list(network_info_list_t *list) {
         info->RSSI = network_info_ret.rssi;
         info->auth.security = network_info_ret.ni_rsncipher;
     }
-
+    close_adapter(con);
     return true;
 
 error:
@@ -69,10 +73,8 @@ error:
 
 static bool isSupportService(const char *name)
 {
-    if (memcmp(name, "TestService", strlen("TestService"))
-#ifndef API_TEST
-        || memcmp(name, "itlwmx", strlen("itlwmx")) || memcmp(name, "itlwm", strlen("itlwm"))
-#endif
+    if (strcmp(name, "TestService")
+        && strcmp(name, "itlwmx") && strcmp(name, "itlwm")
         ) {
         return false;
     }
@@ -125,21 +127,28 @@ void close_adapter(io_connect_t connection)
     }
 }
 
-static kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len)
+kern_return_t _nake_ioctl(io_connect_t con, int *ctl, bool is_get, void *data, size_t data_len)
 {
+    if (!is_get) {
+        *ctl |= IOCTL_MASK;
+    }
+    kern_return_t ret;
+    if (is_get) {
+        ret = IOConnectCallStructMethod(con, *ctl, NULL, 0, data, &data_len);
+    } else {
+        ret = IOConnectCallStructMethod(con, *ctl, data, data_len, NULL, 0);
+    }
+    return ret;
+}
+
+kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len)
+{
+    kern_return_t ret;
     io_connect_t con;
     if (!open_adapter(&con)) {
         return KERN_FAILURE;
     }
-    if (!is_get) {
-        ctl |= IOCTL_MASK;
-    }
-    kern_return_t ret;
-    if (is_get) {
-        ret = IOConnectCallStructMethod(con, ctl, NULL, 0, data, &data_len);
-    } else {
-        ret = IOConnectCallStructMethod(con, ctl, data, data_len, NULL, 0);
-    }
+    ret = _nake_ioctl(con, &ctl, is_get, data, data_len);
     close_adapter(con);
     return ret;
 }
