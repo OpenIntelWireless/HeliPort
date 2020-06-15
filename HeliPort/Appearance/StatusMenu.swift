@@ -124,19 +124,21 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         print(sender.title)
         switch sender.title {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
-            //items[6].title = NSLocalizedString("Wi-Fi: On", comment: "")
-            //items[7].title = NSLocalizedString("Turn Wi-Fi Off", comment: "")
+            items[6].title = NSLocalizedString("Wi-Fi: On", comment: "")
+            items[7].title = NSLocalizedString("Turn Wi-Fi Off", comment: "")
+            power_on()
             StatusBarIcon.on()
         case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
-            //items[6].title = NSLocalizedString("Wi-Fi: Off", comment: "")
-            //items[7].title = NSLocalizedString("Turn Wi-Fi On", comment: "")
-            //timer?.invalidate()
-            //timer = nil
-            //StatusBarIcon.off()
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
-            alert.alertStyle = NSAlert.Style.critical
-            alert.runModal()
+            items[6].title = NSLocalizedString("Wi-Fi: Off", comment: "")
+            items[7].title = NSLocalizedString("Turn Wi-Fi On", comment: "")
+            timer?.invalidate()
+            timer = nil
+            power_off()
+            StatusBarIcon.off()
+//            let alert = NSAlert()
+//            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
+//            alert.alertStyle = NSAlert.Style.critical
+//            alert.runModal()
         case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
             joinPop.makeKeyAndOrderFront(self)

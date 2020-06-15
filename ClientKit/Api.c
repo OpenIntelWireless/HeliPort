@@ -45,7 +45,7 @@ bool get_network_list(network_info_list_t *list) {
     if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
         goto error;
     }
-    sleep(5);
+    sleep(3);
     if (!open_adapter(&con)) {
         goto error;
     }
@@ -159,4 +159,27 @@ kern_return_t ioctl_set(int ctl, void *data, size_t data_len) {
 
 kern_return_t ioctl_get(int ctl, void *data, size_t data_len) {
     return _ioctl(ctl, true, data, data_len);
+}
+
+kern_return_t power_on() {
+    struct ioctl_power power;
+    power.enabled = 1;
+    power.version = IOCTL_VERSION;
+    return ioctl_set(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+}
+
+kern_return_t power_off() {
+    struct ioctl_power power;
+    power.enabled = 0;
+    power.version = IOCTL_VERSION;
+    return ioctl_set(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+}
+
+kern_return_t associate_ssid(const char *ssid, const char *pwd)
+{
+    struct ioctl_associate ass;
+    memcpy(ass.nwid.nwid, ssid, 32);
+    memcpy(ass.wpa_key.key, pwd, sizeof(ass.wpa_key.key));
+    ass.version = IOCTL_VERSION;
+    return ioctl_set(IOCTL_80211_ASSOCIATE, &ass, sizeof(struct ioctl_associate));
 }

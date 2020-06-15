@@ -71,4 +71,10 @@ bool get_network_list(network_info_list_t *list);
 
 bool connect_network(network_info_t *info);
 
+kern_return_t power_on();
+
+kern_return_t power_off();
+
+kern_return_t associate_ssid(const char *ssid, const char *pwd);
+
 #endif /* Api_h */
