@@ -67,8 +67,8 @@ error:
 }
 
 bool connect_network(network_info_t *info) {
-error:
-    return false;
+    associate_ssid(info->SSID, info->auth.password);
+    return true;
 }
 
 static bool isSupportService(const char *name)
