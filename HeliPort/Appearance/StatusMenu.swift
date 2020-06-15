@@ -20,22 +20,53 @@ import Sparkle
 class StatusMenu: NSMenu, NSMenuDelegate {
     let heliPortUpdater = SUUpdater()
 
-    let networkListUpdatePeriod: Double = 10
+    let networkListUpdatePeriod: Double = 5
 
     var headerLength: Int = 0
     var timer: Timer?
-    var showAllOptions: Bool = false
 
-    var statusItem: NSMenuItem?
+    let statusItem = NSMenuItem(title: NSLocalizedString("Unavaliable", comment: ""), action: nil, keyEquivalent: "")
+    let switchItem = NSMenuItem(title: NSLocalizedString("Turn Wi-Fi Off", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "")
     var networkItemList = [NSMenuItem]()
     let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
-    var networkItemListSeparator: NSMenuItem?
+    let networkItemListSeparator = NSMenuItem.separator()
+
+    var showAllOptions: Bool = false {
+        willSet(visible) {
+            for idx in 0...5 {
+                items[idx].isHidden = !visible
+            }
+            for idx in 1...2 {
+                items[items.count - idx].isHidden = !visible
+            }
+        }
+    }
+
+    var isNetworkListEmpty: Bool = true {
+        willSet(empty) {
+            networkItemListSeparator.isHidden = empty
+            if empty {
+                for item in self.networkItemList {
+                    if let view = item.view as? WifiMenuItemView {
+                        view.hide()
+                    }
+                }
+            }
+        }
+    }
+
+    var isNetworkEnabled: Bool = true {
+        willSet(newState) {
+            statusItem.title = NSLocalizedString(newState ? "Wi-Fi: On" : "Wi-Fi: Off", comment: "")
+            switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
+            self.isNetworkListEmpty = !newState
+        }
+    }
 
     override init(title: String) {
         super.init(title: title)
         minimumWidth = CGFloat(285.0)
         delegate = self
-        //autoenablesItems = false
         setupMenuHeaderAndFooter()
         updateNetworkList()
     }
@@ -48,9 +79,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(withTitle: NSLocalizedString("Open Wireless Diagnostics...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(NSMenuItem.separator())
 
-        statusItem = addItem(withTitle: NSLocalizedString("Unavaliable", comment: ""), action: nil, keyEquivalent: "")
-        statusItem?.isEnabled = false
-        addItem(withTitle: NSLocalizedString("Turn Wi-Fi Off", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(statusItem)
+        addItem(switchItem)
+        switchItem.target = self
         addItem(NSMenuItem.separator())
 
         headerLength = items.count
@@ -59,15 +90,15 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             networkItemList.append(addNetworkItemPlaceholder())
         }
 
-        networkItemListSeparator = NSMenuItem.separator()
-        networkItemListSeparator?.isHidden = true
-        addItem(networkItemListSeparator!)
+        addItem(networkItemListSeparator)
 
         addItem(withTitle: NSLocalizedString("Join Other Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Create Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Check for Updates...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+
+        addItem(NSMenuItem.separator())
         addItem(withTitle: NSLocalizedString("About HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(withTitle: NSLocalizedString("Check for Updates...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
         addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
     }
 
@@ -90,55 +121,25 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.timer!, forMode: .common)
             currentRunLoop.run()
         }
+        updateNetworkList()
 
-        if showAllOptions {
-            buildOptionMenu()
-        } else {
-            buildNormalMenu()
-        }
     }
 
     func menuDidClose(_ menu: NSMenu) {
         timer?.invalidate()
     }
 
-    func buildNormalMenu() {
-        for idx in 0...5 {
-            items[idx].isHidden = true
-        }
-        for idx in 1...3 {
-            items[items.count - idx].isHidden = true
-        }
-    }
-
-    func buildOptionMenu() {
-        for idx in 0...5 {
-            items[idx].isHidden = false
-        }
-        for idx in 1...3 {
-            items[items.count - idx].isHidden = false
-        }
-    }
-
     @objc func clickMenuItem(_ sender: NSMenuItem) {
         print(sender.title)
         switch sender.title {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
-            items[6].title = NSLocalizedString("Wi-Fi: On", comment: "")
-            items[7].title = NSLocalizedString("Turn Wi-Fi Off", comment: "")
+            isNetworkEnabled = true
             power_on()
             StatusBarIcon.on()
         case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
-            items[6].title = NSLocalizedString("Wi-Fi: Off", comment: "")
-            items[7].title = NSLocalizedString("Turn Wi-Fi On", comment: "")
-            timer?.invalidate()
-            timer = nil
+            isNetworkEnabled = false
             power_off()
             StatusBarIcon.off()
-//            let alert = NSAlert()
-//            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
-//            alert.alertStyle = NSAlert.Style.critical
-//            alert.runModal()
         case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
             joinPop.makeKeyAndOrderFront(self)
@@ -158,8 +159,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             exit(0)
         default:
             print("Default")
-            //let url = URL(string: "x-apple.systempreferences:com.apple.preference.network")!
-            //NSWorkspace.shared.open(url)
         }
     }
 
@@ -181,28 +180,23 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 statusText = String(cString: &platformInfo.device_info_str.0) + " " + String(cString: &platformInfo.driver_info_str.0)
             }
             DispatchQueue.main.async {
-                self.statusItem?.title = statusText
+                self.statusItem.title = statusText
             }
+        }
+
+        if !isNetworkEnabled {
+            return
         }
 
         NetworkManager.scanNetwork(callback: { networkList in
             DispatchQueue.main.async {
-                if networkList.count > 0 {
-                    var networkList = networkList
-                    for index in 0 ... self.networkItemList.count - 1 {
-                        guard let view = self.networkItemList[index].view as? WifiMenuItemView else {
-                            continue
-                        }
-                        if networkList.count > 0 {
-                            view.updateNetworkInfo(networkInfo: networkList.removeFirst())
-                            view.show()
-                        } else {
-                            view.hide()
-                        }
+                self.isNetworkListEmpty = networkList.count == 0
+                var networkList = networkList
+                for index in 0 ... self.networkItemList.count - 1 {
+                    if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
+                        view.updateNetworkInfo(networkInfo: networkList.removeFirst())
+                        view.show()
                     }
-                    self.networkItemListSeparator?.isHidden = false
-                } else {
-                    self.networkItemListSeparator?.isHidden = true
                 }
             }
         })
