@@ -57,7 +57,9 @@ bool get_network_list(network_info_list_t *list) {
         network_info_t *info = &list->networks[list->count++];
         strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
         info->RSSI = network_info_ret.rssi;
-        info->auth.security = network_info_ret.ni_rsncipher;
+        // TODO: set security
+        // info->auth.security = network_info_ret.ni_rsncipher;
+        info->auth.security = ITL80211_CIPHER_CCMP;
     }
     close_adapter(con);
     return true;
@@ -67,8 +69,7 @@ error:
 }
 
 bool connect_network(network_info_t *info) {
-    associate_ssid(info->SSID, info->auth.password);
-    return true;
+    return associate_ssid(info->SSID, info->auth.password) == KERN_SUCCESS;
 }
 
 static bool isSupportService(const char *name)

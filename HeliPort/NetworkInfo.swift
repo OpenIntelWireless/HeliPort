@@ -128,9 +128,7 @@ class NetworkManager {
                 idx += 1
                 var network = element as? network_info_t
                 let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, rssi: Int(network!.RSSI))
-//                networkInfo.auth.security = network?.auth.security ?? 0
-                //TODO hard coded
-                networkInfo.auth.security = NetworkInfo.AuthSecurity.CCMP.rawValue
+                networkInfo.auth.security = network?.auth.security ?? 0
                 networkInfo.auth.option = network?.auth.option ?? 0
                 networkInfoList.append(networkInfo)
             }
