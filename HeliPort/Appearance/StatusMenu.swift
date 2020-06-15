@@ -48,7 +48,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             if empty {
                 for item in self.networkItemList {
                     if let view = item.view as? WifiMenuItemView {
-                        view.hide()
+                        view.visible = false
                     }
                 }
             }
@@ -168,7 +168,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         guard let view = item.view as? WifiMenuItemView else {
             return item
         }
-        view.hide()
+        view.visible = false
         return item
     }
 
@@ -194,8 +194,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 var networkList = networkList
                 for index in 0 ... self.networkItemList.count - 1 {
                     if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
-                        view.updateNetworkInfo(networkInfo: networkList.removeFirst())
-                        view.show()
+                        view.networkInfo = networkList.removeFirst()
+                        view.visible = true
                     }
                 }
             }

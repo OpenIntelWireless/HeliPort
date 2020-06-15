@@ -17,62 +17,90 @@ import Foundation
 import Cocoa
 
 class WifiMenuItemView: NSView {
-    var menuItemView: NSVisualEffectView
-    var statusImage: NSImageView
-    var ssidLabel: NSTextView
-    var lockImage: NSImageView
-    var signalImage: NSImageView
-    var highlightColor: NSColor
-    var normalColor: NSColor
-    var isMouseOver: Bool = false
-    var visible: Bool = true
-    var currentWindow: NSWindow?
-
-    var networkInfo: NetworkInfo
-
-    init(networkInfo: NetworkInfo) {
-        self.networkInfo = networkInfo
-        menuItemView = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 285, height: 20))
-        statusImage = NSImageView(frame: NSRect(x: 3, y: 0, width: 18, height: 18))
-        ssidLabel = NSTextView(frame: NSRect(x: 18, y: 0, width: 206, height: 18))
-        lockImage = NSImageView(frame: NSRect(x: 231, y: 0, width: 18, height: 18))
-        signalImage = NSImageView(frame: NSRect(x: 257, y: 0, width: 18, height: 18))
-        isMouseOver = false
-
-        highlightColor = NSColor.white
-        normalColor = NSColor.black
-
-        super.init(frame: NSRect(x: 0, y: 0, width: 285, height: 20))
-
-        if isDarkMode(view: menuItemView) {
-            highlightColor = NSColor.white
-            normalColor = NSColor.white
-        }
-
-        menuItemView.addTrackingRect(menuItemView.bounds, owner: menuItemView, userData: nil, assumeInside: false)
+    let menuItemView: NSVisualEffectView = {
+        let menuItemView = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 285, height: 18))
         menuItemView.state = .active
         menuItemView.material = .popover
         menuItemView.isEmphasized = false
         menuItemView.blendingMode = .behindWindow
+        return menuItemView
+    }()
 
+    let statusImage: NSImageView = {
+        let statusImage = NSImageView(frame: NSRect(x: 3, y: 0, width: 18, height: 18))
         statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
         statusImage.image?.isTemplate = true
-        statusImage.isHidden = !networkInfo.isConnected
-        menuItemView.addSubview(statusImage)
+        return statusImage
+    }()
 
+    let ssidLabel: NSTextView = {
+        let ssidLabel = NSTextView(frame: NSRect(x: 18, y: 0, width: 206, height: 18))
         ssidLabel.drawsBackground = false
         ssidLabel.isEditable = false
         ssidLabel.isSelectable = false
         ssidLabel.font = NSFont.systemFont(ofSize: 14)
-        ssidLabel.string = networkInfo.ssid
-        menuItemView.addSubview(ssidLabel)
+        return ssidLabel
+    }()
 
+    let lockImage: NSImageView = {
+        let lockImage = NSImageView(frame: NSRect(x: 231, y: 0, width: 18, height: 18))
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
-        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
-        menuItemView.addSubview(lockImage)
+        return lockImage
+    }()
 
-        signalImage.image = NSImage.init(named: "WiFiSignalStrengthExcellent")
-        //signalImage?.contentTintColor =
+    let signalImage: NSImageView = {
+        let signalImage = NSImageView(frame: NSRect(x: 257, y: 0, width: 18, height: 18))
+        return signalImage
+    }()
+
+    var highlightColor: NSColor = NSColor.white
+    var normalColor: NSColor = NSColor.white
+    var isMouseOver: Bool = false {
+        willSet(hover) {
+            menuItemView.material = hover ? .selection : .popover
+            menuItemView.isEmphasized = hover
+            ssidLabel.textColor = hover ? highlightColor : normalColor
+            if #available(OSX 10.14, *) {
+                statusImage.contentTintColor = hover ? highlightColor : normalColor
+                lockImage.contentTintColor = hover ? highlightColor : normalColor
+                signalImage.contentTintColor = hover ? highlightColor : normalColor
+            }
+        }
+    }
+
+    var darkModeEnabled: Bool = false {
+        willSet(enabled) {
+            highlightColor = NSColor.white
+            normalColor = enabled ? NSColor.white : NSColor.black
+        }
+    }
+
+    var visible: Bool = true {
+        willSet(visible) {
+            setFrameSize(NSSize(width: 285, height: visible ? 18 : 0))
+        }
+    }
+
+    var currentWindow: NSWindow?
+
+    var networkInfo: NetworkInfo {
+        willSet(networkInfo) {
+            statusImage.isHidden = !networkInfo.isConnected
+            ssidLabel.string = networkInfo.ssid
+            lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
+            signalImage.image = getRssiImage(networkInfo.rssi)
+        }
+    }
+
+    init(networkInfo: NetworkInfo) {
+        self.networkInfo = networkInfo
+        super.init(frame: NSRect(x: 0, y: 0, width: 285, height: 18))
+
+        darkModeEnabled = isDarkMode()
+
+        menuItemView.addSubview(statusImage)
+        menuItemView.addSubview(ssidLabel)
+        menuItemView.addSubview(lockImage)
         menuItemView.addSubview(signalImage)
 
         addSubview(menuItemView)
@@ -82,63 +110,14 @@ class WifiMenuItemView: NSView {
         menuItemView.autoresizingMask = [.width, .height]
     }
 
-    func updateNetworkInfo(networkInfo: NetworkInfo) {
-        self.networkInfo = networkInfo
-        statusImage.isHidden = !networkInfo.isConnected
-        ssidLabel.string = networkInfo.ssid
-        lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
-    }
-
-    func show() {
-        setFrameSize(NSSize(width: 285, height: 20))
-        visible = true
-    }
-
-    func hide() {
-        setFrameSize(NSSize(width: 285, height: 0))
-        visible = false
-    }
-
     func checkHighlight() {
         if visible, let position = currentWindow?.mouseLocationOutsideOfEventStream {
-            setHighlight(bounds.contains(convert(position, from: nil)))
-        }
-    }
-
-    func setHighlight(_ isHighlighted: Bool) {
-        if isHighlighted {
-            menuItemView.material = .selection
-            menuItemView.isEmphasized = true
-            ssidLabel.textColor = highlightColor
-            if #available(OSX 10.14, *) {
-                statusImage.contentTintColor = highlightColor
-                lockImage.contentTintColor = highlightColor
-                signalImage.contentTintColor = highlightColor
-            }
-            isMouseOver = true
-        } else {
-            menuItemView.material = .popover
-            menuItemView.isEmphasized = false
-            ssidLabel.textColor = normalColor
-            if #available(OSX 10.14, *) {
-                statusImage.contentTintColor = normalColor
-                lockImage.contentTintColor = normalColor
-                signalImage.contentTintColor = normalColor
-            }
-            isMouseOver = false
+            isMouseOver = bounds.contains(convert(position, from: nil))
         }
     }
 
     override func mouseUp(with event: NSEvent) {
-        menuItemView.material = .popover
-        menuItemView.isEmphasized = false
         isMouseOver = false // NSWindow pop up could escape mouseExit
-        ssidLabel.textColor = normalColor
-        if #available(OSX 10.14, *) {
-            statusImage.contentTintColor = normalColor
-            lockImage.contentTintColor = normalColor
-            signalImage.contentTintColor = normalColor
-        }
         enclosingMenuItem?.menu?.cancelTracking()
         NetworkManager.connect(networkInfo: networkInfo)
     }
@@ -148,37 +127,35 @@ class WifiMenuItemView: NSView {
         //https://stackoverflow.com/questions/15075033/weird-issue-with-nsmenuitem-custom-view-and-mouseup
         super.viewWillMove(toWindow: newWindow)
         newWindow?.becomeKey()
-        updateTrackingAreas()
         currentWindow = newWindow
     }
 
     override func draw(_ rect: NSRect) {
-        if isDarkMode(view: menuItemView) {
-            highlightColor = NSColor.white
-            normalColor = NSColor.white
-        } else {
-            highlightColor = NSColor.white
-            normalColor = NSColor.black
-        }
-        if !isMouseOver {
-            ssidLabel.textColor = normalColor
-            if #available(OSX 10.14, *) {
-                statusImage.contentTintColor = normalColor
-                lockImage.contentTintColor = normalColor
-                signalImage.contentTintColor = normalColor
-            }
-        }
-        //menuItemView?.isHidden = !(enclosingMenuItem?.isHighlighted ?? false)
+        darkModeEnabled = isDarkMode()
+        checkHighlight()
     }
 
-    func isDarkMode(view: NSView) -> Bool {
+    func isDarkMode() -> Bool {
         if #available(OSX 10.14, *) {
-            return view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+            return self.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
         }
         return false
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func getRssiImage(_ RSSI: Int) -> NSImage? {
+        var signalImageName: String
+        switch RSSI {
+        case ..<(-80):
+            signalImageName = "WiFiSignalStrengthFair"
+        case ..<(-60):
+            signalImageName = "WiFiSignalStrengthGood"
+        default:
+            signalImageName = "WiFiSignalStrengthExcellent"
+        }
+        return NSImage.init(named: signalImageName)
     }
 }
