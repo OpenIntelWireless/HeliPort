@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -128,7 +128,6 @@
 				FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */,
 				2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -157,11 +156,11 @@
 		BCFA32DE2424D2BE00E23603 = {
 			isa = PBXGroup;
 			children = (
+				F86A896C243CD1B500CBABC2 /* ClientKit */,
 				7562BBE324826102008A9BD2 /* README.md */,
 				F86A897A243CD5F500CBABC2 /* Common */,
 				BCFA32E92424D2BE00E23603 /* HeliPort */,
 				F86A895E243CD13100CBABC2 /* TestService */,
-				F86A896C243CD1B500CBABC2 /* ClientKit */,
 				BCFA32E82424D2BE00E23603 /* Products */,
 				27E333CBDEE9F043281383C3 /* Pods */,
 				A3DAA5EDB2CAD33F8A53CAD7 /* Frameworks */,

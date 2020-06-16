@@ -176,6 +176,15 @@ kern_return_t power_off() {
     return ioctl_set(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
 }
 
+kern_return_t join_ssid(const char *ssid, const char *pwd)
+{
+    struct ioctl_join join;
+    join.version = IOCTL_VERSION;
+    memcpy(join.nwid.nwid, ssid, 32);
+    memcpy(join.wpa_key.key, pwd, sizeof(join.wpa_key.key));
+    return ioctl_set(IOCTL_80211_JOIN, &join, sizeof(struct ioctl_join));
+}
+
 kern_return_t associate_ssid(const char *ssid, const char *pwd)
 {
     struct ioctl_associate ass;

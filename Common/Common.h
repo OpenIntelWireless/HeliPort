@@ -93,6 +93,8 @@ struct ioctl_disassociate {
 
 struct ioctl_join {
     unsigned int version;
+    struct ioctl_nw_id nwid;
+    struct ioctl_wpa_key wpa_key;
 };
 
 struct ioctl_scan {

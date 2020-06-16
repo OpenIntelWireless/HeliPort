@@ -75,6 +75,8 @@ kern_return_t power_on(void);
 
 kern_return_t power_off(void);
 
+kern_return_t join_ssid(const char *ssid, const char *pwd);
+
 kern_return_t associate_ssid(const char *ssid, const char *pwd);
 
 #endif /* Api_h */

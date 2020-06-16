@@ -183,7 +183,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         joinButton?.title = NSLocalizedString("Join", comment: "")
         joinButton?.target = self
         joinButton?.isEnabled = false
-        //joinButton?.action = #selector()
+        joinButton?.action = #selector(joinWiFi(_:))
         buttonView?.addSubview(joinButton!)
 
         cancelButton?.bezelStyle = .rounded
@@ -303,6 +303,12 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         if isSave?.state.rawValue == 1 {
         }
 
+    }
+    
+    @objc func joinWiFi(_ sender: Any?) {
+        associate_ssid(ssidBox?.stringValue,
+                       JoinPopWindow.passwdInputBox?.stringValue)
+        close()
     }
 
     @objc func cancel(_ sender: Any?) {
