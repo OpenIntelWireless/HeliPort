@@ -127,7 +127,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         usernameLabel?.isHidden = true
         buttonView?.addSubview(usernameLabel!)
 
-        usernameBox?.stringValue = ""
         usernameBox?.drawsBackground = true
         usernameBox?.isBordered = true
         usernameBox?.isEditable = true
@@ -149,7 +148,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         JoinPopWindow.passwdInputBox?.cell = passwdInputBoxCell
         passwdInputBoxCell?.allowedInputSourceLocales = [NSAllRomanInputSourcesLocaleIdentifier]
         passwdInputBoxCell?.isBordered = true
-        JoinPopWindow.passwdInputBox?.stringValue = ""
         JoinPopWindow.passwdInputBox?.drawsBackground = true
         JoinPopWindow.passwdInputBox?.isEditable = true
         JoinPopWindow.passwdInputBox?.isSelectable = true
@@ -158,7 +156,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         JoinPopWindow.passwdInputBox?.isHidden = true
         buttonView?.addSubview(JoinPopWindow.passwdInputBox!)
 
-        JoinPopWindow.passwdSecureBox?.stringValue = ""
         JoinPopWindow.passwdSecureBox?.drawsBackground = true
         JoinPopWindow.passwdSecureBox?.isEditable = true
         JoinPopWindow.passwdSecureBox?.isSelectable = true
@@ -196,6 +193,8 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         cancelButton?.action = #selector(cancel(_:))
         buttonView?.addSubview(cancelButton!)
 
+        resetInputBoxes()
+
         view?.autoresizingMask = .minYMargin
         buttonView?.autoresizingMask = .maxYMargin
 
@@ -208,14 +207,16 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     }
 
     @objc func security(_ sender: Any?) {
-        switch (securityPop?.indexOfSelectedItem)! {
-        case 0: // Encryption: None
+        switch (securityPop?.title)! {
+        case NSLocalizedString("None", comment: ""):
             usernameLabel?.isHidden = true
             usernameBox?.isHidden = true
             passwdLabel?.isHidden = true
             JoinPopWindow.passwdInputBox?.isHidden = true
             JoinPopWindow.passwdSecureBox?.isHidden = true
             isShowPasswd?.isHidden = true
+            resetInputBoxes()
+            controlJoinButton()
             ssidBox?.becomeFirstResponder()
             if frame.height == 317 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY + 48, width: 450, height: 269)
@@ -225,7 +226,10 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY + 76, width: 450, height: 269)
                 setFrame(frameSize, display: false, animate: true)
             }
-        case 2, 3: // Encryption: Personal
+        case NSLocalizedString("WPA/WPA2 Personal", comment: ""),
+             NSLocalizedString("WPA2/WPA3 Personal", comment: ""),
+             NSLocalizedString("WPA2 Personal", comment: ""),
+             NSLocalizedString("WPA3 Personal", comment: ""):
             if frame.height == 269 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY - 48, width: 450, height: 317)
                 setFrame(frameSize, display: false, animate: true)
@@ -236,12 +240,17 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdInputBox?.isHidden = true
             JoinPopWindow.passwdSecureBox?.isHidden = false
             isShowPasswd?.isHidden = false
+            resetInputBoxes()
+            controlJoinButton()
             if frame.height == 345 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY + 28, width: 450, height: 317)
                 setFrame(frameSize, display: false, animate: true)
             }
             JoinPopWindow.passwdSecureBox?.becomeFirstResponder()
-        case 5, 6: // Encryption: Enterprise
+        case NSLocalizedString("WPA/WPA2 Enterprise", comment: ""),
+             NSLocalizedString("WPA2/WPA3 Enterprise", comment: ""),
+             NSLocalizedString("WPA2 Enterprise", comment: ""),
+             NSLocalizedString("WPA3 Enterprise", comment: ""):
             if frame.height == 269 {
                 let frameSize = NSRect(x: frame.minX, y: frame.minY - 76, width: 450, height: 345)
                 setFrame(frameSize, display: false, animate: true)
@@ -256,8 +265,15 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdInputBox?.isHidden = true
             JoinPopWindow.passwdSecureBox?.isHidden = false
             isShowPasswd?.isHidden = false
+            resetInputBoxes()
+            controlJoinButton()
             usernameBox?.becomeFirstResponder()
         default:
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("Encryption type unsupported", comment: "")
+            alert.alertStyle = NSAlert.Style.critical
+            alert.runModal()
+            controlJoinButton()
             return
         }
     }
@@ -293,16 +309,43 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         close()
     }
 
+    func resetInputBoxes() {
+        JoinPopWindow.passwdInputBox?.stringValue = ""
+        JoinPopWindow.passwdSecureBox?.stringValue = ""
+        usernameBox?.stringValue = ""
+    }
+
+    // TODO: Get rid of this mess
+    func controlJoinButton() {
+        if (ssidBox?.stringValue.count)! > 0 &&
+            (ssidBox?.stringValue.count)! <= 32 {
+            if JoinPopWindow.passwdInputBox?.isHidden ==  true &&
+                JoinPopWindow.passwdSecureBox?.isHidden == true {
+                joinButton?.isEnabled = true
+            } else if (JoinPopWindow.passwdInputBox?.isHidden ==  false ||
+                JoinPopWindow.passwdSecureBox?.isHidden == false) &&
+                (JoinPopWindow.passwdSecureBox?.stringValue.count)! >= 8 &&
+                (JoinPopWindow.passwdInputBox?.stringValue.count)! >= 8 {
+                if usernameBox?.isHidden == false &&
+                    (usernameBox?.stringValue.count)! == 0 {
+                    joinButton?.isEnabled = false
+                    return
+                }
+                joinButton?.isEnabled = true
+            } else {
+                joinButton?.isEnabled = false
+            }
+        } else {
+            joinButton?.isEnabled = false
+        }
+    }
+
     func controlTextDidChange(_ obj: Notification) {
+        controlJoinButton()
         if JoinPopWindow.passwdInputBox?.isHidden == false {
             JoinPopWindow.passwdSecureBox?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
         } else {
             JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
-        }
-        if (JoinPopWindow.passwdSecureBox?.stringValue.count)! < 8 && (JoinPopWindow.passwdInputBox?.stringValue.count)! < 8 {
-            joinButton?.isEnabled = false
-        } else {
-            joinButton?.isEnabled = true
         }
         if (JoinPopWindow.passwdSecureBox?.stringValue.count)! > 64 {
             let index = JoinPopWindow.passwdSecureBox?.stringValue.index((JoinPopWindow.passwdSecureBox?.stringValue.startIndex)!, offsetBy: 64)
