@@ -25,8 +25,16 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     var headerLength: Int = 0
     var timer: Timer?
 
-    let statusItem = NSMenuItem(title: NSLocalizedString("Unavaliable", comment: ""), action: nil, keyEquivalent: "")
-    let switchItem = NSMenuItem(title: NSLocalizedString("Turn Wi-Fi Off", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "")
+    let statusItem = NSMenuItem(
+        title: NSLocalizedString("Unavaliable", comment: ""),
+        action: nil,
+        keyEquivalent: ""
+    )
+    let switchItem = NSMenuItem(
+        title: NSLocalizedString("Turn Wi-Fi Off", comment: ""),
+        action: #selector(clickMenuItem(_:)),
+        keyEquivalent: ""
+    )
     var networkItemList = [NSMenuItem]()
     let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
     let networkItemListSeparator = NSMenuItem.separator()
@@ -72,11 +80,36 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func setupMenuHeaderAndFooter() {
-        addItem(withTitle: NSLocalizedString("Interface Name: en1", comment: ""), action: nil, keyEquivalent: "").isHidden = true
-        addItem(withTitle: NSLocalizedString("Address: aa:bb:cc:dd:ee:ff", comment: ""), action: nil, keyEquivalent: "").isHidden = true
-        addItem(withTitle: NSLocalizedString("Enable Wi-Fi Logging", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Create Diagnostics Report...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Open Wireless Diagnostics...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(
+            withTitle: NSLocalizedString("Interface Name: en1", comment: ""),
+            action: nil,
+            keyEquivalent: ""
+        ).isHidden = true
+
+        addItem(
+            withTitle: NSLocalizedString("Address: aa:bb:cc:dd:ee:ff", comment: ""),
+            action: nil,
+            keyEquivalent: ""
+        ).isHidden = true
+
+        addItem(
+            withTitle: NSLocalizedString("Enable Wi-Fi Logging", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
+        addItem(
+            withTitle: NSLocalizedString("Create Diagnostics Report...", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
+        addItem(
+            withTitle: NSLocalizedString("Open Wireless Diagnostics...", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
         addItem(NSMenuItem.separator())
 
         addItem(statusItem)
@@ -92,14 +125,43 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(networkItemListSeparator)
 
-        addItem(withTitle: NSLocalizedString("Join Other Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Create Network...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Open Network Preferences...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
+        addItem(
+            withTitle: NSLocalizedString("Join Other Network...", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
+        addItem(
+            withTitle: NSLocalizedString("Create Network...", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
+        addItem(
+            withTitle: NSLocalizedString("Open Network Preferences...", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
 
         addItem(NSMenuItem.separator())
-        addItem(withTitle: NSLocalizedString("About HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Check for Updates...", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "").target = self
-        addItem(withTitle: NSLocalizedString("Quit HeliPort", comment: ""), action: #selector(clickMenuItem(_:)), keyEquivalent: "Q").target = self
+
+        addItem(
+            withTitle: NSLocalizedString("About HeliPort", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
+        addItem(
+            withTitle: NSLocalizedString("Check for Updates...", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        ).target = self
+
+        addItem(
+            withTitle: NSLocalizedString("Quit HeliPort", comment: ""),
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: "Q"
+        ).target = self
     }
 
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
@@ -116,7 +178,13 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
-            self.timer = Timer.scheduledTimer(timeInterval: self.networkListUpdatePeriod, target: self, selector: #selector(self.updateNetworkList), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(
+                timeInterval: self.networkListUpdatePeriod,
+                target: self,
+                selector: #selector(self.updateNetworkList),
+                userInfo: nil,
+                repeats: true
+            )
             let currentRunLoop = RunLoop.current
             currentRunLoop.add(self.timer!, forMode: .common)
             currentRunLoop.run()
@@ -141,7 +209,17 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             power_off()
             StatusBarIcon.off()
         case NSLocalizedString("Join Other Network...", comment: ""):
-            let joinPop = JoinPopWindow.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
+            let joinPop = JoinPopWindow.init(
+                contentRect: NSRect(
+                    x: 0,
+                    y: 0,
+                    width: 450,
+                    height: 247
+                ),
+                styleMask: .titled,
+                backing: .buffered,
+                defer: false
+            )
             joinPop.makeKeyAndOrderFront(self)
         case NSLocalizedString("Create Network...", comment: ""):
             let alert = NSAlert()
@@ -163,8 +241,18 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func addNetworkItemPlaceholder() -> NSMenuItem {
-        let item = addItem(withTitle: "placeholder", action: #selector(clickMenuItem(_:)), keyEquivalent: "")
-        item.view = WifiMenuItemView(networkInfo: NetworkInfo(ssid: "placeholder", connected: false, rssi: 0))
+        let item = addItem(
+            withTitle: "placeholder",
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: ""
+        )
+        item.view = WifiMenuItemView(
+            networkInfo: NetworkInfo(
+                ssid: "placeholder",
+                connected: false,
+                rssi: 0
+            )
+        )
         guard let view = item.view as? WifiMenuItemView else {
             return item
         }
@@ -177,7 +265,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             var statusText = NSLocalizedString("No Status Information Avaliable", comment: "")
             var platformInfo = platform_info_t()
             if get_platform_info(&platformInfo) {
-                statusText = String(cString: &platformInfo.device_info_str.0) + " " + String(cString: &platformInfo.driver_info_str.0)
+                statusText = String(
+                    cString: &platformInfo.device_info_str.0) +
+                    " " +
+                    String(cString: &platformInfo.driver_info_str.0
+                )
             }
             DispatchQueue.main.async {
                 self.statusItem.title = statusText

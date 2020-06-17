@@ -18,7 +18,12 @@ import Cocoa
 
 class WifiMenuItemView: NSView {
     let menuItemView: NSVisualEffectView = {
-        let menuItemView = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 285, height: 18))
+        let menuItemView = NSVisualEffectView(frame: NSRect(
+            x: 0,
+            y: 0,
+            width: 285,
+            height: 18
+        ))
         menuItemView.state = .active
         menuItemView.material = .popover
         menuItemView.isEmphasized = false
@@ -27,14 +32,24 @@ class WifiMenuItemView: NSView {
     }()
 
     let statusImage: NSImageView = {
-        let statusImage = NSImageView(frame: NSRect(x: 3, y: 0, width: 18, height: 18))
+        let statusImage = NSImageView(frame: NSRect(
+            x: 3,
+            y: 0,
+            width: 18,
+            height: 18
+        ))
         statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
         statusImage.image?.isTemplate = true
         return statusImage
     }()
 
     let ssidLabel: NSTextView = {
-        let ssidLabel = NSTextView(frame: NSRect(x: 18, y: 0, width: 206, height: 18))
+        let ssidLabel = NSTextView(frame: NSRect(
+            x: 18,
+            y: 0,
+            width: 206,
+            height: 18
+        ))
         ssidLabel.drawsBackground = false
         ssidLabel.isEditable = false
         ssidLabel.isSelectable = false
@@ -43,13 +58,23 @@ class WifiMenuItemView: NSView {
     }()
 
     let lockImage: NSImageView = {
-        let lockImage = NSImageView(frame: NSRect(x: 231, y: 0, width: 18, height: 18))
+        let lockImage = NSImageView(frame: NSRect(
+            x: 231,
+            y: 0,
+            width: 18,
+            height: 18
+        ))
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
         return lockImage
     }()
 
     let signalImage: NSImageView = {
-        let signalImage = NSImageView(frame: NSRect(x: 257, y: 0, width: 18, height: 18))
+        let signalImage = NSImageView(frame: NSRect(
+            x: 257,
+            y: 0,
+            width: 18,
+            height: 18
+        ))
         return signalImage
     }()
 
@@ -77,7 +102,10 @@ class WifiMenuItemView: NSView {
 
     var visible: Bool = true {
         willSet(visible) {
-            setFrameSize(NSSize(width: 285, height: visible ? 18 : 0))
+            setFrameSize(NSSize(
+                width: 285,
+                height: visible ? 18 : 0
+            ))
         }
     }
 
@@ -94,7 +122,12 @@ class WifiMenuItemView: NSView {
 
     init(networkInfo: NetworkInfo) {
         self.networkInfo = networkInfo
-        super.init(frame: NSRect(x: 0, y: 0, width: 285, height: 18))
+        super.init(frame: NSRect(
+            x: 0,
+            y: 0,
+            width: 285,
+            height: 18
+        ))
 
         darkModeEnabled = isDarkMode()
 

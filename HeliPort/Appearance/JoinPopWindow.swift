@@ -37,28 +37,128 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     var joinButton: NSButton?
     var cancelButton: NSButton?
 
-    override init(contentRect: NSRect, styleMask style: NSWindow.StyleMask, backing backingStoreType: NSWindow.BackingStoreType, defer flag: Bool) {
-        super.init(contentRect: contentRect, styleMask: style, backing: backingStoreType, defer: flag)
+    override init(
+        contentRect: NSRect,
+        styleMask style: NSWindow.StyleMask,
+        backing backingStoreType: NSWindow.BackingStoreType,
+        defer flag: Bool
+    ) {
+        super.init(
+            contentRect: contentRect,
+            styleMask: style,
+            backing: backingStoreType,
+            defer: flag
+        )
         NSApplication.shared.activate(ignoringOtherApps: true)
-        view = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
-        buttonView = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 175))
-        icon = NSImageView(frame: NSRect(x: 25, y: 167, width: 64, height: 64))
-        titleLabel = NSTextField(frame: NSRect(x: 105, y: 212, width: 345, height: 16))
-        subTitleLabel = NSTextField(frame: NSRect(x: 105, y: 170, width: 310, height: 32))
-        ssidLabel = NSTextField(frame: NSRect(x: 70, y: 132, width: 100, height: 19))
-        ssidBox = NSTextField(frame: NSRect(x: 173, y: 132, width: 255, height: 21))
-        securityLabel = NSTextField(frame: NSRect(x: 100, y: 103, width: 70, height: 19))
-        securityPop = NSPopUpButton(frame: NSRect(x: 171, y: 100, width: 260, height: 26))
-        usernameLabel = NSTextField(frame: NSRect(x: 100, y: 150, width: 70, height: 19))
-        usernameBox = NSTextField(frame: NSRect(x: 173, y: 151, width: 255, height: 21))
-        passwdLabel = NSTextView(frame: NSRect(x: 93, y: 121, width: 80, height: 19))
-        JoinPopWindow.passwdInputBox = NSTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
+        view = NSView(frame: NSRect(
+            x: 0,
+            y: 0,
+            width: 450,
+            height: 247
+        ))
+        buttonView = NSView(frame: NSRect(
+            x: 0,
+            y: 0,
+            width: 450,
+            height: 175
+        ))
+        icon = NSImageView(frame: NSRect(
+            x: 25,
+            y: 167,
+            width: 64,
+            height: 64
+        ))
+        titleLabel = NSTextField(frame: NSRect(
+            x: 105,
+            y: 212,
+            width: 345,
+            height: 16
+        ))
+        subTitleLabel = NSTextField(frame: NSRect(
+            x: 105,
+            y: 170,
+            width: 310,
+            height: 32
+        ))
+        ssidLabel = NSTextField(frame: NSRect(
+            x: 70,
+            y: 132,
+            width: 100,
+            height: 19
+        ))
+        ssidBox = NSTextField(frame: NSRect(
+            x: 173,
+            y: 132,
+            width: 255,
+            height: 21
+        ))
+        securityLabel = NSTextField(frame: NSRect(
+            x: 100,
+            y: 103,
+            width: 70,
+            height: 19
+        ))
+        securityPop = NSPopUpButton(frame: NSRect(
+            x: 171,
+            y: 100,
+            width: 260,
+            height: 26
+        ))
+        usernameLabel = NSTextField(frame: NSRect(
+            x: 100,
+            y: 150,
+            width: 70,
+            height: 19
+        ))
+        usernameBox = NSTextField(frame: NSRect(
+            x: 173,
+            y: 151,
+            width: 255,
+            height: 21
+        ))
+        passwdLabel = NSTextView(frame: NSRect(
+            x: 93,
+            y: 121,
+            width: 80,
+            height: 19
+        ))
+        JoinPopWindow.passwdInputBox = NSTextField(frame: NSRect(
+            x: 173,
+            y: 124,
+            width: 255,
+            height: 21
+        ))
         passwdInputBoxCell = NSTextFieldCell.init()
-        JoinPopWindow.passwdSecureBox = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
-        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 255, height: 18))
-        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 255, height: 18))
-        joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
-        cancelButton = NSButton(frame: NSRect(x: 269, y: 18, width: 85, height: 22))
+        JoinPopWindow.passwdSecureBox = NSSecureTextField(frame: NSRect(
+            x: 173,
+            y: 124,
+            width: 255,
+            height: 21
+        ))
+        isShowPasswd = NSButton(frame: NSRect(
+            x: 173,
+            y: 100,
+            width: 255,
+            height: 18
+        ))
+        isSave = NSButton(frame: NSRect(
+            x: 173,
+            y: 80,
+            width: 255,
+            height: 18
+        ))
+        joinButton = NSButton(frame: NSRect(
+            x: 353,
+            y: 18,
+            width: 85,
+            height: 22
+        ))
+        cancelButton = NSButton(frame: NSRect(
+            x: 269,
+            y: 18,
+            width: 85,
+            height: 22
+        ))
 
         icon?.image = NSImage.init(named: "WiFi")
         view?.addSubview(icon!)
@@ -67,10 +167,13 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         titleLabel?.drawsBackground = false
         titleLabel?.isBordered = false
         titleLabel?.isSelectable = false
-        titleLabel?.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
+        titleLabel?.font = NSFont.boldSystemFont(ofSize: 13)
         view?.addSubview(titleLabel!)
 
-        subTitleLabel?.stringValue = NSLocalizedString("Enter the name and security type of the network you want to join.", comment: "")
+        subTitleLabel?.stringValue = NSLocalizedString(
+            "Enter the name and security type of the network you want to join.",
+            comment: ""
+        )
         subTitleLabel?.drawsBackground = false
         subTitleLabel?.isBordered = false
         subTitleLabel?.isSelectable = false
@@ -219,20 +322,47 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             controlJoinButton()
             ssidBox?.becomeFirstResponder()
             if frame.height == 317 {
-                let frameSize = NSRect(x: frame.minX, y: frame.minY + 48, width: 450, height: 269)
-                setFrame(frameSize, display: false, animate: true)
+                let frameSize = NSRect(
+                    x: frame.minX,
+                    y: frame.minY + 48,
+                    width: 450,
+                    height: 269
+                )
+                setFrame(
+                    frameSize,
+                    display: false,
+                    animate: true
+                )
             }
             if frame.height == 345 {
-                let frameSize = NSRect(x: frame.minX, y: frame.minY + 76, width: 450, height: 269)
-                setFrame(frameSize, display: false, animate: true)
+                let frameSize = NSRect(
+                    x: frame.minX,
+                    y: frame.minY + 76,
+                    width: 450,
+                    height: 269
+                )
+                setFrame(
+                    frameSize,
+                    display: false,
+                    animate: true
+                )
             }
         case NSLocalizedString("WPA/WPA2 Personal", comment: ""),
              NSLocalizedString("WPA2/WPA3 Personal", comment: ""),
              NSLocalizedString("WPA2 Personal", comment: ""),
              NSLocalizedString("WPA3 Personal", comment: ""):
             if frame.height == 269 {
-                let frameSize = NSRect(x: frame.minX, y: frame.minY - 48, width: 450, height: 317)
-                setFrame(frameSize, display: false, animate: true)
+                let frameSize = NSRect(
+                    x: frame.minX,
+                    y: frame.minY - 48,
+                    width: 450,
+                    height: 317
+                )
+                setFrame(
+                    frameSize,
+                    display: false,
+                    animate: true
+                )
             }
             usernameLabel?.isHidden = true
             usernameBox?.isHidden = true
@@ -243,8 +373,17 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             resetInputBoxes()
             controlJoinButton()
             if frame.height == 345 {
-                let frameSize = NSRect(x: frame.minX, y: frame.minY + 28, width: 450, height: 317)
-                setFrame(frameSize, display: false, animate: true)
+                let frameSize = NSRect(
+                    x: frame.minX,
+                    y: frame.minY + 28,
+                    width: 450,
+                    height: 317
+                )
+                setFrame(
+                    frameSize,
+                    display: false,
+                    animate: true
+                )
             }
             JoinPopWindow.passwdSecureBox?.becomeFirstResponder()
         case NSLocalizedString("WPA/WPA2 Enterprise", comment: ""),
@@ -252,12 +391,30 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
              NSLocalizedString("WPA2 Enterprise", comment: ""),
              NSLocalizedString("WPA3 Enterprise", comment: ""):
             if frame.height == 269 {
-                let frameSize = NSRect(x: frame.minX, y: frame.minY - 76, width: 450, height: 345)
-                setFrame(frameSize, display: false, animate: true)
+                let frameSize = NSRect(
+                    x: frame.minX,
+                    y: frame.minY - 76,
+                    width: 450,
+                    height: 345
+                )
+                setFrame(
+                    frameSize,
+                    display: false,
+                    animate: true
+                )
             }
             if frame.height == 317 {
-                let frameSize = NSRect(x: frame.minX, y: frame.minY - 28, width: 450, height: 345)
-                setFrame(frameSize, display: false, animate: true)
+                let frameSize = NSRect(
+                    x: frame.minX,
+                    y: frame.minY - 28,
+                    width: 450,
+                    height: 345
+                )
+                setFrame(
+                    frameSize,
+                    display: false,
+                    animate: true
+                )
             }
             usernameLabel?.isHidden = false
             usernameBox?.isHidden = false
@@ -285,7 +442,10 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdSecureBox?.isHidden = false
             JoinPopWindow.passwdSecureBox?.becomeFirstResponder()
             JoinPopWindow.passwdSecureBox?.selectText(self)
-            JoinPopWindow.passwdSecureBox?.currentEditor()?.selectedRange = NSRange(location: "\((JoinPopWindow.passwdSecureBox)!)".count, length: 0)
+            JoinPopWindow.passwdSecureBox?.currentEditor()?.selectedRange = NSRange(
+                location: "\((JoinPopWindow.passwdSecureBox)!)".count,
+                length: 0
+            )
         }
         if isShowPasswd?.state.rawValue == 1 {
             JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
@@ -293,7 +453,10 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdSecureBox?.isHidden = true
             JoinPopWindow.passwdInputBox?.becomeFirstResponder()
             JoinPopWindow.passwdInputBox?.selectText(self)
-            JoinPopWindow.passwdInputBox?.currentEditor()?.selectedRange = NSRange(location: "\((JoinPopWindow.passwdInputBox)!)".count, length: 0)
+            JoinPopWindow.passwdInputBox?.currentEditor()?.selectedRange = NSRange(
+                location: "\((JoinPopWindow.passwdInputBox)!)".count,
+                length: 0
+            )
         }
     }
 
@@ -304,10 +467,12 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         }
 
     }
-    
+
     @objc func joinWiFi(_ sender: Any?) {
-        associate_ssid(ssidBox?.stringValue,
-                       JoinPopWindow.passwdInputBox?.stringValue)
+        associate_ssid(
+            ssidBox?.stringValue,
+            JoinPopWindow.passwdInputBox?.stringValue
+        )
         close()
     }
 
@@ -354,11 +519,18 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
         }
         if (JoinPopWindow.passwdSecureBox?.stringValue.count)! > 64 {
-            let index = JoinPopWindow.passwdSecureBox?.stringValue.index((JoinPopWindow.passwdSecureBox?.stringValue.startIndex)!, offsetBy: 64)
-            JoinPopWindow.passwdSecureBox?.stringValue = String((JoinPopWindow.passwdSecureBox?.stringValue[..<index!])!)
+            let index = JoinPopWindow.passwdSecureBox?.stringValue.index(
+                (JoinPopWindow.passwdSecureBox?.stringValue.startIndex)!,
+                offsetBy: 64
+            )
+            JoinPopWindow.passwdSecureBox?.stringValue =
+                String((JoinPopWindow.passwdSecureBox?.stringValue[..<index!])!)
         }
         if (JoinPopWindow.passwdInputBox?.stringValue.count)! > 64 {
-            let index = JoinPopWindow.passwdInputBox?.stringValue.index((JoinPopWindow.passwdInputBox?.stringValue.startIndex)!, offsetBy: 64)
+            let index = JoinPopWindow.passwdInputBox?.stringValue.index(
+                (JoinPopWindow.passwdInputBox?.stringValue.startIndex)!,
+                offsetBy: 64
+            )
             JoinPopWindow.passwdInputBox?.stringValue = String((JoinPopWindow.passwdInputBox?.stringValue[..<index!])!)
         }
     }

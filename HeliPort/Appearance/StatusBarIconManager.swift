@@ -47,10 +47,18 @@ class StatusBarIcon: NSObject {
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
             self.timer?.invalidate()
-            self.timer = Timer.scheduledTimer(timeInterval: 0.3, target: self,
-                                              selector: #selector(self.tick), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(
+                timeInterval: 0.3,
+                target: self,
+                selector: #selector(self.tick),
+                userInfo: nil,
+                repeats: true
+            )
             let currentRunLoop = RunLoop.current
-            currentRunLoop.add(self.timer!, forMode: .common)
+            currentRunLoop.add(
+                self.timer!,
+                forMode: .common
+            )
             currentRunLoop.run()
         }
     }

@@ -33,34 +33,96 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
     var networkInfo: NetworkInfo
     var getAuthInfoCallback: ((_ auth: NetworkAuth) -> Void)
 
-    init(popWindow: NSWindow, networkInfo: NetworkInfo, getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> Void) {
+    init(
+        popWindow: NSWindow,
+        networkInfo: NetworkInfo,
+        getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> Void
+    ) {
         self.popWindow = popWindow
         self.networkInfo = networkInfo
         self.getAuthInfoCallback = getAuthInfoCallback
 
-        view = NSView(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
-        icon = NSImageView(frame: NSRect(x: 25, y: 165, width: 64, height: 64))
-        title = NSTextField(frame: NSRect(x: 105, y: 160, width: 300, height: 64))
-        passwdLabel = NSTextView(frame: NSRect(x: 73, y: 124, width: 100, height: 19))
-        passwdInputBox = NSTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
+        view = NSView(frame: NSRect(
+            x: 0,
+            y: 0,
+            width: 450,
+            height: 247
+        ))
+        icon = NSImageView(frame: NSRect(
+            x: 25,
+            y: 165,
+            width: 64,
+            height: 64
+        ))
+        title = NSTextField(frame: NSRect(
+            x: 105,
+            y: 160,
+            width: 300,
+            height: 64
+        ))
+        passwdLabel = NSTextView(frame: NSRect(
+            x: 73,
+            y: 124,
+            width: 100,
+            height: 19
+        ))
+        passwdInputBox = NSTextField(frame: NSRect(
+            x: 173,
+            y: 124,
+            width: 255,
+            height: 21
+        ))
         passwdInputBoxCell = NSTextFieldCell.init()
-        passwdSecureBox = NSSecureTextField(frame: NSRect(x: 173, y: 124, width: 255, height: 21))
-        isShowPasswd = NSButton(frame: NSRect(x: 173, y: 100, width: 170, height: 18))
-        isSave = NSButton(frame: NSRect(x: 173, y: 80, width: 170, height: 18))
-        joinButton = NSButton(frame: NSRect(x: 353, y: 18, width: 85, height: 22))
-        cancelButton = NSButton(frame: NSRect(x: 269, y: 18, width: 85, height: 22))
+        passwdSecureBox = NSSecureTextField(frame: NSRect(
+            x: 173,
+            y: 124,
+            width: 255,
+            height: 21
+        ))
+        isShowPasswd = NSButton(frame: NSRect(
+            x: 173,
+            y: 100,
+            width: 170,
+            height: 18
+        ))
+        isSave = NSButton(frame: NSRect(
+            x: 173,
+            y: 80,
+            width: 170,
+            height: 18
+        ))
+        joinButton = NSButton(frame: NSRect(
+            x: 353,
+            y: 18,
+            width: 85,
+            height: 22
+        ))
+        cancelButton = NSButton(frame: NSRect(
+            x: 269,
+            y: 18,
+            width: 85,
+            height: 22
+        ))
 
-        super.init(frame: NSRect(x: 0, y: 0, width: 450, height: 247))
+        super.init(frame: NSRect(
+            x: 0,
+            y: 0,
+            width: 450,
+            height: 247
+        ))
 
         NSApplication.shared.activate(ignoringOtherApps: true)
         icon.image = NSImage.init(named: "WiFi")
         view.addSubview(icon)
 
-        title.stringValue = NSLocalizedString("Wi-Fi Network \"", comment: "") + self.networkInfo.ssid + NSLocalizedString("\" Requires Password", comment: "")
+        title.stringValue =
+            NSLocalizedString("Wi-Fi Network \"", comment: "") +
+            self.networkInfo.ssid +
+            NSLocalizedString("\" Requires Password", comment: "")
         title.drawsBackground = false
         title.isBordered = false
         title.isSelectable = false
-        title.font = NSFont.boldSystemFont(ofSize: 13)//systemFont(ofSize: 13).
+        title.font = NSFont.boldSystemFont(ofSize: 13)
         view.addSubview(title)
 
         passwdLabel.string = NSLocalizedString("Password:", comment: "")
@@ -132,7 +194,10 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
             passwdSecureBox.isHidden = false
             passwdSecureBox.becomeFirstResponder()
             passwdSecureBox.selectText(self)
-            passwdSecureBox.currentEditor()?.selectedRange = NSRange(location: "\((passwdSecureBox))".count, length: 0)
+            passwdSecureBox.currentEditor()?.selectedRange = NSRange(
+                location: "\((passwdSecureBox))".count,
+                length: 0
+            )
         }
         if isShowPasswd.state.rawValue == 1 {
             passwdInputBox.stringValue = (passwdSecureBox.stringValue)
@@ -140,7 +205,10 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
             passwdSecureBox.isHidden = true
             passwdInputBox.becomeFirstResponder()
             passwdInputBox.selectText(self)
-            passwdInputBox.currentEditor()?.selectedRange = NSRange(location: "\((passwdInputBox))".count, length: 0)
+            passwdInputBox.currentEditor()?.selectedRange = NSRange(
+                location: "\((passwdInputBox))".count,
+                length: 0
+            )
         }
     }
 
@@ -170,11 +238,17 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
             joinButton.isEnabled = true
         }
         if (passwdSecureBox.stringValue.count) > 64 {
-            let index = passwdSecureBox.stringValue.index((passwdSecureBox.stringValue.startIndex), offsetBy: 64)
+            let index = passwdSecureBox.stringValue.index(
+                (passwdSecureBox.stringValue.startIndex),
+                offsetBy: 64
+            )
             passwdSecureBox.stringValue = String((passwdSecureBox.stringValue[..<index]))
         }
         if (passwdInputBox.stringValue.count) > 64 {
-            let index = passwdInputBox.stringValue.index((passwdInputBox.stringValue.startIndex), offsetBy: 64)
+            let index = passwdInputBox.stringValue.index((
+                passwdInputBox.stringValue.startIndex),
+                offsetBy: 64
+            )
             passwdInputBox.stringValue = String((passwdInputBox.stringValue[..<index]))
         }
     }

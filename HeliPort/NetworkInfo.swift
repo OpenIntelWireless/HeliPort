@@ -63,7 +63,10 @@ class NetworkManager {
         }
         if !supportedSecurityMode.contains(networkInfo.auth.security) {
             let alert = NSAlert()
-            let labelName = String(describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ?? NetworkInfo.AuthSecurity.NONE)
+            let labelName = String(
+                describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
+                NetworkInfo.AuthSecurity.NONE
+            )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + labelName
             alert.alertStyle = NSAlert.Style.critical
@@ -75,17 +78,28 @@ class NetworkManager {
 
         let getAuthInfoCallback: (_ auth: NetworkAuth) -> Void = { auth in
             var networkInfoStruct = network_info_t()
-            strncpy(&networkInfoStruct.SSID.0, networkInfo.ssid, Int(MAX_SSID_LENGTH))
+            strncpy(
+                &networkInfoStruct.SSID.0,
+                networkInfo.ssid,
+                Int(MAX_SSID_LENGTH)
+            )
             networkInfoStruct.is_connected = false
             networkInfoStruct.RSSI = Int32(networkInfo.rssi)
 
             networkInfoStruct.auth.security = auth.security
             networkInfoStruct.auth.option = auth.option
             networkInfoStruct.auth.identity = UnsafeMutablePointer<UInt8>.allocate(capacity: auth.identity.count)
-            networkInfoStruct.auth.identity.initialize(from: &auth.identity, count: auth.identity.count)
+            networkInfoStruct.auth.identity.initialize(
+                from: &auth.identity,
+                count: auth.identity.count
+            )
             networkInfoStruct.auth.identity_length = UInt32(auth.identity.count)
-            networkInfoStruct.auth.username = UnsafeMutablePointer<Int8>(mutating: (auth.username as NSString).utf8String)
-            networkInfoStruct.auth.password = UnsafeMutablePointer<Int8>(mutating: (auth.password as NSString).utf8String)
+            networkInfoStruct.auth.username = UnsafeMutablePointer<Int8>(
+                mutating: (auth.username as NSString).utf8String
+            )
+            networkInfoStruct.auth.password = UnsafeMutablePointer<Int8>(
+                mutating: (auth.password as NSString).utf8String
+            )
 
             StatusBarIcon.connecting()
             DispatchQueue.global(qos: .background).async {
@@ -104,8 +118,22 @@ class NetworkManager {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth)
         } else {
-            let popWindow = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247), styleMask: .titled, backing: .buffered, defer: false)
-            let wifiPopView: WiFiPopoverSubview = WiFiPopoverSubview(popWindow: popWindow, networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback)
+            let popWindow = NSWindow(
+                contentRect: NSRect(
+                    x: 0,
+                    y: 0,
+                    width: 450,
+                    height: 247
+                ),
+                styleMask: .titled,
+                backing: .buffered,
+                defer: false
+            )
+            let wifiPopView: WiFiPopoverSubview = WiFiPopoverSubview(
+                popWindow: popWindow,
+                networkInfo: networkInfo,
+                getAuthInfoCallback: getAuthInfoCallback
+            )
             popWindow.contentView = wifiPopView
             popWindow.isReleasedWhenClosed = false
             popWindow.level = .floating
@@ -127,7 +155,11 @@ class NetworkManager {
                 }
                 idx += 1
                 var network = element as? network_info_t
-                let networkInfo = NetworkInfo(ssid: String(cString: &network!.SSID.0), connected: network!.is_connected, rssi: Int(network!.RSSI))
+                let networkInfo = NetworkInfo(
+                    ssid: String(cString: &network!.SSID.0),
+                    connected: network!.is_connected,
+                    rssi: Int(network!.RSSI)
+                )
                 networkInfo.auth.security = network?.auth.security ?? 0
                 networkInfo.auth.option = network?.auth.option ?? 0
                 networkInfoList.append(networkInfo)
