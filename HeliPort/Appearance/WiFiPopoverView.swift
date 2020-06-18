@@ -174,6 +174,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         joinButton.title = NSLocalizedString("Join", comment: "")
         joinButton.target = self
         joinButton.isEnabled = false
+        joinButton.keyEquivalent = "\r"
         joinButton.action = #selector(connect(_:))
         view.addSubview(joinButton)
 
