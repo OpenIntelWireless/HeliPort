@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		501FA512249B8F77002B5B54 /* WifiPlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501FA511249B8F77002B5B54 /* WifiPlistManager.swift */; };
 		508D9C6D248393910025701D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 508D9C6F248393910025701D /* Localizable.strings */; };
 		7557CDF424935260000F0F71 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7557CDF324935260000F0F71 /* Credits.rtf */; };
 		7562BBE424826103008A9BD2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7562BBE324826102008A9BD2 /* README.md */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.release.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.release.xcconfig"; sourceTree = "<group>"; };
+		501FA511249B8F77002B5B54 /* WifiPlistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiPlistManager.swift; sourceTree = "<group>"; };
 		508D9C6724838D540025701D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.strings"; sourceTree = "<group>"; };
 		508D9C6E248393910025701D /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
@@ -128,7 +130,6 @@
 				FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */,
 				2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -186,6 +187,7 @@
 				BCFA32F12424D2BF00E23603 /* Info.plist */,
 				BCF712FA243C9EB100BE3C05 /* Appearance */,
 				75FDF38A2481D22000B2A601 /* NetworkInfo.swift */,
+				501FA511249B8F77002B5B54 /* WifiPlistManager.swift */,
 				BCA4DFA624385F73002A862A /* KeychainManager.swift */,
 				BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */,
 				7557CDF324935260000F0F71 /* Credits.rtf */,
@@ -441,6 +443,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75FDF38C2481D25A00B2A601 /* Api.c in Sources */,
+				501FA512249B8F77002B5B54 /* WifiPlistManager.swift in Sources */,
 				BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */,
 				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
