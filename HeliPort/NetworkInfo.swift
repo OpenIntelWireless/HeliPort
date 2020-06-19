@@ -156,7 +156,9 @@ class NetworkManager {
                 idx += 1
                 var network = element as? network_info_t
                 let networkInfo = NetworkInfo(
-                    ssid: String(cString: &network!.SSID.0),
+                    ssid: String(cString: &network!.SSID.0)
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression),
                     connected: network!.is_connected,
                     rssi: Int(network!.RSSI)
                 )
