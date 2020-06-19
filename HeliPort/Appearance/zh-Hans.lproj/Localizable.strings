@@ -26,9 +26,9 @@
 "Show password" = "显示密码";
 "Turn Wi-Fi Off" = "关闭Wi-Fi";
 "Turn Wi-Fi On" = "开启Wi-Fi";
-"Unavaliable" = "不可用";
+"Unavailable" = "不可用";
 "Username:" = "用户名：";
-"Version" = "版本";
+"Version: " = "版本：";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2企业级";
 "WPA/WPA2 Personal" = "WPA/WPA2个人级";

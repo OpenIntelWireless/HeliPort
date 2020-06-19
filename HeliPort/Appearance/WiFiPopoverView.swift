@@ -222,6 +222,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
 
     @objc func connect(_ sender: Any?) {
         networkInfo.auth.password = passwdInputBox.stringValue
+        getAuthInfoCallback(networkInfo.auth)
         if isSave.state == .on {
             print("saved")
         }
