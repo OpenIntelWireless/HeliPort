@@ -437,7 +437,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     }
 
     @objc func showPasswd(_ sender: Any?) {
-        if isShowPasswd?.state.rawValue == 0 {
+        if isShowPasswd?.state == .off {
             JoinPopWindow.passwdSecureBox?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
             JoinPopWindow.passwdInputBox?.isHidden = true
             JoinPopWindow.passwdSecureBox?.isHidden = false
@@ -447,8 +447,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
                 location: "\((JoinPopWindow.passwdSecureBox)!)".count,
                 length: 0
             )
-        }
-        if isShowPasswd?.state.rawValue == 1 {
+        } else {
             JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
             JoinPopWindow.passwdInputBox?.isHidden = false
             JoinPopWindow.passwdSecureBox?.isHidden = true
@@ -462,10 +461,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     }
 
     @objc func saveWiFi(_ sender: Any?) {
-        if isSave?.state.rawValue == 0 {
-        }
-        if isSave?.state.rawValue == 1 {
-        }
 
     }
 

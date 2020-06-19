@@ -189,7 +189,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
     }
 
     @objc func showPasswd(_ sender: Any?) {
-        if isShowPasswd.state.rawValue == 0 {
+        if isShowPasswd.state == .off {
             passwdSecureBox.stringValue = (passwdInputBox.stringValue)
             passwdInputBox.isHidden = true
             passwdSecureBox.isHidden = false
@@ -199,8 +199,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
                 location: "\((passwdSecureBox))".count,
                 length: 0
             )
-        }
-        if isShowPasswd.state.rawValue == 1 {
+        } else {
             passwdInputBox.stringValue = (passwdSecureBox.stringValue)
             passwdInputBox.isHidden = false
             passwdSecureBox.isHidden = true
@@ -223,7 +222,9 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
 
     @objc func connect(_ sender: Any?) {
         networkInfo.auth.password = passwdInputBox.stringValue
-        getAuthInfoCallback(networkInfo.auth)
+        if isSave.state == .on {
+            print("saved")
+        }
         popWindow.close()
     }
 

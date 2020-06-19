@@ -35,6 +35,16 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         action: #selector(clickMenuItem(_:)),
         keyEquivalent: ""
     )
+    let bsdItem = NSMenuItem(
+        title: NSLocalizedString("Interface Name: ", comment: "") + "(null)",
+        action: nil,
+        keyEquivalent: ""
+    )
+    let macItem = NSMenuItem(
+        title: NSLocalizedString("Address: ", comment: "") + "(null)",
+        action: nil,
+        keyEquivalent: ""
+    )
     var networkItemList = [NSMenuItem]()
     let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
     let networkItemListSeparator = NSMenuItem.separator()
@@ -80,18 +90,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func setupMenuHeaderAndFooter() {
-        addItem(
-            withTitle: NSLocalizedString("Interface Name: en1", comment: ""),
-            action: nil,
-            keyEquivalent: ""
-        ).isHidden = true
-
-        addItem(
-            withTitle: NSLocalizedString("Address: aa:bb:cc:dd:ee:ff", comment: ""),
-            action: nil,
-            keyEquivalent: ""
-        ).isHidden = true
-
+        addItem(bsdItem)
+        addItem(macItem)
         addItem(
             withTitle: NSLocalizedString("Enable Wi-Fi Logging", comment: ""),
             action: #selector(clickMenuItem(_:)),
@@ -263,16 +263,21 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     @objc func updateNetworkList() {
         DispatchQueue.global(qos: .background).async {
             var statusText = NSLocalizedString("No Status Information Avaliable", comment: "")
+            var bsdName = NSLocalizedString("Unavailable", comment: "")
+            var macAddr = NSLocalizedString("Unavailable", comment: "")
             var platformInfo = platform_info_t()
             if get_platform_info(&platformInfo) {
-                statusText = String(
-                    cString: &platformInfo.device_info_str.0) +
+                statusText =
+                    String(cString: &platformInfo.device_info_str.0) +
                     " " +
-                    String(cString: &platformInfo.driver_info_str.0
-                )
+                    String(cString: &platformInfo.driver_info_str.0)
+                bsdName = String(cString: &platformInfo.device_info_str.0)
+                macAddr = NetworkManager.getMACAddressFromBSD(bsd: bsdName) ?? macAddr
             }
             DispatchQueue.main.async {
                 self.statusItem.title = statusText
+                self.bsdItem.title = NSLocalizedString("Interface Name: ", comment: "") + bsdName
+                self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
             }
         }
 

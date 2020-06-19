@@ -3,4 +3,7 @@ disabled_rules:
   - function_body_length
   - todo
 
+identifier_name:
+  allowed_symbols: "_"
+
 force_cast: warning

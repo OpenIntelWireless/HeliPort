@@ -1,4 +1,5 @@
-"Address: aa:bb:cc:dd:ee:ff" = "地址：aa:bb:cc:dd:ee:ff";
+"About HeliPort" = "关于 HeliPort";
+"Address: " = "地址：";
 "Cancel" = "取消";
 "Check for Updates..." = "检查更新...";
 "Create Diagnostics Report..." = "创建诊断报告...";
@@ -8,7 +9,7 @@
 "Enter the name and security type of the network you want to join." = "输入您想要加入的网络的名称和安全性类型。";
 "FUNCTION NOT IMPLEMENTED" = "功能尚未实现";
 "Find and join a Wi-Fi network." = "查找并加入Wi-Fi网络。";
-"Interface Name: en1" = "接口名称：en1";
+"Interface Name: " = "接口名称：";
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";
 "Network Name:" = "网络名称：";
@@ -27,6 +28,7 @@
 "Turn Wi-Fi On" = "开启Wi-Fi";
 "Unavaliable" = "不可用";
 "Username:" = "用户名：";
+"Version" = "版本";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2企业级";
 "WPA/WPA2 Personal" = "WPA/WPA2个人级";
@@ -40,5 +42,3 @@
 "Wi-Fi: Off" = "Wi-Fi: 关闭";
 "Wi-Fi: On" = "Wi-Fi: 开启";
 "\" Requires Password" = "\" 需要密码";
-"About HeliPort" = "关于 HeliPort";
-"Version" = "版本";

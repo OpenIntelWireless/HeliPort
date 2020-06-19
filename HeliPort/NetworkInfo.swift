@@ -170,4 +170,46 @@ class NetworkManager {
             callback(networkInfoList)
         }
     }
+
+    // Credit: vadian
+    // https://stackoverflow.com/a/31838376/13164334
+    class func getMACAddressFromBSD(bsd: String) -> String? {
+        let MAC_ADDRESS_LENGTH = 6
+        let separator = ":"
+
+        var length: size_t = 0
+        var buffer: [CChar]
+
+        let bsdIndex = Int32(if_nametoindex(bsd))
+        if bsdIndex == 0 {
+            print("Error: could not find index for bsd name \(bsd)")
+            return nil
+        }
+        let bsdData = Data(bsd.utf8)
+        var managementInfoBase = [CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, bsdIndex]
+
+        if sysctl(&managementInfoBase, 6, nil, &length, nil, 0) < 0 {
+            print("Error: could not determine length of info data structure")
+            return nil
+        }
+
+        buffer = [CChar](unsafeUninitializedCapacity: length, initializingWith: {buffer, initializedCount in
+            for idx in 0..<length { buffer[idx] = 0 }
+            initializedCount = length
+        })
+
+        if sysctl(&managementInfoBase, 6, &buffer, &length, nil, 0) < 0 {
+            print("Error: could not read info data structure")
+            return nil
+        }
+
+        let infoData = Data(bytes: buffer, count: length)
+        let indexAfterMsghdr = MemoryLayout<if_msghdr>.stride + 1
+        let rangeOfToken = infoData[indexAfterMsghdr...].range(of: bsdData)!
+        let lower = rangeOfToken.upperBound
+        let upper = lower + MAC_ADDRESS_LENGTH
+        let macAddressData = infoData[lower..<upper]
+        let addressBytes = macAddressData.map { String(format: "%02x", $0) }
+        return addressBytes.joined(separator: separator)
+    }
 }
