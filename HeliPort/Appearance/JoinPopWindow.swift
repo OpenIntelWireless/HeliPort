@@ -308,6 +308,10 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         isReleasedWhenClosed = false
         level = .floating
         center()
+        
+        // Set WPA Personal as default
+        securityPop?.selectItem(at: 3)
+        security(nil)
     }
 
     @objc func security(_ sender: Any?) {
@@ -508,7 +512,6 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     }
 
     func controlTextDidChange(_ obj: Notification) {
-        controlJoinButton()
         if JoinPopWindow.passwdInputBox?.isHidden == false {
             JoinPopWindow.passwdSecureBox?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
         } else {
@@ -529,5 +532,7 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             )
             JoinPopWindow.passwdInputBox?.stringValue = String((JoinPopWindow.passwdInputBox?.stringValue[..<index!])!)
         }
+        
+        controlJoinButton()
     }
 }
