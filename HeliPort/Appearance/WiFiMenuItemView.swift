@@ -18,63 +18,43 @@ import Cocoa
 
 class WifiMenuItemView: NSView {
     let menuItemView: NSVisualEffectView = {
-        let menuItemView = NSVisualEffectView(frame: NSRect(
-            x: 0,
-            y: 0,
-            width: 285,
-            height: 18
-        ))
+        let menuItemView = NSVisualEffectView()
         menuItemView.state = .active
         menuItemView.material = .popover
         menuItemView.isEmphasized = false
         menuItemView.blendingMode = .behindWindow
+        menuItemView.translatesAutoresizingMaskIntoConstraints = false
         return menuItemView
     }()
 
     let statusImage: NSImageView = {
-        let statusImage = NSImageView(frame: NSRect(
-            x: 3,
-            y: 0,
-            width: 18,
-            height: 18
-        ))
+        let statusImage = NSImageView()
         statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
         statusImage.image?.isTemplate = true
+        statusImage.translatesAutoresizingMaskIntoConstraints = false
         return statusImage
     }()
 
     let ssidLabel: NSTextView = {
-        let ssidLabel = NSTextView(frame: NSRect(
-            x: 18,
-            y: 0,
-            width: 206,
-            height: 18
-        ))
+        let ssidLabel = NSTextView()
         ssidLabel.drawsBackground = false
         ssidLabel.isEditable = false
         ssidLabel.isSelectable = false
         ssidLabel.font = NSFont.systemFont(ofSize: 14)
+        ssidLabel.translatesAutoresizingMaskIntoConstraints = false
         return ssidLabel
     }()
 
     let lockImage: NSImageView = {
-        let lockImage = NSImageView(frame: NSRect(
-            x: 231,
-            y: 0,
-            width: 18,
-            height: 18
-        ))
+        let lockImage = NSImageView()
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
+        lockImage.translatesAutoresizingMaskIntoConstraints = false
         return lockImage
     }()
 
     let signalImage: NSImageView = {
-        let signalImage = NSImageView(frame: NSRect(
-            x: 257,
-            y: 0,
-            width: 18,
-            height: 18
-        ))
+        let signalImage = NSImageView()
+        signalImage.translatesAutoresizingMaskIntoConstraints = false
         return signalImage
     }()
 
@@ -103,7 +83,7 @@ class WifiMenuItemView: NSView {
     var visible: Bool = true {
         willSet(visible) {
             setFrameSize(NSSize(
-                width: 285,
+                width: self.frame.width,
                 height: visible ? 18 : 0
             ))
         }
@@ -120,12 +100,32 @@ class WifiMenuItemView: NSView {
         }
     }
 
+    func setupLayout() {
+        menuItemView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        menuItemView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+
+        statusImage.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
+        statusImage.leftAnchor.constraint(equalTo: menuItemView.leftAnchor, constant: 5).isActive = true
+
+        signalImage.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
+        signalImage.heightAnchor.constraint(equalToConstant: 14).isActive = true
+        signalImage.rightAnchor.constraint(equalTo: menuItemView.rightAnchor, constant: -10).isActive = true
+
+        lockImage.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
+        lockImage.rightAnchor.constraint(equalTo: signalImage.leftAnchor, constant: -10).isActive = true
+
+        ssidLabel.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
+        ssidLabel.heightAnchor.constraint(equalTo: menuItemView.heightAnchor).isActive = true
+        ssidLabel.leftAnchor.constraint(equalTo: statusImage.rightAnchor, constant: -2).isActive = true
+        ssidLabel.rightAnchor.constraint(equalTo: lockImage.leftAnchor, constant: -10).isActive = true
+    }
+
     init(networkInfo: NetworkInfo) {
         self.networkInfo = networkInfo
         super.init(frame: NSRect(
             x: 0,
             y: 0,
-            width: 285,
+            width: 0,
             height: 18
         ))
 
@@ -137,10 +137,9 @@ class WifiMenuItemView: NSView {
         menuItemView.addSubview(signalImage)
 
         addSubview(menuItemView)
+        setupLayout()
 
-        autoresizesSubviews = true
-        autoresizingMask = [.width, .height]
-        menuItemView.autoresizingMask = [.width, .height]
+        autoresizingMask = [.width]
     }
 
     func checkHighlight() {
