@@ -288,6 +288,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             return
         }
 
+        DispatchQueue.main.async {
+            self.statusItem.title = NSLocalizedString("Wi-Fi: Looking for Networks...", comment: "")
+        }
         NetworkManager.scanNetwork(callback: { networkList in
             DispatchQueue.main.async {
                 self.isNetworkListEmpty = networkList.count == 0
@@ -297,6 +300,10 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                         view.networkInfo = networkList.removeFirst()
                         view.visible = true
                     }
+                }
+                // If the wifi is turned off after a start of a scan, do not update to "Wi-Fi on".
+                if self.isNetworkEnabled {
+                    self.statusItem.title = NSLocalizedString("Wi-Fi: On", comment: "")
                 }
             }
         })

@@ -99,7 +99,7 @@ bool open_adapter(io_connect_t *connection_t)
     mach_port_deallocate(mach_task_self(), port);
     if (kr != KERN_SUCCESS)
         return false;
-    while ((service = IOIteratorNext(iter))) {
+    while ((service = IOIteratorNext(iter)) && !found) {
         CFTypeRef type_ref = IORegistryEntryCreateCFProperty(service, CFSTR("IOClass"), kCFAllocatorDefault, 0);
         if (type_ref) {
             const char *name = CFStringGetCStringPtr(type_ref, 0);
@@ -110,12 +110,13 @@ bool open_adapter(io_connect_t *connection_t)
             if (isSupportService(name)) {
                 if (IOServiceOpen(service, mach_task_self(), type, connection_t) == KERN_SUCCESS) {
                     found = true;
-                    IOObjectRelease(service);
-                    CFRelease(type_ref);
-                    break;
                 }
             }
+            // Fix leak issue if there is more than one Ethernet controller
+            CFRelease(type_ref);
         }
+        // Fix leak issue if there is more than one Ethernet controller
+        IOObjectRelease(service);
     }
     IOObjectRelease(iter);
     return found;
