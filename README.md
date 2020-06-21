@@ -12,6 +12,23 @@ If you have any questions or feedback, feel free to [![Join the chat at https://
 
 This project is currently in the early stage of development, nothing except the User Interface works.
 
+## What to do
+
+- Get itlwm.kext from https://github.com/zxystd/itlwm
+- Put it in EFI/CLOVER/kexts/Other
+- Reboot !
+- Clone this project
+- Install CocoaPods
+- <code>cd ~/Downloads/HeliPort-master</code>
+- <code>pod update</code>
+- Open HeliPort.xcworkspace with XCode
+- Select Heliport on the top left corner
+- Hit the tirangle button
+- The HeliPort.app is now in the left tree in Products directory
+- Second clic -> Show in Finder -> open the .app file
+- Et voila ! Look at the top right corner and you'll see the wifi icon, hit it, choose your network and connect.
+
+
 ### To-Do's
 
 - [ ] Save user network info
