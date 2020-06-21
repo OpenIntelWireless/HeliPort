@@ -12,12 +12,6 @@ Si vous avez des questions ou que vous avez des retours à faire n'hesitez pas �
 
 Le projet en est encore à ses débuts, seul l'interface fonctionne pour le moment.
 
-### A faire
-
-- [ ] Sauvegarder les informations de connexion
-- [ ] Authentification EAP
-- [ ] Connexion aux réseaux cachées
-
 Visitez [Projects](https://github.com/zxystd/HeliPort/projects) pour plus d'informations
 
 ## Problèmes
