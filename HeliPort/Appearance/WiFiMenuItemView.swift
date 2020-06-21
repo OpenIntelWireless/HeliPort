@@ -138,8 +138,6 @@ class WifiMenuItemView: NSView {
 
         addSubview(menuItemView)
         setupLayout()
-
-        autoresizingMask = [.width]
     }
 
     func checkHighlight() {
@@ -181,6 +179,8 @@ class WifiMenuItemView: NSView {
     func getRssiImage(_ RSSI: Int) -> NSImage? {
         var signalImageName: String
         switch RSSI {
+        case ..<(-100):
+            signalImageName = "WiFiSignalStrengthPoor"
         case ..<(-80):
             signalImageName = "WiFiSignalStrengthFair"
         case ..<(-60):
