@@ -21,15 +21,40 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     let heliPortUpdater = SUUpdater()
 
     let networkListUpdatePeriod: Double = 5
+    let statusUpdatePeriod: Double = 2
 
     var headerLength: Int = 0
-    var timer: Timer?
+    var networkListUpdateTimer: Timer?
+    var statusUpdateTimer: Timer?
 
     let statusItem = NSMenuItem(
-        title: NSLocalizedString("Wi-Fi: On", comment: ""),
+        title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""),
         action: nil,
         keyEquivalent: ""
     )
+    var status: UInt32 = 0 {
+        didSet {
+            var statusText = ""
+            switch status {
+            case ITL80211_S_INIT.rawValue:
+                statusText = "Wi-Fi: On"
+                StatusBarIcon.disconnected()
+            case ITL80211_S_SCAN.rawValue:
+                statusText = "Wi-Fi: Looking for Networks..."
+            case ITL80211_S_AUTH.rawValue, ITL80211_S_ASSOC.rawValue:
+                statusText = "Wi-Fi: Connecting"
+                StatusBarIcon.connecting()
+            case ITL80211_S_RUN.rawValue:
+                statusText = "Wi-Fi: Connected"
+                StatusBarIcon.connected()
+            default:
+                statusText = "Wi-Fi: Off"
+                StatusBarIcon.off()
+            }
+            statusItem.title = NSLocalizedString(statusText, comment: "")
+        }
+    }
+
     let switchItem = NSMenuItem(
         title: NSLocalizedString("Turn Wi-Fi Off", comment: ""),
         action: #selector(clickMenuItem(_:)),
@@ -84,7 +109,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
     var isNetworkEnabled: Bool = true {
         willSet(newState) {
-            statusItem.title = NSLocalizedString(newState ? "Wi-Fi: On" : "Wi-Fi: Off", comment: "")
             switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
             self.isNetworkListEmpty = !newState
         }
@@ -96,6 +120,20 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         delegate = self
         setupMenuHeaderAndFooter()
         updateNetworkList()
+        getDeviceInfo()
+
+        DispatchQueue.global(qos: .default).async {
+            self.statusUpdateTimer = Timer.scheduledTimer(
+                timeInterval: self.statusUpdatePeriod,
+                target: self,
+                selector: #selector(self.updateStatus),
+                userInfo: nil,
+                repeats: true
+            )
+            let currentRunLoop = RunLoop.current
+            currentRunLoop.add(self.statusUpdateTimer!, forMode: .common)
+            currentRunLoop.run()
+        }
     }
 
     func setupMenuHeaderAndFooter() {
@@ -188,7 +226,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
-            self.timer = Timer.scheduledTimer(
+            self.networkListUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.networkListUpdatePeriod,
                 target: self,
                 selector: #selector(self.updateNetworkList),
@@ -196,7 +234,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 repeats: true
             )
             let currentRunLoop = RunLoop.current
-            currentRunLoop.add(self.timer!, forMode: .common)
+            currentRunLoop.add(self.networkListUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
         updateNetworkList()
@@ -204,7 +242,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func menuDidClose(_ menu: NSMenu) {
-        timer?.invalidate()
+        networkListUpdateTimer?.invalidate()
     }
 
     @objc func clickMenuItem(_ sender: NSMenuItem) {
@@ -250,6 +288,39 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
+    func getDeviceInfo() {
+        DispatchQueue.global(qos: .background).async {
+            var bsdName = NSLocalizedString("Unavailable", comment: "")
+            var macAddr = NSLocalizedString("Unavailable", comment: "")
+            var itlwmVer = NSLocalizedString("Unavailable", comment: "")
+            var platformInfo = platform_info_t()
+            if get_platform_info(&platformInfo) {
+                bsdName = String(cString: &platformInfo.device_info_str.0)
+                macAddr = NetworkManager.getMACAddressFromBSD(bsd: bsdName) ?? macAddr
+                itlwmVer = String(cString: &platformInfo.driver_info_str.0)
+            }
+            DispatchQueue.main.async {
+                self.bsdItem.title = NSLocalizedString("Interface Name: ", comment: "") + bsdName
+                self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
+                self.itlwmVerItem.title = NSLocalizedString("Version: ", comment: "") + itlwmVer
+            }
+        }
+    }
+
+    @objc func updateStatus() {
+        if !isNetworkEnabled {
+            return
+        }
+        DispatchQueue.global(qos: .background).async {
+            var status: UInt32 = 0xFF
+            if get_80211_state(&status) {
+                DispatchQueue.main.async {
+                    self.status = status
+                }
+            }
+        }
+    }
+
     func addNetworkItemPlaceholder() -> NSMenuItem {
         let item = addItem(
             withTitle: "placeholder",
@@ -277,30 +348,10 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc func updateNetworkList() {
-        DispatchQueue.global(qos: .background).async {
-            var bsdName = NSLocalizedString("Unavailable", comment: "")
-            var macAddr = NSLocalizedString("Unavailable", comment: "")
-            var itlwmVer = NSLocalizedString("Unavailable", comment: "")
-            var platformInfo = platform_info_t()
-            if get_platform_info(&platformInfo) {
-                bsdName = String(cString: &platformInfo.device_info_str.0)
-                macAddr = NetworkManager.getMACAddressFromBSD(bsd: bsdName) ?? macAddr
-                itlwmVer = String(cString: &platformInfo.driver_info_str.0)
-            }
-            DispatchQueue.main.async {
-                self.bsdItem.title = NSLocalizedString("Interface Name: ", comment: "") + bsdName
-                self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
-                self.itlwmVerItem.title = NSLocalizedString("Version: ", comment: "") + itlwmVer
-            }
-        }
-
         if !isNetworkEnabled {
             return
         }
 
-        DispatchQueue.main.async {
-            self.statusItem.title = NSLocalizedString("Wi-Fi: Looking for Networks...", comment: "")
-        }
         NetworkManager.scanNetwork(callback: { networkList in
             DispatchQueue.main.async {
                 self.isNetworkListEmpty = networkList.count == 0
@@ -310,10 +361,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                         view.networkInfo = networkList.removeFirst()
                         view.visible = true
                     }
-                }
-                // If the wifi is turned off after a start of a scan, do not update to "Wi-Fi on".
-                if self.isNetworkEnabled {
-                    self.statusItem.title = NSLocalizedString("Wi-Fi: On", comment: "")
                 }
             }
         })
