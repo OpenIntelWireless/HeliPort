@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 
 final class WifiPopupWindow: NSWindow {
-    init(networkInfo: NetworkInfo, getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> Void) {
+    init(networkInfo: NetworkInfo, getAuthInfoCallback: @escaping (_ auth: NetworkAuth, _ savePassword: Bool) -> Void) {
         super.init(
             contentRect: NSRect(
                 x: 0,

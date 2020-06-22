@@ -77,7 +77,7 @@ class NetworkManager {
             return
         }
 
-        let getAuthInfoCallback: (_ auth: NetworkAuth) -> Void = { auth in
+        let getAuthInfoCallback: (_ auth: NetworkAuth, _ savePassword: Bool) -> Void = { auth, savePassword in
             var networkInfoStruct = network_info_t()
             strncpy(
                 &networkInfoStruct.SSID.0,
@@ -108,6 +108,10 @@ class NetworkManager {
                 DispatchQueue.main.async {
                     if result {
                         StatusBarIcon.connected()
+
+                        if savePassword, !auth.password.isEmpty {
+                            CredentialsManager.instance.save(networkInfo, password: auth.password)
+                        }
                     } else {
                         StatusBarIcon.disconnected()
                     }
@@ -117,7 +121,7 @@ class NetworkManager {
 
         guard networkInfo.auth.security != NetworkInfo.AuthSecurity.NONE.rawValue else {
             networkInfo.auth.password = ""
-            getAuthInfoCallback(networkInfo.auth)
+            getAuthInfoCallback(networkInfo.auth, false)
             return
         }
 
@@ -129,7 +133,7 @@ class NetworkManager {
 
         networkInfo.auth.password = savedPassword
         Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
-        getAuthInfoCallback(networkInfo.auth)
+        getAuthInfoCallback(networkInfo.auth, false)
     }
 
     class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {

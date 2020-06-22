@@ -31,12 +31,12 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
     var cancelButton: NSButton
 
     var networkInfo: NetworkInfo
-    var getAuthInfoCallback: ((_ auth: NetworkAuth) -> Void)
+    var getAuthInfoCallback: ((_ auth: NetworkAuth, _ savePassword: Bool) -> Void)
 
     init(
         popWindow: NSWindow,
         networkInfo: NetworkInfo,
-        getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> Void
+        getAuthInfoCallback: @escaping (_ auth: NetworkAuth, _ savePassword: Bool) -> Void
     ) {
         self.popWindow = popWindow
         self.networkInfo = networkInfo
@@ -216,10 +216,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
 
     @objc func connect(_ sender: Any?) {
         networkInfo.auth.password = passwdInputBox.stringValue
-        getAuthInfoCallback(networkInfo.auth)
-        if isSave.state == .on {
-            CredentialsManager.instance.save(networkInfo, password: networkInfo.auth.password)
-        }
+        getAuthInfoCallback(networkInfo.auth, isSave.state == .on)
         popWindow.close()
     }
 
