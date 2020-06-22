@@ -52,7 +52,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     )
     var networkItemList = [NSMenuItem]()
     let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
-    let networkItemListSeparator = NSMenuItem.separator()
+    let networkItemListSeparator: NSMenuItem = {
+        let networkItemListSeparator =  NSMenuItem.separator()
+        networkItemListSeparator.isHidden = true
+        return networkItemListSeparator
+    }()
 
     var showAllOptions: Bool = false {
         willSet(visible) {
@@ -263,6 +267,12 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             return item
         }
         view.visible = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        guard let supView = view.superview else {
+            return item
+        }
+        view.widthAnchor.constraint(equalTo: supView.widthAnchor).isActive = true
+        view.heightAnchor.constraint(equalTo: supView.heightAnchor).isActive = true
         return item
     }
 
@@ -288,15 +298,22 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             return
         }
 
+        DispatchQueue.main.async {
+            self.statusItem.title = NSLocalizedString("Wi-Fi: Looking for Networks...", comment: "")
+        }
         NetworkManager.scanNetwork(callback: { networkList in
             DispatchQueue.main.async {
                 self.isNetworkListEmpty = networkList.count == 0
                 var networkList = networkList
-                for index in 0 ... self.networkItemList.count - 1 {
+                for index in 0 ..< self.networkItemList.count {
                     if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
                         view.networkInfo = networkList.removeFirst()
                         view.visible = true
                     }
+                }
+                // If the wifi is turned off after a start of a scan, do not update to "Wi-Fi on".
+                if self.isNetworkEnabled {
+                    self.statusItem.title = NSLocalizedString("Wi-Fi: On", comment: "")
                 }
             }
         })
