@@ -13,7 +13,6 @@
 		7562BBE424826103008A9BD2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7562BBE324826102008A9BD2 /* README.md */; };
 		75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkInfo.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
-		BCA4DFA724385F73002A862A /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFA624385F73002A862A /* KeychainManager.swift */; };
 		BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */; };
 		BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */; };
@@ -69,7 +68,6 @@
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkInfo.swift; sourceTree = "<group>"; };
-		BCA4DFA624385F73002A862A /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiPopoverView.swift; sourceTree = "<group>"; };
 		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPopWindow.swift; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 				BCF712FA243C9EB100BE3C05 /* Appearance */,
 				75FDF38A2481D22000B2A601 /* NetworkInfo.swift */,
 				501FA511249B8F77002B5B54 /* WifiPlistManager.swift */,
-				BCA4DFA624385F73002A862A /* KeychainManager.swift */,
 				BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */,
 				7557CDF324935260000F0F71 /* Credits.rtf */,
 				F379276E24A0A4A50087FF2B /* CredentialsManager.swift */,
@@ -456,7 +453,6 @@
 				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
-				BCA4DFA724385F73002A862A /* KeychainManager.swift in Sources */,
 				BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */,
 				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
