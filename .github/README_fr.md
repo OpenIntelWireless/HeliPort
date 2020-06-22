@@ -16,7 +16,7 @@ Visitez [Projects](https://github.com/zxystd/HeliPort/projects) pour plus d'info
 
 ## Problèmes
 
-Les problèmes remontés pour ce projet doivent être liés à des bugs ainsi qu'aux demandes d'évolution, prenez le temps de remplir tous les termes dans le template de report de bug. 
+Les problèmes remontés pour ce projet doivent être liés à des bugs ainsi qu'aux demandes d'évolution, prenez le temps de remplir tous les termes dans le template de report de bug.
 
 Les problèmes suivants seront considérés comme invalides et fermés immédiatement:
 
@@ -32,7 +32,8 @@ Les problèmes suivants seront considérés comme invalides et fermés immédiat
 
 ## Contribution
 
-Nous avons désespérément besoin de contributeurs pour nous aider à améliorer le projet, tout aide sera grandement appréciée.  
+Nous avons désespérément besoin de contributeurs pour nous aider à améliorer le projet, tout aide sera grandement appréciée.
+  
 - Les interfaces utilisateur et la gestion de mots de passe sont implémentés en `Swift 5`
 - Les communications avec [itlwm](https://github.com/zxystd/itlwm) sont implementées en `C`
 
@@ -42,4 +43,3 @@ Nous avons désespérément besoin de contributeurs pour nous aider à améliore
 - [@DogAndPot](https://github.com/DogAndPot) for password management and UI implementation
 - [@Goshin](https://github.com/Goshin) for investigating APIs
 - [@zxystd](https://github.com/zxystd) for writing [itlwm](https://github.com/zxystd/itlwm) and APIs
-
