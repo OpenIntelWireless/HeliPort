@@ -58,10 +58,11 @@ class NetworkManager {
     ]
 
     class func connect(networkInfo: NetworkInfo) {
-        if networkInfo.isConnected {
+        guard !networkInfo.isConnected else {
             return
         }
-        if !supportedSecurityMode.contains(networkInfo.auth.security) {
+
+        guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
             let labelName = String(
                 describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
@@ -114,69 +115,53 @@ class NetworkManager {
             }
         }
 
-        if networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue {
+        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.NONE.rawValue else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth)
-        } else {
-            if let savedPassword = CredentialsManager.instance.get(networkInfo) {
-                networkInfo.auth.password = savedPassword
-                Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
-                getAuthInfoCallback(networkInfo.auth)
-                return
-            }
-
-            let popWindow = NSWindow(
-                contentRect: NSRect(
-                    x: 0,
-                    y: 0,
-                    width: 450,
-                    height: 247
-                ),
-                styleMask: .titled,
-                backing: .buffered,
-                defer: false
-            )
-            let wifiPopView: WiFiPopoverSubview = WiFiPopoverSubview(
-                popWindow: popWindow,
-                networkInfo: networkInfo,
-                getAuthInfoCallback: getAuthInfoCallback
-            )
-            popWindow.contentView = wifiPopView
-            popWindow.isReleasedWhenClosed = false
-            popWindow.level = .floating
-            popWindow.makeKeyAndOrderFront(self)
-            popWindow.center()
+            return
         }
+
+        guard let savedPassword = CredentialsManager.instance.get(networkInfo) else {
+            let popup = WifiPopupWindow(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback)
+            popup.show()
+            return
+        }
+
+        networkInfo.auth.password = savedPassword
+        Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
+        getAuthInfoCallback(networkInfo.auth)
     }
 
     class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {
         DispatchQueue.global(qos: .background).async {
             var list = network_info_list_t()
             get_network_list(&list)
-            networkInfoList.removeAll()
-            let networks = Mirror(reflecting: list.networks).children.map({ $0.value })
-            var idx = 1
+
+            var result = Set<NetworkInfo>()
+            let networks = Mirror(reflecting: list.networks).children.map({ $0.value }).prefix(Int(list.count))
+
             for element in networks {
-                if idx > list.count {
-                    break
-                }
-                idx += 1
                 var network = element as? network_info_t
+                let ssid = String(cString: &network!.SSID.0)
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression)
+                guard !ssid.isEmpty else {
+                    continue
+                }
+
                 let networkInfo = NetworkInfo(
-                    ssid: String(cString: &network!.SSID.0)
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                        .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression),
+                    ssid: ssid,
                     connected: network!.is_connected,
                     rssi: Int(network!.RSSI)
                 )
                 networkInfo.auth.security = network?.auth.security ?? 0
                 networkInfo.auth.option = network?.auth.option ?? 0
-                networkInfoList.append(networkInfo)
+                result.insert(networkInfo)
             }
-            var ssidSet = Set<String>()
-            networkInfoList = networkInfoList.sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected }
-                .filter { $0.ssid != "" && ssidSet.insert($0.ssid).0 }
-            callback(networkInfoList)
+
+            DispatchQueue.main.async {
+                callback(Array(result).sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected })
+            }
         }
     }
 
@@ -220,5 +205,15 @@ class NetworkManager {
         let macAddressData = infoData[lower..<upper]
         let addressBytes = macAddressData.map { String(format: "%02x", $0) }
         return addressBytes.joined(separator: separator)
+    }
+}
+
+extension NetworkInfo: Hashable {
+    static func == (lhs: NetworkInfo, rhs: NetworkInfo) -> Bool {
+        return lhs.ssid == rhs.ssid
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ssid)
     }
 }

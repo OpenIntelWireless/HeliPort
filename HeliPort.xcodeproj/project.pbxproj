@@ -24,6 +24,7 @@
 		D47DD664F9B2939B57C54DF4 /* Pods_HeliPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */; };
 		F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379276E24A0A4A50087FF2B /* CredentialsManager.swift */; };
 		F379277124A0A52E0087FF2B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277024A0A52E0087FF2B /* Log.swift */; };
+		F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */; };
 		F84E327924457FAE00D07895 /* ItlNetworkUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */; };
 		F86A8960243CD13300CBABC2 /* TestService.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F86A895F243CD13300CBABC2 /* TestService.hpp */; };
 		F86A8962243CD13400CBABC2 /* TestService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F86A8961243CD13400CBABC2 /* TestService.cpp */; };
@@ -82,6 +83,7 @@
 		DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeliPort.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F379276E24A0A4A50087FF2B /* CredentialsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsManager.swift; sourceTree = "<group>"; };
 		F379277024A0A52E0087FF2B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiPopupWindow.swift; sourceTree = "<group>"; };
 		F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ItlNetworkUserClient.cpp; sourceTree = "<group>"; };
 		F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ItlNetworkUserClient.hpp; sourceTree = "<group>"; };
 		F86A895D243CD13000CBABC2 /* TestService.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestService.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +155,7 @@
 				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
 				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
 				508D9C6F248393910025701D /* Localizable.strings */,
+				F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */,
 				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
+				F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
