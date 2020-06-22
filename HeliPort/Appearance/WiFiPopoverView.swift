@@ -165,8 +165,6 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         isSave.setButtonType(.switch)
         isSave.font = .systemFont(ofSize: 13)
         isSave.title = NSLocalizedString("Remember this network", comment: "")
-        isSave.target = self
-        isSave.action = #selector(saveWiFi(_:))
         view.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded
@@ -212,10 +210,6 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         }
     }
 
-    @objc func saveWiFi(_ sender: Any?) {
-
-    }
-
     @objc func cancel(_ sender: Any?) {
         popWindow.close()
     }
@@ -224,7 +218,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         networkInfo.auth.password = passwdInputBox.stringValue
         getAuthInfoCallback(networkInfo.auth)
         if isSave.state == .on {
-            print("saved")
+            CredentialsManager.instance.save(networkInfo, password: networkInfo.auth.password)
         }
         popWindow.close()
     }

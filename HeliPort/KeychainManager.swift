@@ -45,6 +45,7 @@ class KeychainManager: NSObject {
     }
 
     // TODO: 存储数据
+    @discardableResult
     class func keyChainSaveData(data: Any, withIdentifier identifier: String) -> Bool {
         // 获取存储数据的条件
         let keyChainSaveMutableDictionary = self.createQuaryMutableDictionary(identifier: identifier)

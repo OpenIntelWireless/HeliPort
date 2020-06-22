@@ -118,6 +118,13 @@ class NetworkManager {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth)
         } else {
+            if let savedPassword = CredentialsManager.instance.get(networkInfo) {
+                networkInfo.auth.password = savedPassword
+                Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
+                getAuthInfoCallback(networkInfo.auth)
+                return
+            }
+
             let popWindow = NSWindow(
                 contentRect: NSRect(
                     x: 0,
