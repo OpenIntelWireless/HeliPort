@@ -35,6 +35,20 @@ error:
     return false;
 }
 
+bool get_80211_state(uint32_t *state) {
+    struct ioctl_state state_struct;
+    if (ioctl_get(IOCTL_80211_STATE, &state_struct, sizeof(struct ioctl_state)) != KERN_SUCCESS) {
+        goto error;
+    }
+
+    *state = state_struct.state;
+
+    return true;
+
+error:
+    return false;
+}
+
 bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
 
@@ -69,7 +83,21 @@ error:
 }
 
 bool connect_network(network_info_t *info) {
-    return associate_ssid(info->SSID, info->auth.password) == KERN_SUCCESS;
+    if (associate_ssid(info->SSID, info->auth.password) != KERN_SUCCESS) {
+        goto error;
+    }
+
+    int timeout = 40;
+    while (timeout-- > 0) {
+        uint32_t state;
+        if (get_80211_state(&state) && state == ITL80211_S_RUN) {
+            return true;
+        }
+        sleep(1);
+    }
+
+error:
+    return false;
 }
 
 static bool isSupportService(const char *name)

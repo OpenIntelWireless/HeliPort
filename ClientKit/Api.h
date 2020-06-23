@@ -67,6 +67,8 @@ kern_return_t _nake_ioctl(io_connect_t con, int *ctl, bool is_get, void *data, s
 
 bool get_platform_info(platform_info_t *result);
 
+bool get_80211_state(uint32_t *state);
+
 bool get_network_list(network_info_list_t *list);
 
 bool connect_network(network_info_t *info);
