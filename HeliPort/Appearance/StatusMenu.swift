@@ -18,16 +18,19 @@ import Cocoa
 import Sparkle
 
 final class StatusMenu: NSMenu, NSMenuDelegate {
-    let heliPortUpdater = SUUpdater()
 
-    let networkListUpdatePeriod: Double = 5
-    let statusUpdatePeriod: Double = 2
+    // - MARK: Properties
 
-    var headerLength: Int = 0
-    var networkListUpdateTimer: Timer?
-    var statusUpdateTimer: Timer?
+    private let heliPortUpdater = SUUpdater()
 
-    var status: UInt32 = 0 {
+    private let networkListUpdatePeriod: Double = 5
+    private let statusUpdatePeriod: Double = 2
+
+    private var headerLength: Int = 0
+    private var networkListUpdateTimer: Timer?
+    private var statusUpdateTimer: Timer?
+
+    private var status: UInt32 = 0 {
         didSet {
             var statusText = ""
             switch status {
@@ -50,24 +53,16 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    // - MARK: Menu items
-
-    private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
-    private let switchItem = NSMenuItem(title: NSLocalizedString("Turn Wi-Fi Off", comment: ""))
-    private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
-    private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
-    private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
-
     private var networkItemList = [NSMenuItem]()
 
-    let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
-    let networkItemListSeparator: NSMenuItem = {
+    private let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
+    private let networkItemListSeparator: NSMenuItem = {
         let networkItemListSeparator =  NSMenuItem.separator()
         networkItemListSeparator.isHidden = true
         return networkItemListSeparator
     }()
 
-    var showAllOptions: Bool = false {
+    private var showAllOptions: Bool = false {
         willSet(visible) {
             for idx in 0...6 {
                 items[idx].isHidden = !visible
@@ -78,25 +73,35 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    var isNetworkListEmpty: Bool = true {
+    private var isNetworkListEmpty: Bool = true {
         willSet(empty) {
             networkItemListSeparator.isHidden = empty
-            if empty {
-                for item in self.networkItemList {
-                    if let view = item.view as? WifiMenuItemView {
-                        view.visible = false
-                    }
+            guard empty else {
+                return
+            }
+
+            for item in self.networkItemList {
+                if let view = item.view as? WifiMenuItemView {
+                    view.visible = false
                 }
             }
         }
     }
 
-    var isNetworkEnabled: Bool = true {
+    private var isNetworkEnabled: Bool = true {
         willSet(newState) {
             switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
             self.isNetworkListEmpty = !newState
         }
     }
+
+    // - MARK: Menu items
+
+    private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
+    private let switchItem = NSMenuItem(title: NSLocalizedString("Turn Wi-Fi Off", comment: ""))
+    private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
+    private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
+    private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
 
     // - MARK: Init
 
@@ -163,6 +168,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "Q")
     }
 
+    // - MARK: Overrides
+
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
         for item in networkItemList {
             if let view = item.view as? WifiMenuItemView {
@@ -195,6 +202,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     func menuDidClose(_ menu: NSMenu) {
         networkListUpdateTimer?.invalidate()
     }
+
+    // - MARK: Actions
 
     private func addClickItem(title: String, keyEquivalent: String = "") {
         addItem(
