@@ -102,18 +102,13 @@ class NetworkManager {
                 mutating: (auth.password as NSString).utf8String
             )
 
-            StatusBarIcon.connecting()
             DispatchQueue.global(qos: .background).async {
                 let result = connect_network(&networkInfoStruct)
                 DispatchQueue.main.async {
                     if result {
-                        StatusBarIcon.connected()
-
                         if savePassword, !auth.password.isEmpty {
                             CredentialsManager.instance.save(networkInfo, password: auth.password)
                         }
-                    } else {
-                        StatusBarIcon.disconnected()
                     }
                 }
             }

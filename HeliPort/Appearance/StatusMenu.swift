@@ -251,11 +251,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
             isNetworkEnabled = true
             power_on()
-            StatusBarIcon.on()
         case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
             isNetworkEnabled = false
             power_off()
-            StatusBarIcon.off()
         case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(
                 contentRect: NSRect(
@@ -360,11 +358,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                     view.networkInfo = networkList.removeFirst()
                     view.visible = true
                 }
-            }
-
-            // If the wifi is turned off after a start of a scan, do not update to "Wi-Fi on".
-            if self.isNetworkEnabled {
-                self.statusItem.title = NSLocalizedString("Wi-Fi: On", comment: "")
             }
         }
     }
