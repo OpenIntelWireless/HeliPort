@@ -27,11 +27,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     var networkListUpdateTimer: Timer?
     var statusUpdateTimer: Timer?
 
-    let statusItem = NSMenuItem(
-        title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""),
-        action: nil,
-        keyEquivalent: ""
-    )
     var status: UInt32 = 0 {
         didSet {
             var statusText = ""
@@ -55,27 +50,14 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    let switchItem = NSMenuItem(
-        title: NSLocalizedString("Turn Wi-Fi Off", comment: ""),
-        action: #selector(clickMenuItem(_:)),
-        keyEquivalent: ""
-    )
-    let bsdItem = NSMenuItem(
-        title: NSLocalizedString("Interface Name: ", comment: "") + "(null)",
-        action: nil,
-        keyEquivalent: ""
-    )
-    let macItem = NSMenuItem(
-        title: NSLocalizedString("Address: ", comment: "") + "(null)",
-        action: nil,
-        keyEquivalent: ""
-    )
-    let itlwmVerItem = NSMenuItem(
-        title: NSLocalizedString("Version: ", comment: "") + "(null)",
-        action: nil,
-        keyEquivalent: ""
-    )
-    var networkItemList = [NSMenuItem]()
+    private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
+    private let switchItem = NSMenuItem(title: NSLocalizedString("Turn Wi-Fi Off", comment: ""))
+    private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
+    private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
+    private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
+
+    private var networkItemList = [NSMenuItem]()
+
     let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
     let networkItemListSeparator: NSMenuItem = {
         let networkItemListSeparator =  NSMenuItem.separator()
