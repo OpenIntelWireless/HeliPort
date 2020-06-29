@@ -316,10 +316,10 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             var status: UInt32 = 0xFF
             get_80211_state(&status)
             DispatchQueue.main.async {
-                self.status = status
                 if get_power_ret {
                     self.isNetworkEnabled = powerState
                 }
+                self.status = status
             }
         }
     }
