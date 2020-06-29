@@ -96,8 +96,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    override init(title: String) {
-        super.init(title: title)
+    init() {
+        super.init(title: "")
         minimumWidth = CGFloat(285.0)
         delegate = self
         setupMenuHeaderAndFooter()
@@ -116,6 +116,10 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.statusUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
+    }
+
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setupMenuHeaderAndFooter() {
@@ -359,9 +363,5 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 }
             }
         }
-    }
-
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

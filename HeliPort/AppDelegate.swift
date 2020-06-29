@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
         statusBar.button?.image?.isTemplate = true
-        statusBar.menu = StatusMenu.init(title: "")
+        statusBar.menu = StatusMenu()
 
         StatusBarIcon.statusBar = statusBar
     }
