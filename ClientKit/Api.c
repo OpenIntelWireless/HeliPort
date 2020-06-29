@@ -191,6 +191,12 @@ kern_return_t ioctl_get(int ctl, void *data, size_t data_len) {
     return _ioctl(ctl, true, data, data_len);
 }
 
+bool is_power_on() {
+    struct ioctl_power power;
+    ioctl_get(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+    return power.enabled;
+}
+
 kern_return_t power_on() {
     struct ioctl_power power;
     power.enabled = 1;
@@ -203,6 +209,11 @@ kern_return_t power_off() {
     power.enabled = 0;
     power.version = IOCTL_VERSION;
     return ioctl_set(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+}
+
+kern_return_t get_station_info(station_info_t *info)
+{
+    return ioctl_get(IOCTL_80211_STA_INFO, info, sizeof(struct ioctl_sta_info));
 }
 
 kern_return_t join_ssid(const char *ssid, const char *pwd)

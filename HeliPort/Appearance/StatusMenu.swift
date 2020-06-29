@@ -237,8 +237,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.networkListUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
+        updateNetworkInfo()
         updateNetworkList()
-
     }
 
     func menuDidClose(_ menu: NSMenu) {
@@ -292,6 +292,11 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             var macAddr = NSLocalizedString("Unavailable", comment: "")
             var itlwmVer = NSLocalizedString("Unavailable", comment: "")
             var platformInfo = platform_info_t()
+            if is_power_on() {
+                print("Wi-Fi open")
+            } else {
+                print("Wi-Fi close")
+            }
             if get_platform_info(&platformInfo) {
                 bsdName = String(cString: &platformInfo.device_info_str.0)
                 macAddr = NetworkManager.getMACAddressFromBSD(bsd: bsdName) ?? macAddr
@@ -343,6 +348,18 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         view.widthAnchor.constraint(equalTo: supView.widthAnchor).isActive = true
         view.heightAnchor.constraint(equalTo: supView.heightAnchor).isActive = true
         return item
+    }
+    
+    @objc func updateNetworkInfo() {
+        if !isNetworkEnabled {
+            return
+        }
+        
+        DispatchQueue.global(qos: .background).async {
+            var info = station_info_t()
+            get_station_info(&info)
+            print(String(format: "current rate=%03d", info.rate))
+        }
     }
 
     @objc func updateNetworkList() {

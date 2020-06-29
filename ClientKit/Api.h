@@ -52,6 +52,7 @@ typedef struct {
     network_info_t networks[MAX_NETWORK_LIST_LENGTH];
 } network_info_list_t;
 
+typedef struct ioctl_sta_info station_info_t;
 
 bool open_adapter(io_connect_t *connection_t);
 
@@ -72,6 +73,10 @@ bool get_80211_state(uint32_t *state);
 bool get_network_list(network_info_list_t *list);
 
 bool connect_network(network_info_t *info);
+
+bool is_power_on(void);
+
+kern_return_t get_station_info(station_info_t *info);
 
 kern_return_t power_on(void);
 
