@@ -31,12 +31,12 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
     var cancelButton: NSButton
 
     var networkInfo: NetworkInfo
-    var getAuthInfoCallback: ((_ auth: NetworkAuth) -> Void)
+    var getAuthInfoCallback: ((_ auth: NetworkAuth, _ savePassword: Bool) -> Void)
 
     init(
         popWindow: NSWindow,
         networkInfo: NetworkInfo,
-        getAuthInfoCallback: @escaping (_ auth: NetworkAuth) -> Void
+        getAuthInfoCallback: @escaping (_ auth: NetworkAuth, _ savePassword: Bool) -> Void
     ) {
         self.popWindow = popWindow
         self.networkInfo = networkInfo
@@ -165,8 +165,6 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         isSave.setButtonType(.switch)
         isSave.font = .systemFont(ofSize: 13)
         isSave.title = NSLocalizedString("Remember this network", comment: "")
-        isSave.target = self
-        isSave.action = #selector(saveWiFi(_:))
         view.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded
@@ -212,20 +210,13 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         }
     }
 
-    @objc func saveWiFi(_ sender: Any?) {
-
-    }
-
     @objc func cancel(_ sender: Any?) {
         popWindow.close()
     }
 
     @objc func connect(_ sender: Any?) {
         networkInfo.auth.password = passwdInputBox.stringValue
-        getAuthInfoCallback(networkInfo.auth)
-        if isSave.state == .on {
-            print("saved")
-        }
+        getAuthInfoCallback(networkInfo.auth, isSave.state == .on)
         popWindow.close()
     }
 

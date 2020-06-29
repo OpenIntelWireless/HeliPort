@@ -352,18 +352,21 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             return
         }
 
-        NetworkManager.scanNetwork(callback: { networkList in
-            DispatchQueue.main.async {
-                self.isNetworkListEmpty = networkList.count == 0
-                var networkList = networkList
-                for index in 0 ..< self.networkItemList.count {
-                    if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
-                        view.networkInfo = networkList.removeFirst()
-                        view.visible = true
-                    }
+        NetworkManager.scanNetwork { networkList in
+            self.isNetworkListEmpty = networkList.count == 0
+            var networkList = networkList
+            for index in 0 ..< self.networkItemList.count {
+                if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
+                    view.networkInfo = networkList.removeFirst()
+                    view.visible = true
                 }
             }
-        })
+
+            // If the wifi is turned off after a start of a scan, do not update to "Wi-Fi on".
+            if self.isNetworkEnabled {
+                self.statusItem.title = NSLocalizedString("Wi-Fi: On", comment: "")
+            }
+        }
     }
 
     required init(coder: NSCoder) {
