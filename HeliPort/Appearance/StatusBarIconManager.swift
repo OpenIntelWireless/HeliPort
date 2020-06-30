@@ -22,31 +22,34 @@ class StatusBarIcon: NSObject {
     static var count: Int = 8
     static func on() {
         timer?.invalidate()
-        connecting()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-           disconnected()
-        }
+        timer = nil
+        disconnected()
     }
 
     class func off() {
         timer?.invalidate()
+        timer = nil
         statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
     }
 
     class func connected() {
         timer?.invalidate()
+        timer = nil
         statusBar.button?.image = NSImage.init(named: "WiFiStateOn")
     }
 
     class func disconnected() {
         timer?.invalidate()
+        timer = nil
         statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
     }
 
     class func connecting() {
+        if timer != nil {
+            return
+        }
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
-            self.timer?.invalidate()
             self.timer = Timer.scheduledTimer(
                 timeInterval: 0.3,
                 target: self,

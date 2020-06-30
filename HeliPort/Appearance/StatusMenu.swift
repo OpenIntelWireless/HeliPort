@@ -48,6 +48,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 statusText = "Wi-Fi: Connected"
                 StatusBarIcon.connected()
             default:
+                statusText = "Wi-Fi: Status unavailable"
+            }
+            if !isNetworkEnabled {
                 statusText = "Wi-Fi: Off"
                 StatusBarIcon.off()
             }
@@ -249,10 +252,8 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         print(sender.title)
         switch sender.title {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
-            isNetworkEnabled = true
             power_on()
         case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
-            isNetworkEnabled = false
             power_off()
         case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(
@@ -311,15 +312,16 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc func updateStatus() {
-        if !isNetworkEnabled {
-            return
-        }
         DispatchQueue.global(qos: .background).async {
+            var powerState: Bool = false
+            let get_power_ret = get_power_state(&powerState)
             var status: UInt32 = 0xFF
-            if get_80211_state(&status) {
-                DispatchQueue.main.async {
-                    self.status = status
+            get_80211_state(&status)
+            DispatchQueue.main.async {
+                if get_power_ret {
+                    self.isNetworkEnabled = powerState
                 }
+                self.status = status
             }
         }
     }

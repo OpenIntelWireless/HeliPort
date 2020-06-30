@@ -35,6 +35,20 @@ error:
     return false;
 }
 
+bool get_power_state(bool *enabled) {
+    struct ioctl_power power;
+    if (ioctl_get(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power)) != KERN_SUCCESS) {
+        goto error;
+    }
+
+    *enabled = power.enabled;
+
+    return true;
+
+error:
+    return false;
+}
+
 bool get_80211_state(uint32_t *state) {
     struct ioctl_state state_struct;
     if (ioctl_get(IOCTL_80211_STATE, &state_struct, sizeof(struct ioctl_state)) != KERN_SUCCESS) {
