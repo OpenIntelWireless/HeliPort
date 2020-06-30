@@ -43,10 +43,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             switch status {
             case ITL80211_S_INIT:
                 StatusBarIcon.disconnected()
-            case ITL80211_S_SCAN, ITL80211_S_AUTH, ITL80211_S_ASSOC:
+            case ITL80211_S_AUTH, ITL80211_S_ASSOC:
                 StatusBarIcon.connecting()
             case ITL80211_S_RUN:
                 StatusBarIcon.connected()
+            case ITL80211_S_SCAN:
+                // no change in status bar icon when scanning
+                break
             default:
                 StatusBarIcon.off()
             }
