@@ -17,11 +17,8 @@ import Cocoa
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-
-    var password: String = ""
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        checkDriver()
 
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
@@ -31,8 +28,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         StatusBarIcon.statusBar = statusBar
     }
 
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
+    private func checkDriver() {
+        var drv_info = ioctl_driver_info()
+        _ = ioctl_get(Int32(IOCTL_80211_DRIVER_INFO.rawValue), &drv_info, MemoryLayout<ioctl_driver_info>.size)
 
+        let version = char32ToString(tuple: drv_info.driver_version)
+        let interface = char32ToString(tuple: drv_info.bsd_name)
+        guard !version.isEmpty, !interface.isEmpty else {
+            Log.error("itlwm kext not loaded!")
+            return
+        }
+
+        Log.debug("Loaded tltwm \(version) as \(interface)")
+    }
 }
