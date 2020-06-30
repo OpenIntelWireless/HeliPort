@@ -221,9 +221,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var platformInfo = platform_info_t()
 
             if is_power_on() {
-                print("Wi-Fi open")
+                Log.debug("Wi-Fi powered on")
             } else {
-                print("Wi-Fi close")
+                Log.debug("Wi-Fi powered off")
             }
 
             if get_platform_info(&platformInfo) {
@@ -269,7 +269,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     // - MARK: Action handlers
 
     @objc func clickMenuItem(_ sender: NSMenuItem) {
-        print(sender.title)
+        Log.debug("Clicked \(sender.title)")
         switch sender.title {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
             isNetworkEnabled = true
@@ -305,7 +305,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Quit HeliPort", comment: ""):
             exit(0)
         default:
-            print("Default")
+            Log.error("Invalid menu item clicked")
         }
     }
 
@@ -332,7 +332,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         DispatchQueue.global(qos: .background).async {
             var info = station_info_t()
             get_station_info(&info)
-            print(String(format: "current rate=%03d", info.rate))
+            Log.debug(String(format: "current rate=%03d", info.rate))
         }
     }
 
