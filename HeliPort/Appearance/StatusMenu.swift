@@ -30,26 +30,20 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
-    private var status: UInt32 = 0 {
+    private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
-            var statusText = ""
+            statusItem.title = NSLocalizedString(status.description, comment: "")
+
             switch status {
-            case ITL80211_S_INIT.rawValue:
-                statusText = "Wi-Fi: On"
+            case ITL80211_S_INIT:
                 StatusBarIcon.disconnected()
-            case ITL80211_S_SCAN.rawValue:
-                statusText = "Wi-Fi: Looking for Networks..."
-            case ITL80211_S_AUTH.rawValue, ITL80211_S_ASSOC.rawValue:
-                statusText = "Wi-Fi: Connecting"
+            case ITL80211_S_SCAN, ITL80211_S_AUTH, ITL80211_S_ASSOC:
                 StatusBarIcon.connecting()
-            case ITL80211_S_RUN.rawValue:
-                statusText = "Wi-Fi: Connected"
+            case ITL80211_S_RUN:
                 StatusBarIcon.connected()
             default:
-                statusText = "Wi-Fi: Off"
                 StatusBarIcon.off()
             }
-            statusItem.title = NSLocalizedString(statusText, comment: "")
         }
     }
 
@@ -310,16 +304,18 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc private func updateStatus() {
-       guard isNetworkEnabled else {
+        guard isNetworkEnabled else {
             return
         }
 
         DispatchQueue.global(qos: .background).async {
             var status: UInt32 = 0xFF
-            if get_80211_state(&status) {
-                DispatchQueue.main.async {
-                    self.status = status
-                }
+            guard get_80211_state(&status) else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.status = itl_80211_state(rawValue: status)
             }
         }
     }
