@@ -69,11 +69,19 @@ bool get_network_list(network_info_list_t *list) {
     struct ioctl_scan scan;
     struct ioctl_network_info network_info_ret;
     io_connect_t con;
+    struct ioctl_sta_info sta_info;
+    char *current_ssid = (char *)"";
+    uint32_t state;
     scan.version = IOCTL_VERSION;
     if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
         goto error;
     }
     sleep(3);
+    if (get_80211_state(&state) && state == ITL80211_S_RUN) {
+        if (get_station_info(&sta_info) == KERN_SUCCESS) {
+            current_ssid = (char *)sta_info.ssid;
+        }
+    }
     if (!open_adapter(&con)) {
         goto error;
     }
@@ -88,6 +96,7 @@ bool get_network_list(network_info_list_t *list) {
         // TODO: set security
         // info->auth.security = network_info_ret.ni_rsncipher;
         info->auth.security = ITL80211_CIPHER_CCMP;
+        info->is_connected = strcmp(current_ssid, (char *) &network_info_ret.ssid) == 0;
     }
     close_adapter(con);
     return true;
