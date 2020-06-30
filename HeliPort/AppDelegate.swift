@@ -39,6 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        Log.debug("Loaded tltwm \(version) as \(interface)")
+        Log.debug("Loaded itlwm \(version) as \(interface)")
     }
 }
