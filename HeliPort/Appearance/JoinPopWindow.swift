@@ -487,51 +487,74 @@ class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         usernameBox?.stringValue = ""
     }
 
-    // TODO: Get rid of this mess
     func controlJoinButton() {
-        if (ssidBox?.stringValue.count)! > 0 &&
-            (ssidBox?.stringValue.count)! <= 32 {
-            if JoinPopWindow.passwdInputBox?.isHidden ==  true &&
-                JoinPopWindow.passwdSecureBox?.isHidden == true {
-                joinButton?.isEnabled = true
-            } else if (JoinPopWindow.passwdInputBox?.isHidden ==  false ||
-                JoinPopWindow.passwdSecureBox?.isHidden == false) &&
-                (JoinPopWindow.passwdSecureBox?.stringValue.count)! >= 8 &&
-                (JoinPopWindow.passwdInputBox?.stringValue.count)! >= 8 {
-                if usernameBox?.isHidden == false &&
-                    (usernameBox?.stringValue.count)! == 0 {
-                    joinButton?.isEnabled = false
-                    return
-                }
-                joinButton?.isEnabled = true
-            } else {
-                joinButton?.isEnabled = false
-            }
-        } else {
+        // password input needs to exists (should always be the case)
+        guard let passwdInputBox = JoinPopWindow.passwdInputBox,
+            let passwdSecureBox = JoinPopWindow.passwdSecureBox else {
             joinButton?.isEnabled = false
+            return
         }
+
+        // SSID needs to be filled in and shorter than 32 characters
+        guard let ssid = ssidBox?.stringValue, !ssid.isEmpty, ssid.count <= 32 else {
+            joinButton?.isEnabled = false
+            return
+        }
+
+        // no password used, both password inputs are hidden
+        if passwdInputBox.isHidden, passwdSecureBox.isHidden {
+            joinButton?.isEnabled = true
+            return
+        }
+
+        // password is too short, less than 8 characters
+        guard (!passwdInputBox.isHidden || !passwdSecureBox.isHidden),
+            passwdSecureBox.stringValue.count >= 8,
+            passwdInputBox.stringValue.count >= 8  else {
+            joinButton?.isEnabled = false
+            return
+        }
+
+        // user name input shown but not filled in
+        if let usernameBox = usernameBox, !usernameBox.isHidden, usernameBox.stringValue.isEmpty {
+            joinButton?.isEnabled = false
+            return
+        }
+
+        // everything is OK
+        joinButton?.isEnabled = true
     }
 
     func controlTextDidChange(_ obj: Notification) {
-        if JoinPopWindow.passwdInputBox?.isHidden == false {
-            JoinPopWindow.passwdSecureBox?.stringValue = (JoinPopWindow.passwdInputBox?.stringValue)!
-        } else {
-            JoinPopWindow.passwdInputBox?.stringValue = (JoinPopWindow.passwdSecureBox?.stringValue)!
+        guard let passwdInputBox = JoinPopWindow.passwdInputBox,
+            let passwdSecureBox = JoinPopWindow.passwdSecureBox else {
+                return
         }
-        if (JoinPopWindow.passwdSecureBox?.stringValue.count)! > 64 {
-            let index = JoinPopWindow.passwdSecureBox?.stringValue.index(
-                (JoinPopWindow.passwdSecureBox?.stringValue.startIndex)!,
-                offsetBy: 64
-            )
-            JoinPopWindow.passwdSecureBox?.stringValue =
-                String((JoinPopWindow.passwdSecureBox?.stringValue[..<index!])!)
+
+        // if clear password box is visible, copy password to secure box
+        if !passwdInputBox.isHidden {
+            passwdSecureBox.stringValue = passwdInputBox.stringValue
         }
-        if (JoinPopWindow.passwdInputBox?.stringValue.count)! > 64 {
-            let index = JoinPopWindow.passwdInputBox?.stringValue.index(
-                (JoinPopWindow.passwdInputBox?.stringValue.startIndex)!,
+
+        // if clear password box is not visible, copy password from secure box to password box
+        if passwdInputBox.isHidden {
+            passwdInputBox.stringValue = passwdSecureBox.stringValue
+        }
+
+        // trim secure box to 64 characters
+        if passwdSecureBox.stringValue.count > 64 {
+            passwdSecureBox.stringValue = String(passwdSecureBox.stringValue[..<passwdSecureBox.stringValue.index(
+                passwdSecureBox.stringValue.startIndex,
                 offsetBy: 64
-            )
-            JoinPopWindow.passwdInputBox?.stringValue = String((JoinPopWindow.passwdInputBox?.stringValue[..<index!])!)
+            )])
+        }
+
+        // trim password box to 64 characters
+        if passwdInputBox.stringValue.count > 64 {
+            passwdInputBox.stringValue = String(passwdInputBox.stringValue[..<passwdInputBox.stringValue.index(
+                passwdInputBox.stringValue.startIndex,
+                offsetBy: 64
+            )])
         }
 
         controlJoinButton()
