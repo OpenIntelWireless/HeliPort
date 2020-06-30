@@ -32,6 +32,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
+            guard isNetworkEnabled else {
+                StatusBarIcon.off()
+                statusItem.title = NSLocalizedString("Wi-Fi: Off", comment: "")
+                return
+            }
+
             statusItem.title = NSLocalizedString(status.description, comment: "")
 
             switch status {
@@ -43,7 +49,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 StatusBarIcon.connected()
             default:
                 StatusBarIcon.off()
-            }
+            }            
         }
     }
 
@@ -234,7 +240,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    private func addNetworkItemPlaceholder() -> NSMenuItem {
+    func addNetworkItemPlaceholder() -> NSMenuItem {
         let item = addItem(
             withTitle: "placeholder",
             action: #selector(clickMenuItem(_:)),
@@ -264,12 +270,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     @objc func clickMenuItem(_ sender: NSMenuItem) {
         Log.debug("Clicked \(sender.title)")
+
         switch sender.title {
         case NSLocalizedString("Turn Wi-Fi On", comment: ""):
-            isNetworkEnabled = true
             power_on()
         case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
-            isNetworkEnabled = false
             power_off()
         case NSLocalizedString("Join Other Network...", comment: ""):
             let joinPop = JoinPopWindow.init(
@@ -304,17 +309,16 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc private func updateStatus() {
-        guard isNetworkEnabled else {
-            return
-        }
-
         DispatchQueue.global(qos: .background).async {
+            var powerState: Bool = false
+            let get_power_ret = get_power_state(&powerState)
             var status: UInt32 = 0xFF
-            guard get_80211_state(&status) else {
-                return
-            }
+            get_80211_state(&status)
 
             DispatchQueue.main.async {
+                if get_power_ret {
+                    self.isNetworkEnabled = powerState
+                }
                 self.status = itl_80211_state(rawValue: status)
             }
         }
