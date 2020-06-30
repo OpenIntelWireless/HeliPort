@@ -103,6 +103,7 @@ class NetworkManager {
             )
 
             DispatchQueue.global(qos: .background).async {
+                StatusBarIcon.connecting()
                 let result = connect_network(&networkInfoStruct)
                 DispatchQueue.main.async {
                     if result {
