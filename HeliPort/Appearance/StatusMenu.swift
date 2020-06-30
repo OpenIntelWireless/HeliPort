@@ -34,9 +34,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     )
     var status: UInt32 = 0 {
         didSet {
-            if !isNetworkEnabled {
-                return
-            }
             var statusText = ""
             switch status {
             case ITL80211_S_INIT.rawValue:
@@ -52,6 +49,9 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 StatusBarIcon.connected()
             default:
                 statusText = "Wi-Fi: Status unavailable"
+            }
+            if !isNetworkEnabled {
+                statusText = "Wi-Fi: Off"
             }
             statusItem.title = NSLocalizedString(statusText, comment: "")
         }
@@ -307,9 +307,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc func updateStatus() {
-        if !isNetworkEnabled {
-            return
-        }
         DispatchQueue.global(qos: .background).async {
             var powerState: Bool = false
             let get_power_ret = get_power_state(&powerState)
