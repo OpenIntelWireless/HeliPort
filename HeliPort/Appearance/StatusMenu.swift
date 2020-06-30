@@ -101,7 +101,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     // - MARK: Menu items
 
     private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
-    private let switchItem = NSMenuItem(title: NSLocalizedString("Turn Wi-Fi Off", comment: ""))
+    private let switchItem = NSMenuItem(
+        title: NSLocalizedString("Turn Wi-Fi Off", comment: ""),
+        action: #selector(clickMenuItem(_:))
+    )
     private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
     private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
     private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")

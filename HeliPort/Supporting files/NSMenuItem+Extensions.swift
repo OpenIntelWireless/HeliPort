@@ -13,4 +13,8 @@ extension NSMenuItem {
     convenience init(title: String) {
         self.init(title: title, action: nil, keyEquivalent: "")
     }
+
+    convenience init(title: String, action: Selector) {
+        self.init(title: title, action: action, keyEquivalent: "")
+    }
 }
