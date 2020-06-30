@@ -312,9 +312,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             get_80211_state(&status)
 
             DispatchQueue.main.async {
-                if get_power_ret {
-                    self.isNetworkEnabled = powerState
-                }
+                self.isNetworkEnabled = get_power_ret
                 self.status = itl_80211_state(rawValue: status)
             }
         }
