@@ -32,7 +32,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
-            guard isNetworkEnabled else {
+            guard isNetworkCardEnabled else {
                 StatusBarIcon.off()
                 statusItem.title = NSLocalizedString("Wi-Fi: Off", comment: "")
                 return
@@ -91,7 +91,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    private var isNetworkEnabled: Bool = true {
+    private var isNetworkCardEnabled: Bool = false {
         willSet(newState) {
             switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
             self.isNetworkListEmpty = !newState
@@ -102,7 +102,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
     private let switchItem = NSMenuItem(
-        title: NSLocalizedString("Turn Wi-Fi Off", comment: ""),
+        title: NSLocalizedString("Turn Wi-Fi On", comment: ""),
         action: #selector(clickMenuItem(_:))
     )
     private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
@@ -313,7 +313,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             DispatchQueue.main.async {
                 if get_power_ret {
-                    self.isNetworkEnabled = powerState
+                    self.isNetworkCardEnabled = powerState
                 }
                 self.status = itl_80211_state(rawValue: status)
             }
@@ -321,7 +321,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc private func updateNetworkInfo() {
-        guard isNetworkEnabled else {
+        guard isNetworkCardEnabled else {
             return
         }
 
@@ -333,7 +333,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     @objc private func updateNetworkList() {
-        guard isNetworkEnabled else {
+        guard isNetworkCardEnabled else {
             return
         }
 
