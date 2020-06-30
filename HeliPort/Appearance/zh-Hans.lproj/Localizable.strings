@@ -42,6 +42,6 @@
 "Wi-Fi: Off" = "Wi-Fi: 关闭";
 "Wi-Fi: On" = "Wi-Fi: 开启";
 "\" Requires Password" = "\" 需要密码";
-"Wi-Fi: Looking for Networks..." = "搜索网络..."
-"Wi-Fi: Connecting" = "正在连接"
-"Wi-Fi: Connected" = "已连接"
+"Wi-Fi: Looking for Networks..." = "搜索网络...";
+"Wi-Fi: Connecting" = "正在连接";
+"Wi-Fi: Connected" = "已连接";
