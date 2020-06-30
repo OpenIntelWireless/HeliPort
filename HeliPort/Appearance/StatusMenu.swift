@@ -17,76 +17,55 @@ import Foundation
 import Cocoa
 import Sparkle
 
-class StatusMenu: NSMenu, NSMenuDelegate {
-    let heliPortUpdater = SUUpdater()
+final class StatusMenu: NSMenu, NSMenuDelegate {
 
-    let networkListUpdatePeriod: Double = 5
-    let statusUpdatePeriod: Double = 2
+    // - MARK: Properties
 
-    var headerLength: Int = 0
-    var networkListUpdateTimer: Timer?
-    var statusUpdateTimer: Timer?
+    private let heliPortUpdater = SUUpdater()
 
-    let statusItem = NSMenuItem(
-        title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""),
-        action: nil,
-        keyEquivalent: ""
-    )
-    var status: UInt32 = 0 {
+    private let networkListUpdatePeriod: Double = 5
+    private let statusUpdatePeriod: Double = 2
+
+    private var headerLength: Int = 0
+    private var networkListUpdateTimer: Timer?
+    private var statusUpdateTimer: Timer?
+
+    private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
-            var statusText = ""
-            switch status {
-            case ITL80211_S_INIT.rawValue:
-                statusText = "Wi-Fi: On"
-                StatusBarIcon.disconnected()
-            case ITL80211_S_SCAN.rawValue:
-                statusText = "Wi-Fi: Looking for Networks..."
-            case ITL80211_S_AUTH.rawValue, ITL80211_S_ASSOC.rawValue:
-                statusText = "Wi-Fi: Connecting"
-                StatusBarIcon.connecting()
-            case ITL80211_S_RUN.rawValue:
-                statusText = "Wi-Fi: Connected"
-                StatusBarIcon.connected()
-            default:
-                statusText = "Wi-Fi: Status unavailable"
+            guard isNetworkCardEnabled else {
+                StatusBarIcon.off()
+                statusItem.title = NSLocalizedString("Wi-Fi: Off", comment: "")
+                return
             }
-            if !isNetworkEnabled {
-                statusText = "Wi-Fi: Off"
+
+            statusItem.title = NSLocalizedString(status.description, comment: "")
+
+            switch status {
+            case ITL80211_S_INIT:
+                StatusBarIcon.disconnected()
+            case ITL80211_S_AUTH, ITL80211_S_ASSOC:
+                StatusBarIcon.connecting()
+            case ITL80211_S_RUN:
+                StatusBarIcon.connected()
+            case ITL80211_S_SCAN:
+                // no change in status bar icon when scanning
+                break
+            default:
                 StatusBarIcon.off()
             }
-            statusItem.title = NSLocalizedString(statusText, comment: "")
         }
     }
 
-    let switchItem = NSMenuItem(
-        title: NSLocalizedString("Turn Wi-Fi Off", comment: ""),
-        action: #selector(clickMenuItem(_:)),
-        keyEquivalent: ""
-    )
-    let bsdItem = NSMenuItem(
-        title: NSLocalizedString("Interface Name: ", comment: "") + "(null)",
-        action: nil,
-        keyEquivalent: ""
-    )
-    let macItem = NSMenuItem(
-        title: NSLocalizedString("Address: ", comment: "") + "(null)",
-        action: nil,
-        keyEquivalent: ""
-    )
-    let itlwmVerItem = NSMenuItem(
-        title: NSLocalizedString("Version: ", comment: "") + "(null)",
-        action: nil,
-        keyEquivalent: ""
-    )
-    var networkItemList = [NSMenuItem]()
-    let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
-    let networkItemListSeparator: NSMenuItem = {
+    private var networkItemList = [NSMenuItem]()
+
+    private let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
+    private let networkItemListSeparator: NSMenuItem = {
         let networkItemListSeparator =  NSMenuItem.separator()
         networkItemListSeparator.isHidden = true
         return networkItemListSeparator
     }()
 
-    var showAllOptions: Bool = false {
+    private var showAllOptions: Bool = false {
         willSet(visible) {
             for idx in 0...6 {
                 items[idx].isHidden = !visible
@@ -97,28 +76,43 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    var isNetworkListEmpty: Bool = true {
+    private var isNetworkListEmpty: Bool = true {
         willSet(empty) {
             networkItemListSeparator.isHidden = empty
-            if empty {
-                for item in self.networkItemList {
-                    if let view = item.view as? WifiMenuItemView {
-                        view.visible = false
-                    }
+            guard empty else {
+                return
+            }
+
+            for item in self.networkItemList {
+                if let view = item.view as? WifiMenuItemView {
+                    view.visible = false
                 }
             }
         }
     }
 
-    var isNetworkEnabled: Bool = true {
+    private var isNetworkCardEnabled: Bool = false {
         willSet(newState) {
             switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
             self.isNetworkListEmpty = !newState
         }
     }
 
-    override init(title: String) {
-        super.init(title: title)
+    // - MARK: Menu items
+
+    private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
+    private let switchItem = NSMenuItem(
+        title: NSLocalizedString("Turn Wi-Fi On", comment: ""),
+        action: #selector(clickMenuItem(_:))
+    )
+    private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
+    private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
+    private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
+
+    // - MARK: Init
+
+    init() {
+        super.init(title: "")
         minimumWidth = CGFloat(285.0)
         delegate = self
         setupMenuHeaderAndFooter()
@@ -139,27 +133,20 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    func setupMenuHeaderAndFooter() {
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // - MARK: Setup
+
+    private func setupMenuHeaderAndFooter() {
         addItem(bsdItem)
         addItem(macItem)
         addItem(itlwmVerItem)
-        addItem(
-            withTitle: NSLocalizedString("Enable Wi-Fi Logging", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
 
-        addItem(
-            withTitle: NSLocalizedString("Create Diagnostics Report...", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
-
-        addItem(
-            withTitle: NSLocalizedString("Open Wireless Diagnostics...", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
+        addClickItem(title: NSLocalizedString("Enable Wi-Fi Logging", comment: ""))
+        addClickItem(title: NSLocalizedString("Create Diagnostics Report...", comment: ""))
+        addClickItem(title: NSLocalizedString("Open Wireless Diagnostics...", comment: ""))
 
         addItem(NSMenuItem.separator())
 
@@ -176,44 +163,18 @@ class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(networkItemListSeparator)
 
-        addItem(
-            withTitle: NSLocalizedString("Join Other Network...", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
-
-        addItem(
-            withTitle: NSLocalizedString("Create Network...", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
-
-        addItem(
-            withTitle: NSLocalizedString("Open Network Preferences...", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
+        addClickItem(title: NSLocalizedString("Join Other Network...", comment: ""))
+        addClickItem(title: NSLocalizedString("Create Network...", comment: ""))
+        addClickItem(title: NSLocalizedString("Open Network Preferences...", comment: ""))
 
         addItem(NSMenuItem.separator())
 
-        addItem(
-            withTitle: NSLocalizedString("About HeliPort", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
-
-        addItem(
-            withTitle: NSLocalizedString("Check for Updates...", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
-        ).target = self
-
-        addItem(
-            withTitle: NSLocalizedString("Quit HeliPort", comment: ""),
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: "Q"
-        ).target = self
+        addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
+        addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
+        addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "Q")
     }
+
+    // - MARK: Overrides
 
     func menu(_ menu: NSMenu, willHighlight item: NSMenuItem?) {
         for item in networkItemList {
@@ -248,61 +209,35 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         networkListUpdateTimer?.invalidate()
     }
 
-    @objc func clickMenuItem(_ sender: NSMenuItem) {
-        print(sender.title)
-        switch sender.title {
-        case NSLocalizedString("Turn Wi-Fi On", comment: ""):
-            power_on()
-        case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
-            power_off()
-        case NSLocalizedString("Join Other Network...", comment: ""):
-            let joinPop = JoinPopWindow.init(
-                contentRect: NSRect(
-                    x: 0,
-                    y: 0,
-                    width: 450,
-                    height: 247
-                ),
-                styleMask: .titled,
-                backing: .buffered,
-                defer: false
-            )
-            joinPop.makeKeyAndOrderFront(self)
-        case NSLocalizedString("Create Network...", comment: ""):
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
-            alert.alertStyle = NSAlert.Style.critical
-            alert.runModal()
-        case NSLocalizedString("Open Network Preferences...", comment: ""):
-            NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
-        case NSLocalizedString("Check for Updates...", comment: ""):
-            heliPortUpdater.checkForUpdates(self)
-        case NSLocalizedString("About HeliPort", comment: ""):
-            NSApplication.shared.orderFrontStandardAboutPanel()
-            NSApplication.shared.activate(ignoringOtherApps: true)
-        case NSLocalizedString("Quit HeliPort", comment: ""):
-            exit(0)
-        default:
-            print("Default")
-        }
+    // - MARK: Actions
+
+    private func addClickItem(title: String, keyEquivalent: String = "") {
+        addItem(
+            withTitle: title,
+            action: #selector(clickMenuItem(_:)),
+            keyEquivalent: keyEquivalent
+        ).target = self
     }
 
-    func getDeviceInfo() {
+    private func getDeviceInfo() {
         DispatchQueue.global(qos: .background).async {
             var bsdName = NSLocalizedString("Unavailable", comment: "")
             var macAddr = NSLocalizedString("Unavailable", comment: "")
             var itlwmVer = NSLocalizedString("Unavailable", comment: "")
             var platformInfo = platform_info_t()
+
             if is_power_on() {
-                print("Wi-Fi open")
+                Log.debug("Wi-Fi powered on")
             } else {
-                print("Wi-Fi close")
+                Log.debug("Wi-Fi powered off")
             }
+
             if get_platform_info(&platformInfo) {
                 bsdName = String(cString: &platformInfo.device_info_str.0)
                 macAddr = NetworkManager.getMACAddressFromBSD(bsd: bsdName) ?? macAddr
                 itlwmVer = String(cString: &platformInfo.driver_info_str.0)
             }
+
             DispatchQueue.main.async {
                 self.bsdItem.title = NSLocalizedString("Interface Name: ", comment: "") + bsdName
                 self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
@@ -311,22 +246,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    @objc func updateStatus() {
-        DispatchQueue.global(qos: .background).async {
-            var powerState: Bool = false
-            let get_power_ret = get_power_state(&powerState)
-            var status: UInt32 = 0xFF
-            get_80211_state(&status)
-            DispatchQueue.main.async {
-                if get_power_ret {
-                    self.isNetworkEnabled = powerState
-                }
-                self.status = status
-            }
-        }
-    }
-
-    func addNetworkItemPlaceholder() -> NSMenuItem {
+    private func addNetworkItemPlaceholder() -> NSMenuItem {
         let item = addItem(
             withTitle: "placeholder",
             action: #selector(clickMenuItem(_:)),
@@ -351,21 +271,69 @@ class StatusMenu: NSMenu, NSMenuDelegate {
         view.heightAnchor.constraint(equalTo: supView.heightAnchor).isActive = true
         return item
     }
-    
-    @objc func updateNetworkInfo() {
-        if !isNetworkEnabled {
-            return
-        }
-        
-        DispatchQueue.global(qos: .background).async {
-            var info = station_info_t()
-            get_station_info(&info)
-            print(String(format: "current rate=%03d", info.rate))
+
+    // - MARK: Action handlers
+
+    @objc private func clickMenuItem(_ sender: NSMenuItem) {
+        Log.debug("Clicked \(sender.title)")
+
+        switch sender.title {
+        case NSLocalizedString("Turn Wi-Fi On", comment: ""):
+            power_on()
+        case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
+            power_off()
+        case NSLocalizedString("Join Other Network...", comment: ""):
+            let joinPop = JoinPopWindow()
+            joinPop.show()
+        case NSLocalizedString("Create Network...", comment: ""):
+            let alert = NSAlert()
+            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
+            alert.alertStyle = NSAlert.Style.critical
+            alert.runModal()
+        case NSLocalizedString("Open Network Preferences...", comment: ""):
+            NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
+        case NSLocalizedString("Check for Updates...", comment: ""):
+            heliPortUpdater.checkForUpdates(self)
+        case NSLocalizedString("About HeliPort", comment: ""):
+            NSApplication.shared.orderFrontStandardAboutPanel()
+            NSApplication.shared.activate(ignoringOtherApps: true)
+        case NSLocalizedString("Quit HeliPort", comment: ""):
+            exit(0)
+        default:
+            Log.error("Invalid menu item clicked")
         }
     }
 
-    @objc func updateNetworkList() {
-        if !isNetworkEnabled {
+    @objc private func updateStatus() {
+        DispatchQueue.global(qos: .background).async {
+            var powerState: Bool = false
+            let get_power_ret = get_power_state(&powerState)
+            var status: UInt32 = 0xFF
+            get_80211_state(&status)
+
+            DispatchQueue.main.async {
+                if get_power_ret {
+                    self.isNetworkCardEnabled = powerState
+                }
+                self.status = itl_80211_state(rawValue: status)
+            }
+        }
+    }
+
+    @objc private func updateNetworkInfo() {
+        guard isNetworkCardEnabled else {
+            return
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            var info = station_info_t()
+            get_station_info(&info)
+            Log.debug(String(format: "current rate=%03d", info.rate))
+        }
+    }
+
+    @objc private func updateNetworkList() {
+        guard isNetworkCardEnabled else {
             return
         }
 
@@ -379,9 +347,5 @@ class StatusMenu: NSMenu, NSMenuDelegate {
                 }
             }
         }
-    }
-
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
