@@ -277,18 +277,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Turn Wi-Fi Off", comment: ""):
             power_off()
         case NSLocalizedString("Join Other Network...", comment: ""):
-            let joinPop = JoinPopWindow.init(
-                contentRect: NSRect(
-                    x: 0,
-                    y: 0,
-                    width: 450,
-                    height: 247
-                ),
-                styleMask: .titled,
-                backing: .buffered,
-                defer: false
-            )
-            joinPop.makeKeyAndOrderFront(self)
+            let joinPop = JoinPopWindow()
+            joinPop.show()
         case NSLocalizedString("Create Network...", comment: ""):
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")

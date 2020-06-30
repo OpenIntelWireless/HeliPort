@@ -37,6 +37,19 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     private let joinButton: NSButton
     private let cancelButton: NSButton
 
+    convenience init() {
+        self.init(
+            contentRect: NSRect(
+            x: 0,
+            y: 0,
+            width: 450,
+            height: 247
+        ),
+        styleMask: .titled,
+        backing: .buffered,
+        defer: false)
+    }
+
     override init(
         contentRect: NSRect,
         styleMask style: NSWindow.StyleMask,
@@ -546,5 +559,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         }
 
         controlJoinButton()
+    }
+
+    func show() {
+        makeKeyAndOrderFront(self)
     }
 }
