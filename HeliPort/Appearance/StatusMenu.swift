@@ -49,7 +49,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 StatusBarIcon.connected()
             default:
                 StatusBarIcon.off()
-            }            
+            }
         }
     }
 
