@@ -52,6 +52,7 @@ class StatusMenu: NSMenu, NSMenuDelegate {
             }
             if !isNetworkEnabled {
                 statusText = "Wi-Fi: Off"
+                StatusBarIcon.off()
             }
             statusItem.title = NSLocalizedString(statusText, comment: "")
         }
@@ -112,7 +113,6 @@ class StatusMenu: NSMenu, NSMenuDelegate {
     var isNetworkEnabled: Bool = true {
         willSet(newState) {
             switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
-            newState ? StatusBarIcon.on() : StatusBarIcon.off()
             self.isNetworkListEmpty = !newState
         }
     }
