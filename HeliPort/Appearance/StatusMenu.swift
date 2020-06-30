@@ -240,7 +240,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    func addNetworkItemPlaceholder() -> NSMenuItem {
+    private func addNetworkItemPlaceholder() -> NSMenuItem {
         let item = addItem(
             withTitle: "placeholder",
             action: #selector(clickMenuItem(_:)),
@@ -268,7 +268,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     // - MARK: Action handlers
 
-    @objc func clickMenuItem(_ sender: NSMenuItem) {
+    @objc private func clickMenuItem(_ sender: NSMenuItem) {
         Log.debug("Clicked \(sender.title)")
 
         switch sender.title {
