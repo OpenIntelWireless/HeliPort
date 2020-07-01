@@ -38,10 +38,10 @@
 "WPA2/WPA3 Personal" = "WPA2/WPA3个人级";
 "WPA3 Enterprise" = "WPA3企业级";
 "WPA3 Personal" = "WPA3个人级";
+"Wi-Fi: Connected" = "Wi-Fi：已连接";
+"Wi-Fi: Connecting" = "Wi-Fi：正在连接";
+"Wi-Fi: Looking for Networks..." = "Wi-Fi：搜索网络...";
 "Wi-Fi Network \"" = "Wi-Fi网络 \"";
 "Wi-Fi: Off" = "Wi-Fi: 关闭";
 "Wi-Fi: On" = "Wi-Fi: 开启";
 "\" Requires Password" = "\" 需要密码";
-"Wi-Fi: Looking for Networks..." = "搜索网络...";
-"Wi-Fi: Connecting" = "正在连接";
-"Wi-Fi: Connected" = "已连接";
