@@ -247,3 +247,11 @@ kern_return_t associate_ssid(const char *ssid, const char *pwd)
     ass.version = IOCTL_VERSION;
     return ioctl_set(IOCTL_80211_ASSOCIATE, &ass, sizeof(struct ioctl_associate));
 }
+
+kern_return_t dis_associate_ssid(const char *ssid)
+{
+    struct ioctl_disassociate dis;
+    dis.version = IOCTL_VERSION;
+    memcpy(dis.ssid, ssid, 32);
+    return ioctl_set(IOCTL_80211_DISASSOCIATE, &dis, sizeof(struct ioctl_disassociate));
+}
