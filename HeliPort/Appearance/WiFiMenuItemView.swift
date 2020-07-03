@@ -179,11 +179,11 @@ class WifiMenuItemView: NSView {
     func getRssiImage(_ RSSI: Int) -> NSImage? {
         var signalImageName: String
         switch RSSI {
-        case ..<(-100):
+        case ..<(0):
             signalImageName = "WiFiSignalStrengthPoor"
-        case ..<(-80):
+        case ..<(20):
             signalImageName = "WiFiSignalStrengthFair"
-        case ..<(-60):
+        case ..<(40):
             signalImageName = "WiFiSignalStrengthGood"
         default:
             signalImageName = "WiFiSignalStrengthExcellent"
