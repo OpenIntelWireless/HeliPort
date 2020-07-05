@@ -73,9 +73,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             for idx in 1...2 {
                 items[items.count - idx].isHidden = !visible
             }
-            for idx in 11...23 {
-                // Hide security and country code since those have not been implemented in io_station_info
-                if idx == 15 || idx == 18 {
+            for idx in 11...24 {
+                // TODO: security, country code, and NSS are hidden since those have not been implemented in io_station_info
+                if idx == 15 || idx == 18 || idx == 24 {
                     items[idx].isHidden = true
                     continue
                 }
@@ -133,6 +133,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let txRateItem = NSMenuItem(title: NSLocalizedString("    Tx Rate: ", comment: "") + "(null)")
     private let phyModeItem = NSMenuItem(title: NSLocalizedString("    PHY Mode: ", comment: "") + "(null)")
     private let mcsIndexItem = NSMenuItem(title: NSLocalizedString("    MCS Index: ", comment: "") + "(null)")
+    private let nssItem = NSMenuItem(title: NSLocalizedString("    NSS: ", comment: "") + "(null)")
 
     // - MARK: Init
 
@@ -200,6 +201,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         insertItem(txRateItem, at: headerLength + 11)
         insertItem(phyModeItem, at: headerLength + 12)
         insertItem(mcsIndexItem, at: headerLength + 13)
+        insertItem(nssItem, at: headerLength + 14)
 
         addItem(networkItemListSeparator)
 
@@ -379,6 +381,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var txRate = NSLocalizedString("Unavailable", comment: "")
             var phyMode = NSLocalizedString("Unavailable", comment: "")
             var mcsIndex = NSLocalizedString("Unavailable", comment: "")
+            var nss = NSLocalizedString("Unavailable", comment: "")
             var staInfo = station_info_t()
             if self.status == ITL80211_S_RUN && get_station_info(&staInfo) == KERN_SUCCESS {
                 let bsd = String(self.bsdItem.title)
@@ -406,12 +409,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 channel = String(staInfo.channel) + " (" +
                     (staInfo.channel <= 14 ? "2.4 GHz" : "5 GHz") + ", " +
                 "\(staInfo.band_width) MHz)"
-                countryCode = "Unknown"
+                countryCode = NSLocalizedString("Unknown", comment: "")
                 rssi = String(staInfo.rssi) + " dBm"
                 noise = String(staInfo.noise) + " dBm"
                 txRate = String(staInfo.rate) + " Mbps"
                 phyMode = staInfo.op_mode.description
                 mcsIndex = String(staInfo.cur_mcs)
+                nss = NSLocalizedString("Unknown", comment: "")
             }
             DispatchQueue.main.async {
                 self.disconnectItem.title = NSLocalizedString("Disconnect from: ", comment: "") + disconnectName
@@ -427,6 +431,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.txRateItem.title = NSLocalizedString("    Tx Rate: ", comment: "") + txRate
                 self.phyModeItem.title = NSLocalizedString("    PHY Mode: ", comment: "") + phyMode
                 self.mcsIndexItem.title = NSLocalizedString("    MCS Index: ", comment: "") + mcsIndex
+                self.nssItem.title = NSLocalizedString("    NSS: ", comment: "") + nss
             }
         }
     }
