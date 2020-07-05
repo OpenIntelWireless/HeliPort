@@ -51,7 +51,7 @@
 "Wi-Fi: Status unavailable" = "Wi-Fi: Stato non disponibile";
 "\" Requires Password" = "\" Password necessaria";
 "    IP Address: "      = "    Indirizzo IP: ";
-"    Router: "          = "    Router: ";
+"    Router: "          = "    IP del Router: ";
 "    Internet: "        = "    Internet: ";
 "    Security: "        = "    Protocollo di sicurezza: ";
 "    BSSID: "           = "    BSSID: ";
