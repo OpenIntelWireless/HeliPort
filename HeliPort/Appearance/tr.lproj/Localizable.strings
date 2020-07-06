@@ -4,7 +4,7 @@
 "Check for Updates..." = "Güncelleme...";
 "Create Diagnostics Report..." = "Tanı Raporu Oluştur...";
 "Create Network..." = "Ağ Oluştur...";
-"Disconnect from: " = "Bağlantıyı Kapat:";
+"Disconnect from: " = "Bağlantıyı Kapat: ";
 "Dynamic WEP" = "Dinamik WEP";
 "Enable Wi-Fi Logging" = "Wi-Fi Tanılamayı Aç";
 "Enter the name and security type of the network you want to join." = "Bağlanmak istediğiniz kablosuz ağın adını ve güvenlik türünü girin.";
@@ -32,7 +32,7 @@
 "Unknown" = "Bilinmiyor";
 "Unreachable" = "Bağlantı Yok";
 "Username:" = "Kullanıcı Adı:";
-"Version: " = "Versiyon：";
+"Version: " = "Versiyon: ";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Enterprise";
 "WPA/WPA2 Personal" = "WPA/WPA2 Kişisel";
@@ -42,9 +42,9 @@
 "WPA2/WPA3 Personal" = "WPA2/WPA3 Kişisel";
 "WPA3 Enterprise" = "WPA3 Enterprise";
 "WPA3 Personal" = "WPA3 Kişisel";
-"Wi-Fi: Connected" = "Wi-Fi：Bağlandı";
-"Wi-Fi: Connecting" = "Wi-Fi：Bağlanıyor";
-"Wi-Fi: Looking for Networks..." = "Wi-Fi：Ağ Taranıyor...";
+"Wi-Fi: Connected" = "Wi-Fi: Bağlandı";
+"Wi-Fi: Connecting" = "Wi-Fi: Bağlanıyor";
+"Wi-Fi: Looking for Networks..." = "Wi-Fi: Ağ Taranıyor...";
 "Wi-Fi Network \"" = "Wi-Fi Ağ \"";
 "Wi-Fi: Off" = "Wi-Fi: Kapalı";
 "Wi-Fi: On" = "Wi-Fi: Aç";
