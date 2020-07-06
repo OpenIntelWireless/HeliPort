@@ -65,7 +65,7 @@
 
 /* Begin PBXFileReference section */
 		2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.release.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.release.xcconfig"; sourceTree = "<group>"; };
-		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		501FA511249B8F77002B5B54 /* WifiPlistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiPlistManager.swift; sourceTree = "<group>"; };
 		50B86AB924B22E9B008E4FE4 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50B86ABC24B22F75008E4FE4 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
