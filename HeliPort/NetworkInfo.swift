@@ -282,13 +282,7 @@ class NetworkManager {
             }
         }
         freeifaddrs(ifaddr)
-        if ipV4 != nil {
-            return ipV4
-        } else if ipV6 != nil {
-            return ipV6
-        } else {
-            return nil
-        }
+        return ipV4 ?? ipV6
     }
 }
 
