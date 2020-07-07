@@ -230,25 +230,20 @@ class NetworkManager {
         let dynamicCreate = SCDynamicStoreCreate(kCFAllocatorDefault, "router-ip" as CFString, nil, nil)
         let keyIPv4 = "State:/Network/Global/IPv4" as CFString
         let keyIPv6 = "State:/Network/Global/IPv6" as CFString
-        var dictionary: CFPropertyList?
-        if let ipV4Info = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4) {
-            dictionary = ipV4Info
-        } else if let ipV6Info = SCDynamicStoreCopyValue(dynamicCreate, keyIPv6) {
-            dictionary = ipV6Info
+        let dictionary = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4)
+            ?? SCDynamicStoreCopyValue(dynamicCreate, keyIPv6)
+
+        guard let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String, interface == bsd else {
+            Log.error("Could not find interface")
+            return nil
         }
-        if let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String {
-            if interface == bsd {
-                print("Interface found: \(interface == bsd)")
-                if let ipRouterAddr = dictionary?["Router"] as? String {
-                    return ipRouterAddr
-                } else {
-                    print("Could not find router ip")
-                }
-            } else {
-                print("Could not find interface")
-            }
+
+        guard let ipRouterAddr = dictionary?["Router"] as? String else {
+            Log.error("Could not find router ip")
+            return nil
         }
-        return nil
+
+        return ipRouterAddr
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
