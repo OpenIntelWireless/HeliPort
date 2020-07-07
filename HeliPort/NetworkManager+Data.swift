@@ -16,9 +16,9 @@
 import Foundation
 
 final class NetworkInfo {
-    var ssid: String = ""
-    var isConnected: Bool = false
-    var rssi: Int = 0
+    let ssid: String
+    let isConnected: Bool
+    var rssi: Int
 
     var auth = NetworkAuth()
 
@@ -36,6 +36,16 @@ final class NetworkInfo {
         self.ssid = ssid
         self.isConnected = connected
         self.rssi = rssi
+    }
+}
+
+extension NetworkInfo: Hashable {
+    static func == (lhs: NetworkInfo, rhs: NetworkInfo) -> Bool {
+        return lhs.ssid == rhs.ssid
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ssid)
     }
 }
 

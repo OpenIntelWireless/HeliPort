@@ -259,16 +259,6 @@ final class NetworkManager {
     }
 }
 
-extension NetworkInfo: Hashable {
-    static func == (lhs: NetworkInfo, rhs: NetworkInfo) -> Bool {
-        return lhs.ssid == rhs.ssid
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ssid)
-    }
-}
-
 extension itl_phy_mode: CustomStringConvertible {
     public var description: String {
         switch self {
