@@ -461,9 +461,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             self.isNetworkListEmpty = networkList.count == 0
             var networkList = networkList
             for index in 0 ..< self.networkItemList.count {
-                if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
-                    view.networkInfo = networkList.removeFirst()
-                    view.visible = true
+                if let view = self.networkItemList[index].view as? WifiMenuItemView {
+                    if networkList.count > 0 {
+                        view.networkInfo = networkList.removeFirst()
+                        view.visible = true
+                    } else {
+                        view.visible = false
+                    }
                 }
             }
             self.updateNetworkInfo()
