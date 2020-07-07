@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         checkDriver()
 
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
+        statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
         statusBar.button?.image?.isTemplate = true
         statusBar.menu = StatusMenu()
 

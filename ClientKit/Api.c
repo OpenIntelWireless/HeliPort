@@ -76,7 +76,7 @@ bool get_network_list(network_info_list_t *list) {
     if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
         goto error;
     }
-    sleep(3);
+    sleep(2);
     if (get_80211_state(&state) && state == ITL80211_S_RUN) {
         if (get_station_info(&sta_info) == KERN_SUCCESS) {
             current_ssid = (char *)sta_info.ssid;

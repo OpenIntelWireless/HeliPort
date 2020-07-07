@@ -33,8 +33,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
             guard isNetworkCardEnabled else {
-                StatusBarIcon.off()
-                statusItem.title = NSLocalizedString("Wi-Fi: Off", comment: "")
                 return
             }
 
@@ -46,7 +44,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             case ITL80211_S_AUTH, ITL80211_S_ASSOC:
                 StatusBarIcon.connecting()
             case ITL80211_S_RUN:
-                StatusBarIcon.connected()
+                DispatchQueue.global(qos: .background).async {
+                    var staInfo = station_info_t()
+                    get_station_info(&staInfo)
+                    DispatchQueue.main.async {
+                        StatusBarIcon.signalStrength(RSSI: staInfo.rssi)
+                    }
+                }
             case ITL80211_S_SCAN:
                 // no change in status bar icon when scanning
                 break
@@ -101,8 +105,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var isNetworkCardEnabled: Bool = false {
         willSet(newState) {
+            statusItem.title = NSLocalizedString(newState ? "Wi-Fi: On" : "Wi-Fi: Off", comment: "")
             switchItem.title = NSLocalizedString(newState ? "Turn Wi-Fi Off" : "Turn Wi-Fi On", comment: "")
-            self.isNetworkListEmpty = !newState
+            if newState != isNetworkCardEnabled {
+                newState ? StatusBarIcon.on() : StatusBarIcon.off()
+                self.isNetworkListEmpty = true
+            }
         }
     }
 
@@ -118,6 +126,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
 
     // MARK: - WiFi connected items
+
     let disconnectItem = NSMenuItem(
         title: NSLocalizedString("Disconnect from: ", comment: "") + "(null)",
         action: #selector(disassociateSSID(_:)))
@@ -143,9 +152,17 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         delegate = self
         setupMenuHeaderAndFooter()
         getDeviceInfo()
-        updateNetworkList()
 
         DispatchQueue.global(qos: .default).async {
+            var powerState: Bool = false
+            let get_power_ret = get_power_state(&powerState)
+            DispatchQueue.main.async {
+                if get_power_ret {
+                    self.isNetworkCardEnabled = powerState
+                    self.updateNetworkList()
+                }
+            }
+
             self.statusUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.statusUpdatePeriod,
                 target: self,
@@ -243,7 +260,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.networkListUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
-        updateNetworkInfo()
         updateNetworkList()
     }
 
@@ -450,6 +466,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     view.visible = true
                 }
             }
+            self.updateNetworkInfo()
         }
     }
 
