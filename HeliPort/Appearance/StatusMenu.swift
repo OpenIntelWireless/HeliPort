@@ -260,7 +260,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.networkListUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
-        updateNetworkList()
     }
 
     func menuDidClose(_ menu: NSMenu) {
