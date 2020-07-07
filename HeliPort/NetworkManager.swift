@@ -49,9 +49,7 @@ class NetworkAuth {
     var password: String = ""
 }
 
-class NetworkManager {
-    static var networkInfoList = [NetworkInfo]()
-
+final class NetworkManager {
     static let supportedSecurityMode = [
         NetworkInfo.AuthSecurity.NONE.rawValue,
         NetworkInfo.AuthSecurity.TKIP.rawValue,
