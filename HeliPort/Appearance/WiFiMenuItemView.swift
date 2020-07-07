@@ -96,7 +96,7 @@ class WifiMenuItemView: NSView {
             statusImage.isHidden = !networkInfo.isConnected
             ssidLabel.string = networkInfo.ssid
             lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
-            signalImage.image = getRssiImage(networkInfo.rssi)
+            signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
         }
     }
 
@@ -176,7 +176,7 @@ class WifiMenuItemView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func getRssiImage(_ RSSI: Int) -> NSImage? {
+    class func getRssiImage(_ RSSI: Int) -> NSImage? {
         var signalImageName: String
         switch RSSI {
         case ..<(-100):

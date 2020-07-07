@@ -66,6 +66,13 @@ class StatusBarIcon: NSObject {
         }
     }
 
+    class func signalStrength(RSSI: Int16) {
+        timer?.invalidate()
+        timer = nil
+        let signalImage = WifiMenuItemView.getRssiImage(Int(RSSI))
+        statusBar.button?.image = signalImage
+    }
+
     @objc class func tick() {
         DispatchQueue.main.async {
             StatusBarIcon.count -= 1

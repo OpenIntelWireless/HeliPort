@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		501FA512249B8F77002B5B54 /* WifiPlistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501FA511249B8F77002B5B54 /* WifiPlistManager.swift */; };
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
 		7557CDF424935260000F0F71 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7557CDF324935260000F0F71 /* Credits.rtf */; };
@@ -14,7 +15,6 @@
 		75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkInfo.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
 		BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */; };
-		BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */; };
 		BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */; };
 		BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */; };
@@ -478,8 +478,8 @@
 				F3915F0724AB1A1B00E6614D /* itl_80211_state+Status.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
-				BCA4DFAD243A307B002A862A /* StatusMenu.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkInfo.swift in Sources */,
+				13AF73B624B25E170015867C /* StatusMenu.swift in Sources */,
 				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
 				F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
