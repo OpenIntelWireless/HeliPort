@@ -174,7 +174,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         )
         NSApplication.shared.activate(ignoringOtherApps: true)
 
-        icon.image = NSImage.init(named: "WiFi")
+        icon.image = #imageLiteral(resourceName: "WiFi")
         view.addSubview(icon)
 
         titleLabel.stringValue = NSLocalizedString("Find and join a Wi-Fi network.", comment: "")

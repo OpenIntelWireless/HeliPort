@@ -29,7 +29,7 @@ class WifiMenuItemView: NSView {
 
     let statusImage: NSImageView = {
         let statusImage = NSImageView()
-        statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
+        statusImage.image = NSImage(named: "NSMenuOnStateTemplate")
         statusImage.image?.isTemplate = true
         statusImage.translatesAutoresizingMaskIntoConstraints = false
         return statusImage
@@ -47,7 +47,7 @@ class WifiMenuItemView: NSView {
 
     let lockImage: NSImageView = {
         let lockImage = NSImageView()
-        lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
+        lockImage.image = NSImage(named: "NSLockLockedTemplate")
         lockImage.translatesAutoresizingMaskIntoConstraints = false
         return lockImage
     }()
@@ -188,6 +188,6 @@ class WifiMenuItemView: NSView {
         default:
             signalImageName = "WiFiSignalStrengthExcellent"
         }
-        return NSImage.init(named: signalImageName)
+        return NSImage(named: signalImageName)
     }
 }

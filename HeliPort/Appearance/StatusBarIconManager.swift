@@ -29,19 +29,19 @@ class StatusBarIcon: NSObject {
     class func off() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOff")
     }
 
     class func connected() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOn")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOn")
     }
 
     class func disconnected() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateDisconnected")
     }
 
     class func connecting() {
@@ -78,17 +78,17 @@ class StatusBarIcon: NSObject {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
             case 7:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthPoor")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthPoor")
             case 6:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthFair")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
             case 5:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthGood")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
             case 4:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthExcellent")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthExcellent")
             case 3:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthGood")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
             case 2:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthFair")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
                 StatusBarIcon.count = 8
             default:
                 return
