@@ -177,14 +177,14 @@ class NetworkManager {
 
         let bsdIndex = Int32(if_nametoindex(bsd))
         if bsdIndex == 0 {
-            print("Error: could not find index for bsd name \(bsd)")
+            Log.error("Could not find index for bsd name \(bsd)")
             return nil
         }
         let bsdData = Data(bsd.utf8)
         var managementInfoBase = [CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, bsdIndex]
 
         if sysctl(&managementInfoBase, 6, nil, &length, nil, 0) < 0 {
-            print("Error: could not determine length of info data structure")
+            Log.error("Could not determine length of info data structure")
             return nil
         }
 
@@ -194,7 +194,7 @@ class NetworkManager {
         })
 
         if sysctl(&managementInfoBase, 6, &buffer, &length, nil, 0) < 0 {
-            print("Error: could not read info data structure")
+            Log.error("Could not read info data structure")
             return nil
         }
 
