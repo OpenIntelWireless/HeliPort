@@ -161,7 +161,7 @@ class NetworkManager {
             }
 
             DispatchQueue.main.async {
-                callback(Array(result).sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected })
+                callback(Array(result).sorted { $0.ssid < $1.ssid }.sorted { $0.isConnected && !$1.isConnected })
             }
         }
     }
