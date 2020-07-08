@@ -17,6 +17,7 @@ import Foundation
 import Cocoa
 
 class WifiMenuItemView: NSView {
+
     let statusImage: NSImageView = {
         let statusImage = NSImageView()
         statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
@@ -100,6 +101,7 @@ class WifiMenuItemView: NSView {
 
     func setupLayout() {
         heightConstraint = heightAnchor.constraint(equalToConstant: 19)
+        heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
         heightConstraint.isActive = true
 
         statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
