@@ -70,7 +70,6 @@ bool get_network_list(network_info_list_t *list) {
     struct ioctl_network_info network_info_ret;
     io_connect_t con;
     struct ioctl_sta_info sta_info;
-    char *current_ssid = (char *)"";
     uint32_t state;
     scan.version = IOCTL_VERSION;
     if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
@@ -79,7 +78,11 @@ bool get_network_list(network_info_list_t *list) {
     sleep(2);
     if (get_80211_state(&state) && state == ITL80211_S_RUN) {
         if (get_station_info(&sta_info) == KERN_SUCCESS) {
-            current_ssid = (char *)sta_info.ssid;
+            list->count = 1;
+            strncpy(list->networks[0].SSID, (char*) sta_info.ssid, 32);
+            list->networks[0].RSSI = sta_info.rssi;
+            list->networks[0].auth.security = ITL80211_CIPHER_CCMP; // TODO: set sta_info.ni_rsncipher;
+            list->networks[0].is_connected = true;
         }
     }
     if (!open_adapter(&con)) {
@@ -96,7 +99,7 @@ bool get_network_list(network_info_list_t *list) {
         // TODO: set security
         // info->auth.security = network_info_ret.ni_rsncipher;
         info->auth.security = ITL80211_CIPHER_CCMP;
-        info->is_connected = strcmp(current_ssid, (char *) &network_info_ret.ssid) == 0;
+        info->is_connected = false;
     }
     close_adapter(con);
     return true;
