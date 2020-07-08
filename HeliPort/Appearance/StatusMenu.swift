@@ -300,6 +300,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
                 self.itlwmVerItem.title = NSLocalizedString("Version: ", comment: "") + itlwmVer
             }
+
+            // If not connected, try to connect saved networks
+            var stationInfo = station_info_t()
+            if get_station_info(&stationInfo) != KERN_SUCCESS {
+                NetworkManager.connectSavedNetworks()
+            }
         }
     }
 

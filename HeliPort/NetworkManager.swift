@@ -27,7 +27,7 @@ final class NetworkManager {
         ITL80211_SECURITY_PERSONAL
     ]
 
-    class func connect(networkInfo: NetworkInfo) {
+    class func connect(networkInfo: NetworkInfo, _ callback: ((_ result: Bool) -> Void)? = nil) {
         guard !networkInfo.isConnected else {
             return
         }
@@ -77,6 +77,7 @@ final class NetworkManager {
                             CredentialsManager.instance.save(networkInfo, password: auth.password)
                         }
                     }
+                    callback?(result)
                 }
             }
         }
@@ -127,6 +128,20 @@ final class NetworkManager {
 
             DispatchQueue.main.async {
                 callback(Array(result).sorted { $0.ssid < $1.ssid }.sorted { $0.isConnected && !$1.isConnected })
+            }
+        }
+    }
+
+    class func connectSavedNetworks() {
+        DispatchQueue.global(qos: .background).async {
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
+            var connected = false
+            for network in CredentialsManager.instance.getSavedNetworks() where !connected {
+                connect(networkInfo: network) { (result: Bool) -> Void in
+                    connected = result
+                    dispatchSemaphore.signal()
+                }
+                dispatchSemaphore.wait()
             }
         }
     }

@@ -19,6 +19,7 @@ final class CredentialsManager {
     }
 
     func save(_ network: NetworkInfo, password: String) {
+        // TODO: save or serialize NetworkInfo model
         Log.debug("Saving password for network \(network.ssid)")
         keychain[string: network.keychainKey] = password
     }
@@ -31,6 +32,17 @@ final class CredentialsManager {
 
         Log.debug("Loading password for network \(network.ssid)")
         return password
+    }
+
+    func getSavedNetworks() -> [NetworkInfo] {
+        var list: [NetworkInfo] = []
+        for ssid in keychain.allKeys() {
+            // TODO: unserialize networkInfo
+            let network = NetworkInfo(ssid: ssid, connected: false, rssi: 0)
+            network.auth.security = NetworkInfo.AuthSecurity.CCMP.rawValue
+            list.append(network)
+        }
+        return list
     }
 }
 
