@@ -19,9 +19,12 @@ import SystemConfiguration
 
 final class NetworkManager {
     static let supportedSecurityMode = [
-        NetworkInfo.AuthSecurity.NONE.rawValue,
-        NetworkInfo.AuthSecurity.TKIP.rawValue,
-        NetworkInfo.AuthSecurity.CCMP.rawValue
+        ITL80211_SECURITY_NONE.rawValue,
+        ITL80211_SECURITY_WEP.rawValue,
+        ITL80211_SECURITY_WPA_PERSONAL.rawValue,
+        ITL80211_SECURITY_WPA_PERSONAL_MIXED.rawValue,
+        ITL80211_SECURITY_WPA2_PERSONAL.rawValue,
+        ITL80211_SECURITY_PERSONAL.rawValue
     ]
 
     class func connect(networkInfo: NetworkInfo) {
@@ -32,8 +35,7 @@ final class NetworkManager {
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
             let labelName = String(
-                describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
-                NetworkInfo.AuthSecurity.NONE
+                describing: itl80211_security.init(rawValue: networkInfo.auth.security)
             )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + labelName
@@ -82,7 +84,7 @@ final class NetworkManager {
             }
         }
 
-        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.NONE.rawValue else {
+        guard networkInfo.auth.security != ITL80211_SECURITY_NONE.rawValue else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth, false)
             return
@@ -127,7 +129,7 @@ final class NetworkManager {
             }
 
             DispatchQueue.main.async {
-                callback(Array(result).sorted { $0.rssi > $1.rssi }.sorted { $0.isConnected && !$1.isConnected })
+                callback(Array(result).sorted { $0.ssid < $1.ssid }.sorted { $0.isConnected && !$1.isConnected })
             }
         }
     }
@@ -256,5 +258,42 @@ final class NetworkManager {
 
         // ipV4 has priority
         return ipV4 ?? ipV6
+    }
+}
+
+extension itl80211_security: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case ITL80211_SECURITY_NONE :
+            return "None"
+        case ITL80211_SECURITY_WEP:
+            return "WEP"
+        case ITL80211_SECURITY_WPA_PERSONAL:
+            return "WPA Personal"
+        case ITL80211_SECURITY_WPA_PERSONAL_MIXED:
+            return "WPA/WPA2 Personal"
+        case ITL80211_SECURITY_WPA2_PERSONAL:
+            return "WPA2 Personal"
+        case ITL80211_SECURITY_PERSONAL:
+            return "Personal"
+        case ITL80211_SECURITY_DYNAMIC_WEP:
+            return "Dynamic WEP"
+        case ITL80211_SECURITY_WPA_ENTERPRISE:
+            return "WPA Enterprise"
+        case ITL80211_SECURITY_WPA_ENTERPRISE_MIXED:
+            return "WPA/WPA2 Enterprise"
+        case ITL80211_SECURITY_WPA2_ENTERPRISE:
+            return "WPA2 Enterprise"
+        case ITL80211_SECURITY_ENTERPRISE:
+            return "Enterprise"
+        case ITL80211_SECURITY_WPA3_PERSONAL:
+            return "WPA3 Personal"
+        case ITL80211_SECURITY_WPA3_ENTERPRISE:
+            return "WPA3 Enterprise"
+        case ITL80211_SECURITY_WPA3_TRANSITION:
+            return "WPA3 Transition"
+        default:
+            return "Unknown"
+        }
     }
 }

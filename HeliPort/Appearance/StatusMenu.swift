@@ -148,7 +148,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     init() {
         super.init(title: "")
-        minimumWidth = CGFloat(285.0)
+        minimumWidth = CGFloat(286.0)
         delegate = self
         setupMenuHeaderAndFooter()
         getDeviceInfo()
@@ -260,7 +260,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.networkListUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
-        updateNetworkList()
     }
 
     func menuDidClose(_ menu: NSMenu) {
@@ -320,13 +319,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         guard let view = item.view as? WifiMenuItemView else {
             return item
         }
-        view.visible = false
         view.translatesAutoresizingMaskIntoConstraints = false
         guard let supView = view.superview else {
             return item
         }
-        view.widthAnchor.constraint(equalTo: supView.widthAnchor).isActive = true
-        view.heightAnchor.constraint(equalTo: supView.heightAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: supView.leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: supView.topAnchor).isActive = true
+        view.trailingAnchor.constraint(greaterThanOrEqualTo: supView.trailingAnchor).isActive = true
+        view.visible = false
         return item
     }
 
@@ -460,9 +460,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             self.isNetworkListEmpty = networkList.count == 0
             var networkList = networkList
             for index in 0 ..< self.networkItemList.count {
-                if networkList.count > 0, let view = self.networkItemList[index].view as? WifiMenuItemView {
-                    view.networkInfo = networkList.removeFirst()
-                    view.visible = true
+                if let view = self.networkItemList[index].view as? WifiMenuItemView {
+                    if networkList.count > 0 {
+                        view.networkInfo = networkList.removeFirst()
+                        view.visible = true
+                    } else {
+                        view.visible = false
+                    }
                 }
             }
             self.updateNetworkInfo()
