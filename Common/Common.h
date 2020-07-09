@@ -119,6 +119,24 @@ struct ioctl_tx_power {
     unsigned int version;
 };
 
+enum AuthSecurity {
+    kASNONE,
+    kASWEP,
+    kASWPAPersonal,
+    kASWPAPersonalMixed,
+    kASWPA2Personal,
+    kASPersonal,
+    kASDynamicWEP,
+    kASWPAEnterprise,
+    kASWPAEnterpriseMixed,
+    kASWPA2Enterprise,
+    kASEnterprise,
+    kASWPA3Personal,
+    kASWPA3Enterprise,
+    kASWPA3Transition,
+    kASUnknown                 = 255
+};
+
 /*
  * 802.11 ciphers.
  */

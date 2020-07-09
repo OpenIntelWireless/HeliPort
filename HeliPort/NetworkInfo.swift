@@ -24,14 +24,23 @@ class NetworkInfo {
 
     var auth = NetworkAuth()
 
+    //TODO same declare in Common.h, need to be optimized.
     enum AuthSecurity: UInt32 {
-        case NONE        = 0x00000000
-        case USEGROUP    = 0x00000001
-        case WEP40       = 0x00000002
-        case TKIP        = 0x00000004
-        case CCMP        = 0x00000008
-        case WEP104      = 0x00000010
-        case BIP         = 0x00000020    /* 11w */
+        case kASNONE                    = 0
+        case kASWEP                     = 1
+        case kASWPAPersonal             = 2
+        case kASWPAPersonalMixed        = 3
+        case kASWPA2Personal            = 4
+        case kASPersonal                = 5
+        case kASDynamicWEP              = 6
+        case kASWPAEnterprise           = 7
+        case kASWPAEnterpriseMixed      = 8
+        case kASWPA2Enterprise          = 9
+        case kASEnterprise              = 10
+        case kASWPA3Personal            = 11
+        case kASWPA3Enterprise          = 12
+        case kASWPA3Transition          = 13
+        case kASUnknown                 = 255
     }
 
     init (ssid: String, connected: Bool, rssi: Int) {
@@ -53,9 +62,20 @@ class NetworkManager {
     static var networkInfoList = [NetworkInfo]()
 
     static let supportedSecurityMode = [
-        NetworkInfo.AuthSecurity.NONE.rawValue,
-        NetworkInfo.AuthSecurity.TKIP.rawValue,
-        NetworkInfo.AuthSecurity.CCMP.rawValue
+        NetworkInfo.AuthSecurity.kASNONE.rawValue,
+        NetworkInfo.AuthSecurity.kASWEP.rawValue,
+        NetworkInfo.AuthSecurity.kASWPAPersonal.rawValue,
+        NetworkInfo.AuthSecurity.kASWPAPersonalMixed.rawValue,
+        NetworkInfo.AuthSecurity.kASWPA2Personal.rawValue,
+        NetworkInfo.AuthSecurity.kASPersonal.rawValue,
+        NetworkInfo.AuthSecurity.kASDynamicWEP.rawValue,
+        NetworkInfo.AuthSecurity.kASWPAEnterprise.rawValue,
+        NetworkInfo.AuthSecurity.kASWPAEnterpriseMixed.rawValue,
+        NetworkInfo.AuthSecurity.kASWPA2Enterprise.rawValue,
+        NetworkInfo.AuthSecurity.kASEnterprise.rawValue,
+        NetworkInfo.AuthSecurity.kASWPA3Personal.rawValue,
+        NetworkInfo.AuthSecurity.kASWPA3Enterprise.rawValue,
+        NetworkInfo.AuthSecurity.kASWPA3Transition.rawValue
     ]
 
     class func connect(networkInfo: NetworkInfo) {
@@ -67,7 +87,7 @@ class NetworkManager {
             let alert = NSAlert()
             let labelName = String(
                 describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
-                NetworkInfo.AuthSecurity.NONE
+                NetworkInfo.AuthSecurity.kASNONE
             )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + labelName
@@ -116,7 +136,7 @@ class NetworkManager {
             }
         }
 
-        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.NONE.rawValue else {
+        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.kASNONE.rawValue else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth, false)
             return
