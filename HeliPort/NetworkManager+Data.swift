@@ -50,7 +50,7 @@ extension NetworkInfo: Hashable {
 }
 
 final class NetworkAuth {
-    var security: UInt32 = 0
+    var security: itl80211_security = ITL80211_SECURITY_NONE
     var option: UInt64 = 0
     var identity = [UInt8]()
     var username: String = ""

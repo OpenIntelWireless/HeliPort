@@ -19,12 +19,12 @@ import SystemConfiguration
 
 final class NetworkManager {
     static let supportedSecurityMode = [
-        ITL80211_SECURITY_NONE.rawValue,
-        ITL80211_SECURITY_WEP.rawValue,
-        ITL80211_SECURITY_WPA_PERSONAL.rawValue,
-        ITL80211_SECURITY_WPA_PERSONAL_MIXED.rawValue,
-        ITL80211_SECURITY_WPA2_PERSONAL.rawValue,
-        ITL80211_SECURITY_PERSONAL.rawValue
+        ITL80211_SECURITY_NONE,
+        ITL80211_SECURITY_WEP,
+        ITL80211_SECURITY_WPA_PERSONAL,
+        ITL80211_SECURITY_WPA_PERSONAL_MIXED,
+        ITL80211_SECURITY_WPA2_PERSONAL,
+        ITL80211_SECURITY_PERSONAL
     ]
 
     class func connect(networkInfo: NetworkInfo) {
@@ -34,11 +34,8 @@ final class NetworkManager {
 
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
-            let labelName = String(
-                describing: itl80211_security.init(rawValue: networkInfo.auth.security)
-            )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
-                + labelName
+                + networkInfo.auth.security.description
             alert.alertStyle = NSAlert.Style.critical
             DispatchQueue.main.async {
                 alert.runModal()
@@ -56,7 +53,7 @@ final class NetworkManager {
             networkInfoStruct.is_connected = false
             networkInfoStruct.RSSI = Int32(networkInfo.rssi)
 
-            networkInfoStruct.auth.security = auth.security
+            networkInfoStruct.auth.security = auth.security.rawValue
             networkInfoStruct.auth.option = auth.option
             networkInfoStruct.auth.identity = UnsafeMutablePointer<UInt8>.allocate(capacity: auth.identity.count)
             networkInfoStruct.auth.identity.initialize(
@@ -84,7 +81,7 @@ final class NetworkManager {
             }
         }
 
-        guard networkInfo.auth.security != ITL80211_SECURITY_NONE.rawValue else {
+        guard networkInfo.auth.security != ITL80211_SECURITY_NONE else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth, false)
             return
@@ -123,7 +120,7 @@ final class NetworkManager {
                     connected: network!.is_connected,
                     rssi: Int(network!.RSSI)
                 )
-                networkInfo.auth.security = network?.auth.security ?? 0
+                networkInfo.auth.security = itl80211_security(rawValue: network?.auth.security ?? 0)
                 networkInfo.auth.option = network?.auth.option ?? 0
                 result.insert(networkInfo)
             }
