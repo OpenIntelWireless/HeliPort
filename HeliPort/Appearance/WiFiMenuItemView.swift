@@ -112,7 +112,7 @@ class WifiMenuItemView: NSView {
         signalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1).isActive = true
         signalImage.leadingAnchor.constraint(equalTo: lockImage.trailingAnchor, constant: 12).isActive = true
         signalImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
-        signalImage.widthAnchor.constraint(equalToConstant: 21).isActive = true
+        signalImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
     }
 
     init(networkInfo: NetworkInfo) {
