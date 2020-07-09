@@ -58,25 +58,16 @@ class WifiMenuItemView: NSView {
         return signalImage
     }()
 
-    var highlightColor: NSColor = NSColor.white
-    var normalColor: NSColor = NSColor.white
     var isMouseOver: Bool = false {
         willSet(hover) {
             menuItemView.material = hover ? .selection : .popover
             menuItemView.isEmphasized = hover
-            ssidLabel.textColor = hover ? highlightColor : normalColor
+            ssidLabel.textColor = hover ? .white : .textColor
             if #available(OSX 10.14, *) {
-                statusImage.contentTintColor = hover ? highlightColor : normalColor
-                lockImage.contentTintColor = hover ? highlightColor : normalColor
-                signalImage.contentTintColor = hover ? highlightColor : normalColor
+                statusImage.contentTintColor = hover ? .white : .textColor
+                lockImage.contentTintColor = hover ? .white : .textColor
+                signalImage.contentTintColor = hover ? .white : .textColor
             }
-        }
-    }
-
-    var darkModeEnabled: Bool = false {
-        willSet(enabled) {
-            highlightColor = NSColor.white
-            normalColor = enabled ? NSColor.white : NSColor.black
         }
     }
 
@@ -129,8 +120,6 @@ class WifiMenuItemView: NSView {
             height: 18
         ))
 
-        darkModeEnabled = isDarkMode()
-
         menuItemView.addSubview(statusImage)
         menuItemView.addSubview(ssidLabel)
         menuItemView.addSubview(lockImage)
@@ -161,15 +150,7 @@ class WifiMenuItemView: NSView {
     }
 
     override func draw(_ rect: NSRect) {
-        darkModeEnabled = isDarkMode()
         checkHighlight()
-    }
-
-    func isDarkMode() -> Bool {
-        if #available(OSX 10.14, *) {
-            return self.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-        }
-        return false
     }
 
     required init?(coder: NSCoder) {
