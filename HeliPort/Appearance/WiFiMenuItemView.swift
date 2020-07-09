@@ -86,7 +86,7 @@ class WifiMenuItemView: NSView {
         willSet(networkInfo) {
             statusImage.isHidden = !networkInfo.isConnected
             ssidLabel.string = networkInfo.ssid
-            lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.kASNONE.rawValue
+            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE.rawValue
             signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
         }
     }

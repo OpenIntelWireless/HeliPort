@@ -24,25 +24,6 @@ class NetworkInfo {
 
     var auth = NetworkAuth()
 
-    //TODO same declare in Common.h, need to be optimized.
-    enum AuthSecurity: UInt32 {
-        case kASNONE                    = 0
-        case kASWEP                     = 1
-        case kASWPAPersonal             = 2
-        case kASWPAPersonalMixed        = 3
-        case kASWPA2Personal            = 4
-        case kASPersonal                = 5
-        case kASDynamicWEP              = 6
-        case kASWPAEnterprise           = 7
-        case kASWPAEnterpriseMixed      = 8
-        case kASWPA2Enterprise          = 9
-        case kASEnterprise              = 10
-        case kASWPA3Personal            = 11
-        case kASWPA3Enterprise          = 12
-        case kASWPA3Transition          = 13
-        case kASUnknown                 = 255
-    }
-
     init (ssid: String, connected: Bool, rssi: Int) {
         self.ssid = ssid
         self.isConnected = connected
@@ -62,20 +43,12 @@ class NetworkManager {
     static var networkInfoList = [NetworkInfo]()
 
     static let supportedSecurityMode = [
-        NetworkInfo.AuthSecurity.kASNONE.rawValue,
-        NetworkInfo.AuthSecurity.kASWEP.rawValue,
-        NetworkInfo.AuthSecurity.kASWPAPersonal.rawValue,
-        NetworkInfo.AuthSecurity.kASWPAPersonalMixed.rawValue,
-        NetworkInfo.AuthSecurity.kASWPA2Personal.rawValue,
-        NetworkInfo.AuthSecurity.kASPersonal.rawValue,
-        NetworkInfo.AuthSecurity.kASDynamicWEP.rawValue,
-        NetworkInfo.AuthSecurity.kASWPAEnterprise.rawValue,
-        NetworkInfo.AuthSecurity.kASWPAEnterpriseMixed.rawValue,
-        NetworkInfo.AuthSecurity.kASWPA2Enterprise.rawValue,
-        NetworkInfo.AuthSecurity.kASEnterprise.rawValue,
-        NetworkInfo.AuthSecurity.kASWPA3Personal.rawValue,
-        NetworkInfo.AuthSecurity.kASWPA3Enterprise.rawValue,
-        NetworkInfo.AuthSecurity.kASWPA3Transition.rawValue
+        ITL80211_SECURITY_NONE.rawValue,
+        ITL80211_SECURITY_WEP.rawValue,
+        ITL80211_SECURITY_WPA_PERSONAL.rawValue,
+        ITL80211_SECURITY_WPA_PERSONAL_MIXED.rawValue,
+        ITL80211_SECURITY_WPA2_PERSONAL.rawValue,
+        ITL80211_SECURITY_PERSONAL.rawValue
     ]
 
     class func connect(networkInfo: NetworkInfo) {
@@ -86,8 +59,7 @@ class NetworkManager {
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
             let labelName = String(
-                describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
-                NetworkInfo.AuthSecurity.kASNONE
+                describing: itl80211_security.init(rawValue: networkInfo.auth.security)
             )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + labelName
@@ -136,7 +108,7 @@ class NetworkManager {
             }
         }
 
-        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.kASNONE.rawValue else {
+        guard networkInfo.auth.security != ITL80211_SECURITY_NONE.rawValue else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth, false)
             return
@@ -337,6 +309,43 @@ extension itl_phy_mode: CustomStringConvertible {
             return "802.11ac"
         case ITL80211_MODE_11AX:
             return "802.11ax"
+        default:
+            return "Unknown"
+        }
+    }
+}
+
+extension itl80211_security: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case ITL80211_SECURITY_NONE :
+            return "None"
+        case ITL80211_SECURITY_WEP:
+            return "WEP"
+        case ITL80211_SECURITY_WPA_PERSONAL:
+            return "WPA Personal"
+        case ITL80211_SECURITY_WPA_PERSONAL_MIXED:
+            return "WPA/WPA2 Personal"
+        case ITL80211_SECURITY_WPA2_PERSONAL:
+            return "WPA2 Personal"
+        case ITL80211_SECURITY_PERSONAL:
+            return "Personal"
+        case ITL80211_SECURITY_DYNAMIC_WEP:
+            return "Dynamic WEP"
+        case ITL80211_SECURITY_WPA_ENTERPRISE:
+            return "WPA Enterprise"
+        case ITL80211_SECURITY_WPA_ENTERPRISE_MIXED:
+            return "WPA/WPA2 Enterprise"
+        case ITL80211_SECURITY_WPA2_ENTERPRISE:
+            return "WPA2 Enterprise"
+        case ITL80211_SECURITY_ENTERPRISE:
+            return "Enterprise"
+        case ITL80211_SECURITY_WPA3_PERSONAL:
+            return "WPA3 Personal"
+        case ITL80211_SECURITY_WPA3_ENTERPRISE:
+            return "WPA3 Enterprise"
+        case ITL80211_SECURITY_WPA3_TRANSITION:
+            return "WPA3 Transition"
         default:
             return "Unknown"
         }

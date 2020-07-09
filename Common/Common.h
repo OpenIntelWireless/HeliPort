@@ -119,22 +119,22 @@ struct ioctl_tx_power {
     unsigned int version;
 };
 
-enum AuthSecurity {
-    kASNONE,
-    kASWEP,
-    kASWPAPersonal,
-    kASWPAPersonalMixed,
-    kASWPA2Personal,
-    kASPersonal,
-    kASDynamicWEP,
-    kASWPAEnterprise,
-    kASWPAEnterpriseMixed,
-    kASWPA2Enterprise,
-    kASEnterprise,
-    kASWPA3Personal,
-    kASWPA3Enterprise,
-    kASWPA3Transition,
-    kASUnknown                 = 255
+enum itl80211_security {
+    ITL80211_SECURITY_NONE,
+    ITL80211_SECURITY_WEP,
+    ITL80211_SECURITY_WPA_PERSONAL,
+    ITL80211_SECURITY_WPA_PERSONAL_MIXED,
+    ITL80211_SECURITY_WPA2_PERSONAL,
+    ITL80211_SECURITY_PERSONAL,
+    ITL80211_SECURITY_DYNAMIC_WEP,
+    ITL80211_SECURITY_WPA_ENTERPRISE,
+    ITL80211_SECURITY_WPA_ENTERPRISE_MIXED,
+    ITL80211_SECURITY_WPA2_ENTERPRISE,
+    ITL80211_SECURITY_ENTERPRISE,
+    ITL80211_SECURITY_WPA3_PERSONAL,
+    ITL80211_SECURITY_WPA3_ENTERPRISE,
+    ITL80211_SECURITY_WPA3_TRANSITION,
+    ITL80211_SECURITY_UNKNOWN                 = 255
 };
 
 /*

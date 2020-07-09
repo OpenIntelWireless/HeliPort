@@ -68,33 +68,35 @@ static uint32_t analyse_security(struct ioctl_network_info *info) {
         //wpa2
         if (info->rsn_akms & ITL80211_AKM_8021X) {
             if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
-                return kASWPAEnterpriseMixed;
+                return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED;
             }
-            return kASWPA2Enterprise;
+            return ITL80211_SECURITY_WPA2_ENTERPRISE;
         } else if (info->rsn_akms & ITL80211_AKM_PSK) {
             if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
-                return kASWPAPersonalMixed;
+                return ITL80211_SECURITY_WPA_PERSONAL_MIXED;
             }
-            return kASWPA2Personal;
+            return ITL80211_SECURITY_WPA2_PERSONAL;
         } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
-            return kASWPA2Enterprise;
+            return ITL80211_SECURITY_WPA2_ENTERPRISE;
         } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
-            return kASPersonal;
+            return ITL80211_SECURITY_PERSONAL;
         }
     } else if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
         //wpa
         if (info->rsn_akms & ITL80211_AKM_8021X) {
-            return kASWPAEnterprise;
+            return ITL80211_SECURITY_WPA_ENTERPRISE;
         } else if (info->rsn_akms & ITL80211_AKM_PSK) {
-            return kASWPAPersonal;
+            return ITL80211_SECURITY_WPA_PERSONAL;
         } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
-            return kASWPAEnterprise;
+            return ITL80211_SECURITY_WPA_ENTERPRISE;
         } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
-            return kASEnterprise;
+            return ITL80211_SECURITY_ENTERPRISE;
         }
+    } else if (!info->supported_rsnprotos) {
+        return ITL80211_SECURITY_NONE;
     }
     //TODO wpa3
-    return kASNONE;
+    return ITL80211_SECURITY_UNKNOWN;
 }
 
 bool get_network_list(network_info_list_t *list) {
