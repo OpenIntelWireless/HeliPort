@@ -57,25 +57,16 @@ class WifiMenuItemView: NSView {
         return signalImage
     }()
 
-    var highlightColor: NSColor = NSColor.white
-    var normalColor: NSColor = NSColor.white
     var isMouseOver: Bool = false {
         willSet(hover) {
             (superview as? NSVisualEffectView)?.material = hover ? .selection : .popover
             (superview as? NSVisualEffectView)?.isEmphasized = hover
-            ssidLabel.textColor = hover ? highlightColor : normalColor
+            ssidLabel.textColor = hover ? .white : .textColor
             if #available(OSX 10.14, *) {
-                statusImage.contentTintColor = hover ? highlightColor : normalColor
-                lockImage.contentTintColor = hover ? highlightColor : normalColor
-                signalImage.contentTintColor = hover ? highlightColor : normalColor
+                statusImage.contentTintColor = hover ? .white : .textColor
+                lockImage.contentTintColor = hover ? .white : .textColor
+                signalImage.contentTintColor = hover ? .white : .textColor
             }
-        }
-    }
-
-    var darkModeEnabled: Bool = false {
-        willSet(enabled) {
-            highlightColor = NSColor.white
-            normalColor = enabled ? NSColor.white : NSColor.black
         }
     }
 
@@ -92,7 +83,7 @@ class WifiMenuItemView: NSView {
         willSet(networkInfo) {
             statusImage.isHidden = !networkInfo.isConnected
             ssidLabel.stringValue = networkInfo.ssid
-            lockImage.isHidden = networkInfo.auth.security == NetworkInfo.AuthSecurity.NONE.rawValue
+            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE.rawValue
             signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
             layoutSubtreeIfNeeded()
         }
@@ -128,8 +119,6 @@ class WifiMenuItemView: NSView {
         self.networkInfo = networkInfo
         super.init(frame: NSRect.zero)
 
-        darkModeEnabled = isDarkMode()
-
         self.addSubview(statusImage)
         self.addSubview(ssidLabel)
         self.addSubview(lockImage)
@@ -159,15 +148,7 @@ class WifiMenuItemView: NSView {
     }
 
     override func draw(_ rect: NSRect) {
-        darkModeEnabled = isDarkMode()
         checkHighlight()
-    }
-
-    func isDarkMode() -> Bool {
-        if #available(OSX 10.14, *) {
-            return self.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-        }
-        return false
     }
 
     required init?(coder: NSCoder) {

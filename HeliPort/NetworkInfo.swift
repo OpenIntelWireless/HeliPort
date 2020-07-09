@@ -24,16 +24,6 @@ class NetworkInfo {
 
     var auth = NetworkAuth()
 
-    enum AuthSecurity: UInt32 {
-        case NONE        = 0x00000000
-        case USEGROUP    = 0x00000001
-        case WEP40       = 0x00000002
-        case TKIP        = 0x00000004
-        case CCMP        = 0x00000008
-        case WEP104      = 0x00000010
-        case BIP         = 0x00000020    /* 11w */
-    }
-
     init (ssid: String, connected: Bool, rssi: Int) {
         self.ssid = ssid
         self.isConnected = connected
@@ -53,9 +43,12 @@ class NetworkManager {
     static var networkInfoList = [NetworkInfo]()
 
     static let supportedSecurityMode = [
-        NetworkInfo.AuthSecurity.NONE.rawValue,
-        NetworkInfo.AuthSecurity.TKIP.rawValue,
-        NetworkInfo.AuthSecurity.CCMP.rawValue
+        ITL80211_SECURITY_NONE.rawValue,
+        ITL80211_SECURITY_WEP.rawValue,
+        ITL80211_SECURITY_WPA_PERSONAL.rawValue,
+        ITL80211_SECURITY_WPA_PERSONAL_MIXED.rawValue,
+        ITL80211_SECURITY_WPA2_PERSONAL.rawValue,
+        ITL80211_SECURITY_PERSONAL.rawValue
     ]
 
     class func connect(networkInfo: NetworkInfo) {
@@ -66,8 +59,7 @@ class NetworkManager {
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
             let labelName = String(
-                describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
-                NetworkInfo.AuthSecurity.NONE
+                describing: itl80211_security.init(rawValue: networkInfo.auth.security)
             )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + labelName
@@ -116,7 +108,7 @@ class NetworkManager {
             }
         }
 
-        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.NONE.rawValue else {
+        guard networkInfo.auth.security != ITL80211_SECURITY_NONE.rawValue else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth, false)
             return
@@ -317,6 +309,43 @@ extension itl_phy_mode: CustomStringConvertible {
             return "802.11ac"
         case ITL80211_MODE_11AX:
             return "802.11ax"
+        default:
+            return "Unknown"
+        }
+    }
+}
+
+extension itl80211_security: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case ITL80211_SECURITY_NONE :
+            return "None"
+        case ITL80211_SECURITY_WEP:
+            return "WEP"
+        case ITL80211_SECURITY_WPA_PERSONAL:
+            return "WPA Personal"
+        case ITL80211_SECURITY_WPA_PERSONAL_MIXED:
+            return "WPA/WPA2 Personal"
+        case ITL80211_SECURITY_WPA2_PERSONAL:
+            return "WPA2 Personal"
+        case ITL80211_SECURITY_PERSONAL:
+            return "Personal"
+        case ITL80211_SECURITY_DYNAMIC_WEP:
+            return "Dynamic WEP"
+        case ITL80211_SECURITY_WPA_ENTERPRISE:
+            return "WPA Enterprise"
+        case ITL80211_SECURITY_WPA_ENTERPRISE_MIXED:
+            return "WPA/WPA2 Enterprise"
+        case ITL80211_SECURITY_WPA2_ENTERPRISE:
+            return "WPA2 Enterprise"
+        case ITL80211_SECURITY_ENTERPRISE:
+            return "Enterprise"
+        case ITL80211_SECURITY_WPA3_PERSONAL:
+            return "WPA3 Personal"
+        case ITL80211_SECURITY_WPA3_ENTERPRISE:
+            return "WPA3 Enterprise"
+        case ITL80211_SECURITY_WPA3_TRANSITION:
+            return "WPA3 Transition"
         default:
             return "Unknown"
         }
