@@ -17,26 +17,21 @@ import Foundation
 import Cocoa
 
 class WifiMenuItemView: NSView {
-    let menuItemView: NSVisualEffectView = {
-        let menuItemView = NSVisualEffectView()
-        menuItemView.state = .active
-        menuItemView.material = .popover
-        menuItemView.isEmphasized = false
-        menuItemView.blendingMode = .behindWindow
-        menuItemView.translatesAutoresizingMaskIntoConstraints = false
-        return menuItemView
-    }()
 
     let statusImage: NSImageView = {
         let statusImage = NSImageView()
         statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
         statusImage.image?.isTemplate = true
         statusImage.translatesAutoresizingMaskIntoConstraints = false
+        statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return statusImage
     }()
 
-    let ssidLabel: NSTextView = {
-        let ssidLabel = NSTextView()
+    let ssidLabel: NSTextField = {
+        let ssidLabel = NSTextField()
+        ssidLabel.isBordered = false
+        ssidLabel.usesSingleLineMode = true
+        ssidLabel.maximumNumberOfLines = 1
         ssidLabel.drawsBackground = false
         ssidLabel.isEditable = false
         ssidLabel.isSelectable = false
@@ -48,20 +43,24 @@ class WifiMenuItemView: NSView {
     let lockImage: NSImageView = {
         let lockImage = NSImageView()
         lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
+        lockImage.image?.isTemplate = true
         lockImage.translatesAutoresizingMaskIntoConstraints = false
+        lockImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return lockImage
     }()
 
     let signalImage: NSImageView = {
         let signalImage = NSImageView()
+        signalImage.image?.isTemplate = true
         signalImage.translatesAutoresizingMaskIntoConstraints = false
+        signalImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return signalImage
     }()
 
     var isMouseOver: Bool = false {
         willSet(hover) {
-            menuItemView.material = hover ? .selection : .popover
-            menuItemView.isEmphasized = hover
+            (superview as? NSVisualEffectView)?.material = hover ? .selection : .popover
+            (superview as? NSVisualEffectView)?.isEmphasized = hover
             ssidLabel.textColor = hover ? .white : .textColor
             if #available(OSX 10.14, *) {
                 statusImage.contentTintColor = hover ? .white : .textColor
@@ -73,10 +72,8 @@ class WifiMenuItemView: NSView {
 
     var visible: Bool = true {
         willSet(visible) {
-            setFrameSize(NSSize(
-                width: self.frame.width,
-                height: visible ? 18 : 0
-            ))
+            heightConstraint.constant = visible ? 19 : 0
+            layoutSubtreeIfNeeded()
         }
     }
 
@@ -85,47 +82,48 @@ class WifiMenuItemView: NSView {
     var networkInfo: NetworkInfo {
         willSet(networkInfo) {
             statusImage.isHidden = !networkInfo.isConnected
-            ssidLabel.string = networkInfo.ssid
+            ssidLabel.stringValue = networkInfo.ssid
             lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE.rawValue
             signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
+            layoutSubtreeIfNeeded()
         }
     }
 
+    var heightConstraint: NSLayoutConstraint!
+
     func setupLayout() {
-        menuItemView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        menuItemView.heightAnchor.constraint(equalTo: heightAnchor).isActive = true
+        heightConstraint = heightAnchor.constraint(equalToConstant: 19)
+        heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
+        heightConstraint.isActive = true
 
-        statusImage.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
-        statusImage.leftAnchor.constraint(equalTo: menuItemView.leftAnchor, constant: 5).isActive = true
+        statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6).isActive = true
+        statusImage.widthAnchor.constraint(equalToConstant: 12).isActive = true
 
-        signalImage.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
-        signalImage.heightAnchor.constraint(equalToConstant: 14).isActive = true
-        signalImage.rightAnchor.constraint(equalTo: menuItemView.rightAnchor, constant: -10).isActive = true
+        ssidLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        ssidLabel.leadingAnchor.constraint(equalTo: statusImage.trailingAnchor, constant: 3).isActive = true
+        ssidLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        ssidLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
-        lockImage.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
-        lockImage.rightAnchor.constraint(equalTo: signalImage.leftAnchor, constant: -10).isActive = true
+        lockImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        lockImage.leadingAnchor.constraint(equalTo: ssidLabel.trailingAnchor, constant: 10).isActive = true
+        lockImage.widthAnchor.constraint(equalToConstant: 10).isActive = true
 
-        ssidLabel.centerYAnchor.constraint(equalTo: menuItemView.centerYAnchor).isActive = true
-        ssidLabel.heightAnchor.constraint(equalTo: menuItemView.heightAnchor).isActive = true
-        ssidLabel.leftAnchor.constraint(equalTo: statusImage.rightAnchor, constant: -2).isActive = true
-        ssidLabel.rightAnchor.constraint(equalTo: lockImage.leftAnchor, constant: -10).isActive = true
+        signalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1).isActive = true
+        signalImage.leadingAnchor.constraint(equalTo: lockImage.trailingAnchor, constant: 12).isActive = true
+        signalImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
+        signalImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
     }
 
     init(networkInfo: NetworkInfo) {
         self.networkInfo = networkInfo
-        super.init(frame: NSRect(
-            x: 0,
-            y: 0,
-            width: 0,
-            height: 18
-        ))
+        super.init(frame: NSRect.zero)
 
-        menuItemView.addSubview(statusImage)
-        menuItemView.addSubview(ssidLabel)
-        menuItemView.addSubview(lockImage)
-        menuItemView.addSubview(signalImage)
+        self.addSubview(statusImage)
+        self.addSubview(ssidLabel)
+        self.addSubview(lockImage)
+        self.addSubview(signalImage)
 
-        addSubview(menuItemView)
         setupLayout()
     }
 
