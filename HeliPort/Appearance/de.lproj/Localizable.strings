@@ -24,7 +24,7 @@
 "Quit HeliPort" = "HeliPort beenden";
 "Reachable" = "Erreichbar";
 "Remember this network" = "Dieses Netzwerk speichern";
-"Security:" = "Verschlüsselung:";
+"Security:" = "Sicherheit:";
 "Show password" = "Passwort anzeigen";
 "Turn Wi-Fi Off" = "WLAN deaktivieren";
 "Turn Wi-Fi On" = "WLAN aktivieren";
@@ -46,8 +46,8 @@
 "Wi-Fi: Connecting" = "WLAN: Verbinden";
 "Wi-Fi: Looking for Networks..." = "WLAN: Suche nach Netzwerken...";
 "Wi-Fi Network \"" = "WLAN Netzwerk \"";
-"Wi-Fi: Off" = "WLAN: Deaktiviert";
-"Wi-Fi: On" = "WLAN: Aktiviert";
+"Wi-Fi: Off" = "WLAN: aus";
+"Wi-Fi: On" = "WLAN: ein";
 "Wi-Fi: Status unavailable" = "WLAN: Status nicht verfügbar";
 "\" Requires Password" = "\" Benötigt Passwort";
 "    IP Address: "      = "    IP Adresse: ";
