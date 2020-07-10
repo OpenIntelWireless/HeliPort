@@ -148,7 +148,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     init() {
         super.init(title: "")
-        minimumWidth = CGFloat(285.0)
+        minimumWidth = CGFloat(286.0)
         delegate = self
         setupMenuHeaderAndFooter()
         getDeviceInfo()
@@ -319,13 +319,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         guard let view = item.view as? WifiMenuItemView else {
             return item
         }
-        view.visible = false
         view.translatesAutoresizingMaskIntoConstraints = false
         guard let supView = view.superview else {
             return item
         }
-        view.widthAnchor.constraint(equalTo: supView.widthAnchor).isActive = true
-        view.heightAnchor.constraint(equalTo: supView.heightAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: supView.leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: supView.topAnchor).isActive = true
+        view.trailingAnchor.constraint(greaterThanOrEqualTo: supView.trailingAnchor).isActive = true
+        view.visible = false
         return item
     }
 
@@ -407,7 +408,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 let ipAddress = NetworkManager.getLocalAddress(bsd: bsd)
                 let routerAddress = NetworkManager.getRouterAddress(bsd: bsd)
                 let isReachable = NetworkManager.checkConnectionReachability(station: staInfo)
-                Log.debug(String(format: "current rate=%03d", staInfo.rate))
                 disconnectName = String(cString: &staInfo.ssid.0)
                 ipAddr = ipAddress ?? NSLocalizedString("Unknown", comment: "")
                 routerAddr = routerAddress ?? NSLocalizedString("Unknown", comment: "")
