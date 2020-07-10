@@ -52,6 +52,7 @@ typedef struct {
     network_info_t networks[MAX_NETWORK_LIST_LENGTH];
 } network_info_list_t;
 
+typedef struct ioctl_sta_info station_info_t;
 
 bool open_adapter(io_connect_t *connection_t);
 
@@ -61,10 +62,32 @@ kern_return_t ioctl_get(int ctl, void *data, size_t data_len);
 
 kern_return_t ioctl_set(int ctl, void *data, size_t data_len);
 
+kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len);
+
+kern_return_t _nake_ioctl(io_connect_t con, int *ctl, bool is_get, void *data, size_t data_len);
+
 bool get_platform_info(platform_info_t *result);
+
+bool get_power_state(bool *enabled);
+
+bool get_80211_state(uint32_t *state);
 
 bool get_network_list(network_info_list_t *list);
 
 bool connect_network(network_info_t *info);
+
+bool is_power_on(void);
+
+kern_return_t get_station_info(station_info_t *info);
+
+kern_return_t power_on(void);
+
+kern_return_t power_off(void);
+
+kern_return_t join_ssid(const char *ssid, const char *pwd);
+
+kern_return_t associate_ssid(const char *ssid, const char *pwd);
+
+kern_return_t dis_associate_ssid(const char *ssid);
 
 #endif /* Api_h */

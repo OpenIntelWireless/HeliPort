@@ -17,41 +17,60 @@ import Foundation
 import Cocoa
 
 class StatusBarIcon: NSObject {
+    static var statusBar: NSStatusItem!
     static var timer: Timer?
     static var count: Int = 8
     static func on() {
         timer?.invalidate()
-        connecting()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-           disconnected()
-        }
+        timer = nil
+        disconnected()
     }
 
     class func off() {
         timer?.invalidate()
-        statusBar.button?.image = NSImage.init(named: "AirPortOff")
+        timer = nil
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOff")
     }
 
     class func connected() {
         timer?.invalidate()
-        statusBar.button?.image = NSImage.init(named: "AirPort4")
+        timer = nil
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOn")
     }
 
     class func disconnected() {
         timer?.invalidate()
-        statusBar.button?.image = NSImage.init(named: "AirPortInMenu0")
+        timer = nil
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateDisconnected")
     }
 
     class func connecting() {
+        if timer != nil {
+            return
+        }
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
-            self.timer?.invalidate()
-            self.timer = Timer.scheduledTimer(timeInterval: 0.3, target: self,
-                                              selector: #selector(self.tick), userInfo: nil, repeats: true)
+            self.timer = Timer.scheduledTimer(
+                timeInterval: 0.3,
+                target: self,
+                selector: #selector(self.tick),
+                userInfo: nil,
+                repeats: true
+            )
             let currentRunLoop = RunLoop.current
-            currentRunLoop.add(self.timer!, forMode: .common)
+            currentRunLoop.add(
+                self.timer!,
+                forMode: .common
+            )
             currentRunLoop.run()
         }
+    }
+
+    class func signalStrength(RSSI: Int16) {
+        timer?.invalidate()
+        timer = nil
+        let signalImage = WifiMenuItemView.getRssiImage(Int(RSSI))
+        statusBar.button?.image = signalImage
     }
 
     @objc class func tick() {
@@ -59,17 +78,17 @@ class StatusBarIcon: NSObject {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
             case 7:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning1")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning1")
             case 6:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning2")
             case 5:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning3")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning3")
             case 4:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning4")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning4")
             case 3:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning3")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning3")
             case 2:
-                statusBar.button?.image = NSImage.init(named: "AirPortScanning2")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning2")
                 StatusBarIcon.count = 8
             default:
                 return

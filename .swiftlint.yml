@@ -1,7 +1,12 @@
+excluded:
+- Pods
+
 disabled_rules:
-  - line_length
   - type_body_length
   - function_body_length
   - todo
+
+identifier_name:
+  allowed_symbols: "_"
 
 force_cast: warning

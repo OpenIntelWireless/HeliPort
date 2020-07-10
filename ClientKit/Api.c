@@ -35,26 +35,13 @@ error:
     return false;
 }
 
-bool get_network_list(network_info_list_t *list) {
-    memset(list, 0, sizeof(network_info_list_t));
-
-    struct ioctl_scan scan;
-    struct ioctl_network_info network_info_ret;
-    scan.version = IOCTL_VERSION;
-    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
+bool get_power_state(bool *enabled) {
+    struct ioctl_power power;
+    if (ioctl_get(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power)) != KERN_SUCCESS) {
         goto error;
     }
 
-    sleep(5);
-    while (ioctl_get(IOCTL_80211_SCAN_RESULT, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
-        if (list->count >= MAX_NETWORK_LIST_LENGTH) {
-            break;
-        }
-        network_info_t *info = &list->networks[list->count++];
-        strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
-        info->RSSI = network_info_ret.rssi;
-        info->auth.security = network_info_ret.ni_rsncipher;
-    }
+    *enabled = power.enabled;
 
     return true;
 
@@ -62,17 +49,127 @@ error:
     return false;
 }
 
+bool get_80211_state(uint32_t *state) {
+    struct ioctl_state state_struct;
+    if (ioctl_get(IOCTL_80211_STATE, &state_struct, sizeof(struct ioctl_state)) != KERN_SUCCESS) {
+        goto error;
+    }
+
+    *state = state_struct.state;
+
+    return true;
+
+error:
+    return false;
+}
+
+static uint32_t analyse_security(struct ioctl_network_info *info) {
+    if (info->supported_rsnprotos & ITL80211_PROTO_RSN) {
+        //wpa2
+        if (info->rsn_akms & ITL80211_AKM_8021X) {
+            if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
+                return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED;
+            }
+            return ITL80211_SECURITY_WPA2_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_PSK) {
+            if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
+                return ITL80211_SECURITY_WPA_PERSONAL_MIXED;
+            }
+            return ITL80211_SECURITY_WPA2_PERSONAL;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
+            return ITL80211_SECURITY_WPA2_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
+            return ITL80211_SECURITY_PERSONAL;
+        }
+    } else if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
+        //wpa
+        if (info->rsn_akms & ITL80211_AKM_8021X) {
+            return ITL80211_SECURITY_WPA_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_PSK) {
+            return ITL80211_SECURITY_WPA_PERSONAL;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
+            return ITL80211_SECURITY_WPA_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
+            return ITL80211_SECURITY_ENTERPRISE;
+        }
+    } else if (!info->supported_rsnprotos) {
+        return ITL80211_SECURITY_NONE;
+    }
+    //TODO wpa3
+    return ITL80211_SECURITY_UNKNOWN;
+}
+
+bool get_network_list(network_info_list_t *list) {
+    memset(list, 0, sizeof(network_info_list_t));
+
+    struct ioctl_scan scan;
+    struct ioctl_network_info network_info_ret;
+    io_connect_t con;
+    struct ioctl_sta_info sta_info;
+    uint32_t state;
+    scan.version = IOCTL_VERSION;
+    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
+        goto error;
+    }
+    sleep(2);
+    if (get_80211_state(&state) && state == ITL80211_S_RUN) {
+        if (get_station_info(&sta_info) == KERN_SUCCESS) {
+            list->count = 1;
+            strncpy(list->networks[0].SSID, (char*) sta_info.ssid, 32);
+            list->networks[0].RSSI = sta_info.rssi;
+            list->networks[0].auth.security = ITL80211_CIPHER_NONE;//will update below
+            list->networks[0].is_connected = true;
+        }
+    }
+    if (!open_adapter(&con)) {
+        goto error;
+    }
+    int oid = IOCTL_80211_SCAN_RESULT;
+    while (_nake_ioctl(con, &oid, true, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
+        if (list->count >= MAX_NETWORK_LIST_LENGTH) {
+            break;
+        }
+        network_info_t *info = &list->networks[list->count++];
+        strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
+        info->RSSI = network_info_ret.rssi;
+        // info->auth.security = network_info_ret.ni_rsncipher;
+        info->auth.security = analyse_security(&network_info_ret);
+        info->is_connected = false;
+        printf("%s se=%d\n", info->SSID, info->auth.security);
+        if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
+            info->is_connected = true;
+            list->networks[0].auth.security = info->auth.security;
+        }
+    }
+    close_adapter(con);
+    return true;
+
+error:
+    return false;
+}
+
 bool connect_network(network_info_t *info) {
+    if (associate_ssid(info->SSID, info->auth.password) != KERN_SUCCESS) {
+        goto error;
+    }
+
+    int timeout = 40;
+    while (timeout-- > 0) {
+        uint32_t state;
+        if (get_80211_state(&state) && state == ITL80211_S_RUN) {
+            return true;
+        }
+        sleep(1);
+    }
+
 error:
     return false;
 }
 
 static bool isSupportService(const char *name)
 {
-    if (memcmp(name, "TestService", strlen("TestService"))
-#ifndef API_TEST
-        || memcmp(name, "itlwmx", strlen("itlwmx")) || memcmp(name, "itlwm", strlen("itlwm"))
-#endif
+    if (strcmp(name, "TestService")
+        && strcmp(name, "itlwmx") && strcmp(name, "itlwm")
         ) {
         return false;
     }
@@ -96,7 +193,7 @@ bool open_adapter(io_connect_t *connection_t)
     mach_port_deallocate(mach_task_self(), port);
     if (kr != KERN_SUCCESS)
         return false;
-    while ((service = IOIteratorNext(iter))) {
+    while ((service = IOIteratorNext(iter)) && !found) {
         CFTypeRef type_ref = IORegistryEntryCreateCFProperty(service, CFSTR("IOClass"), kCFAllocatorDefault, 0);
         if (type_ref) {
             const char *name = CFStringGetCStringPtr(type_ref, 0);
@@ -107,12 +204,13 @@ bool open_adapter(io_connect_t *connection_t)
             if (isSupportService(name)) {
                 if (IOServiceOpen(service, mach_task_self(), type, connection_t) == KERN_SUCCESS) {
                     found = true;
-                    IOObjectRelease(service);
-                    CFRelease(type_ref);
-                    break;
                 }
             }
+            // Fix leak issue if there is more than one Ethernet controller
+            CFRelease(type_ref);
         }
+        // Fix leak issue if there is more than one Ethernet controller
+        IOObjectRelease(service);
     }
     IOObjectRelease(iter);
     return found;
@@ -125,21 +223,28 @@ void close_adapter(io_connect_t connection)
     }
 }
 
-static kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len)
+kern_return_t _nake_ioctl(io_connect_t con, int *ctl, bool is_get, void *data, size_t data_len)
 {
+    if (!is_get) {
+        *ctl |= IOCTL_MASK;
+    }
+    kern_return_t ret;
+    if (is_get) {
+        ret = IOConnectCallStructMethod(con, *ctl, NULL, 0, data, &data_len);
+    } else {
+        ret = IOConnectCallStructMethod(con, *ctl, data, data_len, NULL, 0);
+    }
+    return ret;
+}
+
+kern_return_t _ioctl(int ctl, bool is_get, void *data, size_t data_len)
+{
+    kern_return_t ret;
     io_connect_t con;
     if (!open_adapter(&con)) {
         return KERN_FAILURE;
     }
-    if (!is_get) {
-        ctl |= IOCTL_MASK;
-    }
-    kern_return_t ret;
-    if (is_get) {
-        ret = IOConnectCallStructMethod(con, ctl, NULL, 0, data, &data_len);
-    } else {
-        ret = IOConnectCallStructMethod(con, ctl, data, data_len, NULL, 0);
-    }
+    ret = _nake_ioctl(con, &ctl, is_get, data, data_len);
     close_adapter(con);
     return ret;
 }
@@ -150,4 +255,55 @@ kern_return_t ioctl_set(int ctl, void *data, size_t data_len) {
 
 kern_return_t ioctl_get(int ctl, void *data, size_t data_len) {
     return _ioctl(ctl, true, data, data_len);
+}
+
+bool is_power_on() {
+    struct ioctl_power power;
+    ioctl_get(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+    return power.enabled;
+}
+
+kern_return_t power_on() {
+    struct ioctl_power power;
+    power.enabled = 1;
+    power.version = IOCTL_VERSION;
+    return ioctl_set(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+}
+
+kern_return_t power_off() {
+    struct ioctl_power power;
+    power.enabled = 0;
+    power.version = IOCTL_VERSION;
+    return ioctl_set(IOCTL_80211_POWER, &power, sizeof(struct ioctl_power));
+}
+
+kern_return_t get_station_info(station_info_t *info)
+{
+    return ioctl_get(IOCTL_80211_STA_INFO, info, sizeof(struct ioctl_sta_info));
+}
+
+kern_return_t join_ssid(const char *ssid, const char *pwd)
+{
+    struct ioctl_join join;
+    join.version = IOCTL_VERSION;
+    memcpy(join.nwid.nwid, ssid, 32);
+    memcpy(join.wpa_key.key, pwd, sizeof(join.wpa_key.key));
+    return ioctl_set(IOCTL_80211_JOIN, &join, sizeof(struct ioctl_join));
+}
+
+kern_return_t associate_ssid(const char *ssid, const char *pwd)
+{
+    struct ioctl_associate ass;
+    memcpy(ass.nwid.nwid, ssid, 32);
+    memcpy(ass.wpa_key.key, pwd, sizeof(ass.wpa_key.key));
+    ass.version = IOCTL_VERSION;
+    return ioctl_set(IOCTL_80211_ASSOCIATE, &ass, sizeof(struct ioctl_associate));
+}
+
+kern_return_t dis_associate_ssid(const char *ssid)
+{
+    struct ioctl_disassociate dis;
+    dis.version = IOCTL_VERSION;
+    memcpy(dis.ssid, ssid, 32);
+    return ioctl_set(IOCTL_80211_DISASSOCIATE, &dis, sizeof(struct ioctl_disassociate));
 }
