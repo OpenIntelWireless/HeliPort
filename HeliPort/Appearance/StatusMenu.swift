@@ -408,7 +408,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 let ipAddress = NetworkManager.getLocalAddress(bsd: bsd)
                 let routerAddress = NetworkManager.getRouterAddress(bsd: bsd)
                 let isReachable = NetworkManager.checkConnectionReachability(station: staInfo)
-                Log.debug(String(format: "current rate=%03d", staInfo.rate))
                 disconnectName = String(cString: &staInfo.ssid.0)
                 ipAddr = ipAddress ?? NSLocalizedString("Unknown", comment: "")
                 routerAddr = routerAddress ?? NSLocalizedString("Unknown", comment: "")

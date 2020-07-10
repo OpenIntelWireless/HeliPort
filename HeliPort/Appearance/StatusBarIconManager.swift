@@ -29,19 +29,19 @@ class StatusBarIcon: NSObject {
     class func off() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOff")
     }
 
     class func connected() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOn")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOn")
     }
 
     class func disconnected() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateDisconnected")
     }
 
     class func connecting() {

@@ -20,7 +20,7 @@ class WifiMenuItemView: NSView {
 
     let statusImage: NSImageView = {
         let statusImage = NSImageView()
-        statusImage.image = NSImage.init(named: "NSMenuOnStateTemplate")
+        statusImage.image = NSImage(named: "NSMenuOnStateTemplate")
         statusImage.image?.isTemplate = true
         statusImage.translatesAutoresizingMaskIntoConstraints = false
         statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -83,7 +83,7 @@ class WifiMenuItemView: NSView {
         willSet(networkInfo) {
             statusImage.isHidden = !networkInfo.isConnected
             ssidLabel.stringValue = networkInfo.ssid
-            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE.rawValue
+            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
             signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
             layoutSubtreeIfNeeded()
         }
@@ -167,6 +167,6 @@ class WifiMenuItemView: NSView {
         default:
             signalImageName = "WiFiSignalStrengthExcellent"
         }
-        return NSImage.init(named: signalImageName)
+        return NSImage(named: signalImageName)
     }
 }
