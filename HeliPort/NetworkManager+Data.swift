@@ -15,7 +15,7 @@
 
 import Foundation
 
-final class NetworkInfo {
+final class NetworkInfo: Codable {
     let ssid: String
     let isConnected: Bool
     var rssi: Int
@@ -39,26 +39,10 @@ extension NetworkInfo: Hashable {
     }
 }
 
-final class NetworkAuth {
+final class NetworkAuth: Codable {
     var security: itl80211_security = ITL80211_SECURITY_NONE
     var option: UInt64 = 0
     var identity = [UInt8]()
     var username: String = ""
     var password: String = ""
-}
-
-extension NetworkInfo: Encodable {
-
-}
-
-extension NetworkInfo: Decodable {
-
-}
-
-extension NetworkAuth: Encodable {
-
-}
-
-extension NetworkAuth: Decodable {
-
 }
