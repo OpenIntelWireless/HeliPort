@@ -17,45 +17,14 @@ import Foundation
 import Cocoa
 import SystemConfiguration
 
-class NetworkInfo {
-    var ssid: String = ""
-    var isConnected: Bool = false
-    var rssi: Int = 0
-
-    var auth = NetworkAuth()
-
-    enum AuthSecurity: UInt32 {
-        case NONE        = 0x00000000
-        case USEGROUP    = 0x00000001
-        case WEP40       = 0x00000002
-        case TKIP        = 0x00000004
-        case CCMP        = 0x00000008
-        case WEP104      = 0x00000010
-        case BIP         = 0x00000020    /* 11w */
-    }
-
-    init (ssid: String, connected: Bool, rssi: Int) {
-        self.ssid = ssid
-        self.isConnected = connected
-        self.rssi = rssi
-    }
-}
-
-class NetworkAuth {
-    var security: UInt32 = 0
-    var option: UInt64 = 0
-    var identity = [UInt8]()
-    var username: String = ""
-    var password: String = ""
-}
-
-class NetworkManager {
-    static var networkInfoList = [NetworkInfo]()
-
+final class NetworkManager {
     static let supportedSecurityMode = [
-        NetworkInfo.AuthSecurity.NONE.rawValue,
-        NetworkInfo.AuthSecurity.TKIP.rawValue,
-        NetworkInfo.AuthSecurity.CCMP.rawValue
+        ITL80211_SECURITY_NONE,
+        ITL80211_SECURITY_WEP,
+        ITL80211_SECURITY_WPA_PERSONAL,
+        ITL80211_SECURITY_WPA_PERSONAL_MIXED,
+        ITL80211_SECURITY_WPA2_PERSONAL,
+        ITL80211_SECURITY_PERSONAL
     ]
 
     class func connect(networkInfo: NetworkInfo) {
@@ -65,12 +34,8 @@ class NetworkManager {
 
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
-            let labelName = String(
-                describing: NetworkInfo.AuthSecurity.init(rawValue: networkInfo.auth.security) ??
-                NetworkInfo.AuthSecurity.NONE
-            )
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
-                + labelName
+                + networkInfo.auth.security.description
             alert.alertStyle = NSAlert.Style.critical
             DispatchQueue.main.async {
                 alert.runModal()
@@ -88,7 +53,7 @@ class NetworkManager {
             networkInfoStruct.is_connected = false
             networkInfoStruct.RSSI = Int32(networkInfo.rssi)
 
-            networkInfoStruct.auth.security = auth.security
+            networkInfoStruct.auth.security = auth.security.rawValue
             networkInfoStruct.auth.option = auth.option
             networkInfoStruct.auth.identity = UnsafeMutablePointer<UInt8>.allocate(capacity: auth.identity.count)
             networkInfoStruct.auth.identity.initialize(
@@ -116,7 +81,7 @@ class NetworkManager {
             }
         }
 
-        guard networkInfo.auth.security != NetworkInfo.AuthSecurity.NONE.rawValue else {
+        guard networkInfo.auth.security != ITL80211_SECURITY_NONE else {
             networkInfo.auth.password = ""
             getAuthInfoCallback(networkInfo.auth, false)
             return
@@ -155,7 +120,7 @@ class NetworkManager {
                     connected: network!.is_connected,
                     rssi: Int(network!.RSSI)
                 )
-                networkInfo.auth.security = network?.auth.security ?? 0
+                networkInfo.auth.security = itl80211_security(rawValue: network?.auth.security ?? 0)
                 networkInfo.auth.option = network?.auth.option ?? 0
                 result.insert(networkInfo)
             }
@@ -177,14 +142,14 @@ class NetworkManager {
 
         let bsdIndex = Int32(if_nametoindex(bsd))
         if bsdIndex == 0 {
-            print("Error: could not find index for bsd name \(bsd)")
+            Log.error("Could not find index for bsd name \(bsd)")
             return nil
         }
         let bsdData = Data(bsd.utf8)
         var managementInfoBase = [CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, bsdIndex]
 
         if sysctl(&managementInfoBase, 6, nil, &length, nil, 0) < 0 {
-            print("Error: could not determine length of info data structure")
+            Log.error("Could not determine length of info data structure")
             return nil
         }
 
@@ -194,7 +159,7 @@ class NetworkManager {
         })
 
         if sysctl(&managementInfoBase, 6, &buffer, &length, nil, 0) < 0 {
-            print("Error: could not read info data structure")
+            Log.error("Could not read info data structure")
             return nil
         }
 
@@ -230,95 +195,65 @@ class NetworkManager {
         let dynamicCreate = SCDynamicStoreCreate(kCFAllocatorDefault, "router-ip" as CFString, nil, nil)
         let keyIPv4 = "State:/Network/Global/IPv4" as CFString
         let keyIPv6 = "State:/Network/Global/IPv6" as CFString
-        var dictionary: CFPropertyList?
-        if let ipV4Info = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4) {
-            dictionary = ipV4Info
-        } else if let ipV6Info = SCDynamicStoreCopyValue(dynamicCreate, keyIPv6) {
-            dictionary = ipV6Info
+        let dictionary = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4)
+            ?? SCDynamicStoreCopyValue(dynamicCreate, keyIPv6)
+
+        guard let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String, interface == bsd else {
+            Log.error("Could not find interface")
+            return nil
         }
-        if let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String {
-            if interface == bsd {
-                print("Interface found: \(interface == bsd)")
-                if let ipRouterAddr = dictionary?["Router"] as? String {
-                    return ipRouterAddr
-                } else {
-                    print("Could not find router ip")
-                }
-            } else {
-                print("Could not find interface")
-            }
+
+        guard let ipRouterAddr = dictionary?["Router"] as? String else {
+            Log.error("Could not find router ip")
+            return nil
         }
-        return nil
+
+        return ipRouterAddr
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
     class func getLocalAddress(bsd: String) -> String? {
         // Get list of all interfaces on the local machine:
         var ifaddr: UnsafeMutablePointer<ifaddrs>?
-        guard getifaddrs(&ifaddr) == 0 else { return nil }
-        guard let firstAddr = ifaddr else { return nil }
+        guard getifaddrs(&ifaddr) == 0, let firstAddr = ifaddr else {
+            return nil
+        }
+
         var ipV4: String?
         var ipV6: String?
+
         // For each interface ...
         for ifptr in sequence(first: firstAddr, next: { $0.pointee.ifa_next }) {
             let interface = ifptr.pointee
+
             // Check for IPv4 or IPv6 interface:
             let addrFamily = interface.ifa_addr.pointee.sa_family
-            if addrFamily == UInt8(AF_INET) || addrFamily == UInt8(AF_INET6) {
-                // Check interface name:
-                let name = String(cString: interface.ifa_name)
-                if name == bsd {
-                    // Convert interface address to a human readable string:
-                    var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
-                    getnameinfo(interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len),
-                                &hostname, socklen_t(hostname.count),
-                                nil, socklen_t(0), NI_NUMERICHOST)
-                    if addrFamily == UInt8(AF_INET) {
-                        ipV4 = String(cString: hostname)
-                    } else if addrFamily == UInt8(AF_INET6) {
-                        ipV6 = String(cString: hostname)
-                    }
-                }
+            guard addrFamily == UInt8(AF_INET) || addrFamily == UInt8(AF_INET6) else {
+                continue
+            }
+
+            // Check interface name:
+            let name = String(cString: interface.ifa_name)
+            guard name == bsd else {
+                continue
+            }
+
+            // Convert interface address to a human readable string:
+            var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+            getnameinfo(interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len),
+                        &hostname, socklen_t(hostname.count),
+                        nil, socklen_t(0), NI_NUMERICHOST)
+
+            if addrFamily == UInt8(AF_INET) {
+                ipV4 = String(cString: hostname)
+            } else if addrFamily == UInt8(AF_INET6) {
+                ipV6 = String(cString: hostname)
             }
         }
+
         freeifaddrs(ifaddr)
-        if ipV4 != nil {
-            return ipV4
-        } else if ipV6 != nil {
-            return ipV6
-        } else {
-            return nil
-        }
-    }
-}
 
-extension NetworkInfo: Hashable {
-    static func == (lhs: NetworkInfo, rhs: NetworkInfo) -> Bool {
-        return lhs.ssid == rhs.ssid
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ssid)
-    }
-}
-
-extension itl_phy_mode: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case ITL80211_MODE_11A:
-            return "802.11a"
-        case ITL80211_MODE_11B:
-            return "802.11b"
-        case ITL80211_MODE_11G:
-            return "802.11g"
-        case ITL80211_MODE_11N :
-            return "802.11n"
-        case ITL80211_MODE_11AC:
-            return "802.11ac"
-        case ITL80211_MODE_11AX:
-            return "802.11ax"
-        default:
-            return "Unknown"
-        }
+        // ipV4 has priority
+        return ipV4 ?? ipV6
     }
 }

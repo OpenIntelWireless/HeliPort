@@ -63,6 +63,42 @@ error:
     return false;
 }
 
+static uint32_t analyse_security(struct ioctl_network_info *info) {
+    if (info->supported_rsnprotos & ITL80211_PROTO_RSN) {
+        //wpa2
+        if (info->rsn_akms & ITL80211_AKM_8021X) {
+            if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
+                return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED;
+            }
+            return ITL80211_SECURITY_WPA2_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_PSK) {
+            if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
+                return ITL80211_SECURITY_WPA_PERSONAL_MIXED;
+            }
+            return ITL80211_SECURITY_WPA2_PERSONAL;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
+            return ITL80211_SECURITY_WPA2_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
+            return ITL80211_SECURITY_PERSONAL;
+        }
+    } else if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
+        //wpa
+        if (info->rsn_akms & ITL80211_AKM_8021X) {
+            return ITL80211_SECURITY_WPA_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_PSK) {
+            return ITL80211_SECURITY_WPA_PERSONAL;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
+            return ITL80211_SECURITY_WPA_ENTERPRISE;
+        } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
+            return ITL80211_SECURITY_ENTERPRISE;
+        }
+    } else if (!info->supported_rsnprotos) {
+        return ITL80211_SECURITY_NONE;
+    }
+    //TODO wpa3
+    return ITL80211_SECURITY_UNKNOWN;
+}
+
 bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
 
@@ -81,7 +117,7 @@ bool get_network_list(network_info_list_t *list) {
             list->count = 1;
             strncpy(list->networks[0].SSID, (char*) sta_info.ssid, 32);
             list->networks[0].RSSI = sta_info.rssi;
-            list->networks[0].auth.security = ITL80211_CIPHER_CCMP; // TODO: set sta_info.ni_rsncipher;
+            list->networks[0].auth.security = ITL80211_CIPHER_NONE;//will update below
             list->networks[0].is_connected = true;
         }
     }
@@ -96,10 +132,14 @@ bool get_network_list(network_info_list_t *list) {
         network_info_t *info = &list->networks[list->count++];
         strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
         info->RSSI = network_info_ret.rssi;
-        // TODO: set security
         // info->auth.security = network_info_ret.ni_rsncipher;
-        info->auth.security = ITL80211_CIPHER_CCMP;
+        info->auth.security = analyse_security(&network_info_ret);
         info->is_connected = false;
+        printf("%s se=%d\n", info->SSID, info->auth.security);
+        if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
+            info->is_connected = true;
+            list->networks[0].auth.security = info->auth.security;
+        }
     }
     close_adapter(con);
     return true;
