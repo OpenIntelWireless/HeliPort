@@ -75,6 +75,7 @@
 		50B86ABD24B22FEE008E4FE4 /* pt-BR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		6A54F80824B24B9700B8D651 /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A78687824B26AF6007832EE /* tr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C60CDDC124B88D5A00E1F69D /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -375,6 +376,7 @@
 				en,
 				Base,
 				"zh-Hans",
+				ko,
 				es,
 				"pt-BR",
 				it,
@@ -535,6 +537,7 @@
 			children = (
 				50B86AB924B22E9B008E4FE4 /* es */,
 				50B86ABC24B22F75008E4FE4 /* zh-Hans */,
+				C60CDDC124B88D5A00E1F69D /* ko */,
 				50B86ABD24B22FEE008E4FE4 /* pt-BR */,
 				6A54F80824B24B9700B8D651 /* it */,
 				6A78687824B26AF6007832EE /* tr */,
