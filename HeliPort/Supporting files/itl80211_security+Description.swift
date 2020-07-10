@@ -44,3 +44,11 @@ extension itl80211_security: CustomStringConvertible {
         }
     }
 }
+
+extension itl80211_security: Encodable {
+
+}
+
+extension itl80211_security: Decodable {
+
+}

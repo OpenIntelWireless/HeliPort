@@ -22,7 +22,7 @@ final class NetworkInfo {
 
     var auth = NetworkAuth()
 
-    init (ssid: String, connected: Bool, rssi: Int) {
+    init (ssid: String, connected: Bool = false, rssi: Int = 0) {
         self.ssid = ssid
         self.isConnected = connected
         self.rssi = rssi
@@ -45,4 +45,20 @@ final class NetworkAuth {
     var identity = [UInt8]()
     var username: String = ""
     var password: String = ""
+}
+
+extension NetworkInfo: Encodable {
+
+}
+
+extension NetworkInfo: Decodable {
+
+}
+
+extension NetworkAuth: Encodable {
+
+}
+
+extension NetworkAuth: Decodable {
+
 }
