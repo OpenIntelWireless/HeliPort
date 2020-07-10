@@ -138,8 +138,8 @@ final class NetworkManager {
         DispatchQueue.global(qos: .background).async {
             let dispatchSemaphore = DispatchSemaphore(value: 0)
             var connected = false
-            for network in CredentialsManager.instance.getSavedNetworks() where !connected && network != nil {
-                connect(networkInfo: network!) { (result: Bool) -> Void in
+            for network in CredentialsManager.instance.getSavedNetworks() where !connected {
+                connect(networkInfo: network) { (result: Bool) -> Void in
                     connected = result
                     dispatchSemaphore.signal()
                 }

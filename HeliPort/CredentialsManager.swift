@@ -42,8 +42,8 @@ final class CredentialsManager {
         return try? JSONDecoder().decode(NetworkAuth.self, from: jsonData)
     }
 
-    func getSavedNetworks() -> [NetworkInfo?] {
-        return keychain.allKeys().map { ssid in
+    func getSavedNetworks() -> [NetworkInfo] {
+        return keychain.allKeys().compactMap { ssid in
             guard let attributes = try? keychain.get(ssid, handler: {$0}),
                 let json = attributes.comment,
                 let jsonData = json.data(using: .utf8) else {
