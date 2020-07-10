@@ -27,7 +27,8 @@ final class NetworkManager {
         ITL80211_SECURITY_PERSONAL
     ]
 
-    class func connect(networkInfo: NetworkInfo, _ callback: ((_ result: Bool) -> Void)? = nil) {
+    class func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
+                       _ callback: ((_ result: Bool) -> Void)? = nil) {
         guard !networkInfo.isConnected else {
             return
         }
@@ -91,7 +92,7 @@ final class NetworkManager {
 
         guard networkInfo.auth.security != ITL80211_SECURITY_NONE,
             networkInfo.auth.password.isEmpty else {
-            getAuthInfoCallback(networkInfo.auth, false)
+            getAuthInfoCallback(networkInfo.auth, saveNetwork)
             return
         }
 

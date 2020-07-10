@@ -483,10 +483,28 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     }
 
     @objc private func joinWiFi(_ sender: Any?) {
-        associate_ssid(
-            ssidBox.stringValue,
-            passwdInputBox.stringValue
-        )
+        let networkInfo = NetworkInfo(ssid: ssidBox.stringValue)
+        networkInfo.auth.password = passwdInputBox.stringValue
+
+        switch securityPop.indexOfSelectedItem {
+        case 0:
+            networkInfo.auth.security = ITL80211_SECURITY_NONE
+
+        case 2:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA_PERSONAL_MIXED
+        case 3:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA2_PERSONAL
+
+        case 5:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA_ENTERPRISE_MIXED
+        case 6:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA2_ENTERPRISE
+
+        default:
+            networkInfo.auth.security = ITL80211_SECURITY_UNKNOWN
+        }
+
+        NetworkManager.connect(networkInfo: networkInfo, saveNetwork: isSave.state == .on)
         close()
     }
 
