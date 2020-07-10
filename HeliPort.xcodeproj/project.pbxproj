@@ -75,6 +75,8 @@
 		BCFA32EF2424D2BF00E23603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BCFA32F12424D2BF00E23603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort.entitlements; sourceTree = "<group>"; };
+		C60CDDC024B88D5A00E1F69D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		C60CDDC124B88D5A00E1F69D /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ItlNetworkUserClient.cpp; sourceTree = "<group>"; };
 		F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ItlNetworkUserClient.hpp; sourceTree = "<group>"; };
 		F86A895D243CD13000CBABC2 /* TestService.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestService.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -313,6 +315,7 @@
 				en,
 				Base,
 				"zh-Hans",
+				ko,
 			);
 			mainGroup = BCFA32DE2424D2BE00E23603;
 			productRefGroup = BCFA32E82424D2BE00E23603 /* Products */;
@@ -420,6 +423,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				508D9C6E248393910025701D /* zh-Hans */,
+				C60CDDC124B88D5A00E1F69D /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -429,6 +433,7 @@
 			children = (
 				BCFA32EF2424D2BF00E23603 /* Base */,
 				508D9C6724838D540025701D /* zh-Hans */,
+				C60CDDC024B88D5A00E1F69D /* ko */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
