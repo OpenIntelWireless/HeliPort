@@ -1,5 +1,5 @@
 "About HeliPort" = "Acerca de HeliPort";
-"Address: " = "Dirección de Red：";
+"Address: " = "Dirección de Red: ";
 "Cancel" = "Cancelar";
 "Check for Updates..." = "Buscar Actualizaciones...";
 "Create Diagnostics Report..." = "Crear Informe de Diagnósticos...";
@@ -10,7 +10,7 @@
 "Enter the name and security type of the network you want to join." = "Introduzca el nombre y el tipo de seguridad de la red a la que desea acceder.";
 "FUNCTION NOT IMPLEMENTED" = "FUNCIÓN NO IMPLEMENTADA";
 "Find and join a Wi-Fi network." = "Encuentra y ingresa a una red Wi-Fi. ";
-"Interface Name: " = "Nombre de la Interfaz：";
+"Interface Name: " = "Nombre de la Interfaz: ";
 "Join Other Network..." = "Acceder a otra red...";
 "Join" = "Acceder";
 "Network Name:" = "Nombre de Red:";
@@ -19,7 +19,7 @@
 "None" = "Ninguno";
 "Open Network Preferences..." = "Abrir Preferencias de Red...";
 "Open Wireless Diagnostics..." = "Abrir Diagnósticos de Red Inalámbrica...";
-"Password:" = "Contraseña：";
+"Password:" = "Contraseña:";
 "Password" = "Contraseña";
 "Quit HeliPort" = "Salir de HeliPort";
 "Reachable" = "Alcanzable";
@@ -32,7 +32,7 @@
 "Unknown" = "Desconocido";
 "Unreachable" = "Inalcanzable";
 "Username:" = "Nombre de Usuario";
-"Version: " = "Versión：";
+"Version: " = "Versión: ";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Empresarial";
 "WPA/WPA2 Personal" = "WPA/WPA2 Personal";
@@ -42,9 +42,9 @@
 "WPA2/WPA3 Personal" = "WPA2/WPA3 Personal";
 "WPA3 Enterprise" = "WPA3 Empresarial";
 "WPA3 Personal" = "WPA3 Personal";
-"Wi-Fi: Connected" = "Wi-Fi：Conectado";
-"Wi-Fi: Connecting" = "Wi-Fi：Conectando";
-"Wi-Fi: Looking for Networks..." = "Wi-Fi：Buscando Redes...";
+"Wi-Fi: Connected" = "Wi-Fi: Conectado";
+"Wi-Fi: Connecting" = "Wi-Fi: Conectando";
+"Wi-Fi: Looking for Networks..." = "Wi-Fi: Buscando Redes...";
 "Wi-Fi Network \"" = "Red Wi-Fi \"";
 "Wi-Fi: Off" = "Wi-Fi: Desactivado";
 "Wi-Fi: On" = "Wi-Fi: Activado";

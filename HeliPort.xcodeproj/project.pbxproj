@@ -118,6 +118,7 @@
 		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
 		F8F6CF0E243D67D800965B43 /* IoctlId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IoctlId.h; sourceTree = "<group>"; };
 		FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.debug.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.debug.xcconfig"; sourceTree = "<group>"; };
+		FE29EB4F24B9CE1200285757 /* pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,6 +389,7 @@
 				ru,
 				de,
 				vi,
+				pl,
 			);
 			mainGroup = BCFA32DE2424D2BE00E23603;
 			productRefGroup = BCFA32E82424D2BE00E23603 /* Products */;
@@ -551,6 +553,7 @@
 				6AB23DF524B64B5700D6D774 /* ru */,
 				2A66531D24B6E172002F88EE /* de */,
 				A6B1F45424B9C60A00EBBE79 /* vi */,
+				FE29EB4F24B9CE1200285757 /* pl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
