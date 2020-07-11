@@ -3,7 +3,7 @@
 //  TestService
 //
 //  Created by 钟先耀 on 2020/5/25.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -29,11 +29,11 @@ typedef int apple80211_postMessage_tlv_types;
 
 struct apple80211req
 {
-    char        req_if_name[IFNAMSIZ];    // 16 bytes
-    int            req_type;                // 4 bytes
-    int            req_val;                // 4 bytes
-    u_int32_t    req_len;                // 4 bytes
-    void       *req_data;                // 4 bytes
+    char        req_if_name[IFNAMSIZ];  // 16 bytes
+    int         req_type;               // 4 bytes
+    int         req_val;                // 4 bytes
+    u_int32_t   req_len;                // 4 bytes
+    void        *req_data;              // 4 bytes
 };
 
 class IO80211Interface : public IOEthernetInterface
