@@ -1,12 +1,17 @@
 excluded:
 - Pods
 
-disabled_rules:
-  - type_body_length
-  - function_body_length
-  - todo
-
 identifier_name:
   allowed_symbols: "_"
 
 force_cast: warning
+
+# Following values are all for warnings
+type_body_length:
+  - 400
+
+function_body_length:
+  - 70
+
+file_length:
+  - 500
