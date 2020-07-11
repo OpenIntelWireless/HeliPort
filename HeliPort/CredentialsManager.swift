@@ -23,12 +23,13 @@ final class CredentialsManager {
             return
         }
         network.auth = NetworkAuth()
-        guard let networkInfoJson = try? String(data: JSONEncoder().encode(network), encoding: .utf8) else {
+        let entity = NetworkInfoStorageEntity(network)
+        guard let entityJson = try? String(data: JSONEncoder().encode(entity), encoding: .utf8) else {
             return
         }
 
         Log.debug("Saving password for network \(network.ssid)")
-        try? keychain.comment(networkInfoJson).set(networkAuthJson, key: network.keychainKey)
+        try? keychain.comment(entityJson).set(networkAuthJson, key: network.keychainKey)
     }
 
     func get(_ network: NetworkInfo) -> NetworkAuth? {
@@ -43,13 +44,19 @@ final class CredentialsManager {
     }
 
     func getSavedNetworks() -> [NetworkInfo] {
-        return keychain.allKeys().compactMap { ssid in
+        return (keychain.allKeys().compactMap { ssid in
             guard let attributes = try? keychain.get(ssid, handler: {$0}),
                 let json = attributes.comment,
                 let jsonData = json.data(using: .utf8) else {
                 return nil
             }
-            return try? JSONDecoder().decode(NetworkInfo.self, from: jsonData)
+            return try? JSONDecoder().decode(NetworkInfoStorageEntity.self, from: jsonData)
+        } as [NetworkInfoStorageEntity]).filter { entity in
+            entity.autoJoin && entity.version == NetworkInfoStorageEntity.CURRENT_VERSION
+        }.sorted {
+            $0.order < $1.order
+        }.map { entity in
+            entity.network
         }
     }
 }

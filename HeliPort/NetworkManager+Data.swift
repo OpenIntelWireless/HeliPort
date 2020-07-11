@@ -46,3 +46,18 @@ final class NetworkAuth: Codable {
     var username: String = ""
     var password: String = ""
 }
+
+final class NetworkInfoStorageEntity: Codable {
+    static let CURRENT_VERSION: UInt = 1
+
+    var version: UInt = CURRENT_VERSION
+    var autoJoin: Bool = true
+    var order: Int = 0
+    var network: NetworkInfo
+
+    init (_ network: NetworkInfo, _ autoJoin: Bool = true, _ order: Int = 0) {
+        self.network = network
+        self.autoJoin = autoJoin
+        self.order = order
+    }
+}
