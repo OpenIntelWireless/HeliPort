@@ -3,7 +3,7 @@
 //  ClientKit
 //
 //  Created by 钟先耀 on 2020/4/7.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
