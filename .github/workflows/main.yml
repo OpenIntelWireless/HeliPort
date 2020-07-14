@@ -44,10 +44,10 @@ jobs:
       run: |
         xcodebuild -workspace HeliPort.xcworkspace -scheme HeliPort -configuration Debug -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
-    # Uncomment when ClientKit DSYM generation gets fixed
-    #- name: Release Build
-    #  run: |
-    #    xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+    - name: Release Build
+      if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
+      run: |
+        xcodebuild -workspace HeliPort.xcworkspace -scheme HeliPort -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
     - name: Prepare GH Release
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
@@ -68,12 +68,11 @@ jobs:
         #    NEWVER="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
         #fi
 
-        #cd build/Build/Products/Release
-        cd build/Build/Products/Debug
-        ditto -c -k --sequesterRsrc --keepParent *.app HeliPort.zip
+        cd build/Build/Products/Release
+        ditto -c -k --sequesterRsrc --keepParent HeliPort.app HeliPort.zip
         cd -
         mkdir Artifacts
-        cp -R build/Build/Products/Debug/*.zip Artifacts
+        cp -R build/Build/Products/Release/*.zip Artifacts
         
         git log -"20" --format="- %H %s" | grep -v 'gitignore\|Repo\|Docs\|Merge\|yml\|CI\|Commit\|commit\|attributes' | sed '/^$/d' >> ReleaseNotes.md
         #git log -"$(git rev-list --count $(git rev-list --tags | head -n 1)..HEAD)" --format="- %H %s" | grep -v 'gitignore\|Repo\|Docs\|Merge\|yml\|CI\|Commit\|commit\|attributes' | sed  '/^$/d' >> ReleaseNotes.md
