@@ -154,11 +154,14 @@ bool connect_network(network_info_t *info) {
         goto error;
     }
 
-    int timeout = 40;
+    int timeout = 20;
     while (timeout-- > 0) {
         uint32_t state;
         if (get_80211_state(&state) && state == ITL80211_S_RUN) {
-            return true;
+            station_info_t sta_info;
+            if (get_station_info(&sta_info) == KERN_SUCCESS) {
+                return strcmp(info->SSID, (char*)sta_info.ssid) == 0;
+            }
         }
         sleep(1);
     }
