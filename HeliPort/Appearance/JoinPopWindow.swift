@@ -87,9 +87,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             height: 32
         ))
         ssidLabel = NSTextField(frame: NSRect(
-            x: 70,
+            x: 50,
             y: 132,
-            width: 100,
+            width: 120,
             height: 19
         ))
         ssidBox = NSTextField(frame: NSRect(
@@ -99,9 +99,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             height: 21
         ))
         securityLabel = NSTextField(frame: NSRect(
-            x: 100,
+            x: 50,
             y: 103,
-            width: 70,
+            width: 120,
             height: 19
         ))
         securityPop = NSPopUpButton(frame: NSRect(
@@ -111,9 +111,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             height: 26
         ))
         usernameLabel = NSTextField(frame: NSRect(
-            x: 100,
+            x: 50,
             y: 150,
-            width: 70,
+            width: 120,
             height: 19
         ))
         usernameBox = NSTextField(frame: NSRect(
