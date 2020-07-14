@@ -15,7 +15,9 @@
 
 #include "Api.h"
 #include "mach/mach_port.h"
+#include "pthread.h"
 
+static pthread_mutex_t* api_mutex;
 
 bool get_platform_info(platform_info_t *info) {
     memset(info, 0, sizeof(platform_info_t));
@@ -217,6 +219,15 @@ bool open_adapter(io_connect_t *connection_t)
         IOObjectRelease(service);
     }
     IOObjectRelease(iter);
+
+    if (found) {
+        if (!api_mutex) {
+            api_mutex = malloc(sizeof(pthread_mutex_t));
+            pthread_mutex_init(api_mutex, NULL);
+        }
+        pthread_mutex_lock(api_mutex);
+    }
+
     return found;
 }
 
@@ -224,6 +235,7 @@ void close_adapter(io_connect_t connection)
 {
     if (connection) {
         IOServiceClose(connection);
+        pthread_mutex_unlock(api_mutex);
     }
 }
 
