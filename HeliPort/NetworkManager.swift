@@ -27,7 +27,8 @@ final class NetworkManager {
         ITL80211_SECURITY_PERSONAL
     ]
 
-    class func connect(networkInfo: NetworkInfo) {
+    class func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
+                       _ callback: ((_ result: Bool) -> Void)? = nil) {
         guard !networkInfo.isConnected else {
             return
         }
@@ -73,29 +74,31 @@ final class NetworkManager {
                 let result = connect_network(&networkInfoStruct)
                 DispatchQueue.main.async {
                     if result {
-                        if savePassword, !auth.password.isEmpty {
-                            CredentialsManager.instance.save(networkInfo, password: auth.password)
+                        if savePassword {
+                            CredentialsManager.instance.save(networkInfo)
                         }
                     }
+                    callback?(result)
                 }
             }
         }
 
-        guard networkInfo.auth.security != ITL80211_SECURITY_NONE else {
-            networkInfo.auth.password = ""
+        if let savedNetworkAuth = CredentialsManager.instance.get(networkInfo) {
+            networkInfo.auth = savedNetworkAuth
+            Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
             getAuthInfoCallback(networkInfo.auth, false)
             return
         }
 
-        guard let savedPassword = CredentialsManager.instance.get(networkInfo) else {
-            let popup = WifiPopupWindow(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback)
-            popup.show()
+        guard networkInfo.auth.security != ITL80211_SECURITY_NONE,
+            networkInfo.auth.password.isEmpty else {
+            getAuthInfoCallback(networkInfo.auth, saveNetwork)
             return
         }
 
-        networkInfo.auth.password = savedPassword
-        Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
-        getAuthInfoCallback(networkInfo.auth, false)
+        DispatchQueue.main.async {
+            WifiPopupWindow(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback).show()
+        }
     }
 
     class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {
@@ -127,6 +130,20 @@ final class NetworkManager {
 
             DispatchQueue.main.async {
                 callback(Array(result).sorted { $0.ssid < $1.ssid }.sorted { $0.isConnected && !$1.isConnected })
+            }
+        }
+    }
+
+    class func connectSavedNetworks() {
+        DispatchQueue.global(qos: .background).async {
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
+            var connected = false
+            for network in CredentialsManager.instance.getSavedNetworks() where !connected {
+                connect(networkInfo: network) { (result: Bool) -> Void in
+                    connected = result
+                    dispatchSemaphore.signal()
+                }
+                dispatchSemaphore.wait()
             }
         }
     }
