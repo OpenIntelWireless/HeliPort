@@ -3,7 +3,7 @@
 //  
 //
 //  Created by Bat.bat on 6/16/20.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 //  Credit mansi-cherry
 //  https://github.com/mansi-cherry/iOSHowTo-s/blob/master/MyPlistPlayground.playground/Contents.swift

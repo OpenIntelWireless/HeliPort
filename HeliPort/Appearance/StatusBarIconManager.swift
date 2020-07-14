@@ -3,7 +3,7 @@
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/4/7.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*

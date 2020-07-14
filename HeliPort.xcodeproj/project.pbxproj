@@ -30,57 +30,24 @@
 		F379277124A0A52E0087FF2B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277024A0A52E0087FF2B /* Log.swift */; };
 		F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */; };
 		F3915F0724AB1A1B00E6614D /* itl_80211_state+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */; };
-		F84E327924457FAE00D07895 /* ItlNetworkUserClient.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */; };
-		F86A8960243CD13300CBABC2 /* TestService.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F86A895F243CD13300CBABC2 /* TestService.hpp */; };
-		F86A8962243CD13400CBABC2 /* TestService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F86A8961243CD13400CBABC2 /* TestService.cpp */; };
-		F86A896E243CD1B500CBABC2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F86A896D243CD1B500CBABC2 /* main.cpp */; };
-		F86A897B243CD6EA00CBABC2 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = F86A8972243CD40800CBABC2 /* Common.h */; };
-		F86A897D243CD72700CBABC2 /* Common.h in Headers */ = {isa = PBXBuildFile; fileRef = F86A8972243CD40800CBABC2 /* Common.h */; };
-		F86E286E247288F600F0B03C /* ItlNetworkUserClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */; };
-		F8800632247BAEB6001CD3FB /* FakeNetworkInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = F8800631247BAEB6001CD3FB /* FakeNetworkInterface.h */; };
-		F8C4BDFF247B8E4800FC5539 /* IO80211Interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F8C4BDFD247B8E4800FC5539 /* IO80211Interface.cpp */; };
-		F8C4BE00247B8E4800FC5539 /* IO80211Interface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F8C4BDFE247B8E4800FC5539 /* IO80211Interface.hpp */; };
-		F8F3F3FE248737E400E7EE1C /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
-		F8F6CF0C243D675800965B43 /* Api.h in Headers */ = {isa = PBXBuildFile; fileRef = F8F6CF0A243D675800965B43 /* Api.h */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F86A8975243CD44B00CBABC2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BCFA32DF2424D2BE00E23603 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F86A896A243CD1B500CBABC2;
-			remoteInfo = ClientKit;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		F86A8969243CD1B500CBABC2 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
+		1DCA020324BD00E800F37995 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.release.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.release.xcconfig"; sourceTree = "<group>"; };
+		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		501FA511249B8F77002B5B54 /* WifiPlistManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WifiPlistManager.swift; sourceTree = "<group>"; };
 		50B86AB924B22E9B008E4FE4 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50B86ABC24B22F75008E4FE4 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		C60CDDC124B88D5A00E1F69D /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50B86ABD24B22FEE008E4FE4 /* pt-BR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		6A54F80824B24B9700B8D651 /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6A78687824B26AF6007832EE /* tr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		6AB23DF524B64B5700D6D774 /* ru */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		A6B1F45424B9C60A00EBBE79 /* vi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiPopoverView.swift; sourceTree = "<group>"; };
 		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPopWindow.swift; sourceTree = "<group>"; };
@@ -92,6 +59,7 @@
 		BCFA32EF2424D2BF00E23603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BCFA32F12424D2BF00E23603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort.entitlements; sourceTree = "<group>"; };
+		C60CDDC124B88D5A00E1F69D /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeliPort.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkManager+Data.swift"; sourceTree = "<group>"; };
 		F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_phy_mode+Description.swift"; sourceTree = "<group>"; };
@@ -101,22 +69,12 @@
 		F379277024A0A52E0087FF2B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiPopupWindow.swift; sourceTree = "<group>"; };
 		F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_80211_state+Description.swift"; sourceTree = "<group>"; };
-		F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ItlNetworkUserClient.cpp; sourceTree = "<group>"; };
-		F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ItlNetworkUserClient.hpp; sourceTree = "<group>"; };
-		F86A895D243CD13000CBABC2 /* TestService.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TestService.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		F86A895F243CD13300CBABC2 /* TestService.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestService.hpp; sourceTree = "<group>"; };
-		F86A8961243CD13400CBABC2 /* TestService.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestService.cpp; sourceTree = "<group>"; };
-		F86A8963243CD13400CBABC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F86A896B243CD1B500CBABC2 /* ClientKit */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ClientKit; sourceTree = BUILT_PRODUCTS_DIR; };
-		F86A896D243CD1B500CBABC2 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F86A8972243CD40800CBABC2 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		F8800631247BAEB6001CD3FB /* FakeNetworkInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FakeNetworkInterface.h; sourceTree = "<group>"; };
-		F8C4BDFD247B8E4800FC5539 /* IO80211Interface.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IO80211Interface.cpp; sourceTree = "<group>"; };
-		F8C4BDFE247B8E4800FC5539 /* IO80211Interface.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IO80211Interface.hpp; sourceTree = "<group>"; };
 		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
 		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
 		F8F6CF0E243D67D800965B43 /* IoctlId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IoctlId.h; sourceTree = "<group>"; };
 		FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.debug.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.debug.xcconfig"; sourceTree = "<group>"; };
+		FE29EB4F24B9CE1200285757 /* pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,20 +83,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D47DD664F9B2939B57C54DF4 /* Pods_HeliPort.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F86A895A243CD13000CBABC2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F86A8968243CD1B500CBABC2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,11 +124,9 @@
 		BCFA32DE2424D2BE00E23603 = {
 			isa = PBXGroup;
 			children = (
-				F86A896C243CD1B500CBABC2 /* ClientKit */,
 				7562BBE324826102008A9BD2 /* README.md */,
-				F86A897A243CD5F500CBABC2 /* Common */,
+				F86A896C243CD1B500CBABC2 /* ClientKit */,
 				BCFA32E92424D2BE00E23603 /* HeliPort */,
-				F86A895E243CD13100CBABC2 /* TestService */,
 				BCFA32E82424D2BE00E23603 /* Products */,
 				27E333CBDEE9F043281383C3 /* Pods */,
 				A3DAA5EDB2CAD33F8A53CAD7 /* Frameworks */,
@@ -195,8 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				BCFA32E72424D2BE00E23603 /* HeliPort.app */,
-				F86A895D243CD13000CBABC2 /* TestService.kext */,
-				F86A896B243CD1B500CBABC2 /* ClientKit */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -231,65 +171,18 @@
 			path = "Supporting files";
 			sourceTree = "<group>";
 		};
-		F86A895E243CD13100CBABC2 /* TestService */ = {
-			isa = PBXGroup;
-			children = (
-				F86A895F243CD13300CBABC2 /* TestService.hpp */,
-				F86A8961243CD13400CBABC2 /* TestService.cpp */,
-				F86A8963243CD13400CBABC2 /* Info.plist */,
-				F84E327624457FAE00D07895 /* ItlNetworkUserClient.cpp */,
-				F84E327724457FAE00D07895 /* ItlNetworkUserClient.hpp */,
-				F8C4BDFD247B8E4800FC5539 /* IO80211Interface.cpp */,
-				F8C4BDFE247B8E4800FC5539 /* IO80211Interface.hpp */,
-				F8800631247BAEB6001CD3FB /* FakeNetworkInterface.h */,
-			);
-			path = TestService;
-			sourceTree = "<group>";
-		};
 		F86A896C243CD1B500CBABC2 /* ClientKit */ = {
 			isa = PBXGroup;
 			children = (
-				F86A896D243CD1B500CBABC2 /* main.cpp */,
+				F86A8972243CD40800CBABC2 /* Common.h */,
+				F8F6CF0E243D67D800965B43 /* IoctlId.h */,
 				F8F6CF0A243D675800965B43 /* Api.h */,
 				F8F6CF0B243D675800965B43 /* Api.c */,
 			);
 			path = ClientKit;
 			sourceTree = "<group>";
 		};
-		F86A897A243CD5F500CBABC2 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				F86A8972243CD40800CBABC2 /* Common.h */,
-				F8F6CF0E243D67D800965B43 /* IoctlId.h */,
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		F86A8958243CD13000CBABC2 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8800632247BAEB6001CD3FB /* FakeNetworkInterface.h in Headers */,
-				F84E327924457FAE00D07895 /* ItlNetworkUserClient.hpp in Headers */,
-				F8C4BE00247B8E4800FC5539 /* IO80211Interface.hpp in Headers */,
-				F86A897B243CD6EA00CBABC2 /* Common.h in Headers */,
-				F86A8960243CD13300CBABC2 /* TestService.hpp in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F86A897C243CD72000CBABC2 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F86A897D243CD72700CBABC2 /* Common.h in Headers */,
-				F8F6CF0C243D675800965B43 /* Api.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		BCFA32E62424D2BE00E23603 /* HeliPort */ = {
@@ -306,48 +199,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				F86A8976243CD44B00CBABC2 /* PBXTargetDependency */,
 			);
 			name = HeliPort;
 			productName = HeliPort;
 			productReference = BCFA32E72424D2BE00E23603 /* HeliPort.app */;
 			productType = "com.apple.product-type.application";
-		};
-		F86A895C243CD13000CBABC2 /* TestService */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F86A8966243CD13400CBABC2 /* Build configuration list for PBXNativeTarget "TestService" */;
-			buildPhases = (
-				F86A8958243CD13000CBABC2 /* Headers */,
-				F86A8959243CD13000CBABC2 /* Sources */,
-				F86A895A243CD13000CBABC2 /* Frameworks */,
-				F86A895B243CD13000CBABC2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = TestService;
-			productName = TestService;
-			productReference = F86A895D243CD13000CBABC2 /* TestService.kext */;
-			productType = "com.apple.product-type.kernel-extension";
-		};
-		F86A896A243CD1B500CBABC2 /* ClientKit */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F86A896F243CD1B500CBABC2 /* Build configuration list for PBXNativeTarget "ClientKit" */;
-			buildPhases = (
-				F86A897C243CD72000CBABC2 /* Headers */,
-				F86A8967243CD1B500CBABC2 /* Sources */,
-				F86A8968243CD1B500CBABC2 /* Frameworks */,
-				F86A8969243CD1B500CBABC2 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ClientKit;
-			productName = ClientKit;
-			productReference = F86A896B243CD1B500CBABC2 /* ClientKit */;
-			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -361,12 +217,6 @@
 				TargetAttributes = {
 					BCFA32E62424D2BE00E23603 = {
 						CreatedOnToolsVersion = 11.3.1;
-					};
-					F86A895C243CD13000CBABC2 = {
-						CreatedOnToolsVersion = 11.1;
-					};
-					F86A896A243CD1B500CBABC2 = {
-						CreatedOnToolsVersion = 11.1;
 					};
 				};
 			};
@@ -386,6 +236,9 @@
 				el,
 				ru,
 				de,
+				vi,
+				pl,
+				fr,
 			);
 			mainGroup = BCFA32DE2424D2BE00E23603;
 			productRefGroup = BCFA32E82424D2BE00E23603 /* Products */;
@@ -393,8 +246,6 @@
 			projectRoot = "";
 			targets = (
 				BCFA32E62424D2BE00E23603 /* HeliPort */,
-				F86A895C243CD13000CBABC2 /* TestService */,
-				F86A896A243CD1B500CBABC2 /* ClientKit */,
 			);
 		};
 /* End PBXProject section */
@@ -409,13 +260,6 @@
 				BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */,
 				BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */,
 				7557CDF424935260000F0F71 /* Credits.rtf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F86A895B243CD13000CBABC2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,34 +350,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F86A8959243CD13000CBABC2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8C4BDFF247B8E4800FC5539 /* IO80211Interface.cpp in Sources */,
-				F86E286E247288F600F0B03C /* ItlNetworkUserClient.cpp in Sources */,
-				F86A8962243CD13400CBABC2 /* TestService.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F86A8967243CD1B500CBABC2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8F3F3FE248737E400E7EE1C /* Api.c in Sources */,
-				F86A896E243CD1B500CBABC2 /* main.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		F86A8976243CD44B00CBABC2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F86A896A243CD1B500CBABC2 /* ClientKit */;
-			targetProxy = F86A8975243CD44B00CBABC2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		50B86AB824B22E9B008E4FE4 /* Localizable.strings */ = {
@@ -548,6 +365,9 @@
 				42979EFF24B3A27200F15FBD /* el */,
 				6AB23DF524B64B5700D6D774 /* ru */,
 				2A66531D24B6E172002F88EE /* de */,
+				A6B1F45424B9C60A00EBBE79 /* vi */,
+				FE29EB4F24B9CE1200285757 /* pl */,
+				1DCA020324BD00E800F37995 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -694,7 +514,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lhy.HeliPort;
+				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
@@ -718,79 +538,11 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.lhy.HeliPort;
+				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
 				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		F86A8964243CD13400CBABC2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.0d1;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = TestService/Info.plist;
-				MODULE_NAME = com.zxystd.TestService;
-				MODULE_VERSION = 1.0.0d1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.TestService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-				WRAPPER_EXTENSION = kext;
-			};
-			name = Debug;
-		};
-		F86A8965243CD13400CBABC2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1.0.0d1;
-				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = TestService/Info.plist;
-				MODULE_NAME = com.zxystd.TestService;
-				MODULE_VERSION = 1.0.0d1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.TestService;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SDKROOT = macosx;
-				WRAPPER_EXTENSION = kext;
-			};
-			name = Release;
-		};
-		F86A8970243CD1B500CBABC2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_INPUT_FILETYPE = automatic;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.clientkittest;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-			};
-			name = Debug;
-		};
-		F86A8971243CD1B500CBABC2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_INPUT_FILETYPE = automatic;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zxystd.clientkittest;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -811,24 +563,6 @@
 			buildConfigurations = (
 				BCFA32F62424D2BF00E23603 /* Debug */,
 				BCFA32F72424D2BF00E23603 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		F86A8966243CD13400CBABC2 /* Build configuration list for PBXNativeTarget "TestService" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F86A8964243CD13400CBABC2 /* Debug */,
-				F86A8965243CD13400CBABC2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		F86A896F243CD1B500CBABC2 /* Build configuration list for PBXNativeTarget "ClientKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F86A8970243CD1B500CBABC2 /* Debug */,
-				F86A8971243CD1B500CBABC2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
