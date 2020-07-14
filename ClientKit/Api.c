@@ -108,10 +108,7 @@ bool get_network_list(network_info_list_t *list) {
     struct ioctl_sta_info sta_info;
     uint32_t state;
     scan.version = IOCTL_VERSION;
-    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
-        goto error;
-    }
-    sleep(2);
+
     if (get_80211_state(&state) && state == ITL80211_S_RUN) {
         if (get_station_info(&sta_info) == KERN_SUCCESS) {
             list->count = 1;
@@ -142,6 +139,10 @@ bool get_network_list(network_info_list_t *list) {
         }
     }
     close_adapter(con);
+
+    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
+        goto error;
+    }
     return true;
 
 error:
