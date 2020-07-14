@@ -2,8 +2,8 @@
 "Address: " = "Endereço: ";
 "Cancel" = "Cancelar";
 "Check for Updates..." = "Procurar atualizações";
-"Create Diagnostics Report..." = "Criar relatório de diagnóstico...";
-"Create Network..." = "Adicionar rede...";
+"Create Diagnostics Report..." = "Criar relatório de diagnóstico";
+"Create Network..." = "Adicionar rede";
 "Disconnect from: " = "Desconectar de: ";
 "Dynamic WEP" = "WEP Dinâmico";
 "Enable Wi-Fi Logging" = "Ativar registo de Wi-Fi";
@@ -11,7 +11,7 @@
 "FUNCTION NOT IMPLEMENTED" = "FUNÇÃO NÃO IMPLEMENTADA";
 "Find and join a Wi-Fi network." = "Encontre e conecte-se a uma rede Wi-Fi.";
 "Interface Name: " = "Nome da interface: ";
-"Join Other Network..." = "Conectar a outra rede...";
+"Join Other Network..." = "Conectar a uma outra rede";
 "Join" = "Conectar";
 "Network Name:" = "Nome da rede:";
 "No Network Avaliable" = "Nenhuma rede disponível";
