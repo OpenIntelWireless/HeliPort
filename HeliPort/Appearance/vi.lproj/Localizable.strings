@@ -13,6 +13,7 @@
 "Interface Name: " = "Tên mạng: ";
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
+"Launch At Login" = "Launch At Login"; // FIXME
 "Network Name:" = "Tên mạng:";
 "No Network Avaliable" = "Không tìm thấy mạng";
 "No Status Information Avaliable" = "Không có thông tin trạng thái";

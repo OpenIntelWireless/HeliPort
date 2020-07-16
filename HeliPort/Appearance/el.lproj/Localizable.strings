@@ -13,6 +13,7 @@
 "Interface Name: " = "Όνομα Διεπαφής: ";
 "Join Other Network..." = "Εισέλθετε σε Άλλο Δίκτυο...";
 "Join" = "Είσοδος";
+"Launch At Login" = "Launch At Login"; // FIXME
 "Network Name:" = "Ονομα Δικτύου:";
 "No Network Avaliable" = "Κανένα Διαθέσιμο Δίκτυο";
 "No Status Information Avaliable" = "Δεν Υπάρχουν Πληροφορίες Κατάστασης";

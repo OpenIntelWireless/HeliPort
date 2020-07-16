@@ -44,3 +44,5 @@ extension itl80211_security: CustomStringConvertible {
         }
     }
 }
+
+extension itl80211_security: Codable { }

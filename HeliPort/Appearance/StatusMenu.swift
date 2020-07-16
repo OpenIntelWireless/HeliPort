@@ -114,6 +114,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
+    private var isAutoLaunch: Bool = false {
+        willSet(newState) {
+            toggleLaunchItem.state = newState ? .on : .off
+        }
+    }
+
     // - MARK: Menu items
 
     private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
@@ -124,6 +130,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
     private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
     private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
+
+    private let toggleLaunchItem = NSMenuItem(
+        title: NSLocalizedString("Launch At Login", comment: ""),
+        action: #selector(clickMenuItem(_:))
+    )
 
     // MARK: - WiFi connected items
 
@@ -162,6 +173,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     self.updateNetworkList()
                 }
             }
+
+            self.isAutoLaunch = LoginItemManager.isEnabled()
 
             self.statusUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.statusUpdatePeriod,
@@ -228,6 +241,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(NSMenuItem.separator())
 
+        // TODO: Move this option into the settings window once it's implemented
+        addItem(toggleLaunchItem)
+        toggleLaunchItem.target = self
         addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
         addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "Q")
@@ -300,6 +316,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
                 self.itlwmVerItem.title = NSLocalizedString("Version: ", comment: "") + itlwmVer
             }
+
+            // If not connected, try to connect saved networks
+            var stationInfo = station_info_t()
+            if get_station_info(&stationInfo) != KERN_SUCCESS {
+                NetworkManager.connectSavedNetworks()
+            }
         }
     }
 
@@ -352,6 +374,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
         case NSLocalizedString("Check for Updates...", comment: ""):
             heliPortUpdater.checkForUpdates(self)
+        case NSLocalizedString("Launch At Login", comment: ""):
+            LoginItemManager.setStatus(enabled: LoginItemManager.isEnabled() ? false : true)
+            isAutoLaunch = LoginItemManager.isEnabled()
         case NSLocalizedString("About HeliPort", comment: ""):
             NSApplication.shared.orderFrontStandardAboutPanel()
             NSApplication.shared.activate(ignoringOtherApps: true)

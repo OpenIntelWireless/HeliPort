@@ -13,6 +13,7 @@
 "Interface Name: " = "Имя интерфейса: ";
 "Join Other Network..." = "Подключиться к другой сети...";
 "Join" = "Подключиться";
+"Launch At Login" = "Launch At Login"; // FIXME
 "Network Name:" = "Имя сети:";
 "No Network Avaliable" = "Нет доступных сетей";
 "No Status Information Avaliable" = "Нет доступной информации о статусе";
