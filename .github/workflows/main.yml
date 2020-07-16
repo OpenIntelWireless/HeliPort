@@ -11,7 +11,7 @@ on:
 jobs:
   CI:
 
-    runs-on: macos-latest
+    runs-on: macos-10.15
 
     steps:
     - uses: actions/checkout@v2
@@ -52,6 +52,10 @@ jobs:
     - name: Prepare GH Release
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
       run: |
+        XCBUILD_PATH="build/Build/Products/Release"
+        brew install graphicsmagick imagemagick
+        npm install --global create-dmg
+
         eval $(grep -m 1 "MARKETING_VERSION" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
 
         echo "::set-env name=NEWVER::$MARKETING_VERSION"
@@ -68,22 +72,18 @@ jobs:
         #    NEWVER="${MARKETING_VERSION%.*}.$((${MARKETING_VERSION##*.}+1))"
         #fi
 
-        cd build/Build/Products/Release
-        ditto -c -k --sequesterRsrc --keepParent HeliPort.app HeliPort.zip
+        cp LICENSE $XCBUILD_PATH
+        cd $XCBUILD_PATH
+        mv LICENSE LICENSE.txt
+        create-dmg HeliPort.app || true
+        mv *.dmg HeliPort.dmg
         cd -
         mkdir Artifacts
-        cp -R build/Build/Products/Release/*.zip Artifacts
+        cp -R ${XCBUILD_PATH}/*.dmg Artifacts
         
         git log -"20" --format="- %H %s" | grep -v 'gitignore\|Repo\|Docs\|Merge\|yml\|CI\|Commit\|commit\|attributes' | sed '/^$/d' >> ReleaseNotes.md
         #git log -"$(git rev-list --count $(git rev-list --tags | head -n 1)..HEAD)" --format="- %H %s" | grep -v 'gitignore\|Repo\|Docs\|Merge\|yml\|CI\|Commit\|commit\|attributes' | sed  '/^$/d' >> ReleaseNotes.md
-        
-        mkdir sparkle
-        cd sparkle
-        rawURL="https://github.com/sparkle-project/Sparkle/releases/latest"
-        URL="https://github.com$(one=${"$(curl -L --silent "${rawURL}" | grep '/download/' | grep -m 1 'xz' )"#*href=\"} && two=${one%\"\ rel*} && echo $two)"
-        curl -#LO "${URL}"
-        tar xvf *.xz >/dev/null 2>&1
-        cd ..
+
       shell: zsh {0}
 
     - name: Init GH Release
@@ -98,8 +98,15 @@ jobs:
     - name: Generate Sparkle Appcast
       if: github.event_name == 'push' && contains(github.event.head_commit.message, 'GH release')
       run: |
-        PUBDATE="$(date +"%a, %d %b %Y %T %z")"
+        mkdir sparkle
+        cd sparkle
+        rawURL="https://github.com/sparkle-project/Sparkle/releases/latest"
+        URL="https://github.com$(one=${"$(curl -L --silent "${rawURL}" | grep '/download/' | grep -m 1 'xz' )"#*href=\"} && two=${one%\"\ rel*} && echo $two)"
+        curl -#LO "${URL}"
+        tar xvf *.xz >/dev/null 2>&1
+        cd ..
 
+        PUBDATE="$(date +"%a, %d %b %Y %T %z")"
         APPCAST=(
             '<?xml version="1.0" standalone="yes"?>'
             '<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">'
@@ -109,17 +116,15 @@ jobs:
             "            <title>${NEWVER}</title>"
             "            <pubDate>${PUBDATE}</pubDate>"
             '            <description><![CDATA['
-            "                <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/Primer/14.4.0/primer.min.css\"><meta charset=\"UTF-8\"> $(curl -L --silent https://github.com/zxystd/HeliPort/releases/latest | sed -n '/<div class=\"markdown-body\">/,/<\/div>/p' | tr -d '\n')"
+            "                <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/Primer/14.4.0/primer.min.css\"><meta charset=\"UTF-8\"> $(curl -L --silent https://github.com/OpenIntelWireless/HeliPort/releases/latest | sed -n '/<div class=\"markdown-body\">/,/<\/div>/p' | tr -d '\n')"
             '            ]]>'
             '            </description>'
             "            <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>"
-            "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/zxystd/HeliPort/releases/latest/download/HeliPort.zip\" sparkle:version=\"${NEWVER}\" sparkle:shortVersionString=\"${NEWVER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.zip)/>"
+            "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/OpenIntelWireless/HeliPort/releases/latest/download/HeliPort.dmg\" sparkle:version=\"${NEWVER}\" sparkle:shortVersionString=\"${NEWVER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.dmg)/>"
             '        </item>'
             '    </channel>'
             '</rss>'
         )
-
-        sleep 5
 
         for appcast in "${APPCAST[@]}"; do
             echo "${appcast}" >> ./Artifacts/appcast.xml
