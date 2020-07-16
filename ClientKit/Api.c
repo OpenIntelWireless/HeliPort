@@ -135,7 +135,6 @@ bool get_network_list(network_info_list_t *list) {
         // info->auth.security = network_info_ret.ni_rsncipher;
         info->auth.security = analyse_security(&network_info_ret);
         info->is_connected = false;
-        printf("%s se=%d\n", info->SSID, info->auth.security);
         if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
             info->is_connected = true;
             list->networks[0].auth.security = info->auth.security;
