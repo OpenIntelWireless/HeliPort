@@ -12,6 +12,7 @@
 "Find and join a Wi-Fi network." = "查找并加入Wi-Fi网络。";
 "Interface Name: " = "接口名称：";
 "itlwm API Version: " = "itlwm API Version: ";
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
 "itlwm Version Mismatch" = "itlwm Version Mismatch";
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";

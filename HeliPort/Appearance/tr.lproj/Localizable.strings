@@ -12,6 +12,7 @@
 "Find and join a Wi-Fi network." = "Wi-Fi ağ bağlantısını bul ve bağlan.";
 "Interface Name: " = "Arayüz Adı: ";
 "itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
 "itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "Diğer Kablosuz Ağ'a Bağlan...";
 "Join" = "Bağlan";
