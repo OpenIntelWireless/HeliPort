@@ -11,6 +11,8 @@
 "FUNCTION NOT IMPLEMENTED" = "ΜΗ ΔΙΑΘΕΣΙΜΗ ΛΕΙΤΟΥΡΓΙΑ";
 "Find and join a Wi-Fi network." = "Βρείτε και εισέλθετε σε ένα δίκτυο Wi-Fi.";
 "Interface Name: " = "Όνομα Διεπαφής: ";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "Εισέλθετε σε Άλλο Δίκτυο...";
 "Join" = "Είσοδος";
 "Launch At Login" = "Αυτόματη Εκκίνηση";
@@ -34,6 +36,7 @@
 "Unreachable" = "Μη Προσβάσιμο";
 "Username:" = "Όνομα χρήστη:";
 "Version: " = "Έκδοση: ";
+"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Εταιρικό";
 "WPA/WPA2 Personal" = "WPA/WPA2 Προσωπικό";

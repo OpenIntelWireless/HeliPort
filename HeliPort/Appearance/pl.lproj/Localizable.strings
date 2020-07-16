@@ -10,6 +10,8 @@
 "Enter the name and security type of the network you want to join." = "Podaj nazwę sieci, do której chcesz się przyłączyć, i typ jej zabezpieczeń.";
 "FUNCTION NOT IMPLEMENTED" = "FUNKCJA NIEZAIMPLEMENTOWANA";
 "Find and join a Wi-Fi network." = "Znajdź sieć Wi-Fi i przyłącz się do niej.";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Interface Name: " = "Nazwa interfejsu: ";
 "Join Other Network..." = "Przyłącz się do innej sieci...";
 "Join" = "Połącz";
@@ -34,6 +36,7 @@
 "Unreachable" = "Nieosiągalna";
 "Username:" = "Użytkownik:";
 "Version: " = "Wersja: ";
+"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Enterprise";
 "WPA/WPA2 Personal" = "WPA/WPA2 Personal";

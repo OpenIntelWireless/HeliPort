@@ -37,7 +37,7 @@ final class NetworkManager {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
                 + networkInfo.auth.security.description
-            alert.alertStyle = NSAlert.Style.critical
+            alert.alertStyle = .critical
             DispatchQueue.main.async {
                 alert.runModal()
             }

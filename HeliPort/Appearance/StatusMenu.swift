@@ -388,7 +388,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Create Network...", comment: ""):
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
-            alert.alertStyle = NSAlert.Style.critical
+            alert.alertStyle = .critical
             alert.runModal()
         case NSLocalizedString("Open Network Preferences...", comment: ""):
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
