@@ -10,13 +10,9 @@ If you have any questions or feedback, feel free to [![Join the chat at https://
 
 ## Status
 
-This project is currently in the early stage of development, nothing except the User Interface works.
+This App is currently functional, we're still working on it to make it even better.
 
 ### To-Do's
-
-- [ ] Save user network info
-- [ ] EAP auth
-- [ ] Hidden network connecting
 
 Visit [Projects](https://github.com/zxystd/HeliPort/projects) for more information
 
