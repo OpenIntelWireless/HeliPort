@@ -3,7 +3,7 @@
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/4/4.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -112,7 +112,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         ))
 
         NSApplication.shared.activate(ignoringOtherApps: true)
-        icon.image = NSImage.init(named: "WiFi")
+        icon.image = #imageLiteral(resourceName: "WiFi")
         view.addSubview(icon)
 
         title.stringValue =

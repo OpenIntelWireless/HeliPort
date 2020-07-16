@@ -3,7 +3,7 @@
 //  ClientKit
 //
 //  Created by 钟先耀 on 2020/4/7.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -117,6 +117,24 @@ struct ioctl_scan_result {
 
 struct ioctl_tx_power {
     unsigned int version;
+};
+
+enum itl80211_security {
+    ITL80211_SECURITY_NONE,
+    ITL80211_SECURITY_WEP,
+    ITL80211_SECURITY_WPA_PERSONAL,
+    ITL80211_SECURITY_WPA_PERSONAL_MIXED,
+    ITL80211_SECURITY_WPA2_PERSONAL,
+    ITL80211_SECURITY_PERSONAL,
+    ITL80211_SECURITY_DYNAMIC_WEP,
+    ITL80211_SECURITY_WPA_ENTERPRISE,
+    ITL80211_SECURITY_WPA_ENTERPRISE_MIXED,
+    ITL80211_SECURITY_WPA2_ENTERPRISE,
+    ITL80211_SECURITY_ENTERPRISE,
+    ITL80211_SECURITY_WPA3_PERSONAL,
+    ITL80211_SECURITY_WPA3_ENTERPRISE,
+    ITL80211_SECURITY_WPA3_TRANSITION,
+    ITL80211_SECURITY_UNKNOWN                 = 255
 };
 
 /*

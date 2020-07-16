@@ -3,7 +3,7 @@
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/3/20.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         checkDriver()
 
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOff")
         statusBar.button?.image?.isTemplate = true
         statusBar.menu = StatusMenu()
 

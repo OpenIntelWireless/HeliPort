@@ -3,7 +3,7 @@
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/4/5.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -72,18 +72,38 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var showAllOptions: Bool = false {
         willSet(visible) {
             for idx in 0...6 {
+                /*
+                 * TODO: idx 3, 4, 5 have not been implemented
+                 * 3: Enable Wi-Fi Logging
+                 * 4: Create Diagnostics Report...
+                 * 5: Open Wi-Fi Diagnostics...
+                 */
+                if idx == 3 || idx == 4 || idx == 5 {
+                    items[idx].isHidden = true
+                    continue
+                }
                 items[idx].isHidden = !visible
             }
-            for idx in 1...2 {
-                items[items.count - idx].isHidden = !visible
-            }
+
             for idx in 11...24 {
-                // TODO: security, country code, and NSS are hidden since those have not been implemented in io_station_info
+                /*
+                 * idx 15, 18, 24 have not been implemented in io_station_info
+                 * 15: security
+                 * 18: country code
+                 * 24: NSS
+                 */
                 if idx == 15 || idx == 18 || idx == 24 {
                     items[idx].isHidden = true
                     continue
                 }
                 items[idx].isHidden = !(visible && status == ITL80211_S_RUN)
+            }
+
+            // Create Network... has not been implemented in itlwm
+            items[items.count - 7].isHidden = true
+
+            for idx in 1...2 {
+                items[items.count - idx].isHidden = !visible
             }
         }
     }
@@ -114,6 +134,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
+    private var isAutoLaunch: Bool = false {
+        willSet(newState) {
+            toggleLaunchItem.state = newState ? .on : .off
+        }
+    }
+
     // - MARK: Menu items
 
     private let statusItem = NSMenuItem(title: NSLocalizedString("Wi-Fi: Status unavailable", comment: ""))
@@ -124,6 +150,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
     private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
     private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
+
+    private let toggleLaunchItem = NSMenuItem(
+        title: NSLocalizedString("Launch At Login", comment: ""),
+        action: #selector(clickMenuItem(_:))
+    )
 
     // MARK: - WiFi connected items
 
@@ -148,7 +179,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     init() {
         super.init(title: "")
-        minimumWidth = CGFloat(285.0)
+        minimumWidth = CGFloat(286.0)
         delegate = self
         setupMenuHeaderAndFooter()
         getDeviceInfo()
@@ -162,6 +193,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     self.updateNetworkList()
                 }
             }
+
+            self.isAutoLaunch = LoginItemManager.isEnabled()
 
             self.statusUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.statusUpdatePeriod,
@@ -228,9 +261,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(NSMenuItem.separator())
 
+        // TODO: Move this option into the settings window once it's implemented
+        addItem(toggleLaunchItem)
+        toggleLaunchItem.target = self
         addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
-        addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "Q")
+        addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "q")
     }
 
     // - MARK: Overrides
@@ -300,6 +336,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.macItem.title = NSLocalizedString("Address: ", comment: "") + macAddr
                 self.itlwmVerItem.title = NSLocalizedString("Version: ", comment: "") + itlwmVer
             }
+
+            // If not connected, try to connect saved networks
+            var stationInfo = station_info_t()
+            if get_station_info(&stationInfo) != KERN_SUCCESS {
+                NetworkManager.connectSavedNetworks()
+            }
         }
     }
 
@@ -319,13 +361,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         guard let view = item.view as? WifiMenuItemView else {
             return item
         }
-        view.visible = false
         view.translatesAutoresizingMaskIntoConstraints = false
         guard let supView = view.superview else {
             return item
         }
-        view.widthAnchor.constraint(equalTo: supView.widthAnchor).isActive = true
-        view.heightAnchor.constraint(equalTo: supView.heightAnchor).isActive = true
+        view.leadingAnchor.constraint(equalTo: supView.leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: supView.topAnchor).isActive = true
+        view.trailingAnchor.constraint(greaterThanOrEqualTo: supView.trailingAnchor).isActive = true
+        view.visible = false
         return item
     }
 
@@ -351,6 +394,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
         case NSLocalizedString("Check for Updates...", comment: ""):
             heliPortUpdater.checkForUpdates(self)
+        case NSLocalizedString("Launch At Login", comment: ""):
+            LoginItemManager.setStatus(enabled: LoginItemManager.isEnabled() ? false : true)
+            isAutoLaunch = LoginItemManager.isEnabled()
         case NSLocalizedString("About HeliPort", comment: ""):
             NSApplication.shared.orderFrontStandardAboutPanel()
             NSApplication.shared.activate(ignoringOtherApps: true)
@@ -407,7 +453,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 let ipAddress = NetworkManager.getLocalAddress(bsd: bsd)
                 let routerAddress = NetworkManager.getRouterAddress(bsd: bsd)
                 let isReachable = NetworkManager.checkConnectionReachability(station: staInfo)
-                Log.debug(String(format: "current rate=%03d", staInfo.rate))
                 disconnectName = String(cString: &staInfo.ssid.0)
                 ipAddr = ipAddress ?? NSLocalizedString("Unknown", comment: "")
                 routerAddr = routerAddress ?? NSLocalizedString("Unknown", comment: "")

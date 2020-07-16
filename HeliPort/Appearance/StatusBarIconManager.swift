@@ -3,7 +3,7 @@
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/4/7.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -29,19 +29,19 @@ class StatusBarIcon: NSObject {
     class func off() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOff")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOff")
     }
 
     class func connected() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateOn")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOn")
     }
 
     class func disconnected() {
         timer?.invalidate()
         timer = nil
-        statusBar.button?.image = NSImage.init(named: "WiFiStateDisconnected")
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateDisconnected")
     }
 
     class func connecting() {
@@ -78,17 +78,17 @@ class StatusBarIcon: NSObject {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
             case 7:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthPoor")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning1")
             case 6:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthFair")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning2")
             case 5:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthGood")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning3")
             case 4:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthExcellent")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning4")
             case 3:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthGood")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning3")
             case 2:
-                statusBar.button?.image = NSImage.init(named: "WiFiSignalStrengthFair")
+                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning2")
                 StatusBarIcon.count = 8
             default:
                 return

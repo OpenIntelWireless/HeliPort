@@ -3,7 +3,7 @@
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/4/8.
-//  Copyright © 2020 lhy. All rights reserved.
+//  Copyright © 2020 OpenIntelWireless. All rights reserved.
 //
 
 /*
@@ -87,9 +87,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             height: 32
         ))
         ssidLabel = NSTextField(frame: NSRect(
-            x: 70,
+            x: 50,
             y: 132,
-            width: 100,
+            width: 120,
             height: 19
         ))
         ssidBox = NSTextField(frame: NSRect(
@@ -99,9 +99,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             height: 21
         ))
         securityLabel = NSTextField(frame: NSRect(
-            x: 100,
+            x: 50,
             y: 103,
-            width: 70,
+            width: 120,
             height: 19
         ))
         securityPop = NSPopUpButton(frame: NSRect(
@@ -111,9 +111,9 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             height: 26
         ))
         usernameLabel = NSTextField(frame: NSRect(
-            x: 100,
+            x: 50,
             y: 150,
-            width: 70,
+            width: 120,
             height: 19
         ))
         usernameBox = NSTextField(frame: NSRect(
@@ -174,7 +174,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         )
         NSApplication.shared.activate(ignoringOtherApps: true)
 
-        icon.image = NSImage.init(named: "WiFi")
+        icon.image = #imageLiteral(resourceName: "WiFi")
         view.addSubview(icon)
 
         titleLabel.stringValue = NSLocalizedString("Find and join a Wi-Fi network.", comment: "")
@@ -483,10 +483,28 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
     }
 
     @objc private func joinWiFi(_ sender: Any?) {
-        associate_ssid(
-            ssidBox.stringValue,
-            passwdInputBox.stringValue
-        )
+        let networkInfo = NetworkInfo(ssid: ssidBox.stringValue)
+        networkInfo.auth.password = passwdInputBox.stringValue
+
+        switch securityPop.indexOfSelectedItem {
+        case 0:
+            networkInfo.auth.security = ITL80211_SECURITY_NONE
+
+        case 2:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA_PERSONAL_MIXED
+        case 3:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA2_PERSONAL
+
+        case 5:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA_ENTERPRISE_MIXED
+        case 6:
+            networkInfo.auth.security = ITL80211_SECURITY_WPA2_ENTERPRISE
+
+        default:
+            networkInfo.auth.security = ITL80211_SECURITY_UNKNOWN
+        }
+
+        NetworkManager.connect(networkInfo: networkInfo, saveNetwork: isSave.state == .on)
         close()
     }
 
