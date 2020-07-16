@@ -13,6 +13,7 @@
 "Interface Name: " = "Arayüz Adı: ";
 "Join Other Network..." = "Diğer Kablosuz Ağ'a Bağlan...";
 "Join" = "Bağlan";
+"Launch At Login" = "Launch At Login"; // FIXME
 "Network Name:" = "Kablosuz Ağ Adı:";
 "No Network Avaliable" = "Ağ Bağlantısı Mevcut Değil";
 "No Status Information Avaliable" = "Durum Bilgisi Mevcut Değil";

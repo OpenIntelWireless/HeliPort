@@ -13,6 +13,7 @@
 "Interface Name: " = "인터페이스 이름: ";
 "Join Other Network..." = "다른 네트워크에 연결...";
 "Join" = "연결";
+"Launch At Login" = "Launch At Login"; // FIXME
 "Network Name:" = "네트워크 이름:";
 "No Network Avaliable" = "사용 가능한 네트워크 없음";
 "No Status Information Avaliable" = "상태 정보가 없음";
