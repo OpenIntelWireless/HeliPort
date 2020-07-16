@@ -72,18 +72,38 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var showAllOptions: Bool = false {
         willSet(visible) {
             for idx in 0...6 {
+                /*
+                 * TODO: idx 3, 4, 5 have not been implemented
+                 * 3: Enable Wi-Fi Logging
+                 * 4: Create Diagnostics Report...
+                 * 5: Open Wi-Fi Diagnostics...
+                 */
+                if idx == 3 || idx == 4 || idx == 5 {
+                    items[idx].isHidden = true
+                    continue
+                }
                 items[idx].isHidden = !visible
             }
-            for idx in 1...2 {
-                items[items.count - idx].isHidden = !visible
-            }
+
             for idx in 11...24 {
-                // TODO: security, country code, and NSS are hidden since those have not been implemented in io_station_info
+                /*
+                 * idx 15, 18, 24 have not been implemented in io_station_info
+                 * 15: security
+                 * 18: country code
+                 * 24: NSS
+                 */
                 if idx == 15 || idx == 18 || idx == 24 {
                     items[idx].isHidden = true
                     continue
                 }
                 items[idx].isHidden = !(visible && status == ITL80211_S_RUN)
+            }
+
+            // Create Network... has not been implemented in itlwm
+            items[items.count - 7].isHidden = true
+
+            for idx in 1...2 {
+                items[items.count - idx].isHidden = !visible
             }
         }
     }
