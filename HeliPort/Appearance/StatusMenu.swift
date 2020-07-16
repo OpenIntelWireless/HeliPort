@@ -246,7 +246,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         toggleLaunchItem.target = self
         addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
-        addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "Q")
+        addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "q")
     }
 
     // - MARK: Overrides
