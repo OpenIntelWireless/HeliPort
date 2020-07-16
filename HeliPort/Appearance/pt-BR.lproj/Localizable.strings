@@ -10,10 +10,10 @@
 "Enter the name and security type of the network you want to join." = "Digite o nome e o tipo de segurança da rede à qual você deseja acessar. ";
 "FUNCTION NOT IMPLEMENTED" = "FUNÇÃO NÃO IMPLEMENTADA";
 "Find and join a Wi-Fi network." = "Encontre e entre em uma rede Wi-Fi. ";
+"Interface Name: " = "Nome da Interface: ";
 "itlwm API Version: " = "itlwm API Version: "; // FIXME
 "itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"Interface Name: " = "Nome da Interface: ";
 "Join Other Network..." = "Entrar em Outra Rede...";
 "Join" = "Entrar";
 "Launch At Login" = "Launch At Login"; // FIXME

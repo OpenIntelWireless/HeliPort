@@ -11,9 +11,9 @@
 "FUNCTION NOT IMPLEMENTED" = "功能尚未实现";
 "Find and join a Wi-Fi network." = "查找并加入Wi-Fi网络。";
 "Interface Name: " = "接口名称：";
-"itlwm API Version: " = "itlwm API Version: ";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
 "HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"itlwm Version Mismatch" = "itlwm Version Mismatch";
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";
 "Launch At Login" = "登陆时自动启动";
