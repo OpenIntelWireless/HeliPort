@@ -15,7 +15,9 @@
 
 #include "Api.h"
 #include "mach/mach_port.h"
+#include "pthread.h"
 
+static pthread_mutex_t* api_mutex;
 
 bool get_platform_info(platform_info_t *info) {
     memset(info, 0, sizeof(platform_info_t));
@@ -108,10 +110,7 @@ bool get_network_list(network_info_list_t *list) {
     struct ioctl_sta_info sta_info;
     uint32_t state;
     scan.version = IOCTL_VERSION;
-    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
-        goto error;
-    }
-    sleep(2);
+
     if (get_80211_state(&state) && state == ITL80211_S_RUN) {
         if (get_station_info(&sta_info) == KERN_SUCCESS) {
             list->count = 1;
@@ -141,6 +140,10 @@ bool get_network_list(network_info_list_t *list) {
         }
     }
     close_adapter(con);
+
+    if (ioctl_set(IOCTL_80211_SCAN, &scan, sizeof(struct ioctl_scan)) != KERN_SUCCESS) {
+        goto error;
+    }
     return true;
 
 error:
@@ -152,11 +155,14 @@ bool connect_network(network_info_t *info) {
         goto error;
     }
 
-    int timeout = 40;
+    int timeout = 20;
     while (timeout-- > 0) {
         uint32_t state;
         if (get_80211_state(&state) && state == ITL80211_S_RUN) {
-            return true;
+            station_info_t sta_info;
+            if (get_station_info(&sta_info) == KERN_SUCCESS) {
+                return strcmp(info->SSID, (char*)sta_info.ssid) == 0;
+            }
         }
         sleep(1);
     }
@@ -212,6 +218,15 @@ bool open_adapter(io_connect_t *connection_t)
         IOObjectRelease(service);
     }
     IOObjectRelease(iter);
+
+    if (found) {
+        if (!api_mutex) {
+            api_mutex = malloc(sizeof(pthread_mutex_t));
+            pthread_mutex_init(api_mutex, NULL);
+        }
+        pthread_mutex_lock(api_mutex);
+    }
+
     return found;
 }
 
@@ -219,6 +234,7 @@ void close_adapter(io_connect_t connection)
 {
     if (connection) {
         IOServiceClose(connection);
+        pthread_mutex_unlock(api_mutex);
     }
 }
 
