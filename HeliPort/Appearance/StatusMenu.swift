@@ -261,7 +261,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(NSMenuItem.separator())
 
-        // TODO: Move this option into the settings window once it's implemented
         addItem(toggleLaunchItem)
         toggleLaunchItem.target = self
         addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
