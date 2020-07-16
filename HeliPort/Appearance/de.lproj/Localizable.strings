@@ -13,7 +13,7 @@
 "Interface Name: " = "Interface Name: ";
 "Join Other Network..." = "Anderem Netzwerk beitreten...";
 "Join" = "Verbinden";
-"Launch At Login" = "Launch At Login"; // FIXME
+"Launch At Login" = "Beim Anmelden starten";
 "Network Name:" = "Netzwerkname:";
 "No Network Avaliable" = "Kein Netzwerk verfügbar";
 "No Status Information Avaliable" = "Keine Status Informationen verfügbar";
