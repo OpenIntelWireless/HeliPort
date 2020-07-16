@@ -48,6 +48,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     private func checkAPI() {
 
+        // It's fine for users to bypass this check by launching HeliPort first then loading itlwm in terminal
+        // Only advanced users do so, and they know what they are doing
         guard checkDriver(), IOCTL_VERSION != drv_info.version else {
             return
         }
@@ -59,15 +61,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             NSLocalizedString("HeliPort API Version: ", comment: "") + String(IOCTL_VERSION) +
             "\n" +
             NSLocalizedString("itlwm API Version: ", comment: "") + String(drv_info.version)
+        verAlert.addButton(withTitle: NSLocalizedString("Quit HeliPort", comment: "")).keyEquivalent = "\r"
         verAlert.addButton(
             withTitle: NSLocalizedString("Visit OpenIntelWireless on GitHub", comment: "")
-        ).keyEquivalent = "\r"
-        verAlert.addButton(withTitle: NSLocalizedString("Quit HeliPort", comment: ""))
+        )
 
         NSApplication.shared.activate(ignoringOtherApps: true)
 
-        if verAlert.runModal() == .alertFirstButtonReturn {
+        if verAlert.runModal() == .alertSecondButtonReturn {
             NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
+            // Provide a chance to use this App in extreme conditions
+            return
         }
 
         NSApp.terminate(nil)
