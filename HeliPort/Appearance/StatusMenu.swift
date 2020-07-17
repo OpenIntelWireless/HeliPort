@@ -32,7 +32,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
-            guard isNetworkCardEnabled else {
+            /* Only allow if network card is enabled or if the network card does not load
+             either due to itlwm not loaded or just not able to receive info
+             This prevents cards that are working but are "off" to not change the
+             Status from "WiFi off" to another status. i.e "WiFi: on". */
+            guard isNetworkCardEnabled || !isNetworkCardAvailable else {
                 return
             }
 
@@ -60,7 +64,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 // no change in status bar icon when scanning
                 break
             default:
-                StatusBarIcon.off()
+                StatusBarIcon.error()
             }
         }
     }
@@ -124,6 +128,23 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 if let view = item.view as? WifiMenuItemView {
                     view.visible = false
                 }
+            }
+        }
+    }
+
+    private var isNetworkCardAvailable: Bool = true {
+        willSet(newState) {
+            if !newState {
+                self.isNetworkCardEnabled = false
+            }
+
+            for inx in 6...9 {
+                // TODO: Create Network... has not been implemented in itlwm
+                if inx == 7 {
+                    continue
+                }
+                // Hide items that cannot be used while card is not working
+                items[items.count - inx].isHidden = !newState
             }
         }
     }
@@ -425,6 +446,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 if get_power_ret {
                     self.isNetworkCardEnabled = powerState
                 }
+                self.isNetworkCardAvailable = get_power_ret
                 self.status = itl_80211_state(rawValue: status)
             }
         }
