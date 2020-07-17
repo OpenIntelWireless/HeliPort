@@ -419,6 +419,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 }
                 self.status = itl_80211_state(rawValue: status)
             }
+
+            self.updateNetworkInfo()
         }
     }
 
@@ -442,8 +444,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var phyMode = NSLocalizedString("Unavailable", comment: "")
             var mcsIndex = NSLocalizedString("Unavailable", comment: "")
             var nss = NSLocalizedString("Unavailable", comment: "")
+            var connected = false
             var staInfo = station_info_t()
             if self.status == ITL80211_S_RUN && get_station_info(&staInfo) == KERN_SUCCESS {
+                connected = true
                 let bsd = String(self.bsdItem.title)
                     .replacingOccurrences(of: NSLocalizedString("Interface Name: ", comment: ""),
                                           with: "",
@@ -491,6 +495,16 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.phyModeItem.title = NSLocalizedString("    PHY Mode: ", comment: "") + phyMode
                 self.mcsIndexItem.title = NSLocalizedString("    MCS Index: ", comment: "") + mcsIndex
                 self.nssItem.title = NSLocalizedString("    NSS: ", comment: "") + nss
+                if let wifiItemView = self.networkItemList[0].view as? WifiMenuItemView {
+                    wifiItemView.visible = connected
+                    if connected {
+                        wifiItemView.networkInfo = NetworkInfo(
+                            ssid: String(cString: &staInfo.ssid.0),
+                            connected: true,
+                            rssi: Int(staInfo.rssi)
+                        )
+                    }
+                }
             }
         }
     }
@@ -503,7 +517,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         NetworkManager.scanNetwork { networkList in
             self.isNetworkListEmpty = networkList.count == 0
             var networkList = networkList
-            for index in 0 ..< self.networkItemList.count {
+            for index in 1 ..< self.networkItemList.count {
                 if let view = self.networkItemList[index].view as? WifiMenuItemView {
                     if networkList.count > 0 {
                         view.networkInfo = networkList.removeFirst()
@@ -513,7 +527,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     }
                 }
             }
-            self.updateNetworkInfo()
         }
     }
 
