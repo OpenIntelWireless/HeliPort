@@ -523,7 +523,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                                   options: .regularExpression,
                                   range: nil
         )
-        dis_associate_ssid(ssid)
-        print("disconnected from \(ssid)")
+        
+        DispatchQueue.global().async {
+            CredentialsManager.instance.setAutoJoin(ssid, false)
+            dis_associate_ssid(ssid)
+            print("disconnected from \(ssid)")
+        }
     }
 }

@@ -83,21 +83,25 @@ final class NetworkManager {
             }
         }
 
-        if let savedNetworkAuth = CredentialsManager.instance.get(networkInfo) {
-            networkInfo.auth = savedNetworkAuth
-            Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
-            getAuthInfoCallback(networkInfo.auth, false)
-            return
-        }
+        // Getting keychain access blocks UI Thread and makes everything freeze unless made async
+        DispatchQueue.global().async {
+            if let savedNetworkAuth = CredentialsManager.instance.get(networkInfo) {
+                networkInfo.auth = savedNetworkAuth
+                Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
+                CredentialsManager.instance.setAutoJoin(networkInfo.ssid, true)
+                getAuthInfoCallback(networkInfo.auth, false)
+                return
+            }
 
-        guard networkInfo.auth.security != ITL80211_SECURITY_NONE,
-            networkInfo.auth.password.isEmpty else {
-            getAuthInfoCallback(networkInfo.auth, saveNetwork)
-            return
-        }
+            guard networkInfo.auth.security != ITL80211_SECURITY_NONE,
+                networkInfo.auth.password.isEmpty else {
+                getAuthInfoCallback(networkInfo.auth, saveNetwork)
+                return
+            }
 
-        DispatchQueue.main.async {
-            WifiPopupWindow(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback).show()
+            DispatchQueue.main.async {
+                WifiPopupWindow(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback).show()
+            }
         }
     }
 
