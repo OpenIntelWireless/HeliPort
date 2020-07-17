@@ -109,7 +109,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
 
             // Create Network... has not been implemented in itlwm
-            items[items.count - 7].isHidden = true
+            items[items.count - 8].isHidden = true
 
             for idx in 1...4 {
                 items[items.count - idx].isHidden = !visible
@@ -140,7 +140,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             for inx in 6...9 {
                 // TODO: Create Network... has not been implemented in itlwm
-                if inx == 7 {
+                if inx == 8 {
                     continue
                 }
                 // Hide items that cannot be used while card is not working
