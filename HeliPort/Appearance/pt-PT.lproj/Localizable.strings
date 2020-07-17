@@ -16,6 +16,7 @@
 "itlwm Version Mismatch" = "Versão do itlwm incompatível";
 "Join Other Network..." = "Conectar a uma outra rede";
 "Join" = "Conectar";
+"Launch At Login" = "Iniciar aquando do login";
 "Network Name:" = "Nome da rede:";
 "No Network Avaliable" = "Nenhuma rede disponível";
 "No Status Information Avaliable" = "Nenhuma informação de estado disponível";
