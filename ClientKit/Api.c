@@ -65,42 +65,6 @@ error:
     return false;
 }
 
-static uint32_t analyse_security(struct ioctl_network_info *info) {
-    if (info->supported_rsnprotos & ITL80211_PROTO_RSN) {
-        //wpa2
-        if (info->rsn_akms & ITL80211_AKM_8021X) {
-            if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
-                return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED;
-            }
-            return ITL80211_SECURITY_WPA2_ENTERPRISE;
-        } else if (info->rsn_akms & ITL80211_AKM_PSK) {
-            if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
-                return ITL80211_SECURITY_WPA_PERSONAL_MIXED;
-            }
-            return ITL80211_SECURITY_WPA2_PERSONAL;
-        } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
-            return ITL80211_SECURITY_WPA2_ENTERPRISE;
-        } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
-            return ITL80211_SECURITY_PERSONAL;
-        }
-    } else if (info->supported_rsnprotos & ITL80211_PROTO_WPA) {
-        //wpa
-        if (info->rsn_akms & ITL80211_AKM_8021X) {
-            return ITL80211_SECURITY_WPA_ENTERPRISE;
-        } else if (info->rsn_akms & ITL80211_AKM_PSK) {
-            return ITL80211_SECURITY_WPA_PERSONAL;
-        } else if (info->rsn_akms & ITL80211_AKM_SHA256_8021X) {
-            return ITL80211_SECURITY_WPA_ENTERPRISE;
-        } else if (info->rsn_akms & ITL80211_AKM_SHA256_PSK) {
-            return ITL80211_SECURITY_ENTERPRISE;
-        }
-    } else if (!info->supported_rsnprotos) {
-        return ITL80211_SECURITY_NONE;
-    }
-    //TODO wpa3
-    return ITL80211_SECURITY_UNKNOWN;
-}
-
 bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
 
@@ -123,10 +87,8 @@ bool get_network_list(network_info_list_t *list) {
         if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
             continue;
         }
-        network_info_t *info = &list->networks[list->count++];
-        strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
-        info->RSSI = network_info_ret.rssi;
-        info->auth.security = analyse_security(&network_info_ret);
+        struct ioctl_network_info *info = &list->networks[list->count++];
+        memcpy(info, &network_info_ret, sizeof(struct ioctl_network_info));
     }
     close_adapter(con);
 
@@ -139,8 +101,8 @@ error:
     return false;
 }
 
-bool connect_network(network_info_t *info) {
-    if (associate_ssid(info->SSID, info->auth.password) != KERN_SUCCESS) {
+bool connect_network(const char *ssid, const char *pwd) {
+    if (associate_ssid(ssid, pwd) != KERN_SUCCESS) {
         goto error;
     }
 
@@ -150,7 +112,7 @@ bool connect_network(network_info_t *info) {
         if (get_80211_state(&state) && state == ITL80211_S_RUN) {
             station_info_t sta_info;
             if (get_station_info(&sta_info) == KERN_SUCCESS) {
-                return strcmp(info->SSID, (char*)sta_info.ssid) == 0;
+                return strcmp(ssid, (char*)sta_info.ssid) == 0;
             }
         }
         sleep(1);

@@ -42,32 +42,9 @@ final class NetworkManager {
         }
 
         let getAuthInfoCallback: (_ auth: NetworkAuth, _ savePassword: Bool) -> Void = { auth, savePassword in
-            var networkInfoStruct = network_info_t()
-            strncpy(
-                &networkInfoStruct.SSID.0,
-                networkInfo.ssid,
-                Int(MAX_SSID_LENGTH)
-            )
-            networkInfoStruct.RSSI = Int32(networkInfo.rssi)
-
-            networkInfoStruct.auth.security = auth.security.rawValue
-            networkInfoStruct.auth.option = auth.option
-            networkInfoStruct.auth.identity = UnsafeMutablePointer<UInt8>.allocate(capacity: auth.identity.count)
-            networkInfoStruct.auth.identity.initialize(
-                from: &auth.identity,
-                count: auth.identity.count
-            )
-            networkInfoStruct.auth.identity_length = UInt32(auth.identity.count)
-            networkInfoStruct.auth.username = UnsafeMutablePointer<Int8>(
-                mutating: (auth.username as NSString).utf8String
-            )
-            networkInfoStruct.auth.password = UnsafeMutablePointer<Int8>(
-                mutating: (auth.password as NSString).utf8String
-            )
-
             DispatchQueue.global(qos: .background).async {
                 StatusBarIcon.connecting()
-                let result = connect_network(&networkInfoStruct)
+                let result = connect_network(networkInfo.ssid, auth.password)
                 DispatchQueue.main.async {
                     if result {
                         if savePassword {
@@ -110,8 +87,10 @@ final class NetworkManager {
             let networks = Mirror(reflecting: list.networks).children.map({ $0.value }).prefix(Int(list.count))
 
             for element in networks {
-                var network = element as? network_info_t
-                let ssid = String(cString: &network!.SSID.0)
+                guard var network = element as? ioctl_network_info else {
+                    continue
+                }
+                let ssid = String(cString: &network.ssid.0)
                     .trimmingCharacters(in: .whitespacesAndNewlines)
                     .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression)
                 guard !ssid.isEmpty else {
@@ -120,10 +99,9 @@ final class NetworkManager {
 
                 let networkInfo = NetworkInfo(
                     ssid: ssid,
-                    rssi: Int(network!.RSSI)
+                    rssi: Int(network.rssi)
                 )
-                networkInfo.auth.security = itl80211_security(rawValue: network?.auth.security ?? 0)
-                networkInfo.auth.option = network?.auth.option ?? 0
+                networkInfo.auth.security = getSecurityType(network)
                 result.insert(networkInfo)
             }
 
@@ -271,5 +249,41 @@ final class NetworkManager {
 
         // ipV4 has priority
         return ipV4 ?? ipV6
+    }
+
+    class func getSecurityType(_ info: ioctl_network_info) -> itl80211_security {
+        if info.supported_rsnprotos & ITL80211_PROTO_RSN.rawValue != 0 {
+            //wpa2
+            if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
+                if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
+                    return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED
+                }
+                return ITL80211_SECURITY_WPA2_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_PSK.rawValue != 0 {
+                if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
+                    return ITL80211_SECURITY_WPA_PERSONAL_MIXED
+                }
+                return ITL80211_SECURITY_WPA2_PERSONAL
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_8021X.rawValue != 0 {
+                return ITL80211_SECURITY_WPA2_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_PSK.rawValue != 0 {
+                return ITL80211_SECURITY_PERSONAL
+            }
+        } else if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
+            //wpa
+            if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
+                return ITL80211_SECURITY_WPA_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_PSK.rawValue != 0 {
+                return ITL80211_SECURITY_WPA_PERSONAL
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_8021X.rawValue != 0 {
+                return ITL80211_SECURITY_WPA_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_PSK.rawValue != 0 {
+                return ITL80211_SECURITY_ENTERPRISE
+            }
+        } else if info.supported_rsnprotos == 0 {
+            return ITL80211_SECURITY_NONE
+        }
+        //TODO wpa3
+        return ITL80211_SECURITY_UNKNOWN
     }
 }
