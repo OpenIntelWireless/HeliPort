@@ -107,7 +107,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             // Create Network... has not been implemented in itlwm
             items[items.count - 7].isHidden = true
 
-            for idx in 1...2 {
+            for idx in 1...4 {
                 items[items.count - idx].isHidden = !visible
             }
         }
@@ -266,10 +266,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(NSMenuItem.separator())
 
+        addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addItem(toggleLaunchItem)
         toggleLaunchItem.target = self
-        addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
+
+        addItem(NSMenuItem.separator())
+
         addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "q")
     }
 
