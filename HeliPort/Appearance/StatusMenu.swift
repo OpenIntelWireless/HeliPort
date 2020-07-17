@@ -45,9 +45,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 StatusBarIcon.connecting()
             case ITL80211_S_RUN:
                 DispatchQueue.global(qos: .background).async {
+                    let isReachable = NetworkManager.isReachable()
                     var staInfo = station_info_t()
                     get_station_info(&staInfo)
                     DispatchQueue.main.async {
+                        guard isReachable else {
+                            StatusBarIcon.warning()
+                            return
+                        }
                         StatusBarIcon.signalStrength(RSSI: staInfo.rssi)
                     }
                 }
@@ -451,7 +456,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                                           range: nil)
                 let ipAddress = NetworkManager.getLocalAddress(bsd: bsd)
                 let routerAddress = NetworkManager.getRouterAddress(bsd: bsd)
-                let isReachable = NetworkManager.checkConnectionReachability(station: staInfo)
+                let isReachable = NetworkManager.isReachable()
                 disconnectName = String(cString: &staInfo.ssid.0)
                 ipAddr = ipAddress ?? NSLocalizedString("Unknown", comment: "")
                 routerAddr = routerAddress ?? NSLocalizedString("Unknown", comment: "")
