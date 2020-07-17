@@ -10,9 +10,10 @@
 "Enter the name and security type of the network you want to join." = "Podaj nazwę sieci, do której chcesz się przyłączyć, i typ jej zabezpieczeń.";
 "FUNCTION NOT IMPLEMENTED" = "FUNKCJA NIEZAIMPLEMENTOWANA";
 "Find and join a Wi-Fi network." = "Znajdź sieć Wi-Fi i przyłącz się do niej.";
-"itlwm API Version: " = "itlwm API Version: "; // FIXME
-"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Interface Name: " = "Nazwa interfejsu: ";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "Przyłącz się do innej sieci...";
 "Join" = "Połącz";
 "Launch At Login" = "Uruchom przy logowaniu";

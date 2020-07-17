@@ -12,6 +12,7 @@
 "Find and join a Wi-Fi network." = "Wi-Fi 네트워크를 찾아서 연결합니다.";
 "Interface Name: " = "인터페이스 이름: ";
 "itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
 "itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "다른 네트워크에 연결...";
 "Join" = "연결";

@@ -12,6 +12,7 @@
 "Find and join a Wi-Fi network." = "Encuentra y ingresa a una red Wi-Fi. ";
 "Interface Name: " = "Nombre de la Interfaz: ";
 "itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
 "itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "Acceder a otra red...";
 "Join" = "Acceder";

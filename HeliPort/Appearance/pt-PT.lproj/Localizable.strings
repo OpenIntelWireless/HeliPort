@@ -12,6 +12,7 @@
 "Find and join a Wi-Fi network." = "Encontre e conecte-se a uma rede Wi-Fi.";
 "Interface Name: " = "Nome da interface: ";
 "itlwm API Version: " = "Versão de API do itlwm: ";
+"HeliPort API Version: " = "Versão de API do HeliPort: ";
 "itlwm Version Mismatch" = "Versão do itlwm incompatível";
 "Join Other Network..." = "Conectar a uma outra rede";
 "Join" = "Conectar";
