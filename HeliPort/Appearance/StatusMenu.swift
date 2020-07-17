@@ -82,6 +82,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         willSet(visible) {
             for idx in 0...6 {
                 /*
+                 * Hide top items if the Options button is not pressed.
                  * TODO: idx 3, 4, 5 have not been implemented
                  * 3: Enable Wi-Fi Logging
                  * 4: Create Diagnostics Report...
@@ -96,6 +97,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             for idx in 11...24 {
                 /*
+                 * Hide items for which when there is no Wi-Fi connection and
+                 * Options button is not pressed.
                  * idx 15, 18, 24 have not been implemented in io_station_info
                  * 15: security
                  * 18: country code
@@ -111,6 +114,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             // Create Network... has not been implemented in itlwm
             items[items.count - 8].isHidden = true
 
+            /*
+             * Hide bottom items if the Options button is not pressed:
+             * item.count - 1: Quit HeliPort
+             * item.count - 2: NSMenuItem.separator()
+             * item.count - 3: Check for Updates
+             * item.count - 4: Launch at Login
+             */
             for idx in 1...4 {
                 items[items.count - idx].isHidden = !visible
             }
@@ -143,7 +153,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 if inx == 8 {
                     continue
                 }
-                // Hide items that cannot be used while card is not working
+
+                /*
+                 * Hide items that cannot be used while card is not working
+                 * items.count - 6: Open Network Preferences...
+                 * items.count - 7: Create Network...
+                 * items.count - 8: Join Other Network...
+                 * items.count - 9: networkItemListSeparator
+                 */
                 items[items.count - inx].isHidden = !newState
             }
         }
