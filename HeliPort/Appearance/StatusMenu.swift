@@ -351,11 +351,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             keyEquivalent: ""
         )
         item.view = WifiMenuItemView(
-            networkInfo: NetworkInfo(
-                ssid: "placeholder",
-                connected: false,
-                rssi: 0
-            )
+            networkInfo: NetworkInfo(ssid: "placeholder")
         )
         guard let view = item.view as? WifiMenuItemView else {
             return item
@@ -497,10 +493,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.nssItem.title = NSLocalizedString("    NSS: ", comment: "") + nss
                 if let wifiItemView = self.networkItemList[0].view as? WifiMenuItemView {
                     wifiItemView.visible = connected
+                    wifiItemView.connected = connected
                     if connected {
                         wifiItemView.networkInfo = NetworkInfo(
                             ssid: String(cString: &staInfo.ssid.0),
-                            connected: true,
                             rssi: Int(staInfo.rssi)
                         )
                     }

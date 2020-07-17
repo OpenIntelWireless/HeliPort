@@ -42,7 +42,6 @@ typedef struct {
 
 typedef struct {
     char SSID[MAX_SSID_LENGTH + 1];
-    bool is_connected;
     int RSSI;
     network_auth_t auth;
 } network_info_t;

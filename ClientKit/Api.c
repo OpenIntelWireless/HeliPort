@@ -127,7 +127,6 @@ bool get_network_list(network_info_list_t *list) {
         strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
         info->RSSI = network_info_ret.rssi;
         info->auth.security = analyse_security(&network_info_ret);
-        info->is_connected = false;
     }
     close_adapter(con);
 
