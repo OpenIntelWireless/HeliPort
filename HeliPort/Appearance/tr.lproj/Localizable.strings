@@ -1,7 +1,7 @@
 "About HeliPort" = "HeliPort Hakkında";
 "Address: " = "MAC Adresi: ";
 "Cancel" = "İptal";
-"Check for Updates..." = "Güncelleme...";
+"Check for Updates..." = "Güncellemeleri Kontrol Et...";
 "Create Diagnostics Report..." = "Tanı Raporu Oluştur...";
 "Create Network..." = "Ağ Oluştur...";
 "Disconnect from: " = "Bağlantıyı Kapat: ";
@@ -11,12 +11,12 @@
 "FUNCTION NOT IMPLEMENTED" = "FONKSİYON KULLANIMDA DEĞİL";
 "Find and join a Wi-Fi network." = "Wi-Fi ağ bağlantısını bul ve bağlan.";
 "Interface Name: " = "Arayüz Adı: ";
-"itlwm API Version: " = "itlwm API Version: "; // FIXME
-"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
+"itlwm API Version: " = "itlwm API Versiyon: ";
+"HeliPort API Version: " = "HeliPort API Versiyon: ";
+"itlwm Version Mismatch" = "itlwm Versiyonu Yanlış";
 "Join Other Network..." = "Diğer Kablosuz Ağ'a Bağlan...";
 "Join" = "Bağlan";
-"Launch At Login" = "Launch At Login"; // FIXME
+"Launch At Login" = "Başlangıçta Çalıştır";
 "Network Name:" = "Kablosuz Ağ Adı:";
 "No Network Avaliable" = "Ağ Bağlantısı Mevcut Değil";
 "No Status Information Avaliable" = "Durum Bilgisi Mevcut Değil";
@@ -37,7 +37,7 @@
 "Unreachable" = "Bağlantı Yok";
 "Username:" = "Kullanıcı Adı:";
 "Version: " = "Versiyon: ";
-"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
+"Visit OpenIntelWireless on GitHub" = "Github'ta OpenIntelWireless'ı Ziyaret Et";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Enterprise";
 "WPA/WPA2 Personal" = "WPA/WPA2 Kişisel";
