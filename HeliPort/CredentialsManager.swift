@@ -71,9 +71,12 @@ final class CredentialsManager {
     }
     
     func setAutoJoin(_ ssid: String,_ autoJoin: Bool) {
-        let entity = getStorageFromSsid(ssid)
-        let auth = getAuthFromSsid(ssid)
-        entity?.autoJoin = autoJoin
+        guard let entity = getStorageFromSsid(ssid),
+            let auth = getAuthFromSsid(ssid) else {
+                return
+        }
+        
+        entity.autoJoin = autoJoin
         
         guard let entityJson = try? String(data: JSONEncoder().encode(entity), encoding: .utf8),
             let authJson = try? String(data: JSONEncoder().encode(auth), encoding: .utf8) else {
