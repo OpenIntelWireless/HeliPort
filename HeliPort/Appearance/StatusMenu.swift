@@ -497,6 +497,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     wifiItemView.visible = connected
                     wifiItemView.connected = connected
                     if connected {
+                        self.isNetworkListEmpty = false
                         wifiItemView.networkInfo = NetworkInfo(
                             ssid: String(cString: &staInfo.ssid.0),
                             rssi: Int(staInfo.rssi)
