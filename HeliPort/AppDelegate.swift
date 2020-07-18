@@ -38,6 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let interface = String(cString: &drv_info.bsd_name.0)
         guard !version.isEmpty, !interface.isEmpty else {
             Log.error("itlwm kext not loaded!")
+            #if !DEBUG
+                alertDriverNotLoaded()
+            #endif
             return false
         }
 
@@ -62,18 +65,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             "\n" +
             NSLocalizedString("itlwm API Version: ", comment: "") + String(drv_info.version)
         verAlert.addButton(withTitle: NSLocalizedString("Quit HeliPort", comment: "")).keyEquivalent = "\r"
-        verAlert.addButton(
-            withTitle: NSLocalizedString("Visit OpenIntelWireless on GitHub", comment: "")
-        )
+        #if DEBUG
+            verAlert.addButton(withTitle: NSLocalizedString("Dismiss", comment: ""))
+        #else
+            verAlert.addButton(withTitle: NSLocalizedString("Visit OpenIntelWireless on GitHub", comment: ""))
+        #endif
 
         NSApplication.shared.activate(ignoringOtherApps: true)
 
         if verAlert.runModal() == .alertSecondButtonReturn {
-            NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
-            // Provide a chance to use this App in extreme conditions
+            #if !DEBUG
+                NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
+            #endif
             return
         }
 
         NSApp.terminate(nil)
+    }
+
+    private func alertDriverNotLoaded() {
+        let verAlert = NSAlert()
+
+        verAlert.alertStyle = .critical
+        verAlert.messageText = NSLocalizedString("itlwm is not running", comment: "")
+        verAlert.informativeText = NSLocalizedString("Install and load itlwm", comment: "")
+        verAlert.addButton(withTitle: NSLocalizedString("Dismiss", comment: ""))
+
+        NSApplication.shared.activate(ignoringOtherApps: true)
+
+        verAlert.runModal()
     }
 }
