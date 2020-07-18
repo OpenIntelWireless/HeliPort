@@ -385,8 +385,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             // If not connected, try to connect saved networks
             var stationInfo = station_info_t()
             var state: UInt32 = 0
-            if get_station_info(&stationInfo) != KERN_SUCCESS ||
-                (get_80211_state(&state) && state != ITL80211_S_RUN.rawValue) {
+            if get_80211_state(&state) &&
+                (state != ITL80211_S_RUN.rawValue || get_station_info(&stationInfo) != KERN_SUCCESS) {
                 NetworkManager.connectSavedNetworks()
             }
         }
