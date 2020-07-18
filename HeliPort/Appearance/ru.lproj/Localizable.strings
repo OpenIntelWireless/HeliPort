@@ -11,6 +11,9 @@
 "FUNCTION NOT IMPLEMENTED" = "ФУНКЦИЯ НЕ РЕАЛИЗОВАНА";
 "Find and join a Wi-Fi network." = "Найти и подключиться к сети. ";
 "Interface Name: " = "Имя интерфейса: ";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "Подключиться к другой сети...";
 "Join" = "Подключиться";
 "Launch At Login" = "Launch At Login"; // FIXME
@@ -34,6 +37,7 @@
 "Unreachable" = "Недостижимо";
 "Username:" = "Имя пользователя";
 "Version: " = "Версия: ";
+"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Empresarial";
 "WPA/WPA2 Personal" = "WPA/WPA2 Personal";

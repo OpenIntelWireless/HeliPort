@@ -11,6 +11,9 @@
 "FUNCTION NOT IMPLEMENTED" = "功能尚未实现";
 "Find and join a Wi-Fi network." = "查找并加入Wi-Fi网络。";
 "Interface Name: " = "接口名称：";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";
 "Launch At Login" = "登陆时自动启动";
@@ -34,6 +37,7 @@
 "Unreachable" = "不可访问";
 "Username:" = "用户名：";
 "Version: " = "版本：";
+"Visit OpenIntelWireless on GitHub" = "在 GitHub 上访问 OpenIntelWireless";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2企业级";
 "WPA/WPA2 Personal" = "WPA/WPA2个人级";

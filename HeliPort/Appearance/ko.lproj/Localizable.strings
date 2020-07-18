@@ -11,9 +11,12 @@
 "FUNCTION NOT IMPLEMENTED" = "기능이 구현되지 않았습니다";
 "Find and join a Wi-Fi network." = "Wi-Fi 네트워크를 찾아서 연결합니다.";
 "Interface Name: " = "인터페이스 이름: ";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "다른 네트워크에 연결...";
 "Join" = "연결";
-"Launch At Login" = "Launch At Login"; // FIXME
+"Launch At Login" = "로그인 시 론칭";
 "Network Name:" = "네트워크 이름:";
 "No Network Avaliable" = "사용 가능한 네트워크 없음";
 "No Status Information Avaliable" = "상태 정보가 없음";
@@ -34,6 +37,7 @@
 "Unreachable" = "연결 불가";
 "Username:" = "사용자 이름:";
 "Version: " = "버전: ";
+"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "기업용 WPA/WPA2";
 "WPA/WPA2 Personal" = "개인용 WPA/WPA2";

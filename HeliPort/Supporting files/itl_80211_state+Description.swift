@@ -27,7 +27,7 @@ extension itl_80211_state: CustomStringConvertible {
         case ITL80211_S_RUN:
             return "Wi-Fi: Connected"
         default:
-            return "Wi-Fi: Off"
+            return "Wi-Fi: Status unavailable"
         }
     }
 }

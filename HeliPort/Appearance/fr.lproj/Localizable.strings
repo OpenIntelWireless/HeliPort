@@ -11,9 +11,12 @@
 "FUNCTION NOT IMPLEMENTED" = "FUNCTION NON IMPLÉMENTÉ";
 "Find and join a Wi-Fi network." = "Trouver et se connecter a un reseau Wi-Fi";
 "Interface Name: " = "Nom de l'interface: ";
+"itlwm API Version: " = "itlwm API Version: "; // FIXME
+"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
+"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
 "Join Other Network..." = "Se connecter a un autre réseau...";
 "Join" = "Se connecter";
-"Launch At Login" = "Launch At Login"; // FIXME
+"Launch At Login" = "Lancer au démarrage";
 "Network Name:" = "Nom du réseau:";
 "No Network Avaliable" = "Aucun réseau disponible";
 "No Status Information Avaliable" = "Aucune information disponible";
@@ -34,6 +37,7 @@
 "Unreachable" = "Inatteignable";
 "Username:" = "Nom d'utilisateur";
 "Version: " = "Version: ";
+"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Entreprise";
 "WPA/WPA2 Personal" = "WPA/WPA2 Personnel";
