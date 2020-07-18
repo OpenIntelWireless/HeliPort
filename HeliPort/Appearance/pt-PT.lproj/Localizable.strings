@@ -14,6 +14,9 @@
 "itlwm API Version: " = "Versão de API do itlwm: ";
 "HeliPort API Version: " = "Versão de API do HeliPort: ";
 "itlwm Version Mismatch" = "Versão do itlwm incompatível";
+"itlwm is not running" = "itlwm is not running"; // FIXME
+"Install and load itlwm" = "Install and load itlwm"; // FIXME
+"Dismiss" = "Dismiss"; // FIXME
 "Join Other Network..." = "Conectar a uma outra rede";
 "Join" = "Conectar";
 "Launch At Login" = "Iniciar aquando do login";
