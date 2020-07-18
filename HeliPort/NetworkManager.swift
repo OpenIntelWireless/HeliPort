@@ -194,7 +194,7 @@ final class NetworkManager {
         return addressBytes.joined(separator: separator)
     }
 
-    class func checkConnectionReachability(station: station_info_t) -> Bool {
+    class func isReachable() -> Bool {
         guard let reachability = SCNetworkReachabilityCreateWithName(nil, "www.apple.com") else {
             return false
         }

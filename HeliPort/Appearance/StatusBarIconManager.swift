@@ -66,6 +66,18 @@ class StatusBarIcon: NSObject {
         }
     }
 
+    class func warning() {
+        timer?.invalidate()
+        timer = nil
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateWarning")
+    }
+
+    class func error() {
+        timer?.invalidate()
+        timer = nil
+        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateError")
+    }
+
     class func signalStrength(RSSI: Int16) {
         timer?.invalidate()
         timer = nil
