@@ -14,6 +14,9 @@
 "itlwm API Version: " = "itlwm API Versiyon: ";
 "HeliPort API Version: " = "HeliPort API Versiyon: ";
 "itlwm Version Mismatch" = "itlwm Versiyonu Yanlış";
+"itlwm is not running" = "itlwm is not running"; // FIXME
+"Install and load itlwm" = "Install and load itlwm"; // FIXME
+"Dismiss" = "Dismiss"; // FIXME
 "Join Other Network..." = "Diğer Kablosuz Ağ'a Bağlan...";
 "Join" = "Bağlan";
 "Launch At Login" = "Başlangıçta Çalıştır";

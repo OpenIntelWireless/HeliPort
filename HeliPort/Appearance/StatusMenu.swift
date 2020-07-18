@@ -32,7 +32,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
-            guard isNetworkCardEnabled else {
+            /* Only allow if network card is enabled or if the network card does not load
+             either due to itlwm not loaded or just not able to receive info
+             This prevents cards that are working but are "off" to not change the
+             Status from "WiFi off" to another status. i.e "WiFi: on". */
+            guard isNetworkCardEnabled || !isNetworkCardAvailable else {
                 return
             }
 
@@ -45,9 +49,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 StatusBarIcon.connecting()
             case ITL80211_S_RUN:
                 DispatchQueue.global(qos: .background).async {
+                    let isReachable = NetworkManager.isReachable()
                     var staInfo = station_info_t()
                     get_station_info(&staInfo)
                     DispatchQueue.main.async {
+                        guard isReachable else {
+                            StatusBarIcon.warning()
+                            return
+                        }
                         StatusBarIcon.signalStrength(RSSI: staInfo.rssi)
                     }
                 }
@@ -55,7 +64,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 // no change in status bar icon when scanning
                 break
             default:
-                StatusBarIcon.off()
+                StatusBarIcon.error()
             }
         }
     }
@@ -73,6 +82,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         willSet(visible) {
             for idx in 0...6 {
                 /*
+                 * Hide top items if the Options button is not pressed.
                  * TODO: idx 3, 4, 5 have not been implemented
                  * 3: Enable Wi-Fi Logging
                  * 4: Create Diagnostics Report...
@@ -87,6 +97,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             for idx in 11...24 {
                 /*
+                 * Hide items for which when there is no Wi-Fi connection and
+                 * Options button is not pressed.
                  * idx 15, 18, 24 have not been implemented in io_station_info
                  * 15: security
                  * 18: country code
@@ -100,9 +112,16 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
 
             // Create Network... has not been implemented in itlwm
-            items[items.count - 7].isHidden = true
+            items[items.count - 8].isHidden = true
 
-            for idx in 1...2 {
+            /*
+             * Hide bottom items if the Options button is not pressed:
+             * item.count - 1: Quit HeliPort
+             * item.count - 2: NSMenuItem.separator()
+             * item.count - 3: Check for Updates
+             * item.count - 4: Launch at Login
+             */
+            for idx in 1...4 {
                 items[items.count - idx].isHidden = !visible
             }
         }
@@ -119,6 +138,30 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 if let view = item.view as? WifiMenuItemView {
                     view.visible = false
                 }
+            }
+        }
+    }
+
+    private var isNetworkCardAvailable: Bool = true {
+        willSet(newState) {
+            if !newState {
+                self.isNetworkCardEnabled = false
+            }
+
+            for inx in 6...9 {
+                // TODO: Create Network... has not been implemented in itlwm
+                if inx == 8 {
+                    continue
+                }
+
+                /*
+                 * Hide items that cannot be used while card is not working
+                 * items.count - 6: Open Network Preferences...
+                 * items.count - 7: Create Network...
+                 * items.count - 8: Join Other Network...
+                 * items.count - 9: networkItemListSeparator
+                 */
+                items[items.count - inx].isHidden = !newState
             }
         }
     }
@@ -261,10 +304,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(NSMenuItem.separator())
 
+        addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addItem(toggleLaunchItem)
         toggleLaunchItem.target = self
-        addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
         addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
+
+        addItem(NSMenuItem.separator())
+
         addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "q")
     }
 
@@ -338,7 +384,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             // If not connected, try to connect saved networks
             var stationInfo = station_info_t()
-            if get_station_info(&stationInfo) != KERN_SUCCESS {
+            var state: UInt32 = 0
+            if get_80211_state(&state) &&
+                (state != ITL80211_S_RUN.rawValue || get_station_info(&stationInfo) != KERN_SUCCESS) {
                 NetworkManager.connectSavedNetworks()
             }
         }
@@ -417,6 +465,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 if get_power_ret {
                     self.isNetworkCardEnabled = powerState
                 }
+                self.isNetworkCardAvailable = get_power_ret
                 self.status = itl_80211_state(rawValue: status)
             }
         }
@@ -451,7 +500,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                                           range: nil)
                 let ipAddress = NetworkManager.getLocalAddress(bsd: bsd)
                 let routerAddress = NetworkManager.getRouterAddress(bsd: bsd)
-                let isReachable = NetworkManager.checkConnectionReachability(station: staInfo)
+                let isReachable = NetworkManager.isReachable()
                 disconnectName = String(cString: &staInfo.ssid.0)
                 ipAddr = ipAddress ?? NSLocalizedString("Unknown", comment: "")
                 routerAddr = routerAddress ?? NSLocalizedString("Unknown", comment: "")
