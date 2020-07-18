@@ -38,6 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let interface = String(cString: &drv_info.bsd_name.0)
         guard !version.isEmpty, !interface.isEmpty else {
             Log.error("itlwm kext not loaded!")
+            #if !DEBUG
+                alertDriverNotLoaded()
+            #endif
             return false
         }
 
@@ -75,5 +78,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
 
         NSApp.terminate(nil)
+    }
+
+    private func alertDriverNotLoaded() {
+        let verAlert = NSAlert()
+
+        verAlert.alertStyle = .critical
+        verAlert.messageText = NSLocalizedString("itlwm is not running", comment: "")
+        verAlert.informativeText = NSLocalizedString("Install and load itlwm", comment: "")
+        verAlert.addButton(withTitle: NSLocalizedString("Dismiss", comment: ""))
+
+        NSApplication.shared.activate(ignoringOtherApps: true)
+
+        verAlert.runModal()
     }
 }
