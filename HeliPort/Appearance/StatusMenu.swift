@@ -491,7 +491,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.phyModeItem.title = NSLocalizedString("    PHY Mode: ", comment: "") + phyMode
                 self.mcsIndexItem.title = NSLocalizedString("    MCS Index: ", comment: "") + mcsIndex
                 self.nssItem.title = NSLocalizedString("    NSS: ", comment: "") + nss
-                if let wifiItemView = self.networkItemList[0].view as? WifiMenuItemView {
+                 guard self.isNetworkCardEnabled, let wifiItemView = self.networkItemList[0].view as? WifiMenuItemView else {
+                    return
+                }
                     wifiItemView.visible = connected
                     wifiItemView.connected = connected
                     if connected {
