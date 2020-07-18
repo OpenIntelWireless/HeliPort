@@ -11,9 +11,9 @@
 "FUNCTION NOT IMPLEMENTED" = "ΜΗ ΔΙΑΘΕΣΙΜΗ ΛΕΙΤΟΥΡΓΙΑ";
 "Find and join a Wi-Fi network." = "Βρείτε και εισέλθετε σε ένα δίκτυο Wi-Fi.";
 "Interface Name: " = "Όνομα Διεπαφής: ";
-"itlwm API Version: " = "itlwm API Version: "; // FIXME
-"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
+"itlwm API Version: " = "itlwm API Έκδοση: ";
+"HeliPort API Version: " = "HeliPort API Έκδοση: ";
+"itlwm Version Mismatch" = "itlwm Μη Συμβατή Έκδοση";
 "Join Other Network..." = "Εισέλθετε σε Άλλο Δίκτυο...";
 "Join" = "Είσοδος";
 "Launch At Login" = "Αυτόματη Εκκίνηση";
@@ -37,7 +37,7 @@
 "Unreachable" = "Μη Προσβάσιμο";
 "Username:" = "Όνομα χρήστη:";
 "Version: " = "Έκδοση: ";
-"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
+"Visit OpenIntelWireless on GitHub" = "Επισκεφθείτε το OpenIntelWireless στο GitHub";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Εταιρικό";
 "WPA/WPA2 Personal" = "WPA/WPA2 Προσωπικό";
@@ -64,7 +64,7 @@
 "    Country Code: "    = "    Κωδικός Χώρας: ";
 "    RSSI: "            = "    RSSI: ";
 "    Noise: "           = "    Θόρυβος: ";
-"    Tx Rate: "         = "    Αναλογία Tx: ";
+"    Tx Rate: "         = "    Ρυθμός Tx: ";
 "    PHY Mode: "        = "    Λειτουργία PHY: ";
 "    MCS Index: "       = "    Δείκτης MCS: ";
 "    NSS: "             = "    NSS: ";
