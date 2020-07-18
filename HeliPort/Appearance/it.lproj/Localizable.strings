@@ -14,6 +14,9 @@
 "itlwm API Version: " = "Versione API di itlwm: ";
 "HeliPort API Version: " = "Versione API di HeliPort: ";
 "itlwm Version Mismatch" = "La versione di itlwm non corrisponde";
+"itlwm is not running" = "itlwm non è in esecuzione";
+"Install and load itlwm" = "Installa e carica itlwm";
+"Dismiss" = "Chiudi";
 "Join Other Network..." = "Accedi a un'altra rete...";
 "Join" = "Connetti";
 "Launch At Login" = "Avvia al login";
