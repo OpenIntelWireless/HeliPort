@@ -65,15 +65,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             "\n" +
             NSLocalizedString("itlwm API Version: ", comment: "") + String(drv_info.version)
         verAlert.addButton(withTitle: NSLocalizedString("Quit HeliPort", comment: "")).keyEquivalent = "\r"
-        verAlert.addButton(
-            withTitle: NSLocalizedString("Visit OpenIntelWireless on GitHub", comment: "")
-        )
+        #if DEBUG
+            verAlert.addButton(withTitle: NSLocalizedString("Dismiss", comment: ""))
+        #else
+            verAlert.addButton(withTitle: NSLocalizedString("Visit OpenIntelWireless on GitHub", comment: ""))
+        #endif
 
         NSApplication.shared.activate(ignoringOtherApps: true)
 
         if verAlert.runModal() == .alertSecondButtonReturn {
-            NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
-            // Provide a chance to use this App in extreme conditions
+            #if !DEBUG
+                NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
+            #endif
             return
         }
 
