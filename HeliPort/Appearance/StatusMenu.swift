@@ -108,6 +108,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
+    private var isNetworkConnected: Bool = false
+
     private var isNetworkListEmpty: Bool = true {
         willSet(empty) {
             networkItemListSeparator.isHidden = empty
@@ -440,10 +442,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var phyMode = NSLocalizedString("Unavailable", comment: "")
             var mcsIndex = NSLocalizedString("Unavailable", comment: "")
             var nss = NSLocalizedString("Unavailable", comment: "")
-            var connected = false
+            self.isNetworkConnected = false
             var staInfo = station_info_t()
             if self.status == ITL80211_S_RUN && get_station_info(&staInfo) == KERN_SUCCESS {
-                connected = true
+                self.isNetworkConnected = true
                 let bsd = String(self.bsdItem.title)
                     .replacingOccurrences(of: NSLocalizedString("Interface Name: ", comment: ""),
                                           with: "",
@@ -491,18 +493,18 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.phyModeItem.title = NSLocalizedString("    PHY Mode: ", comment: "") + phyMode
                 self.mcsIndexItem.title = NSLocalizedString("    MCS Index: ", comment: "") + mcsIndex
                 self.nssItem.title = NSLocalizedString("    NSS: ", comment: "") + nss
-                 guard self.isNetworkCardEnabled, let wifiItemView = self.networkItemList[0].view as? WifiMenuItemView else {
+                guard self.isNetworkCardEnabled,
+                    let wifiItemView = self.networkItemList[0].view as? WifiMenuItemView else {
                     return
                 }
-                    wifiItemView.visible = connected
-                    wifiItemView.connected = connected
-                    if connected {
-                        self.isNetworkListEmpty = false
-                        wifiItemView.networkInfo = NetworkInfo(
-                            ssid: String(cString: &staInfo.ssid.0),
-                            rssi: Int(staInfo.rssi)
-                        )
-                    }
+                wifiItemView.visible = self.isNetworkConnected
+                wifiItemView.connected = self.isNetworkConnected
+                if self.isNetworkConnected {
+                    self.isNetworkListEmpty = false
+                    wifiItemView.networkInfo = NetworkInfo(
+                        ssid: String(cString: &staInfo.ssid.0),
+                        rssi: Int(staInfo.rssi)
+                    )
                 }
             }
         }
@@ -514,7 +516,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
 
         NetworkManager.scanNetwork { networkList in
-            self.isNetworkListEmpty = networkList.count == 0
+            self.isNetworkListEmpty = networkList.count == 0 && !self.isNetworkConnected
             var networkList = networkList
             for index in 1 ..< self.networkItemList.count {
                 if let view = self.networkItemList[index].view as? WifiMenuItemView {
