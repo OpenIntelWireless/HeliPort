@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "FUNKCE NENÍ IMPLEMENTOVÁNA";
 "Find and join a Wi-Fi network." = "Najdi a připoj se k Wi-Fi síti ";
 "HeliPort API Version: " = "Verze HeliPort API: ";
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path" // FIXME
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "Název rozhraní: ";
 "Join Other Network..." = "Připojit se k jiné síti";
 "Join" = "Připojit";

@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "ΜΗ ΔΙΑΘΕΣΙΜΗ ΛΕΙΤΟΥΡΓΙΑ";
 "Find and join a Wi-Fi network." = "Βρείτε και εισέλθετε σε ένα δίκτυο Wi-Fi.";
 "HeliPort API Version: " = "HeliPort API Έκδοση: ";
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path" // FIXME
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "Όνομα Διεπαφής: ";
 "Join Other Network..." = "Εισέλθετε σε Άλλο Δίκτυο...";
 "Join" = "Είσοδος";

@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "FONKSİYON KULLANIMDA DEĞİL";
 "Find and join a Wi-Fi network." = "Wi-Fi ağ bağlantısını bul ve bağlan.";
 "HeliPort API Version: " = "HeliPort API Versiyon: ";
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path" // FIXME
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "Arayüz Adı: ";
 "Join Other Network..." = "Diğer Kablosuz Ağ'a Bağlan...";
 "Join" = "Bağlan";
