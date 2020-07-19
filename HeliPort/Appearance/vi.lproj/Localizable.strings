@@ -14,9 +14,9 @@
 "itlwm API Version: " = "Phiên bản itlwm API: ";
 "HeliPort API Version: " = "Phiên bản HeliPort API: ";
 "itlwm Version Mismatch" = "Phiên bản itlwm không đồng bộ";
-"itlwm is not running" = "itlwm is not running"; // FIXME
-"Install and load itlwm" = "Install and load itlwm"; // FIXME
-"Dismiss" = "Dismiss"; // FIXME
+"itlwm is not running" = "itlwm hiện không chạy"; 
+"Install and load itlwm" = "Cài đặt và chạy itlwm";
+"Dismiss" = "Bỏ qua";
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
 "Launch At Login" = "Chạy khi khởi động";
