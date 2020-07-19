@@ -573,7 +573,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                                   options: .regularExpression,
                                   range: nil
         )
-        
+
         DispatchQueue.global().async {
             CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
