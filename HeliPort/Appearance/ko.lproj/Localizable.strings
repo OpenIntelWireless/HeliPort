@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "기능이 구현되지 않았습니다";
 "Find and join a Wi-Fi network." = "Wi-Fi 네트워크를 찾아서 연결합니다.";
 "HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path" // FIXME
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "인터페이스 이름: ";
 "Join Other Network..." = "다른 네트워크에 연결...";
 "Join" = "연결";

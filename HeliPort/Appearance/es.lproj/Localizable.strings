@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "FUNCIÓN NO IMPLEMENTADA";
 "Find and join a Wi-Fi network." = "Encuentra y ingresa a una red Wi-Fi. ";
 "HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path" // FIXME
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "Nombre de la Interfaz: ";
 "Join Other Network..." = "Acceder a otra red...";
 "Join" = "Acceder";

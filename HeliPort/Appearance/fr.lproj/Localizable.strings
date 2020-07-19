@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "FONCTION NON IMPLÉMENTÉE";
 "Find and join a Wi-Fi network." = "Trouver et se connecter à un reseau Wi-Fi";
 "HeliPort API Version: " = "Version de l'API d'HeliPort: ";
-"HeliPort running at an unexpected path" = "HeliPort n'est pas situé au bonne endroit"
+"HeliPort running at an unexpected path" = "HeliPort n'est pas situé au bonne endroit";
 "Interface Name: " = "Nom de l'interface: ";
 "Join Other Network..." = "Se connecter à un autre réseau...";
 "Join" = "Se connecter";
