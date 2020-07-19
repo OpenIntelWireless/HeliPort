@@ -18,6 +18,8 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+
+        checkRunPath()
         checkAPI()
 
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
@@ -53,6 +55,36 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         Log.debug("Loaded itlwm \(version) as \(interface)")
 
         return true
+    }
+
+    // Due to macOS App Translocation, users must store this app in /Applications
+    // Otherwise Sparkle and "Launch At Login" will not function correctly
+    // Ref: https://lapcatsoftware.com/articles/app-translocation.html
+    private func checkRunPath() {
+        let pathComponents = (Bundle.main.bundlePath as NSString).pathComponents
+
+        #if DEBUG
+        guard pathComponents[pathComponents.count - 2] != "Debug" else {
+            return
+        }
+        #else
+        guard pathComponents[pathComponents.count - 2] != "Applications"
+                //|| pathComponents[pathComponents.count - 2] != "Release"
+        else {
+            return
+        }
+        #endif
+
+        Log.error("HeliPort running at an unexpected path!")
+
+        let pathAlert = NSAlert()
+        _ = showCriticalAlert(
+            pathAlert,
+            msg: "HeliPort running at an unexpected path",
+            unlocalizedInfo: nil,
+            optTitles: ["Quit HeliPort"]
+        )
+        NSApp.terminate(nil)
     }
 
     private func checkAPI() {
