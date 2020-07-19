@@ -39,7 +39,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard !version.isEmpty, !interface.isEmpty else {
             Log.error("itlwm kext not loaded!")
             #if !DEBUG
-                alertDriverNotLoaded()
+            let itlAlert = NSAlert()
+            _ = showCriticalAlert(
+                itlAlert,
+                msg: "itlwm is not running",
+                unlocalizedInfo: NSLocalizedString("Install and load itlwm", comment: ""),
+                optTitles: ["Dismiss"]
+            )
             #endif
             return false
         }
@@ -57,42 +63,46 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             return
         }
 
-        let verAlert = NSAlert()
-        verAlert.alertStyle = .critical
-        verAlert.messageText = NSLocalizedString("itlwm Version Mismatch", comment: "")
-        verAlert.informativeText =
-            NSLocalizedString("HeliPort API Version: ", comment: "") + String(IOCTL_VERSION) +
-            "\n" +
-            NSLocalizedString("itlwm API Version: ", comment: "") + String(drv_info.version)
-        verAlert.addButton(withTitle: NSLocalizedString("Quit HeliPort", comment: "")).keyEquivalent = "\r"
-        #if DEBUG
-            verAlert.addButton(withTitle: NSLocalizedString("Dismiss", comment: ""))
-        #else
-            verAlert.addButton(withTitle: NSLocalizedString("Visit OpenIntelWireless on GitHub", comment: ""))
-        #endif
+        Log.error("itlwm API mismatch!")
 
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        #if !DEBUG
+        let apiAlert = NSAlert()
+        let alertReturn = showCriticalAlert(
+            apiAlert,
+            msg: "itlwm Version Mismatch",
+            unlocalizedInfo: NSLocalizedString("HeliPort API Version: ", comment: "") + String(IOCTL_VERSION) +
+                             "\n" +
+                             NSLocalizedString("itlwm API Version: ", comment: "") + String(drv_info.version),
+            optTitles: ["Quit HeliPort", "Visit OpenIntelWireless on GitHub"]
+        )
 
-        if verAlert.runModal() == .alertSecondButtonReturn {
-            #if !DEBUG
-                NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
-            #endif
+        if alertReturn == .alertSecondButtonReturn {
+            NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
             return
         }
 
         NSApp.terminate(nil)
+        #endif
     }
 
-    private func alertDriverNotLoaded() {
-        let verAlert = NSAlert()
+    private func showCriticalAlert(
+        _ alert: NSAlert,
+        msg: String,
+        unlocalizedInfo: String?,
+        optTitles: [String?]
+    ) -> NSApplication.ModalResponse {
 
-        verAlert.alertStyle = .critical
-        verAlert.messageText = NSLocalizedString("itlwm is not running", comment: "")
-        verAlert.informativeText = NSLocalizedString("Install and load itlwm", comment: "")
-        verAlert.addButton(withTitle: NSLocalizedString("Dismiss", comment: ""))
+        alert.alertStyle = .critical
+        alert.messageText = NSLocalizedString(msg, comment: "")
+        alert.informativeText = unlocalizedInfo ?? ""
+
+        optTitles.forEach {
+            if $0 != nil {
+                alert.addButton(withTitle: NSLocalizedString($0!, comment: ""))
+            }
+        }
 
         NSApplication.shared.activate(ignoringOtherApps: true)
-
-        verAlert.runModal()
+        return alert.runModal()
     }
 }
