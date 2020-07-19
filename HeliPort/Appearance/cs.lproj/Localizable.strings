@@ -25,10 +25,6 @@
 "FUNCTION NOT IMPLEMENTED" = "FUNKCE NENÍ IMPLEMENTOVÁNA";
 "Find and join a Wi-Fi network." = "Najdi a připoj se k Wi-Fi síti ";
 "HeliPort API Version: " = "Verze HeliPort API: ";
-"itlwm Version Mismatch" = "Rozdílné verze itlwm a HeliPort";
-"itlwm is not running" = "itlwm není spuštěný"; 
-"Install and load itlwm" = "Nainstalovat a načíst itlwm";
-"Dismiss" = "Zavřít";
 "HeliPort running at an unexpected path" = "HeliPort není správně umístěn";
 "Interface Name: " = "Název rozhraní: ";
 "Join Other Network..." = "Připojit se k jiné síti";
