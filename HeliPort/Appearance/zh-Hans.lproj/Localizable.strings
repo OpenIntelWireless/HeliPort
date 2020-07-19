@@ -25,6 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "功能尚未实现";
 "Find and join a Wi-Fi network." = "查找并加入Wi-Fi网络。";
 "HeliPort API Version: " = "HeliPort API 版本: ";
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "接口名称：";
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";

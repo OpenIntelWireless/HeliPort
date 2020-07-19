@@ -25,7 +25,7 @@
 "FUNCTION NOT IMPLEMENTED" = "CHỨC NĂNG CHƯA HOẠT ĐỘNG";
 "Find and join a Wi-Fi network." = "Tìm và kết nối một mạng Wi-fi.";
 "HeliPort API Version: " = "Phiên bản HeliPort API: ";
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path" // FIXME
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
 "Interface Name: " = "Tên mạng: ";
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
