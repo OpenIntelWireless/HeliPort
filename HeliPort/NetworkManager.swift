@@ -186,23 +186,16 @@ final class NetworkManager {
     }
 
     class func getRouterAddress(bsd: String) -> String? {
-        let dynamicCreate = SCDynamicStoreCreate(kCFAllocatorDefault, "router-ip" as CFString, nil, nil)
-        let keyIPv4 = "State:/Network/Global/IPv4" as CFString
-        let keyIPv6 = "State:/Network/Global/IPv6" as CFString
-        let dictionary = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4)
-            ?? SCDynamicStoreCopyValue(dynamicCreate, keyIPv6)
-
-        guard let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String, interface == bsd else {
-            Log.error("Could not find interface")
+        let routerCommand = ["netstat -rn | egrep -o default.*\(bsd)"]
+        guard let routerOutput = commandLine(args: routerCommand) else {
             return nil
         }
+        let ipv4Command = [#"echo "\#(routerOutput)" | egrep -o "\#(ipv4Pattern)""#]
+        let ipv4Output = commandLine(args: ipv4Command)
 
-        guard let ipRouterAddr = dictionary?["Router"] as? String else {
-            Log.error("Could not find router ip")
-            return nil
-        }
-
-        return ipRouterAddr
+        let ipv6Command = [#"echo "\#(routerOutput)" | egrep -o "\#(ipv6Pattern)""#]
+        let ipv6Output = commandLine(args: ipv6Command)
+        return ipv4Output ?? ipv6Output
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
@@ -285,5 +278,53 @@ final class NetworkManager {
         }
         //TODO wpa3
         return ITL80211_SECURITY_UNKNOWN
+    }
+}
+
+extension NetworkManager {
+    // IPv6 pattern
+    // from https://stackoverflow.com/a/17871737
+    private static let ipv4Pattern = #"(\#(ipv4Seg)\.){3,3}\#(ipv4Seg)"#
+    private static let ipv4Seg = "(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])"
+    private static let ipv6Seg = "[0-9a-fA-F]{1,4}"
+    static let ipv6Pattern: String = "(" +
+        "(\(ipv6Seg):){7,7}\(ipv6Seg)|" +
+        "(\(ipv6Seg):){1,7}:|" +
+        "(\(ipv6Seg):){1,6}:\(ipv6Seg)|" +
+        "(\(ipv6Seg):){1,5}(:\(ipv6Seg)){1,2}|" +
+        "(\(ipv6Seg):){1,4}(:\(ipv6Seg)){1,3}|" +
+        "(\(ipv6Seg):){1,3}(:\(ipv6Seg)){1,4}|" +
+        "(\(ipv6Seg):){1,2}(:\(ipv6Seg)){1,5}|" +
+        "\(ipv6Seg):((:\(ipv6Seg)){1,6})|" +
+        ":((:\(ipv6Seg)){1,7}|:)|" +
+        "fe80:(:\(ipv6Seg)}){0,4}%[0-9a-zA-Z]{1,}|" +
+        "::(ffff(:0{1,4}){0,1}:){0,1}\(ipv4Pattern)" +
+        "(\(ipv6Seg):){1,4}:\(ipv4Pattern)" +
+    ")"
+
+    // Util for running commands
+    static func commandLine(args: [String]) -> String? {
+        let process = Process()
+        if #available(OSX 10.13, *) {
+            process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        } else {
+            process.launchPath = "/bin/sh"
+        }
+        process.arguments = ["-l", "-c"] + args
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        if #available(OSX 10.13, *) {
+            try? process.run()
+        } else {
+            process.launch()
+        }
+        process.waitUntilExit()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        guard let output = String(data: data, encoding: .utf8),
+            !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return nil
+        }
+
+        return output.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
