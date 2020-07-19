@@ -330,6 +330,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
+            self.updateNetworkList()
             self.networkListUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.networkListUpdatePeriod,
                 target: self,
