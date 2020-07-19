@@ -80,50 +80,60 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var showAllOptions: Bool = false {
         willSet(visible) {
-            for idx in 0...6 {
-                /*
-                 * Hide top items if the Options button is not pressed.
-                 * TODO: idx 3, 4, 5 have not been implemented
-                 * 3: Enable Wi-Fi Logging
-                 * 4: Create Diagnostics Report...
-                 * 5: Open Wi-Fi Diagnostics...
-                 */
-                if idx == 3 || idx == 4 || idx == 5 {
-                    items[idx].isHidden = true
-                    continue
-                }
-                items[idx].isHidden = !visible
-            }
+            let hiddenItems: [NSMenuItem] = [
+                bsdItem,
+                macItem,
+                itlwmVerItem,
+                enableLoggingItem,
+                createReportItem,
+                diagnoseItem,
+                hardwareInfoSeparator,
 
-            for idx in 11...24 {
-                /*
-                 * Hide items for which when there is no Wi-Fi connection and
-                 * Options button is not pressed.
-                 * idx 15, 18, 24 have not been implemented in io_station_info
-                 * 15: security
-                 * 18: country code
-                 * 24: NSS
-                 */
-                if idx == 15 || idx == 18 || idx == 24 {
-                    items[idx].isHidden = true
-                    continue
-                }
-                items[idx].isHidden = !(visible && status == ITL80211_S_RUN)
-            }
+                toggleLaunchItem,
+                checkUpdateItem,
+                quitSeparator,
+                quitItem
+            ]
 
-            // Create Network... has not been implemented in itlwm
-            items[items.count - 8].isHidden = true
+            let connectedNetworkInfoItems: [NSMenuItem] = [
+                disconnectItem,
+                ipAddresssItem,
+                routerItem,
+                internetItem,
+                securityItem,
+                bssidItem,
+                channelItem,
+                countryCodeItem,
+                rssiItem,
+                noiseItem,
+                txRateItem,
+                phyModeItem,
+                mcsIndexItem,
+                nssItem
+            ]
 
-            /*
-             * Hide bottom items if the Options button is not pressed:
-             * item.count - 1: Quit HeliPort
-             * item.count - 2: NSMenuItem.separator()
-             * item.count - 3: Check for Updates
-             * item.count - 4: Launch at Login
-             */
-            for idx in 1...4 {
-                items[items.count - idx].isHidden = !visible
-            }
+            let enabledNetworkCardItems: [NSMenuItem] = [
+                createNetworkItem,
+                manuallyJoinItem,
+                networkItemListSeparator
+            ]
+
+            let notImplementedItems: [NSMenuItem] = [
+                enableLoggingItem,
+                createReportItem,
+                diagnoseItem,
+
+                securityItem,
+                countryCodeItem,
+                nssItem,
+
+                createNetworkItem
+            ]
+
+            for item in hiddenItems { item.isHidden = !visible }
+            for item in enabledNetworkCardItems { item.isHidden = !isNetworkCardAvailable }
+            for item in connectedNetworkInfoItems { item.isHidden = !(visible && status == ITL80211_S_RUN) }
+            for item in notImplementedItems { item.isHidden = true }
         }
     }
 
@@ -146,22 +156,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         willSet(newState) {
             if !newState {
                 self.isNetworkCardEnabled = false
-            }
-
-            for inx in 6...9 {
-                // TODO: Create Network... has not been implemented in itlwm
-                if inx == 8 {
-                    continue
-                }
-
-                /*
-                 * Hide items that cannot be used while card is not working
-                 * items.count - 6: Open Network Preferences...
-                 * items.count - 7: Create Network...
-                 * items.count - 8: Join Other Network...
-                 * items.count - 9: networkItemListSeparator
-                 */
-                items[items.count - inx].isHidden = !newState
             }
         }
     }
@@ -193,6 +187,21 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let bsdItem = NSMenuItem(title: NSLocalizedString("Interface Name: ", comment: "") + "(null)")
     private let macItem = NSMenuItem(title: NSLocalizedString("Address: ", comment: "") + "(null)")
     private let itlwmVerItem = NSMenuItem(title: NSLocalizedString("Version: ", comment: "") + "(null)")
+
+    private let enableLoggingItem = NSMenuItem(title: NSLocalizedString("Enable Wi-Fi Logging", comment: ""))
+    private let createReportItem = NSMenuItem(title: NSLocalizedString("Create Diagnostics Report...", comment: ""))
+    private let diagnoseItem = NSMenuItem(title: NSLocalizedString("Open Wireless Diagnostics...", comment: ""))
+    private let hardwareInfoSeparator = NSMenuItem.separator()
+
+    private let manuallyJoinItem = NSMenuItem(title: NSLocalizedString("Join Other Network...", comment: ""))
+    private let createNetworkItem = NSMenuItem(title: NSLocalizedString("Create Network...", comment: ""))
+    private let networkPanelItem = NSMenuItem(title: NSLocalizedString("Open Network Preferences...", comment: ""))
+
+    private let aboutItem = NSMenuItem(title: NSLocalizedString("About HeliPort", comment: ""))
+    private let checkUpdateItem = NSMenuItem(title: NSLocalizedString("Check for Updates...", comment: ""))
+    private let quitSeparator = NSMenuItem.separator()
+    private let quitItem = NSMenuItem(title: NSLocalizedString("Quit HeliPort", comment: ""),
+                                      action: #selector(clickMenuItem(_:)), keyEquivalent: "q")
 
     private let toggleLaunchItem = NSMenuItem(
         title: NSLocalizedString("Launch At Login", comment: ""),
@@ -263,11 +272,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(macItem)
         addItem(itlwmVerItem)
 
-        addClickItem(title: NSLocalizedString("Enable Wi-Fi Logging", comment: ""))
-        addClickItem(title: NSLocalizedString("Create Diagnostics Report...", comment: ""))
-        addClickItem(title: NSLocalizedString("Open Wireless Diagnostics...", comment: ""))
+        addClickItem(enableLoggingItem)
+        addClickItem(createReportItem)
+        addClickItem(diagnoseItem)
 
-        addItem(NSMenuItem.separator())
+        addItem(hardwareInfoSeparator)
 
         addItem(statusItem)
         addItem(switchItem)
@@ -298,20 +307,18 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         addItem(networkItemListSeparator)
 
-        addClickItem(title: NSLocalizedString("Join Other Network...", comment: ""))
-        addClickItem(title: NSLocalizedString("Create Network...", comment: ""))
-        addClickItem(title: NSLocalizedString("Open Network Preferences...", comment: ""))
+        addClickItem(manuallyJoinItem)
+        addClickItem(createNetworkItem)
+        addClickItem(networkPanelItem)
 
         addItem(NSMenuItem.separator())
 
-        addClickItem(title: NSLocalizedString("About HeliPort", comment: ""))
-        addItem(toggleLaunchItem)
-        toggleLaunchItem.target = self
-        addClickItem(title: NSLocalizedString("Check for Updates...", comment: ""))
+        addClickItem(toggleLaunchItem)
+        addClickItem(checkUpdateItem)
+        addClickItem(aboutItem)
 
-        addItem(NSMenuItem.separator())
-
-        addClickItem(title: NSLocalizedString("Quit HeliPort", comment: ""), keyEquivalent: "q")
+        addItem(quitSeparator)
+        addClickItem(quitItem)
     }
 
     // - MARK: Overrides
@@ -350,12 +357,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     // - MARK: Actions
 
-    private func addClickItem(title: String, keyEquivalent: String = "") {
-        addItem(
-            withTitle: title,
-            action: #selector(clickMenuItem(_:)),
-            keyEquivalent: keyEquivalent
-        ).target = self
+    private func addClickItem(_ item: NSMenuItem) {
+        item.target = self
+        item.action = #selector(clickMenuItem(_:))
+        addItem(item)
     }
 
     private func getDeviceInfo() {
