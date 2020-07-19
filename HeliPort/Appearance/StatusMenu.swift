@@ -69,15 +69,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         }
     }
 
-    private var networkItemList = [NSMenuItem]()
-
-    private let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
-    private let networkItemListSeparator: NSMenuItem = {
-        let networkItemListSeparator =  NSMenuItem.separator()
-        networkItemListSeparator.isHidden = true
-        return networkItemListSeparator
-    }()
-
     private var showAllOptions: Bool = false {
         willSet(visible) {
             let hiddenItems: [NSMenuItem] = [
@@ -114,8 +105,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             let enabledNetworkCardItems: [NSMenuItem] = [
                 createNetworkItem,
-                manuallyJoinItem,
-                networkItemListSeparator
+                manuallyJoinItem
             ]
 
             let notImplementedItems: [NSMenuItem] = [
@@ -195,6 +185,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let diagnoseItem = NSMenuItem(title: NSLocalizedString("Open Wireless Diagnostics...", comment: ""))
     private let hardwareInfoSeparator = NSMenuItem.separator()
 
+    private var networkItemList = [NSMenuItem]()
+    private let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
+    private let networkItemListSeparator: NSMenuItem = {
+        let networkItemListSeparator =  NSMenuItem.separator()
+        networkItemListSeparator.isHidden = true
+        return networkItemListSeparator
+    }()
+
     private let manuallyJoinItem = NSMenuItem(title: NSLocalizedString("Join Other Network...", comment: ""))
     private let createNetworkItem = NSMenuItem(title: NSLocalizedString("Create Network...", comment: ""))
     private let networkPanelItem = NSMenuItem(title: NSLocalizedString("Open Network Preferences...", comment: ""))
@@ -239,14 +237,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         getDeviceInfo()
 
         DispatchQueue.global(qos: .default).async {
-            var powerState: Bool = false
-            let get_power_ret = get_power_state(&powerState)
-            DispatchQueue.main.async {
-                if get_power_ret {
-                    self.isNetworkCardEnabled = powerState
-                    self.updateNetworkList()
-                }
-            }
+            self.updateStatus()
+            self.updateNetworkList()
 
             self.isAutoLaunch = LoginItemManager.isEnabled()
 
@@ -339,6 +331,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
+            self.updateNetworkInfo()
             self.updateNetworkList()
             self.networkListUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.networkListUpdatePeriod,
@@ -393,7 +386,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             // If not connected, try to connect saved networks
             var stationInfo = station_info_t()
             var state: UInt32 = 0
-            if get_80211_state(&state) &&
+            var power: Bool = false
+            get_power_state(&power)
+            if get_80211_state(&state) && power &&
                 (state != ITL80211_S_RUN.rawValue || get_station_info(&stationInfo) != KERN_SUCCESS) {
                 NetworkManager.connectSavedNetworks()
             }
@@ -471,9 +466,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 }
                 self.isNetworkCardAvailable = get_power_ret
                 self.status = itl_80211_state(rawValue: status)
+                self.updateNetworkInfo()
             }
-
-            self.updateNetworkInfo()
         }
     }
 
