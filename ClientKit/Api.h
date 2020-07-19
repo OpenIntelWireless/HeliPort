@@ -32,24 +32,8 @@ typedef struct {
 } platform_info_t;
 
 typedef struct {
-    uint32_t security;
-    uint64_t option;
-    uint8_t *identity;
-    uint32_t identity_length;
-    char *username;
-    char *password;
-} network_auth_t;
-
-typedef struct {
-    char SSID[MAX_SSID_LENGTH + 1];
-    bool is_connected;
-    int RSSI;
-    network_auth_t auth;
-} network_info_t;
-
-typedef struct {
     int count;
-    network_info_t networks[MAX_NETWORK_LIST_LENGTH];
+    struct ioctl_network_info networks[MAX_NETWORK_LIST_LENGTH];
 } network_info_list_t;
 
 typedef struct ioctl_sta_info station_info_t;
@@ -74,7 +58,7 @@ bool get_80211_state(uint32_t *state);
 
 bool get_network_list(network_info_list_t *list);
 
-bool connect_network(network_info_t *info);
+bool connect_network(const char *ssid, const char *pwd);
 
 bool is_power_on(void);
 
