@@ -24,6 +24,7 @@ class WifiMenuItemView: NSView {
         statusImage.image?.isTemplate = true
         statusImage.translatesAutoresizingMaskIntoConstraints = false
         statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        statusImage.isHidden = true
         return statusImage
     }()
 
@@ -77,11 +78,16 @@ class WifiMenuItemView: NSView {
         }
     }
 
+    var connected: Bool = false {
+        willSet(connected) {
+            statusImage.isHidden = !connected
+        }
+    }
+
     var currentWindow: NSWindow?
 
     var networkInfo: NetworkInfo {
         willSet(networkInfo) {
-            statusImage.isHidden = !networkInfo.isConnected
             ssidLabel.stringValue = networkInfo.ssid
             lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
             signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
@@ -136,7 +142,9 @@ class WifiMenuItemView: NSView {
     override func mouseUp(with event: NSEvent) {
         isMouseOver = false // NSWindow pop up could escape mouseExit
         enclosingMenuItem?.menu?.cancelTracking()
-        NetworkManager.connect(networkInfo: networkInfo)
+        if !connected {
+            NetworkManager.connect(networkInfo: networkInfo)
+        }
     }
 
     override func viewWillMove(toWindow newWindow: NSWindow?) {

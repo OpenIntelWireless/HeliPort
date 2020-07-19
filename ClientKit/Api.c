@@ -108,18 +108,10 @@ bool get_network_list(network_info_list_t *list) {
     struct ioctl_network_info network_info_ret;
     io_connect_t con;
     struct ioctl_sta_info sta_info;
-    uint32_t state;
     scan.version = IOCTL_VERSION;
 
-    if (get_80211_state(&state) && state == ITL80211_S_RUN) {
-        if (get_station_info(&sta_info) == KERN_SUCCESS) {
-            list->count = 1;
-            strncpy(list->networks[0].SSID, (char*) sta_info.ssid, 32);
-            list->networks[0].RSSI = sta_info.rssi;
-            list->networks[0].auth.security = ITL80211_CIPHER_NONE;//will update below
-            list->networks[0].is_connected = true;
-        }
-    }
+    get_station_info(&sta_info);
+
     if (!open_adapter(&con)) {
         goto error;
     }
@@ -128,16 +120,13 @@ bool get_network_list(network_info_list_t *list) {
         if (list->count >= MAX_NETWORK_LIST_LENGTH) {
             break;
         }
+        if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
+            continue;
+        }
         network_info_t *info = &list->networks[list->count++];
         strncpy(info->SSID, (char*) network_info_ret.ssid, 32);
         info->RSSI = network_info_ret.rssi;
-        // info->auth.security = network_info_ret.ni_rsncipher;
         info->auth.security = analyse_security(&network_info_ret);
-        info->is_connected = false;
-        if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
-            info->is_connected = true;
-            list->networks[0].auth.security = info->auth.security;
-        }
     }
     close_adapter(con);
 

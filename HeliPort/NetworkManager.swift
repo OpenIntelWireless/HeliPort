@@ -29,9 +29,6 @@ final class NetworkManager {
 
     class func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
                        _ callback: ((_ result: Bool) -> Void)? = nil) {
-        guard !networkInfo.isConnected else {
-            return
-        }
 
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = NSAlert()
@@ -51,7 +48,6 @@ final class NetworkManager {
                 networkInfo.ssid,
                 Int(MAX_SSID_LENGTH)
             )
-            networkInfoStruct.is_connected = false
             networkInfoStruct.RSSI = Int32(networkInfo.rssi)
 
             networkInfoStruct.auth.security = auth.security.rawValue
@@ -124,7 +120,6 @@ final class NetworkManager {
 
                 let networkInfo = NetworkInfo(
                     ssid: ssid,
-                    connected: network!.is_connected,
                     rssi: Int(network!.RSSI)
                 )
                 networkInfo.auth.security = itl80211_security(rawValue: network?.auth.security ?? 0)
@@ -133,7 +128,7 @@ final class NetworkManager {
             }
 
             DispatchQueue.main.async {
-                callback(Array(result).sorted { $0.ssid < $1.ssid }.sorted { $0.isConnected && !$1.isConnected })
+                callback(Array(result).sorted { $0.ssid < $1.ssid })
             }
         }
     }
