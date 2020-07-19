@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             _ = showCriticalAlert(
                 itlAlert,
                 msg: "itlwm is not running",
-                unlocalizedInfo: NSLocalizedString("Install and load itlwm", comment: ""),
+                unlocalizedInfo: nil,
                 optTitles: ["Dismiss"]
             )
             #endif
@@ -64,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let pathComponents = (Bundle.main.bundlePath as NSString).pathComponents
 
         #if DEBUG
+        // Normal users should never use the Debug Version
         guard pathComponents[pathComponents.count - 2] != "Debug" else {
             return
         }
@@ -75,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         #endif
 
-        Log.error("HeliPort running at an unexpected path!")
+        Log.error("Running path unexpected!")
 
         let pathAlert = NSAlert()
         _ = showCriticalAlert(

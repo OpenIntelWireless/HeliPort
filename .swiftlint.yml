@@ -4,8 +4,6 @@ excluded:
 identifier_name:
   allowed_symbols: "_"
 
-force_cast: warning
-
 # Following values are all for warnings
 type_body_length:
   - 400
