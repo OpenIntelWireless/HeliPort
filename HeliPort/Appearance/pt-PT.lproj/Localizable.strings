@@ -18,14 +18,14 @@
 "Create Diagnostics Report..." = "Criar relatório de diagnóstico";
 "Create Network..." = "Adicionar rede";
 "Disconnect from: " = "Desconectar de: ";
-"Dismiss" = "Dismiss"; // FIXME
+"Dismiss" = "Descartar";
 "Dynamic WEP" = "WEP Dinâmico";
 "Enable Wi-Fi Logging" = "Ativar registo de Wi-Fi";
 "Enter the name and security type of the network you want to join." = "Insira o nome e o tipo de segurança da rede à qual se deseja conectar.";
-"FUNCTION NOT IMPLEMENTED" = "FUNÇÃO NÃO IMPLEMENTADA";
+"FUNCTION NOT IMPLEMENTED" = "Função não implementada";
 "Find and join a Wi-Fi network." = "Encontre e conecte-se a uma rede Wi-Fi.";
 "HeliPort API Version: " = "Versão de API do HeliPort: ";
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
+"HeliPort running at an unexpected path" = "O HeliPort está a ser executado numa localização não esperada";
 "Interface Name: " = "Nome da interface: ";
 "Join Other Network..." = "Conectar a uma outra rede";
 "Join" = "Conectar";
@@ -70,4 +70,4 @@
 "\" Requires Password" = "\" Necessita de palavra-passe";
 "itlwm API Version: " = "Versão de API do itlwm: ";
 "itlwm Version Mismatch" = "Versão do itlwm incompatível";
-"itlwm is not running" = "itlwm is not running"; // FIXME
+"itlwm is not running" = "O itlwm não está a ser executado";
