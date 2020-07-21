@@ -190,12 +190,21 @@ final class NetworkManager {
         guard let routerOutput = commandLine(args: routerCommand) else {
             return nil
         }
-        let ipv4Command = [#"echo "\#(routerOutput)" | egrep -o "\#(ipv4Pattern)""#]
-        let ipv4Output = commandLine(args: ipv4Command)
 
-        let ipv6Command = [#"echo "\#(routerOutput)" | egrep -o "\#(ipv6Pattern)""#]
-        let ipv6Output = commandLine(args: ipv6Command)
-        return ipv4Output ?? ipv6Output
+        let regex = try? NSRegularExpression.init(pattern: ipAddressRegex, options: [])
+        let firstMatch = regex?.firstMatch(in: routerOutput,
+                                        options: [],
+                                        range: NSRange(location: 0, length: routerOutput.count))
+        if let range = firstMatch?.range(at: 1) {
+            if let swiftRange = Range(range, in: routerOutput) {
+                let ipAddr = String(routerOutput[swiftRange])
+                return ipAddr
+            }
+        } else {
+            print("Could not find router ip address")
+        }
+
+        return nil
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
@@ -282,25 +291,8 @@ final class NetworkManager {
 }
 
 extension NetworkManager {
-    // IPv6 pattern
-    // from https://stackoverflow.com/a/17871737
-    private static let ipv4Pattern = #"(\#(ipv4Seg)\.){3,3}\#(ipv4Seg)"#
-    private static let ipv4Seg = "(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])"
-    private static let ipv6Seg = "[0-9a-fA-F]{1,4}"
-    static let ipv6Pattern: String = "(" +
-        "(\(ipv6Seg):){7,7}\(ipv6Seg)|" +
-        "(\(ipv6Seg):){1,7}:|" +
-        "(\(ipv6Seg):){1,6}:\(ipv6Seg)|" +
-        "(\(ipv6Seg):){1,5}(:\(ipv6Seg)){1,2}|" +
-        "(\(ipv6Seg):){1,4}(:\(ipv6Seg)){1,3}|" +
-        "(\(ipv6Seg):){1,3}(:\(ipv6Seg)){1,4}|" +
-        "(\(ipv6Seg):){1,2}(:\(ipv6Seg)){1,5}|" +
-        "\(ipv6Seg):((:\(ipv6Seg)){1,6})|" +
-        ":((:\(ipv6Seg)){1,7}|:)|" +
-        "fe80:(:\(ipv6Seg)}){0,4}%[0-9a-zA-Z]{1,}|" +
-        "::(ffff(:0{1,4}){0,1}:){0,1}\(ipv4Pattern)" +
-        "(\(ipv6Seg):){1,4}:\(ipv4Pattern)" +
-    ")"
+    // from Goshin
+    private static let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
 
     // Util for running commands
     static func commandLine(args: [String]) -> String? {
