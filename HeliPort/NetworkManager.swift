@@ -186,23 +186,28 @@ final class NetworkManager {
     }
 
     class func getRouterAddress(bsd: String) -> String? {
-        let dynamicCreate = SCDynamicStoreCreate(kCFAllocatorDefault, "router-ip" as CFString, nil, nil)
-        let keyIPv4 = "State:/Network/Global/IPv4" as CFString
-        let keyIPv6 = "State:/Network/Global/IPv6" as CFString
-        let dictionary = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4)
-            ?? SCDynamicStoreCopyValue(dynamicCreate, keyIPv6)
+        // from Goshin
+        let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
 
-        guard let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String, interface == bsd else {
-            Log.error("Could not find interface")
+        let routerCommand = ["netstat -rn | egrep -o default.*\(bsd)"]
+        guard let routerOutput = commandLine(args: routerCommand) else {
             return nil
         }
 
-        guard let ipRouterAddr = dictionary?["Router"] as? String else {
-            Log.error("Could not find router ip")
-            return nil
+        let regex = try? NSRegularExpression.init(pattern: ipAddressRegex, options: [])
+        let firstMatch = regex?.firstMatch(in: routerOutput,
+                                        options: [],
+                                        range: NSRange(location: 0, length: routerOutput.count))
+        if let range = firstMatch?.range(at: 1) {
+            if let swiftRange = Range(range, in: routerOutput) {
+                let ipAddr = String(routerOutput[swiftRange])
+                return ipAddr
+            }
+        } else {
+            print("Could not find router ip address")
         }
 
-        return ipRouterAddr
+        return nil
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
@@ -285,5 +290,34 @@ final class NetworkManager {
         }
         //TODO wpa3
         return ITL80211_SECURITY_UNKNOWN
+    }
+}
+
+extension NetworkManager {
+
+    // Util for running commands
+    static func commandLine(args: [String]) -> String? {
+        let process = Process()
+        if #available(OSX 10.13, *) {
+            process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        } else {
+            process.launchPath = "/bin/sh"
+        }
+        process.arguments = ["-l", "-c"] + args
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        if #available(OSX 10.13, *) {
+            try? process.run()
+        } else {
+            process.launch()
+        }
+        process.waitUntilExit()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        guard let output = String(data: data, encoding: .utf8),
+            !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return nil
+        }
+
+        return output.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
