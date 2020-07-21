@@ -186,6 +186,9 @@ final class NetworkManager {
     }
 
     class func getRouterAddress(bsd: String) -> String? {
+        // from Goshin
+        let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
+
         let routerCommand = ["netstat -rn | egrep -o default.*\(bsd)"]
         guard let routerOutput = commandLine(args: routerCommand) else {
             return nil
@@ -291,8 +294,6 @@ final class NetworkManager {
 }
 
 extension NetworkManager {
-    // from Goshin
-    private static let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
 
     // Util for running commands
     static func commandLine(args: [String]) -> String? {
