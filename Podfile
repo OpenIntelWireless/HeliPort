@@ -4,4 +4,5 @@ target 'HeliPort' do
   use_frameworks!
   pod 'Sparkle'
   pod 'KeychainAccess'
+  pod 'SwiftLint'
 end
