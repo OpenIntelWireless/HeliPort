@@ -69,5 +69,5 @@
 "Wi-Fi: Status unavailable" = "Wi-Fi: Estado no disponible";
 "\" Requires Password" = "\" Necesita una Contraseña";
 "itlwm API Version: " = "itlwm API Version: "; // FIXME
-"itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
-"itlwm is not running" = "itlwm is not running"; // FIXME
+"itlwm Version Mismatch" = "The version of installed itlwm.kext does not match the version required by HeliPort.";
+"itlwm is not running" = "The necessary WLAN driver is not active on your system. Please verify that itlwm.kext is correctly installed and running.";
