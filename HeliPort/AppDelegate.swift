@@ -41,13 +41,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         guard !version.isEmpty, !interface.isEmpty else {
             Log.error("itlwm kext not loaded!")
             #if !DEBUG
-            let itlAlert = NSAlert()
-            _ = showCriticalAlert(
-                itlAlert,
-                msg: "itlwm is not running",
-                unlocalizedInfo: nil,
-                optTitles: ["Dismiss"]
-            )
+            let alert = CriticalAlert(message: NSLocalizedString("itlwm is not running"),
+                                      options: [NSLocalizedString("Dismiss")])
+            alert.show()
             #endif
             return false
         }
@@ -78,13 +74,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         Log.error("Running path unexpected!")
 
-        let pathAlert = NSAlert()
-        _ = showCriticalAlert(
-            pathAlert,
-            msg: "HeliPort running at an unexpected path",
-            unlocalizedInfo: nil,
-            optTitles: ["Quit HeliPort"]
-        )
+        let alert = CriticalAlert(message: NSLocalizedString("HeliPort running at an unexpected path"),
+                                  options: [NSLocalizedString("Quit HeliPort")])
+        alert.show()
+
         NSApp.terminate(nil)
     }
 
@@ -99,43 +92,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         Log.error("itlwm API mismatch!")
 
         #if !DEBUG
-        let apiAlert = NSAlert()
-        let alertReturn = showCriticalAlert(
-            apiAlert,
-            msg: "itlwm Version Mismatch",
-            unlocalizedInfo: NSLocalizedString("HeliPort API Version: ", comment: "") + String(IOCTL_VERSION) +
-                             "\n" +
-                             NSLocalizedString("itlwm API Version: ", comment: "") + String(drv_info.version),
-            optTitles: ["Quit HeliPort", "Visit OpenIntelWireless on GitHub"]
+        let text = NSLocalizedString("HeliPort API Version: ") + String(IOCTL_VERSION) +
+            "\n" + NSLocalizedString("itlwm API Version: ") + String(drv_info.version)
+        let alert = CriticalAlert(message: NSLocalizedString("itlwm Version Mismatch"),
+                                  informativeText: text,
+                                  options: [
+                                    NSLocalizedString("Quit HeliPort"),
+                                    NSLocalizedString("Visit OpenIntelWireless on GitHub")
+                                  ]
         )
 
-        if alertReturn == .alertSecondButtonReturn {
+        if alert.show() == .alertSecondButtonReturn {
             NSWorkspace.shared.open(URL(string: "https://github.com/OpenIntelWireless")!)
             return
         }
 
         NSApp.terminate(nil)
         #endif
-    }
-
-    private func showCriticalAlert(
-        _ alert: NSAlert,
-        msg: String,
-        unlocalizedInfo: String?,
-        optTitles: [String?]
-    ) -> NSApplication.ModalResponse {
-
-        alert.alertStyle = .critical
-        alert.messageText = NSLocalizedString(msg, comment: "")
-        alert.informativeText = unlocalizedInfo ?? ""
-
-        optTitles.forEach {
-            if $0 != nil {
-                alert.addButton(withTitle: NSLocalizedString($0!, comment: ""))
-            }
-        }
-
-        NSApplication.shared.activate(ignoringOtherApps: true)
-        return alert.runModal()
     }
 }
