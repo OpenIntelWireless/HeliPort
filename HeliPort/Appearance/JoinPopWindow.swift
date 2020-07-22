@@ -177,7 +177,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         icon.image = #imageLiteral(resourceName: "WiFi")
         view.addSubview(icon)
 
-        titleLabel.stringValue = NSLocalizedString("Find and join a Wi-Fi network.", comment: "")
+        titleLabel.stringValue = NSLocalizedString("Find and join a Wi-Fi network.")
         titleLabel.drawsBackground = false
         titleLabel.isBordered = false
         titleLabel.isSelectable = false
@@ -194,7 +194,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         subTitleLabel.font = NSFont.systemFont(ofSize: 11)
         view.addSubview(subTitleLabel)
 
-        ssidLabel.stringValue = NSLocalizedString("Network Name:", comment: "")
+        ssidLabel.stringValue = NSLocalizedString("Network Name:")
         ssidLabel.drawsBackground = false
         ssidLabel.alignment = .right
         ssidLabel.isBordered = false
@@ -210,7 +210,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         ssidBox.delegate = self
         view.addSubview(ssidBox)
 
-        securityLabel.stringValue = NSLocalizedString("Security:", comment: "")
+        securityLabel.stringValue = NSLocalizedString("Security:")
         securityLabel.drawsBackground = false
         securityLabel.alignment = .right
         securityLabel.isBordered = false
@@ -218,24 +218,24 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         securityLabel.font = .systemFont(ofSize: 13)
         view.addSubview(securityLabel)
 
-        securityPop.addItem(withTitle: NSLocalizedString("None", comment: ""))
+        securityPop.addItem(withTitle: NSLocalizedString("None"))
         securityPop.menu?.addItem(.separator())
-        //securityPop?.addItem(withTitle: NSLocalizedString("WEP", comment: ""))
-        securityPop.addItem(withTitle: NSLocalizedString("WPA/WPA2 Personal", comment: ""))
-        //securityPop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Personal", comment: ""))
-        securityPop.addItem(withTitle: NSLocalizedString("WPA2 Personal", comment: ""))
-        //securityPop?.addItem(withTitle: NSLocalizedString("WPA3 Personal", comment: ""))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WEP"))
+        securityPop.addItem(withTitle: NSLocalizedString("WPA/WPA2 Personal"))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Personal"))
+        securityPop.addItem(withTitle: NSLocalizedString("WPA2 Personal"))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA3 Personal"))
         //securityPop.menu?.addItem(.separator())
-        //securityPop?.addItem(withTitle: NSLocalizedString("Dynamic WEP", comment: ""))
-        //securityPop.addItem(withTitle: NSLocalizedString("WPA/WPA2 Enterprise", comment: ""))
-        //securityPop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Enterprise", comment: ""))
-        //securityPop.addItem(withTitle: NSLocalizedString("WPA2 Enterprise", comment: ""))
-        //securityPop?.addItem(withTitle: NSLocalizedString("WPA3 Enterprise", comment: ""))
+        //securityPop?.addItem(withTitle: NSLocalizedString("Dynamic WEP"))
+        //securityPop.addItem(withTitle: NSLocalizedString("WPA/WPA2 Enterprise"))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Enterprise"))
+        //securityPop.addItem(withTitle: NSLocalizedString("WPA2 Enterprise"))
+        //securityPop?.addItem(withTitle: NSLocalizedString("WPA3 Enterprise"))
         securityPop.target = self
         securityPop.action = #selector(security(_:))
         view.addSubview(securityPop)
 
-        usernameLabel.stringValue = NSLocalizedString("Username:", comment: "")
+        usernameLabel.stringValue = NSLocalizedString("Username:")
         usernameLabel.drawsBackground = false
         usernameLabel.alignment = .right
         usernameLabel.isBordered = false
@@ -253,7 +253,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         usernameBox.isHidden = true
         buttonView.addSubview(usernameBox)
 
-        passwdLabel.string = NSLocalizedString("Password:", comment: "")
+        passwdLabel.string = NSLocalizedString("Password:")
         passwdLabel.drawsBackground = false
         passwdLabel.alignment = .right
         passwdLabel.isEditable = false
@@ -282,7 +282,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         buttonView.addSubview(passwdSecureBox)
 
         isShowPasswd.setButtonType(.switch)
-        isShowPasswd.title = NSLocalizedString("Show password", comment: "")
+        isShowPasswd.title = NSLocalizedString("Show password")
         isShowPasswd.target = self
         isShowPasswd.action = #selector(showPasswd(_:))
         isShowPasswd.isHidden = true
@@ -290,14 +290,14 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
 
         isSave.setButtonType(.switch)
         isSave.font = .systemFont(ofSize: 13)
-        isSave.title = NSLocalizedString("Remember this network", comment: "")
+        isSave.title = NSLocalizedString("Remember this network")
         isSave.target = self
         isSave.action = #selector(saveWiFi(_:))
         buttonView.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded
         joinButton.font = .systemFont(ofSize: 13)
-        joinButton.title = NSLocalizedString("Join", comment: "")
+        joinButton.title = NSLocalizedString("Join")
         joinButton.target = self
         joinButton.isEnabled = false
         joinButton.keyEquivalent = "\r"
@@ -306,7 +306,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
 
         cancelButton.bezelStyle = .rounded
         cancelButton.font = .systemFont(ofSize: 13)
-        cancelButton.title = NSLocalizedString("Cancel", comment: "")
+        cancelButton.title = NSLocalizedString("Cancel")
         cancelButton.target = self
         cancelButton.action = #selector(cancel(_:))
         buttonView.addSubview(cancelButton)
@@ -331,7 +331,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
 
     @objc private func security(_ sender: Any?) {
         switch securityPop.title {
-        case NSLocalizedString("None", comment: ""):
+        case NSLocalizedString("None"):
             usernameLabel.isHidden = true
             usernameBox.isHidden = true
             passwdLabel.isHidden = true
@@ -367,10 +367,10 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
                     animate: true
                 )
             }
-        case NSLocalizedString("WPA/WPA2 Personal", comment: ""),
-             NSLocalizedString("WPA2/WPA3 Personal", comment: ""),
-             NSLocalizedString("WPA2 Personal", comment: ""),
-             NSLocalizedString("WPA3 Personal", comment: ""):
+        case NSLocalizedString("WPA/WPA2 Personal"),
+             NSLocalizedString("WPA2/WPA3 Personal"),
+             NSLocalizedString("WPA2 Personal"),
+             NSLocalizedString("WPA3 Personal"):
             if frame.height == 269 {
                 let frameSize = NSRect(
                     x: frame.minX,
@@ -406,10 +406,10 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
                 )
             }
             passwdSecureBox.becomeFirstResponder()
-        case NSLocalizedString("WPA/WPA2 Enterprise", comment: ""),
-             NSLocalizedString("WPA2/WPA3 Enterprise", comment: ""),
-             NSLocalizedString("WPA2 Enterprise", comment: ""),
-             NSLocalizedString("WPA3 Enterprise", comment: ""):
+        case NSLocalizedString("WPA/WPA2 Enterprise"),
+             NSLocalizedString("WPA2/WPA3 Enterprise"),
+             NSLocalizedString("WPA2 Enterprise"),
+             NSLocalizedString("WPA3 Enterprise"):
             if frame.height == 269 {
                 let frameSize = NSRect(
                     x: frame.minX,
@@ -446,7 +446,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             controlJoinButton()
             usernameBox.becomeFirstResponder()
         default:
-            let alert = Alert(text: NSLocalizedString("Encryption type unsupported", comment: ""))
+            let alert = Alert(text: NSLocalizedString("Encryption type unsupported"))
             alert.show()
             controlJoinButton()
             return

@@ -31,7 +31,7 @@ final class NetworkManager {
                        _ callback: ((_ result: Bool) -> Void)? = nil) {
 
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
-            let alert = Alert(text: NSLocalizedString("Network security not supported: ", comment: "")
+            let alert = Alert(text: NSLocalizedString("Network security not supported: ")
                 + networkInfo.auth.security.description)
             alert.show()
             return

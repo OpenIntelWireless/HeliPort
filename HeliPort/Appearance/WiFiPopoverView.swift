@@ -116,16 +116,16 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         view.addSubview(icon)
 
         title.stringValue =
-            NSLocalizedString("Wi-Fi Network \"", comment: "") +
+            NSLocalizedString("Wi-Fi Network \"") +
             self.networkInfo.ssid +
-            NSLocalizedString("\" Requires Password", comment: "")
+            NSLocalizedString("\" Requires Password")
         title.drawsBackground = false
         title.isBordered = false
         title.isSelectable = false
         title.font = NSFont.boldSystemFont(ofSize: 13)
         view.addSubview(title)
 
-        passwdLabel.string = NSLocalizedString("Password:", comment: "")
+        passwdLabel.string = NSLocalizedString("Password:")
         passwdLabel.alignment = .right
         passwdLabel.drawsBackground = false
         passwdLabel.isEditable = false
@@ -157,19 +157,19 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
 
         isShowPasswd.setButtonType(.switch)
         isShowPasswd.font = .systemFont(ofSize: 13)
-        isShowPasswd.title = NSLocalizedString("Show password", comment: "")
+        isShowPasswd.title = NSLocalizedString("Show password")
         isShowPasswd.target = self
         isShowPasswd.action = #selector(showPasswd(_:))
         view.addSubview(isShowPasswd)
 
         isSave.setButtonType(.switch)
         isSave.font = .systemFont(ofSize: 13)
-        isSave.title = NSLocalizedString("Remember this network", comment: "")
+        isSave.title = NSLocalizedString("Remember this network")
         view.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded
         joinButton.font = .systemFont(ofSize: 13)
-        joinButton.title = NSLocalizedString("Join", comment: "")
+        joinButton.title = NSLocalizedString("Join")
         joinButton.target = self
         joinButton.isEnabled = false
         joinButton.keyEquivalent = "\r"
@@ -178,7 +178,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
 
         cancelButton.bezelStyle = .rounded
         cancelButton.font = .systemFont(ofSize: 13)
-        cancelButton.title = NSLocalizedString("Cancel", comment: "")
+        cancelButton.title = NSLocalizedString("Cancel")
         cancelButton.target = self
         cancelButton.action = #selector(cancel(_:))
         view.addSubview(cancelButton)
