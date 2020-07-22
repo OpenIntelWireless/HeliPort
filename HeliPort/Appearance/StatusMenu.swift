@@ -432,10 +432,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let joinPop = JoinPopWindow()
             joinPop.show()
         case NSLocalizedString("Create Network...", comment: ""):
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: "")
-            alert.alertStyle = .critical
-            alert.runModal()
+            let alert = Alert(text: NSLocalizedString("FUNCTION NOT IMPLEMENTED", comment: ""))
+            alert.show()
         case NSLocalizedString("Open Network Preferences...", comment: ""):
             NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
         case NSLocalizedString("Check for Updates...", comment: ""):

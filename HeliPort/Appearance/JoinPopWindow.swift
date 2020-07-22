@@ -446,10 +446,8 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
             controlJoinButton()
             usernameBox.becomeFirstResponder()
         default:
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("Encryption type unsupported", comment: "")
-            alert.alertStyle = .critical
-            alert.runModal()
+            let alert = Alert(text: NSLocalizedString("Encryption type unsupported", comment: ""))
+            alert.show()
             controlJoinButton()
             return
         }
