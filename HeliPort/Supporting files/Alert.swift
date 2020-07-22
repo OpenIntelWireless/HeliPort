@@ -30,3 +30,30 @@ final class Alert {
         }
     }
 }
+
+final class CriticalAlert {
+    private let message: String
+    private let informativeText: String
+    private let options: [String]
+
+    init(message: String, informativeText: String = "", options: [String]) {
+        self.message = message
+        self.informativeText = informativeText
+        self.options = options
+    }
+
+    @discardableResult
+    func show() -> NSApplication.ModalResponse {
+        let alert = NSAlert()
+        alert.alertStyle = .critical
+        alert.messageText = message
+        alert.informativeText = informativeText
+
+        options.forEach {
+            alert.addButton(withTitle: $0)
+        }
+
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        return alert.runModal()
+    }
+}
