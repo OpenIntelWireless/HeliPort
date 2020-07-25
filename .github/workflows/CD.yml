@@ -72,7 +72,7 @@ jobs:
         echo '### Disclaimer:' >> ReleaseNotes.md
         echo '***This alpha version is for testing only.***' >> ReleaseNotes.md
         echo 'It is not ready for daily use and we do not guarantee its usability.' >> ReleaseNotes.md
-        echo 'If you discovered an issue and you are don't have debugging skills, please check with the [Gitter Chat Room](https://gitter.im/OpenIntelWireless/itlwm) in advance before opening an Issue.' >> ReleaseNotes.md
+        echo 'If you discovered an issue and you are do not have debugging skills, please check with the [Gitter Chat Room](https://gitter.im/OpenIntelWireless/itlwm) in advance before opening an Issue.' >> ReleaseNotes.md
         echo '### The latest five updates are:' >> ReleaseNotes.md
 
     - name: Generate Release Notes
