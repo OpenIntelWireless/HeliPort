@@ -1,0 +1,144 @@
+name: Distribute GitHub Prerelease
+
+on:
+  push:
+    branches: master
+
+jobs:
+
+  CD:
+    runs-on: macos-10.15
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '5'
+
+    - name: Prepare Env
+      run: |
+        brew install graphicsmagick imagemagick
+        npm install --global create-dmg
+        pod install
+
+    - name: Manage Version
+      run: |
+        git fetch --prune --unshallow --tags
+        GIT_SHA="$(git rev-parse --short HEAD)"
+        CUR_TAG="$(git tag -l | grep 'alpha\|beta' | tail -1)"
+        eval $(grep -m 1 "MARKETING_VERSION =" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
+
+        sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = ${GIT_SHA};/g" HeliPort.xcodeproj/project.pbxproj
+
+        echo "::set-env name=VER::$MARKETING_VERSION"
+        echo "::set-env name=SHORT_SHA::$GIT_SHA"
+        if [[ -z $CUR_TAG ]]; then
+          echo "::set-env name=OLD_PRE_TAG::NULL"
+        else
+          echo "::set-env name=OLD_PRE_TAG::$CUR_TAG"
+        fi
+      shell: zsh {0}
+
+    - name: Build
+      run: |
+        xcodebuild -workspace HeliPort.xcworkspace -scheme HeliPort -configuration Release -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+
+    - name: Create Disk Image
+      run: |
+        XCBUILD_PATH="build/Build/Products/Release"
+        cp LICENSE $XCBUILD_PATH
+        cd $XCBUILD_PATH
+        mv LICENSE LICENSE.txt
+        create-dmg HeliPort.app || true
+        mv *.dmg HeliPort.dmg
+        cd -
+        mkdir Artifacts
+        cp -R ${XCBUILD_PATH}/*.dmg Artifacts
+
+    - name: Setup Prerelease Variables
+      if: contains(github.event.head_commit.message, 'GH release') == false
+      run: |
+        echo "::set-env name=REL_TAG::v${VER}-alpha"
+        echo "::set-env name=IS_PRE::true"
+
+    - name: Setup Release Variables
+      if: contains(github.event.head_commit.message, 'GH release')
+      run: |
+        echo "::set-env name=REL_TAG::v${VER}"
+        echo "::set-env name=IS_PRE::false"
+
+    - name: Generate Prerelease Release Notes
+      if: contains(github.event.head_commit.message, 'GH release') == false
+      run: |
+        echo '### Disclaimer:' >> ReleaseNotes.md
+        echo '***This alpha version is for testing only.***' >> ReleaseNotes.md
+        echo 'It is not ready for daily use and we do not guarantee its usability.' >> ReleaseNotes.md
+        echo 'If you discovered an issue and you are don't have debugging skills, please check with the [Gitter Chat Room](https://gitter.im/OpenIntelWireless/itlwm) in advance before opening an Issue.' >> ReleaseNotes.md
+        echo '### The latest five updates are:' >> ReleaseNotes.md
+
+    - name: Generate Release Notes
+      run: |
+        git log -"5" --format="- %H %s" | sed '/^$/d' >> ReleaseNotes.md
+
+    - name: Delete Old Prerelease
+      uses: dev-drprasad/delete-tag-and-release@v0.1.2
+      with:
+        tag_name: ${{ env.OLD_PRE_TAG }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Init GitHub Release
+      if: contains(github.event.head_commit.message, 'GH release')
+      uses: ncipollo/release-action@v1
+      with:
+        bodyFile: ReleaseNotes.md
+        tag: ${{ env.REL_TAG }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate Sparkle Appcast
+      if: contains(github.event.head_commit.message, 'GH release')
+      run: |
+        mkdir sparkle
+        cd sparkle
+        rawURL="https://github.com/sparkle-project/Sparkle/releases/latest"
+        URL="https://github.com$(one=${"$(curl -L --silent "${rawURL}" | grep '/download/' | grep -m 1 'xz' )"#*href=\"} && two=${one%\"\ rel*} && echo $two)"
+        curl -#LO "${URL}"
+        tar xvf *.xz >/dev/null 2>&1
+        cd ..
+
+        PUBDATE="$(date +"%a, %d %b %Y %T %z")"
+        APPCAST=(
+            '<?xml version="1.0" standalone="yes"?>'
+            '<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">'
+            '    <channel>'
+            '        <title>HeliPort</title>'
+            '        <item>'
+            "            <title>${VER}</title>"
+            "            <pubDate>${PUBDATE}</pubDate>"
+            '            <description><![CDATA['
+            "                <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/Primer/14.4.0/primer.min.css\"><meta charset=\"UTF-8\"> $(curl -L --silent https://github.com/OpenIntelWireless/HeliPort/releases/latest | sed -n '/<div class=\"markdown-body\">/,/<\/div>/p' | tr -d '\n')"
+            '            ]]>'
+            '            </description>'
+            "            <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>"
+            "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/OpenIntelWireless/HeliPort/releases/latest/download/HeliPort.dmg\" sparkle:version=\"${VER}\" sparkle:shortVersionString=\"${VER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.dmg)/>"
+            '        </item>'
+            '    </channel>'
+            '</rss>'
+        )
+
+        for appcast in "${APPCAST[@]}"; do
+            echo "${appcast}" >> ./Artifacts/appcast.xml
+        done
+      shell: zsh {0}
+      env:
+        SPARKLE_KEY: ${{ secrets.SPARKLE_KEY }}
+
+    - name: Publish GitHub Release
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        replacesArtifacts: true
+        prerelease: ${{ env.IS_PRE }}
+        bodyFile: ReleaseNotes.md
+        artifacts: "./Artifacts/*"
+        tag: ${{ env.REL_TAG }}
+        token: ${{ secrets.GITHUB_TOKEN }}
