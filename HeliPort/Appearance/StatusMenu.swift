@@ -23,12 +23,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private let heliPortUpdater = SUUpdater()
 
-    private let networkListUpdatePeriod: Double = 5
-    private let statusUpdatePeriod: Double = 2
+    private let statusUpdatePeriod: Double = 5
 
     private var headerLength: Int = 0
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
+    private var isOpen: Bool = false
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
@@ -245,7 +245,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             self.statusUpdateTimer = Timer.scheduledTimer(
                 timeInterval: self.statusUpdatePeriod,
                 target: self,
-                selector: #selector(self.updateStatus),
+                selector: #selector(self.updateNetworksAndStatus),
                 userInfo: nil,
                 repeats: true
             )
@@ -326,27 +326,18 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     func menuWillOpen(_ menu: NSMenu) {
-
+        isOpen = true
         showAllOptions = (NSApp.currentEvent?.modifierFlags.contains(.option))!
 
         let queue = DispatchQueue.global(qos: .default)
         queue.async {
             self.updateNetworkInfo()
             self.updateNetworkList()
-            self.networkListUpdateTimer = Timer.scheduledTimer(
-                timeInterval: self.networkListUpdatePeriod,
-                target: self,
-                selector: #selector(self.updateNetworkList),
-                userInfo: nil,
-                repeats: true
-            )
-            let currentRunLoop = RunLoop.current
-            currentRunLoop.add(self.networkListUpdateTimer!, forMode: .common)
-            currentRunLoop.run()
         }
     }
 
     func menuDidClose(_ menu: NSMenu) {
+        isOpen = false
         networkListUpdateTimer?.invalidate()
     }
 
@@ -381,16 +372,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.bsdItem.title = NSLocalizedString("Interface Name: ") + bsdName
                 self.macItem.title = NSLocalizedString("Address: ") + macAddr
                 self.itlwmVerItem.title = NSLocalizedString("Version: ") + itlwmVer
-            }
-
-            // If not connected, try to connect saved networks
-            var stationInfo = station_info_t()
-            var state: UInt32 = 0
-            var power: Bool = false
-            get_power_state(&power)
-            if get_80211_state(&state) && power &&
-                (state != ITL80211_S_RUN.rawValue || get_station_info(&stationInfo) != KERN_SUCCESS) {
-                NetworkManager.connectSavedNetworks()
             }
         }
     }
@@ -449,6 +430,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         default:
             Log.error("Invalid menu item clicked")
         }
+    }
+
+    @objc private func updateNetworksAndStatus() {
+        updateStatus()
+        updateNetworkList()
     }
 
     @objc private func updateStatus() {
@@ -564,16 +550,24 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
         NetworkManager.scanNetwork { networkList in
             self.isNetworkListEmpty = networkList.count == 0 && !self.isNetworkConnected
-            var networkList = networkList
-            for index in 1 ..< self.networkItemList.count {
-                if let view = self.networkItemList[index].view as? WifiMenuItemView {
-                    if networkList.count > 0 {
-                        view.networkInfo = networkList.removeFirst()
-                        view.visible = true
-                    } else {
-                        view.visible = false
+            if self.isOpen {
+                var networkListTmp = networkList
+                for index in 1 ..< self.networkItemList.count {
+                    if let view = self.networkItemList[index].view as? WifiMenuItemView {
+                        if networkListTmp.count > 0 {
+                            view.networkInfo = networkListTmp.removeFirst()
+                            view.visible = true
+                        } else {
+                            view.visible = false
+                        }
                     }
                 }
+            }
+
+            // If not connected, try to connect saved networks
+            if self.status != ITL80211_S_RUN
+                && self.status != ITL80211_S_AUTH {
+                NetworkManager.connectSavedNetworks(networkList)
             }
         }
     }
