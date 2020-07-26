@@ -445,7 +445,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             NSApplication.shared.orderFrontStandardAboutPanel()
             NSApplication.shared.activate(ignoringOtherApps: true)
         case NSLocalizedString("Quit HeliPort"):
-            exit(0)
+            NSApp.terminate(nil)
         default:
             Log.error("Invalid menu item clicked")
         }

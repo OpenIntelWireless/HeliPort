@@ -17,7 +17,7 @@
 #include "mach/mach_port.h"
 #include "pthread.h"
 
-static pthread_mutex_t* api_mutex;
+static pthread_mutex_t* api_mutex = NULL;
 
 bool get_platform_info(platform_info_t *info) {
     memset(info, 0, sizeof(platform_info_t));
@@ -272,4 +272,13 @@ kern_return_t dis_associate_ssid(const char *ssid)
     dis.version = IOCTL_VERSION;
     memcpy(dis.ssid, ssid, 32);
     return ioctl_set(IOCTL_80211_DISASSOCIATE, &dis, sizeof(struct ioctl_disassociate));
+}
+
+void api_terminate(void) {
+    if (api_mutex) {
+        /* acquire API lock to wait for the pending API call */
+        pthread_mutex_lock(api_mutex);
+        pthread_mutex_unlock(api_mutex);
+        pthread_mutex_destroy(api_mutex);
+    }
 }

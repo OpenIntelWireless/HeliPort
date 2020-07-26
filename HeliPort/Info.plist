@@ -33,7 +33,7 @@
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
-	<true/>
+	<false/>
 	<key>SUFeedURL</key>
 	<string>https://heliport.bat-bat.workers.dev/https://github.com/zxystd/HeliPort/releases/latest/download/appcast.xml</string>
 	<key>SUPublicEDKey</key>

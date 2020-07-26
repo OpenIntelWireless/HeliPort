@@ -16,7 +16,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         checkRunPath()
@@ -109,5 +109,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         NSApp.terminate(nil)
         #endif
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        Log.debug("Exit")
+        api_terminate()
     }
 }
