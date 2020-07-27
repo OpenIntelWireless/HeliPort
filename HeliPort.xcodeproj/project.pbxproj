@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
+		138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC924CE663B00793AC1 /* BugReporter.swift */; };
 		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
 		50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */; };
@@ -51,6 +53,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
+		138D3CC924CE663B00793AC1 /* BugReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReporter.swift; sourceTree = "<group>"; };
 		1DCA020324BD00E800F37995 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2181E9B524C24FF600E3C73D /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */,
 				F33A1F3E24C8347F008ED2BD /* NSLocalizedString+Extensions.swift */,
 				F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */,
+				138D3CC724CE635800793AC1 /* Commands.swift */,
+				138D3CC924CE663B00793AC1 /* BugReporter.swift */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -429,8 +435,10 @@
 				F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
+				138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */,
 				13AF73B624B25E170015867C /* StatusMenu.swift in Sources */,
+				138D3CC824CE635800793AC1 /* Commands.swift in Sources */,
 				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
 				F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,

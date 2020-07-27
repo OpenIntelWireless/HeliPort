@@ -81,6 +81,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 hardwareInfoSeparator,
 
                 toggleLaunchItem,
+                bugReportItem,
+                bugReportSeparator,
                 checkUpdateItem,
                 quitSeparator,
                 quitItem
@@ -198,6 +200,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let networkPanelItem = NSMenuItem(title: NSLocalizedString("Open Network Preferences..."))
 
     private let aboutItem = NSMenuItem(title: NSLocalizedString("About HeliPort"))
+    private let bugReportItem = NSMenuItem(title: NSLocalizedString("Generate Bug Report"))
+    private let bugReportSeparator = NSMenuItem.separator()
     private let checkUpdateItem = NSMenuItem(title: NSLocalizedString("Check for Updates..."))
     private let quitSeparator = NSMenuItem.separator()
     private let quitItem = NSMenuItem(title: NSLocalizedString("Quit HeliPort"),
@@ -310,6 +314,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         addClickItem(toggleLaunchItem)
         addClickItem(checkUpdateItem)
         addClickItem(aboutItem)
+
+        addItem(bugReportSeparator)
+        addClickItem(bugReportItem)
 
         addItem(quitSeparator)
         addClickItem(quitItem)
@@ -441,6 +448,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Launch At Login"):
             LoginItemManager.setStatus(enabled: LoginItemManager.isEnabled() ? false : true)
             isAutoLaunch = LoginItemManager.isEnabled()
+        case NSLocalizedString("Generate Bug Report"):
+            BugReporter.generateBugReport()
         case NSLocalizedString("About HeliPort"):
             NSApplication.shared.orderFrontStandardAboutPanel()
             NSApplication.shared.activate(ignoringOtherApps: true)
@@ -456,11 +465,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var powerState: Bool = false
             let get_power_ret = get_power_state(&powerState)
             var status: UInt32 = 0xFF
-            get_80211_state(&status)
+            let get_state_ret = get_80211_state(&status)
 
             DispatchQueue.main.async {
-                if get_power_ret {
+                if get_power_ret && get_state_ret {
                     self.isNetworkCardEnabled = powerState
+                } else {
+                    Log.error("Failed get card state")
                 }
                 self.isNetworkCardAvailable = get_power_ret
                 self.status = itl_80211_state(rawValue: status)
@@ -588,7 +599,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         DispatchQueue.global().async {
             CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
-            print("disconnected from \(ssid)")
+            Log.debug("Disconnected from \(ssid)")
         }
     }
 }
