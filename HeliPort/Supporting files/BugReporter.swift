@@ -19,36 +19,63 @@ class BugReporter {
 
     public class func generateBugReport() {
 
-        // HeliPort log
-        let heliPortPID = ProcessInfo.processInfo.processIdentifier
-        let heliPortIdentifier = Bundle.main.bundleIdentifier!
-        let heliAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "Unknown"
-        let heliBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
-        let heliPortLogCommand = ["show", "--predicate",
-                                  "(subsystem == '\(heliPortIdentifier)' && processID == \(heliPortPID))",
-            "--debug", "--last", "boot"
-        ]
-        let heliPortLog = Commands.runCommand(executablePath: .log,
-                                              args: heliPortLogCommand) ?? "No logs for HeliPort"
+        // MARK: HeliPort log
 
-        // itlwm log
+        let appIdentifier = Bundle.main.bundleIdentifier!
+        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "Unknown"
+        let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
+        let appLogCommand = ["show", "--predicate",
+                                  "(subsystem == '\(appIdentifier)')",
+                                  "--debug", "--last", "boot"]
+        let appLog = Commands.runCommand(executablePath: .log,
+                                              args: appLogCommand) ?? "No logs for HeliPort"
+
+        // MARK: itlwm log
+
         var drv_info = ioctl_driver_info()
         _ = ioctl_get(Int32(IOCTL_80211_DRIVER_INFO.rawValue), &drv_info, MemoryLayout<ioctl_driver_info>.size)
-        var itlwmKextVersion = String(cString: &drv_info.driver_version.0)
-        var itlwmKextFwVersion = String(cString: &drv_info.fw_version.0)
-        if itlwmKextVersion.isEmpty { itlwmKextVersion = "Unknown" }
-        if itlwmKextFwVersion.isEmpty { itlwmKextFwVersion = "Unknown" }
+        var itlwmVersion = String(cString: &drv_info.driver_version.0)
+        var itlwmFwVersion = String(cString: &drv_info.fw_version.0)
+        if itlwmVersion.isEmpty { itlwmVersion = "Unknown" }
+        if itlwmFwVersion.isEmpty { itlwmFwVersion = "Unknown" }
         let itlwmLogCommand = ["show", "--predicate",
-                               "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
-                               "--last", "5m" // Too many logs can cause this command to be stuck
-        ]
+                               "(process == 'kernel' " +
+                               "&& eventMessage CONTAINS[c] 'itlwm')",
+                               "--last", "boot"]
         let itlwmLog = Commands.runCommand(executablePath: .log,
                                            args: itlwmLogCommand) ?? "No logs for itlwm"
 
-        let heliPortOutput = "HeliPort Version: \(heliAppVersion) (Build \(heliBuildVer))\n\n" +
-        heliPortLog
-        let itlwmOutput = "itlwm version: \(itlwmKextVersion) (Firmware: \(itlwmKextFwVersion)\n\n" +
-        itlwmLog
+        // MARK: Get itlwm name if loaded (itlwm or itlwmx)
+
+        let kextstatCommand = ["-c", "kextstat"]
+        let itlwmLoaded = Commands.runCommand(executablePath: .shell, args: kextstatCommand)
+        var itlwmName: String?
+        if let regex = try? NSRegularExpression.init(pattern: "\\b(itlwm\\w*)\\b", options: []), itlwmLoaded != nil {
+            let firstMatch = regex.firstMatch(in: itlwmLoaded!,
+                                            options: [],
+                                            range: NSRange(location: 0, length: itlwmLoaded!.count))
+            if let range = firstMatch?.range(at: 1) {
+                if let swiftRange = Range(range, in: itlwmLoaded!) {
+                    itlwmName = String(itlwmLoaded![swiftRange])
+                }
+            }
+        }
+
+        // MARK: Output String
+
+        let appOutput = """
+                             \(appLog)
+
+                             HeliPort Version: \(appVersion) (Build \(appBuildVer))
+                             """
+        let itlwmOutput = """
+                          \(itlwmLog)
+
+                          \(itlwmName != nil ? """
+                                                 \(itlwmName!) loaded
+                                                 \(itlwmName!) version: \(itlwmVersion) (Firmware: \(itlwmFwVersion))
+                                                 """ : "Kext not loaded")
+                          """
 
         let fileManager = FileManager.default
         guard let desktopPath = fileManager.urls(for: .desktopDirectory,
@@ -57,15 +84,16 @@ class BugReporter {
                                                     return
         }
 
-        let reportDir = "HeliPort_report_\(UInt16.random(in: UInt16.min...UInt16.max))"
+        let reportDir = "bugreport_\(UInt16.random(in: UInt16.min...UInt16.max))"
         let urlReportDir = desktopPath.appendingPathComponent(reportDir, isDirectory: true)
 
-        // Write to files
+        // MARK: Write to file
+
         do {
             try fileManager.createDirectory(at: urlReportDir, withIntermediateDirectories: true, attributes: nil)
-            let heliPortFile = urlReportDir.appendingPathComponent("HeliPort_logs.txt")
-            let itlwmFile = urlReportDir.appendingPathComponent("itlwm_logs.txt")
-            try heliPortOutput.write(to: heliPortFile, atomically: true, encoding: .utf8)
+            let heliPortFile = urlReportDir.appendingPathComponent("HeliPort_logs.log")
+            let itlwmFile = urlReportDir.appendingPathComponent("\(itlwmName ?? "itlwm")_logs.log")
+            try appOutput.write(to: heliPortFile, atomically: true, encoding: .utf8)
             try itlwmOutput.write(to: itlwmFile, atomically: true, encoding: .utf8)
         } catch {
             Log.error(error.localizedDescription)

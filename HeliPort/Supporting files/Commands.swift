@@ -39,8 +39,8 @@ class Commands {
         } else {
             process.launch()
         }
-        process.waitUntilExit()
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        process.waitUntilExit()
         guard let output = String(data: data, encoding: .utf8),
             !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return nil
