@@ -449,7 +449,15 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             LoginItemManager.setStatus(enabled: LoginItemManager.isEnabled() ? false : true)
             isAutoLaunch = LoginItemManager.isEnabled()
         case NSLocalizedString("Generate Bug Report"):
-            BugReporter.generateBugReport()
+            // Disable while bug report is being genetated, if autoenable == true, NSMenu ignores isEnable
+            bugReportItem.action = nil
+            DispatchQueue.global(qos: .background).async {
+                BugReporter.generateBugReport()
+                DispatchQueue.main.async {
+                    // Enable after generating report is finished
+                    self.bugReportItem.action = #selector(self.clickMenuItem(_:))
+                }
+            }
         case NSLocalizedString("About HeliPort"):
             NSApplication.shared.orderFrontStandardAboutPanel()
             NSApplication.shared.activate(ignoringOtherApps: true)
