@@ -27,7 +27,9 @@ jobs:
         CUR_TAG="$(git tag -l | grep 'alpha\|beta' | tail -1)"
         eval $(grep -m 1 "MARKETING_VERSION =" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
 
-        sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = ${GIT_SHA};/g" HeliPort.xcodeproj/project.pbxproj
+        if [[ "$(git log -1 --pretty=format:%s)" != *"GH Release"* ]]; then
+          sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = ${GIT_SHA};/g" HeliPort.xcodeproj/project.pbxproj
+        fi
 
         echo "::set-env name=VER::$MARKETING_VERSION"
         echo "::set-env name=SHORT_SHA::$GIT_SHA"
