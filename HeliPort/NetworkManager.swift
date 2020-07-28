@@ -188,7 +188,7 @@ final class NetworkManager {
         let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
 
         let routerCommand = ["-c", "netstat -rn", "|", "egrep -o", "default.*\(bsd)"]
-        guard let routerOutput = Commands.runCommand(executablePath: .shell, args: routerCommand) else {
+        guard let routerOutput = Commands.execute(executablePath: .shell, args: routerCommand).0 else {
             return nil
         }
 

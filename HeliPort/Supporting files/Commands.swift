@@ -21,7 +21,9 @@ class Commands {
         case log = "/usr/bin/log"
     }
 
-    public class func runCommand(executablePath: ExecutablePath, args: [String]) -> String? {
+    // MARK: Run command and returns the output and exit status.
+
+    public class func execute(executablePath: ExecutablePath, args: [String]) -> (String?, Int32) {
         let process = Process()
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -34,7 +36,7 @@ class Commands {
         if #available(OSX 10.13, *) {
             guard (try? process.run()) != nil else {
                 Log.debug("Could not run command")
-                return nil
+                return (nil, 1)
             }
         } else {
             process.launch()
@@ -43,10 +45,10 @@ class Commands {
         process.waitUntilExit()
         guard let output = String(data: data, encoding: .utf8),
             !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return nil
+            return (nil, process.terminationStatus)
         }
 
-        return output.trimmingCharacters(in: .whitespacesAndNewlines)
+        return (output.trimmingCharacters(in: .whitespacesAndNewlines), process.terminationStatus)
     }
 
 }

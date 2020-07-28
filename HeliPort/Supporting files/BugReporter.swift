@@ -27,8 +27,7 @@ class BugReporter {
         let appLogCommand = ["show", "--predicate",
                                   "(subsystem == '\(appIdentifier)')",
                                   "--debug", "--last", "boot"]
-        let appLog = Commands.runCommand(executablePath: .log,
-                                              args: appLogCommand) ?? "No logs for HeliPort"
+        let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
 
         // MARK: itlwm log
 
@@ -42,21 +41,20 @@ class BugReporter {
                                "(process == 'kernel' " +
                                "&& eventMessage CONTAINS[c] 'itlwm')",
                                "--last", "boot"]
-        let itlwmLog = Commands.runCommand(executablePath: .log,
-                                           args: itlwmLogCommand) ?? "No logs for itlwm"
+        let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand).0 ?? "No logs for itlwm"
 
         // MARK: Get itlwm name if loaded (itlwm or itlwmx)
 
         let kextstatCommand = ["-c", "kextstat"]
-        let itlwmLoaded = Commands.runCommand(executablePath: .shell, args: kextstatCommand)
+        let itlwmLoaded = Commands.execute(executablePath: .shell, args: kextstatCommand)
         var itlwmName: String?
-        if let regex = try? NSRegularExpression.init(pattern: "\\b(itlwm\\w*)\\b", options: []), itlwmLoaded != nil {
-            let firstMatch = regex.firstMatch(in: itlwmLoaded!,
+        if let regex = try? NSRegularExpression.init(pattern: "\\b(itlwm\\w*)\\b", options: []), itlwmLoaded.0 != nil {
+            let firstMatch = regex.firstMatch(in: itlwmLoaded.0!,
                                             options: [],
-                                            range: NSRange(location: 0, length: itlwmLoaded!.count))
+                                            range: NSRange(location: 0, length: itlwmLoaded.0!.count))
             if let range = firstMatch?.range(at: 1) {
-                if let swiftRange = Range(range, in: itlwmLoaded!) {
-                    itlwmName = String(itlwmLoaded![swiftRange])
+                if let swiftRange = Range(range, in: itlwmLoaded.0!) {
+                    itlwmName = String(itlwmLoaded.0![swiftRange])
                 }
             }
         }
@@ -78,28 +76,42 @@ class BugReporter {
                           """
 
         let fileManager = FileManager.default
-        guard let desktopPath = fileManager.urls(for: .desktopDirectory,
+        guard let desktopUrl = fileManager.urls(for: .desktopDirectory,
                                                  in: .userDomainMask).first else {
-                                                    Log.error("Could not get desktop path for generated bug report.")
+                                                    Log.error("Could not get desktop path to generate bug report.")
                                                     return
         }
 
-        let reportDir = "bugreport_\(UInt16.random(in: UInt16.min...UInt16.max))"
-        let urlReportDir = desktopPath.appendingPathComponent(reportDir, isDirectory: true)
+        let reportDirName = "bugreport_\(UInt16.random(in: UInt16.min...UInt16.max))"
+        let reportDirUrl = desktopUrl.appendingPathComponent(reportDirName, isDirectory: true)
 
-        // MARK: Write to file
+        // MARK: Write to files
 
         do {
-            try fileManager.createDirectory(at: urlReportDir, withIntermediateDirectories: true, attributes: nil)
-            let heliPortFile = urlReportDir.appendingPathComponent("HeliPort_logs.log")
-            let itlwmFile = urlReportDir.appendingPathComponent("\(itlwmName ?? "itlwm")_logs.log")
+            try fileManager.createDirectory(at: reportDirUrl, withIntermediateDirectories: true, attributes: nil)
+            let heliPortFile = reportDirUrl.appendingPathComponent("HeliPort_logs.log")
+            let itlwmFile = reportDirUrl.appendingPathComponent("\(itlwmName ?? "itlwm")_logs.log")
             try appOutput.write(to: heliPortFile, atomically: true, encoding: .utf8)
             try itlwmOutput.write(to: itlwmFile, atomically: true, encoding: .utf8)
         } catch {
-            Log.error(error.localizedDescription)
+            Log.error("\(error)")
             return
         }
 
-        NSWorkspace.shared.open(urlReportDir)
+        // MARK: Zip file
+
+        let zipName = reportDirName + ".zip"
+        let zipCommand = ["-c", "cd \(desktopUrl.path) && " +
+                                "zip -r -X -m \(zipName) \(reportDirName)"]
+        let outputExitCode = Commands.execute(executablePath: .shell, args: zipCommand).1
+        guard outputExitCode == 0 else {
+            Log.error("Could not create zip file")
+            return
+        }
+
+        // MARK: Select zip file
+
+        NSWorkspace.shared.selectFile("\(desktopUrl.path)/\(zipName)",
+                                      inFileViewerRootedAtPath: desktopUrl.path)
     }
 }
