@@ -81,8 +81,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 hardwareInfoSeparator,
 
                 toggleLaunchItem,
-                bugReportItem,
-                bugReportSeparator,
                 checkUpdateItem,
                 quitSeparator,
                 quitItem
@@ -112,7 +110,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             let notImplementedItems: [NSMenuItem] = [
                 enableLoggingItem,
-                createReportItem,
                 diagnoseItem,
 
                 securityItem,
@@ -200,8 +197,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let networkPanelItem = NSMenuItem(title: NSLocalizedString("Open Network Preferences..."))
 
     private let aboutItem = NSMenuItem(title: NSLocalizedString("About HeliPort"))
-    private let bugReportItem = NSMenuItem(title: NSLocalizedString("Generate Bug Report"))
-    private let bugReportSeparator = NSMenuItem.separator()
     private let checkUpdateItem = NSMenuItem(title: NSLocalizedString("Check for Updates..."))
     private let quitSeparator = NSMenuItem.separator()
     private let quitItem = NSMenuItem(title: NSLocalizedString("Quit HeliPort"),
@@ -314,9 +309,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         addClickItem(toggleLaunchItem)
         addClickItem(checkUpdateItem)
         addClickItem(aboutItem)
-
-        addItem(bugReportSeparator)
-        addClickItem(bugReportItem)
 
         addItem(quitSeparator)
         addClickItem(quitItem)
@@ -431,6 +423,16 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         Log.debug("Clicked \(sender.title)")
 
         switch sender.title {
+        case NSLocalizedString("Create Diagnostics Report..."):
+            // Disable while bug report is being genetated, if autoenable == true, NSMenu ignores isEnable
+            createReportItem.action = nil
+            DispatchQueue.global(qos: .background).async {
+                BugReporter.generateBugReport()
+                DispatchQueue.main.async {
+                    // Enable after generating report is finished
+                    self.createReportItem.action = #selector(self.clickMenuItem(_:))
+                }
+            }
         case NSLocalizedString("Turn Wi-Fi On"):
             power_on()
         case NSLocalizedString("Turn Wi-Fi Off"):
@@ -448,16 +450,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case NSLocalizedString("Launch At Login"):
             LoginItemManager.setStatus(enabled: LoginItemManager.isEnabled() ? false : true)
             isAutoLaunch = LoginItemManager.isEnabled()
-        case NSLocalizedString("Generate Bug Report"):
-            // Disable while bug report is being genetated, if autoenable == true, NSMenu ignores isEnable
-            bugReportItem.action = nil
-            DispatchQueue.global(qos: .background).async {
-                BugReporter.generateBugReport()
-                DispatchQueue.main.async {
-                    // Enable after generating report is finished
-                    self.bugReportItem.action = #selector(self.clickMenuItem(_:))
-                }
-            }
         case NSLocalizedString("About HeliPort"):
             NSApplication.shared.orderFrontStandardAboutPanel()
             NSApplication.shared.activate(ignoringOtherApps: true)
