@@ -46,6 +46,8 @@ final class NetworkManager {
                         if savePassword {
                             CredentialsManager.instance.save(networkInfo)
                         }
+                    } else {
+                        Log.error("Failed to connect to: \(networkInfo.ssid)")
                     }
                     callback?(result)
                 }
@@ -164,7 +166,7 @@ final class NetworkManager {
     }
 
     class func isReachable() -> Bool {
-        guard let reachability = SCNetworkReachabilityCreateWithName(nil, "www.apple.com") else {
+        guard let reachability = SCNetworkReachabilityCreateWithName(nil, "captive.apple.com") else {
             return false
         }
         var address = sockaddr_in()
@@ -185,8 +187,8 @@ final class NetworkManager {
         // from Goshin
         let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
 
-        let routerCommand = ["netstat -rn | egrep -o default.*\(bsd)"]
-        guard let routerOutput = commandLine(args: routerCommand) else {
+        let routerCommand = ["-c", "netstat -rn", "|", "egrep -o", "default.*\(bsd)"]
+        guard let routerOutput = Commands.execute(executablePath: .shell, args: routerCommand).0 else {
             return nil
         }
 
@@ -200,7 +202,7 @@ final class NetworkManager {
                 return ipAddr
             }
         } else {
-            print("Could not find router ip address")
+            Log.debug("Could not find router ip address")
         }
 
         return nil
@@ -286,34 +288,5 @@ final class NetworkManager {
         }
         //TODO wpa3
         return ITL80211_SECURITY_UNKNOWN
-    }
-}
-
-extension NetworkManager {
-
-    // Util for running commands
-    static func commandLine(args: [String]) -> String? {
-        let process = Process()
-        if #available(OSX 10.13, *) {
-            process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        } else {
-            process.launchPath = "/bin/sh"
-        }
-        process.arguments = ["-l", "-c"] + args
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        if #available(OSX 10.13, *) {
-            try? process.run()
-        } else {
-            process.launch()
-        }
-        process.waitUntilExit()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        guard let output = String(data: data, encoding: .utf8),
-            !output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return nil
-        }
-
-        return output.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

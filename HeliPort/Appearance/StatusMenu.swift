@@ -110,7 +110,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             let notImplementedItems: [NSMenuItem] = [
                 enableLoggingItem,
-                createReportItem,
                 diagnoseItem,
 
                 securityItem,
@@ -424,6 +423,16 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         Log.debug("Clicked \(sender.title)")
 
         switch sender.title {
+        case NSLocalizedString("Create Diagnostics Report..."):
+            // Disable while bug report is being genetated, if autoenable == true, NSMenu ignores isEnable
+            createReportItem.action = nil
+            DispatchQueue.global(qos: .background).async {
+                BugReporter.generateBugReport()
+                DispatchQueue.main.async {
+                    // Enable after generating report is finished
+                    self.createReportItem.action = #selector(self.clickMenuItem(_:))
+                }
+            }
         case NSLocalizedString("Turn Wi-Fi On"):
             power_on()
         case NSLocalizedString("Turn Wi-Fi Off"):
@@ -456,11 +465,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var powerState: Bool = false
             let get_power_ret = get_power_state(&powerState)
             var status: UInt32 = 0xFF
-            get_80211_state(&status)
+            let get_state_ret = get_80211_state(&status)
 
             DispatchQueue.main.async {
-                if get_power_ret {
+                if get_power_ret && get_state_ret {
                     self.isNetworkCardEnabled = powerState
+                } else {
+                    Log.error("Failed get card state")
                 }
                 self.isNetworkCardAvailable = get_power_ret
                 self.status = itl_80211_state(rawValue: status)
@@ -588,7 +599,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         DispatchQueue.global().async {
             CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
-            print("disconnected from \(ssid)")
+            Log.debug("Disconnected from \(ssid)")
         }
     }
 }

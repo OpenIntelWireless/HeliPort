@@ -18,10 +18,14 @@ import os.log
 
 final class Log {
     static func debug(_ message: String) {
-        os_log("%@", log: .default, type: .debug, message)
+        os_log("%@", log: .heliPort, type: .debug, message)
     }
 
     static func error(_ message: String) {
-        os_log("%@", log: .default, type: .error, message)
+        os_log("%@", log: .heliPort, type: .error, message)
     }
+}
+
+extension OSLog {
+    static let heliPort = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "HeliPort")
 }
