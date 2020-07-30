@@ -35,7 +35,7 @@ class Commands {
         process.arguments = args
         if #available(OSX 10.13, *) {
             guard (try? process.run()) != nil else {
-                Log.info("Could not run command")
+                Log.debug("Could not run command")
                 return (nil, 1)
             }
         } else {

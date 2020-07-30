@@ -58,7 +58,7 @@ final class NetworkManager {
         DispatchQueue.global().async {
             if let savedNetworkAuth = CredentialsManager.instance.get(networkInfo) {
                 networkInfo.auth = savedNetworkAuth
-                Log.info("Connecting to network \(networkInfo.ssid) with saved password")
+                Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
                 CredentialsManager.instance.setAutoJoin(networkInfo.ssid, true)
                 getAuthInfoCallback(networkInfo.auth, false)
                 return
@@ -202,7 +202,7 @@ final class NetworkManager {
                 return ipAddr
             }
         } else {
-            Log.info("Could not find router ip address")
+            Log.debug("Could not find router ip address")
         }
 
         return nil

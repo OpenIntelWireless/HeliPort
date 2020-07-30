@@ -35,18 +35,18 @@ final class CredentialsManager {
             return
         }
 
-        Log.info("Saving password for network \(network.ssid)")
+        Log.debug("Saving password for network \(network.ssid)")
         try? keychain.comment(entityJson).set(networkAuthJson, key: network.keychainKey)
     }
 
     func get(_ network: NetworkInfo) -> NetworkAuth? {
         guard let password = keychain[string: network.keychainKey],
             let jsonData = password.data(using: .utf8) else {
-            Log.info("No stored password for network \(network.ssid)")
+            Log.debug("No stored password for network \(network.ssid)")
             return nil
         }
 
-        Log.info("Loading password for network \(network.ssid)")
+        Log.debug("Loading password for network \(network.ssid)")
         return try? JSONDecoder().decode(NetworkAuth.self, from: jsonData)
     }
 
