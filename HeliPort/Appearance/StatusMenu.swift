@@ -365,9 +365,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var platformInfo = platform_info_t()
 
             if is_power_on() {
-                Log.debug("Wi-Fi powered on")
+                Log.info("Wi-Fi powered on")
             } else {
-                Log.debug("Wi-Fi powered off")
+                Log.info("Wi-Fi powered off")
             }
 
             if get_platform_info(&platformInfo) {
@@ -420,7 +420,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     // - MARK: Action handlers
 
     @objc private func clickMenuItem(_ sender: NSMenuItem) {
-        Log.debug("Clicked \(sender.title)")
+        Log.info("Clicked \(sender.title)")
 
         switch sender.title {
         case NSLocalizedString("Create Diagnostics Report..."):
@@ -599,7 +599,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         DispatchQueue.global().async {
             CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
-            Log.debug("Disconnected from \(ssid)")
+            Log.info("Disconnected from \(ssid)")
         }
     }
 }

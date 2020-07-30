@@ -26,7 +26,7 @@ class BugReporter {
         let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
         let appLogCommand = ["show", "--predicate",
                                   "(subsystem == '\(appIdentifier)')",
-                                  "--debug", "--last", "boot"]
+                                  "--info", "--last", "boot"]
         let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
 
         // MARK: itlwm log

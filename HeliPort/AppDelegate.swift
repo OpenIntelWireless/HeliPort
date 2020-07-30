@@ -48,7 +48,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return false
         }
 
-        Log.debug("Loaded itlwm \(version) as \(interface)")
+        Log.info("Loaded itlwm \(version) as \(interface)")
 
         return true
     }
@@ -112,7 +112,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        Log.debug("Exit")
+        Log.info("Exit")
         api_terminate()
     }
 }
