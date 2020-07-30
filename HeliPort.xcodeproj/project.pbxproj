@@ -74,6 +74,7 @@
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		88392FB371F67D2475A1BD60 /* id */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A6B1F45424B9C60A00EBBE79 /* vi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiPopoverView.swift; sourceTree = "<group>"; };
 		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
@@ -305,6 +306,7 @@
 				ko,
 				es,
 				"pt-BR",
+				id,
 				it,
 				tr,
 				el,
@@ -456,6 +458,7 @@
 				50B86ABC24B22F75008E4FE4 /* zh-Hans */,
 				C60CDDC124B88D5A00E1F69D /* ko */,
 				50B86ABD24B22FEE008E4FE4 /* pt-BR */,
+				88392FB371F67D2475A1BD60 /* id */,
 				6A54F80824B24B9700B8D651 /* it */,
 				6A78687824B26AF6007832EE /* tr */,
 				42979EFF24B3A27200F15FBD /* el */,
