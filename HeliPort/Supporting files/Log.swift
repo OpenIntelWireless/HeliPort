@@ -26,7 +26,7 @@ final class Log {
     }
 
     static func error(_ message: String) {
-        os_log("%@", log: .heliPort, type: .error, message)
+        os_log("%{public}@", log: .heliPort, type: .error, message)
     }
 }
 
