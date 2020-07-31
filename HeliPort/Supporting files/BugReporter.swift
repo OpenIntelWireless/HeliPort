@@ -26,7 +26,7 @@ class BugReporter {
         let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
         let appLogCommand = ["show", "--predicate",
                                   "(subsystem == '\(appIdentifier)')",
-                                  "--debug", "--last", "boot"]
+                                  "--info", "--last", "boot"]
         let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
 
         // MARK: itlwm log
@@ -61,14 +61,20 @@ class BugReporter {
 
         // MARK: Output String
 
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
+        let dateRan = "Time ran: \(formatter.string(from: date))"
         let appOutput = """
-                             \(appLog)
+                        \(appLog)
 
-                             HeliPort Version: \(appVersion) (Build \(appBuildVer))
-                             """
+                        \(dateRan)
+                        HeliPort Version: \(appVersion) (Build \(appBuildVer))
+                        """
         let itlwmOutput = """
                           \(itlwmLog)
 
+                          \(dateRan)
                           \(itlwmName != nil ? """
                                                  \(itlwmName!) loaded
                                                  \(itlwmName!) version: \(itlwmVersion) (Firmware: \(itlwmFwVersion))
