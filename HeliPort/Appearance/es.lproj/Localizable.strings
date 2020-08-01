@@ -18,14 +18,14 @@
 "Create Diagnostics Report..." = "Crear Informe de Diagnósticos...";
 "Create Network..." = "Crear Red...";
 "Disconnect from: " = "Desconectarse de: ";
-"Dismiss" = "Dismiss"; // FIXME
+"Dismiss" = "Descartar"; 
 "Dynamic WEP" = "WEP Dinámico";
 "Enable Wi-Fi Logging" = "Habilitar Registro de Wi-Fi";
 "Enter the name and security type of the network you want to join." = "Introduzca el nombre y el tipo de seguridad de la red a la que desea acceder.";
 "FUNCTION NOT IMPLEMENTED" = "FUNCIÓN NO IMPLEMENTADA";
-"Find and join a Wi-Fi network." = "Encuentra y ingresa a una red Wi-Fi. ";
-"HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
+"Find and join a Wi-Fi network." = "Encuentra e ingresa a una red Wi-Fi. ";
+"HeliPort API Version: " = "Versión del API de HeliPort: ";
+"HeliPort running at an unexpected path" = "HeliPort ejecutándose en una dirección inesperada"; 
 "Interface Name: " = "Nombre de la Interfaz: ";
 "Join Other Network..." = "Acceder a otra red...";
 "Join" = "Acceder";
@@ -50,7 +50,7 @@
 "Unreachable" = "Inalcanzable";
 "Username:" = "Nombre de Usuario";
 "Version: " = "Versión: ";
-"Visit OpenIntelWireless on GitHub" = "Visit OpenIntelWireless on GitHub"; // FIXME
+"Visit OpenIntelWireless on GitHub" = "Visitar OpenIntelWireless en GitHub";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Empresarial";
 "WPA/WPA2 Personal" = "WPA/WPA2 Personal";
@@ -68,6 +68,6 @@
 "Wi-Fi: On" = "Wi-Fi: Activado";
 "Wi-Fi: Status unavailable" = "Wi-Fi: Estado no disponible";
 "\" Requires Password" = "\" Necesita una Contraseña";
-"itlwm API Version: " = "itlwm API Version: "; // FIXME
-"itlwm Version Mismatch" = "The version of installed itlwm.kext does not match the version required by HeliPort.";
-"itlwm is not running" = "The necessary WLAN driver is not active on your system. Please verify that itlwm.kext is correctly installed and running.";
+"itlwm API Version: " = "Versión del API de itlwm: ";
+"itlwm Version Mismatch" = "La versión instalada de itlwm.kext no coincide con la versión requerida por Heliport.";
+"itlwm is not running" = "El controlador WLAN necesario no se encuentra activo en su sistema. Por favor, verifique  que itwlm.kext esté correctamente instalado y ejecutándose.";
