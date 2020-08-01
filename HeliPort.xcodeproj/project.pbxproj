@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */; };
+		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
 		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
 		138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC924CE663B00793AC1 /* BugReporter.swift */; };
 		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
@@ -53,6 +55,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsSavedNetworksView.swift; sourceTree = "<group>"; };
+		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
 		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
 		138D3CC924CE663B00793AC1 /* BugReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReporter.swift; sourceTree = "<group>"; };
 		1DCA020324BD00E800F37995 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
 				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
 				F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */,
+				1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */,
+				1380C36424D5580200A448CF /* PrefsWindow.swift */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -437,12 +443,14 @@
 				F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
+				1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */,
 				138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */,
 				13AF73B624B25E170015867C /* StatusMenu.swift in Sources */,
 				138D3CC824CE635800793AC1 /* Commands.swift in Sources */,
 				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
 				F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */,
+				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
 			);

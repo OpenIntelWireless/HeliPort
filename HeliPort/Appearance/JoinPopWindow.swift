@@ -293,6 +293,7 @@ final class JoinPopWindow: NSWindow, NSTextFieldDelegate {
         isSave.title = NSLocalizedString("Remember this network")
         isSave.target = self
         isSave.action = #selector(saveWiFi(_:))
+        isSave.state = .on
         buttonView.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded

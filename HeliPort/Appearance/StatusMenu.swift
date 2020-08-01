@@ -30,6 +30,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
+    // One instance at a time
+    private var preferenceWindow: PrefsWindow?
+
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
             /* Only allow if network card is enabled or if the network card does not load
@@ -444,7 +447,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let alert = Alert(text: NSLocalizedString("FUNCTION NOT IMPLEMENTED"))
             alert.show()
         case NSLocalizedString("Open Network Preferences..."):
-            NSWorkspace.shared.openFile("/System/Library/PreferencePanes/Network.prefPane")
+            preferenceWindow?.close()
+            preferenceWindow = PrefsWindow()
+            preferenceWindow?.show()
         case NSLocalizedString("Check for Updates..."):
             heliPortUpdater.checkForUpdates(self)
         case NSLocalizedString("Launch At Login"):

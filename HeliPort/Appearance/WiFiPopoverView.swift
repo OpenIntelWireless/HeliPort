@@ -165,6 +165,7 @@ class WiFiPopoverSubview: NSView, NSWindowDelegate, NSTextFieldDelegate {
         isSave.setButtonType(.switch)
         isSave.font = .systemFont(ofSize: 13)
         isSave.title = NSLocalizedString("Remember this network")
+        isSave.state = .on
         view.addSubview(isSave)
 
         joinButton.bezelStyle = NSButton.BezelStyle.rounded
