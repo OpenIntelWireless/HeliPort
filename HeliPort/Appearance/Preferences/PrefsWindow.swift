@@ -19,45 +19,35 @@ class PrefsWindow: NSWindow {
 
     // MARK: Properties
 
-    var oldView: NSView = NSView()
+    var previousIdentifier: NSToolbarItem.Identifier = .none
 
     convenience init() {
-        self.init(
-            contentRect: NSRect(
-            x: 0,
-            y: 0,
-            width: 520,
-            height: 320
-        ),
-            styleMask: [.titled, .closable],
-        backing: .buffered,
-        defer: false)
+        self.init(contentRect: NSRect.zero,
+                  styleMask: [.titled, .closable],
+                  backing: .buffered,
+                  defer: false)
     }
 
-    override init(
-        contentRect: NSRect,
-        styleMask style: NSWindow.StyleMask,
-        backing backingStoreType: NSWindow.BackingStoreType,
-        defer flag: Bool
-    ) {
-        super.init(
-            contentRect: contentRect,
-            styleMask: style,
-            backing: backingStoreType,
-            defer: flag
-        )
+    override init(contentRect: NSRect,
+                  styleMask style: NSWindow.StyleMask,
+                  backing backingStoreType: NSWindow.BackingStoreType,
+                  defer flag: Bool) {
+
+        super.init(contentRect: contentRect,
+                   styleMask: style,
+                   backing: backingStoreType,
+                   defer: flag)
+
         isReleasedWhenClosed = false
 
-        title = NSLocalizedString("Network Preferences", comment: "")
+        title = .networkPrefs
 
         toolbar = NSToolbar(identifier: "NetworkPrefWindowToolbar")
         toolbar!.delegate = self
         toolbar!.displayMode = .iconAndLabel
         toolbar!.insertItem(withItemIdentifier: .general, at: 0)
         toolbar!.insertItem(withItemIdentifier: .networks, at: 1)
-        toolbar!.selectedItemIdentifier = .networks
-
-        contentView?.addSubview(oldView)
+        toolbar!.selectedItemIdentifier = .general
 
         // Set selected item
         clickToolbarItem(NSToolbarItem(itemIdentifier: toolbar!.selectedItemIdentifier!))
@@ -75,32 +65,34 @@ class PrefsWindow: NSWindow {
     }
 
     @objc private func clickToolbarItem(_ sender: NSToolbarItem) {
-        let identifier = sender.itemIdentifier
+        guard let identifier = toolbar?.selectedItemIdentifier else { return }
+        guard previousIdentifier != identifier else {
+            Log.debug("Toolbar Item already showing \(identifier)")
+            return
+        }
 
         Log.debug("Toolbar Item clicked: \(identifier)")
 
         var newView: NSView?
-
+        var origin = frame.origin
+        var size = frame.size
         switch identifier {
         case .networks:
-            newView = PrefsSavedNetworksView(frame: contentView!.frame)
+            newView = PrefsSavedNetworksView()
+            size = NSSize(width: 620, height: 420)
+        case .general:
+            newView = PrefsGeneralView()
+            size = newView!.fittingSize
         default:
-            break
-        }
-
-        guard newView != nil else {
             Log.error("Toolbar Item not implemented: \(identifier)")
-            return
         }
 
-        toolbar!.selectedItemIdentifier = identifier
+        guard let view = newView else { return }
 
-        if oldView.className != newView!.className {
-            contentView?.replaceSubview(oldView, with: newView!)
-            oldView = newView!
-        } else {
-            Log.debug("Toolbar Item already showing \(identifier)")
-        }
+        origin.y -= size.height - frame.size.height
+        contentView = view
+        setFrame(NSRect(origin: origin, size: size), display: true, animate: true)
+        previousIdentifier = identifier
     }
 }
 
@@ -109,15 +101,15 @@ class PrefsWindow: NSWindow {
 extension PrefsWindow: NSToolbarDelegate {
 
     func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [.networks]
+        return [.general, .networks]
     }
 
     func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [.networks]
+        return [.general, .networks]
     }
 
     func toolbarSelectableItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-        return [.networks]
+        return [.general, .networks]
     }
 
     func toolbar(_ toolbar: NSToolbar,
@@ -126,20 +118,20 @@ extension PrefsWindow: NSToolbarDelegate {
 
         let toolbarItem = NSToolbarItem(itemIdentifier: itemIdentifier)
         toolbarItem.target = self
+        toolbarItem.action = #selector(clickToolbarItem(_:))
 
         switch itemIdentifier {
         case .networks:
-            toolbarItem.label = NSLocalizedString("Wi-Fi", comment: "")
-            toolbarItem.paletteLabel = NSLocalizedString("Wi-Fi", comment: "")
+            toolbarItem.label = .networks
+            toolbarItem.paletteLabel = .networks
             toolbarItem.image = #imageLiteral(resourceName: "WiFi")
             toolbarItem.isEnabled = true
-            toolbarItem.action = #selector(clickToolbarItem(_:))
             return toolbarItem
         case .general:
-            toolbarItem.label = NSLocalizedString("General", comment: "")
-            toolbarItem.paletteLabel = NSLocalizedString("General", comment: "")
+            toolbarItem.label = .general
+            toolbarItem.paletteLabel = .general
             toolbarItem.image = NSImage(named: NSImage.preferencesGeneralName)
-            toolbarItem.isEnabled = false
+            toolbarItem.isEnabled = true
             return toolbarItem
         default:
             return nil
@@ -150,7 +142,15 @@ extension PrefsWindow: NSToolbarDelegate {
 // MARK: Toolbar Item Identifiers
 
 private extension NSToolbarItem.Identifier {
-
     static let networks = NSToolbarItem.Identifier("WiFiNetworks")
     static let general = NSToolbarItem.Identifier("General")
+    static let none = NSToolbarItem.Identifier("none")
+}
+
+// MARK: Localized Strings
+
+private extension String {
+    static let networkPrefs = NSLocalizedString("Network Preferences")
+    static let networks = NSLocalizedString("Networks")
+    static let general = NSLocalizedString("General")
 }

@@ -1,5 +1,5 @@
 //
-//  PrefsSavedWiFiView.swift
+//  PrefsSavedNetworksView.swift
 //  HeliPort
 //
 //  Created by Erik Bautista on 8/1/20.
@@ -24,7 +24,7 @@ class PrefsSavedNetworksView: NSView {
     // MARK: Properties
 
     let savedNetworksLabel: NSTextField = {
-        let label = NSTextField(labelWithString: NSLocalizedString("Saved Networks:", comment: ""))
+        let label = NSTextField(labelWithString: .savedNetworks)
         return label
     }()
 
@@ -45,17 +45,17 @@ class PrefsSavedNetworksView: NSView {
         let attributes = [NSAttributedString.Key.font: font]
 
         let ssidColumn = NSTableColumn(identifier: .ssidId)
-        ssidColumn.title = NSLocalizedString("Network Name", comment: "")
+        ssidColumn.title = .networkName
         ssidColumn.minWidth = (ssidColumn.title as NSString).size(withAttributes: attributes).width
         table.addTableColumn(ssidColumn)
 
         let securityColumn = NSTableColumn(identifier: .securityId)
-        securityColumn.title = NSLocalizedString("Security", comment: "")
+        securityColumn.title = .security
         securityColumn.minWidth = (securityColumn.title as NSString).size(withAttributes: attributes).width
         table.addTableColumn(securityColumn)
 
         let autoenabledColumn = NSTableColumn(identifier: .autoenabledId)
-        autoenabledColumn.title = NSLocalizedString("Auto Join", comment: "")
+        autoenabledColumn.title = .autoJoin
         autoenabledColumn.minWidth = (autoenabledColumn.title as NSString).size(withAttributes: attributes).width
         table.addTableColumn(autoenabledColumn)
 
@@ -63,17 +63,28 @@ class PrefsSavedNetworksView: NSView {
     }()
 
     let orderItemsLabel: NSTextField = {
-        let orderPreferenceString = NSLocalizedString("Drag networks into the order you prefer.")
+        let orderPreferenceString: String = .dragNetworks
         let label = NSTextField(labelWithString: orderPreferenceString)
         return label
     }()
 
-    let removeItemButton: NSButton = {
+    let modifyItemSegment: NSSegmentedControl = {
+        let addImage = NSImage(named: NSImage.addTemplateName)!
         let removeImage = NSImage(named: NSImage.removeTemplateName)!
-        let button = NSButton(image: removeImage, target: self, action: #selector(removeItemClicked(_:)))
-        button.isEnabled = false
+        let editImage = NSImage(named: "NSTouchBarComposeTemplate")!
+        let button = NSSegmentedControl(images: [addImage, removeImage, editImage],
+                                        trackingMode: .momentary,
+                                        target: self,
+                                        action: #selector(modifyItemClicked(_:)))
+        button.setEnabled(false, forSegment: .add)
+        button.setEnabled(false, forSegment: .remove)
+        button.setEnabled(false, forSegment: .edit)
         return button
     }()
+
+    convenience init() {
+        self.init(frame: NSRect.zero)
+    }
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -84,7 +95,7 @@ class PrefsSavedNetworksView: NSView {
 
         addSubview(savedNetworksLabel)
         addSubview(scrollView)
-        addSubview(removeItemButton)
+        addSubview(modifyItemSegment)
         addSubview(orderItemsLabel)
 
         setupConstraints()
@@ -113,12 +124,12 @@ class PrefsSavedNetworksView: NSView {
         scrollView.topAnchor.constraint(equalTo: savedNetworksLabel.bottomAnchor, constant: 8).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset).isActive = true
 
-        removeItemButton.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 8).isActive = true
-        removeItemButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
-        removeItemButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset).isActive = true
+        modifyItemSegment.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 8).isActive = true
+        modifyItemSegment.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        modifyItemSegment.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -inset).isActive = true
 
-        orderItemsLabel.leadingAnchor.constraint(equalTo: removeItemButton.trailingAnchor, constant: 4).isActive = true
-        orderItemsLabel.centerYAnchor.constraint(equalTo: removeItemButton.centerYAnchor).isActive = true
+        orderItemsLabel.leadingAnchor.constraint(equalTo: modifyItemSegment.trailingAnchor, constant: 4).isActive = true
+        orderItemsLabel.centerYAnchor.constraint(equalTo: modifyItemSegment.centerYAnchor).isActive = true
     }
 
     private func updateNetworkPriority() {
@@ -139,26 +150,48 @@ class PrefsSavedNetworksView: NSView {
 
 extension PrefsSavedNetworksView {
 
-    @objc func removeItemClicked(_ sender: NSButton) {
-        Log.debug("Clicked removing segment button")
-        let index = tableView.selectedRow
-        guard index != -1 else { return }
+    @objc func modifyItemClicked(_ sender: NSSegmentedControl) {
+        let selectedSegment = sender.selectedSegment
+        switch selectedSegment {
+        case .remove:
+            removeNetwork()
+        case .edit:
+            editNetwork()
+        default:
+            Log.debug("Modify item not implemented \(selectedSegment)")
+        }
+    }
 
+    private func editNetwork() {
+        let index = tableView.selectedRow
+        let networkInfo = savedNetworks[index].network
+
+        guard let currentWindow = window else {
+            Log.error("Could not show edit window due to window == nil")
+             return
+        }
+
+        let joinWiFi = PrefsModifyWiFiModal(networkInfo: networkInfo)
+        currentWindow.beginSheet(joinWiFi, completionHandler: { _ in })
+    }
+
+    private func removeNetwork() {
+        let index = tableView.selectedRow
         let networkEntity = savedNetworks[index]
 
-        guard window != nil else {
-            Log.error("Could not show alert due to window == nil")
+        guard let currentWindow = window else {
+            Log.error("Could not show remove alert due to window == nil")
              return
         }
 
         let alert = NSAlert()
-        alert.informativeText = "Your Mac will no longer join this Wi-Fi network."
-        alert.messageText = "Remove Wi-Fi network \"\(networkEntity.network.ssid)\"?"
-        alert.addButton(withTitle: "Remove")
-        alert.addButton(withTitle: "Cancel")
+        alert.informativeText = .macWillNotJoin
+        alert.messageText = String(format: .removeNetwork, "\(networkEntity.network.ssid)")
+        alert.addButton(withTitle: .remove)
+        alert.addButton(withTitle: .cancel)
         alert.icon = #imageLiteral(resourceName: "WiFi")
         alert.alertStyle = .warning
-        alert.beginSheetModal(for: window!) { response in
+        alert.beginSheetModal(for: currentWindow) { response in
             switch response {
             case .alertFirstButtonReturn:
                 DispatchQueue.global(qos: .background).async {
@@ -166,7 +199,6 @@ extension PrefsSavedNetworksView {
                     DispatchQueue.main.async {
                         self.savedNetworks.remove(at: index)
                         self.tableView.removeRows(at: IndexSet(integer: index), withAnimation: .effectFade)
-                        self.updateNetworkPriority()
                     }
                 }
             default:
@@ -192,6 +224,14 @@ extension PrefsSavedNetworksView {
             }
         }
     }
+}
+
+// MARK: Modify index
+
+private extension Int {
+    static let add = 0
+    static let remove = 1
+    static let edit = 2
 }
 
 // MARK: Table view delegate
@@ -231,7 +271,9 @@ extension PrefsSavedNetworksView: NSTableViewDelegate {
     }
 
     func tableViewSelectionDidChange(_ notification: Notification) {
-        removeItemButton.isEnabled = tableView.selectedRow != -1
+        let selected = tableView.selectedRow != -1
+        modifyItemSegment.setEnabled(selected, forSegment: .remove)
+        modifyItemSegment.setEnabled(selected, forSegment: .edit)
     }
 }
 
@@ -314,4 +356,18 @@ private extension NSUserInterfaceItemIdentifier {
 
     static let textViewId: NSUserInterfaceItemIdentifier = .init(rawValue: "textViewId")
     static let checkboxId: NSUserInterfaceItemIdentifier = .init(rawValue: "checkboxId")
+}
+
+// MARK: Localized Strings
+
+private extension String {
+    static let savedNetworks = NSLocalizedString("Saved Networks:")
+    static let networkName = NSLocalizedString("Network Name")
+    static let security = NSLocalizedString("Security")
+    static let autoJoin = NSLocalizedString("Auto Join")
+    static let dragNetworks = NSLocalizedString("Drag networks into the order you prefer.")
+    static let macWillNotJoin = NSLocalizedString("Your Mac will no longer join this Wi-Fi network.")
+    static let removeNetwork = NSLocalizedString("Remove Wi-Fi network %@?")
+    static let remove = NSLocalizedString("Remove")
+    static let cancel = NSLocalizedString("Cancel")
 }

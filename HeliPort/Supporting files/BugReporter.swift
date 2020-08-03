@@ -25,8 +25,7 @@ class BugReporter {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "Unknown"
         let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
         let appLogCommand = ["show", "--predicate",
-                                  "(subsystem == '\(appIdentifier)')",
-                                  "--info", "--last", "boot"]
+                                  "(subsystem == '\(appIdentifier)')", "--info", "--last", "boot"]
         let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
 
         // MARK: itlwm log
@@ -38,8 +37,7 @@ class BugReporter {
         if itlwmVersion.isEmpty { itlwmVersion = "Unknown" }
         if itlwmFwVersion.isEmpty { itlwmFwVersion = "Unknown" }
         let itlwmLogCommand = ["show", "--predicate",
-                               "(process == 'kernel' " +
-                               "&& eventMessage CONTAINS[c] 'itlwm')",
+                               "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
                                "--last", "boot"]
         let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand).0 ?? "No logs for itlwm"
 

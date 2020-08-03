@@ -589,25 +589,19 @@ private extension String {
     static let turnWiFiOff = NSLocalizedString("Turn Wi-Fi Off")
     static let wifiOn = NSLocalizedString("Wi-Fi: On")
     static let wifiOff = NSLocalizedString("Wi-Fi: Off")
-
     static let interfaceName = NSLocalizedString("Interface Name: ")
     static let macAddress = NSLocalizedString("Address: ")
     static let itlwmVer = NSLocalizedString("Version: ")
-
     static let enableWiFiLog = NSLocalizedString("Enable Wi-Fi Logging")
     static let createReport = NSLocalizedString("Create Diagnostics Report...")
     static let openDiagnostics = NSLocalizedString("Open Wireless Diagnostics...")
-
     static let joinNetworks = NSLocalizedString("Join Other Network...")
     static let createNetwork = NSLocalizedString("Create Network...")
     static let openNetworkPrefs = NSLocalizedString("Open Network Preferences...")
-
     static let checkUpdates = NSLocalizedString("Check for Updates...")
     static let aboutHeliport = NSLocalizedString("About HeliPort")
     static let quitHeliport = NSLocalizedString("Quit HeliPort")
-
     static let launchLogin = NSLocalizedString("Launch At Login")
-
     static let disconnectNet = NSLocalizedString("Disconnect from: ")
     static let ipAddr = NSLocalizedString("    IP Address: ")
     static let routerStr = NSLocalizedString("    Router: ")
