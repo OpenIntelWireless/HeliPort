@@ -33,6 +33,7 @@ class PrefsSavedNetworksView: NSView {
         view.hasHorizontalScroller = true
         view.hasVerticalScroller = true
         view.autohidesScrollers = true
+        view.focusRingType = .exterior
         return view
     }()
 
@@ -71,7 +72,7 @@ class PrefsSavedNetworksView: NSView {
     let modifyItemSegment: NSSegmentedControl = {
         let addImage = NSImage(named: NSImage.addTemplateName)!
         let removeImage = NSImage(named: NSImage.removeTemplateName)!
-        let editImage = NSImage(named: "NSTouchBarComposeTemplate")!
+        let editImage = NSImage(named: NSImage.quickLookTemplateName)!
         let button = NSSegmentedControl(images: [addImage, removeImage, editImage],
                                         trackingMode: .momentary,
                                         target: self,
@@ -171,8 +172,8 @@ extension PrefsSavedNetworksView {
              return
         }
 
-        let joinWiFi = PrefsModifyWiFiModal(networkInfo: networkInfo)
-        currentWindow.beginSheet(joinWiFi, completionHandler: { _ in })
+        let viewCredentials = PrefsViewWiFiInfoModal(networkInfo: networkInfo)
+        currentWindow.beginSheet(viewCredentials, completionHandler: { _ in })
     }
 
     private func removeNetwork() {

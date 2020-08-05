@@ -7,8 +7,11 @@
 //
 
 import Cocoa
+import LocalAuthentication
 
 class PrefsViewWiFiInfoModal: NSWindow {
+
+    private var authenticated = false
 
     private var networkInfo: NetworkInfo
 
@@ -389,25 +392,31 @@ class PrefsViewWiFiInfoModal: NSWindow {
 
     @objc private func showPasswd(_ sender: Any?) {
         passwdSecureBox.stringValue = passwdInputBox.stringValue
-        passwdInputBox.isHidden = isShowPasswd.state == .off
-        passwdSecureBox.isHidden = isShowPasswd.state == .on
-
         switch isShowPasswd.state {
         case .off:
-            passwdSecureBox.becomeFirstResponder()
-            passwdSecureBox.selectText(self)
-            passwdSecureBox.currentEditor()?.selectedRange = NSRange(
-                location: "\(passwdSecureBox)".count,
-                length: 0
-            )
+            passwdInputBox.isHidden = true
+            passwdSecureBox.isHidden = false
         default:
-            let contextAuth = LAContext()
-            passwdInputBox.becomeFirstResponder()
-            passwdInputBox.selectText(self)
-            passwdInputBox.currentEditor()?.selectedRange = NSRange(
-                location: "\(passwdInputBox)".count,
-                length: 0
-            )
+            guard !authenticated else {
+                self.passwdInputBox.isHidden = false
+                self.passwdSecureBox.isHidden = true
+                return
+            }
+            let auth = LAContext()
+            auth.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: .authReason) { (success, error) in
+                DispatchQueue.main.async {
+                    if success {
+                        self.passwdInputBox.isHidden = false
+                        self.passwdSecureBox.isHidden = true
+                    } else {
+                        self.isShowPasswd.state = .off
+                        Log.error("Unable to show password due to \(String(describing: error))")
+                    }
+                    self.authenticated = success
+                    self.makeKeyAndOrderFront(nil)
+                    NSApplication.shared.activate(ignoringOtherApps: true)
+                }
+            }
         }
     }
 
@@ -426,8 +435,8 @@ class PrefsViewWiFiInfoModal: NSWindow {
 // MARK: Localization strings
 
 private extension String {
-    static let title = NSLocalizedString("%@'s Info")
-    static let subTitle = NSLocalizedString("View saved credentials from keychain for this network.")
+    static let title = NSLocalizedString("%@'s Credentials")
+    static let subTitle = NSLocalizedString("View saved credentials from keychain for the selected network.")
     static let security = NSLocalizedString("Security:")
     static let none = NSLocalizedString(ITL80211_SECURITY_NONE.description)
     static let wpa1_2_Personal = NSLocalizedString(ITL80211_SECURITY_WPA_PERSONAL_MIXED.description)
@@ -438,4 +447,5 @@ private extension String {
     static let password = NSLocalizedString("Password:")
     static let close = NSLocalizedString("Close")
     static let showPassword = NSLocalizedString("Show password")
+    static let authReason = NSLocalizedString("verify your credentials to show the stored password")
 }
