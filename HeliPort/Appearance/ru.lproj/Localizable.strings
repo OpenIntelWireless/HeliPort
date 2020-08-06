@@ -18,18 +18,18 @@
 "Create Diagnostics Report..." = "Создать отчет...";
 "Create Network..." = "Создать сеть...";
 "Disconnect from: " = "Отключиться от: ";
-"Dismiss" = "Пропустить"; // FIXME
+"Dismiss" = "Пропустить";
 "Dynamic WEP" = "Динамический WEP";
 "Enable Wi-Fi Logging" = "Включить логирование Wi-Fi";
 "Enter the name and security type of the network you want to join." = "Выберите имя и тип шифрования сети, к которой хотите подключиться.";
 "FUNCTION NOT IMPLEMENTED" = "ФУНКЦИЯ НЕ РЕАЛИЗОВАНА";
 "Find and join a Wi-Fi network." = "Найти и подключиться к сети. ";
 "HeliPort API Version: " = "HeliPort API Version: "; // FIXME
-"HeliPort running at an unexpected path" = "HeliPort запущен не из каталога программы"; // FIXME
+"HeliPort running at an unexpected path" = "HeliPort запущен не из каталога программы";
 "Interface Name: " = "Имя интерфейса: ";
 "Join Other Network..." = "Подключиться к другой сети...";
 "Join" = "Подключиться";
-"Launch At Login" = "Запускать при старте"; // FIXME
+"Launch At Login" = "Запускать при старте";
 "Network Name:" = "Имя сети:";
 "No Network Avaliable" = "Нет доступных сетей";
 "No Status Information Avaliable" = "Нет доступной информации о статусе";
@@ -50,7 +50,7 @@
 "Unreachable" = "Недостижимо";
 "Username:" = "Имя пользователя";
 "Version: " = "Версия: ";
-"Visit OpenIntelWireless on GitHub" = "Открыть OpenIntelWireless на GitHub"; // FIXME
+"Visit OpenIntelWireless on GitHub" = "Открыть OpenIntelWireless на GitHub";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Enterprise";
 "WPA/WPA2 Personal" = "WPA/WPA2 Personal";
@@ -70,4 +70,4 @@
 "\" Requires Password" = "\" Введите пароль";
 "itlwm API Version: " = "itlwm API Version: "; // FIXME
 "itlwm Version Mismatch" = "itlwm Version Mismatch"; // FIXME
-"itlwm is not running" = "itlwm не запущен"; // FIXME
+"itlwm is not running" = "itlwm не запущен";
