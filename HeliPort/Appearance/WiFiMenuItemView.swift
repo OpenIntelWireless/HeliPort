@@ -20,7 +20,7 @@ class WifiMenuItemView: NSView {
 
     let statusImage: NSImageView = {
         let statusImage = NSImageView()
-        statusImage.image = NSImage(named: "NSMenuOnStateTemplate")
+        statusImage.image = NSImage(named: NSImage.menuOnStateTemplateName)
         statusImage.image?.isTemplate = true
         statusImage.translatesAutoresizingMaskIntoConstraints = false
         statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -43,7 +43,7 @@ class WifiMenuItemView: NSView {
 
     let lockImage: NSImageView = {
         let lockImage = NSImageView()
-        lockImage.image = NSImage.init(named: "NSLockLockedTemplate")
+        lockImage.image = NSImage.init(named: NSImage.lockLockedTemplateName)
         lockImage.image?.isTemplate = true
         lockImage.translatesAutoresizingMaskIntoConstraints = false
         lockImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
@@ -164,17 +164,17 @@ class WifiMenuItemView: NSView {
     }
 
     class func getRssiImage(_ RSSI: Int) -> NSImage? {
-        var signalImageName: String
+        var signalImageName: NSImage
         switch RSSI {
         case ..<(-100):
-            signalImageName = "WiFiSignalStrengthPoor"
+            signalImageName = #imageLiteral(resourceName: "WiFiStateScanning1")
         case ..<(-80):
-            signalImageName = "WiFiSignalStrengthFair"
+            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
         case ..<(-60):
-            signalImageName = "WiFiSignalStrengthGood"
+            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
         default:
-            signalImageName = "WiFiSignalStrengthExcellent"
+            signalImageName = #imageLiteral(resourceName: "WiFiStateOn")
         }
-        return NSImage(named: signalImageName)
+        return signalImageName
     }
 }

@@ -70,14 +70,12 @@ class PrefsSavedNetworksView: NSView {
     }()
 
     let modifyItemSegment: NSSegmentedControl = {
-        let addImage = NSImage(named: NSImage.addTemplateName)!
         let removeImage = NSImage(named: NSImage.removeTemplateName)!
         let editImage = NSImage(named: NSImage.quickLookTemplateName)!
-        let button = NSSegmentedControl(images: [addImage, removeImage, editImage],
+        let button = NSSegmentedControl(images: [removeImage, editImage],
                                         trackingMode: .momentary,
                                         target: self,
                                         action: #selector(modifyItemClicked(_:)))
-        button.setEnabled(false, forSegment: .add)
         button.setEnabled(false, forSegment: .remove)
         button.setEnabled(false, forSegment: .edit)
         return button
@@ -230,9 +228,8 @@ extension PrefsSavedNetworksView {
 // MARK: Modify index
 
 private extension Int {
-    static let add = 0
-    static let remove = 1
-    static let edit = 2
+    static let remove = 0
+    static let edit = 1
 }
 
 // MARK: Table view delegate
