@@ -71,7 +71,9 @@ final class NetworkManager {
             }
 
             DispatchQueue.main.async {
-                WifiPopupWindow(networkInfo: networkInfo, getAuthInfoCallback: getAuthInfoCallback).show()
+                WiFiConfigWindow(windowState: .connectWiFi,
+                                 networkInfo: networkInfo,
+                                 getAuthInfoCallback: getAuthInfoCallback).show()
             }
         }
     }

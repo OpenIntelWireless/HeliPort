@@ -11,9 +11,9 @@
 		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
 		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
 		138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC924CE663B00793AC1 /* BugReporter.swift */; };
+		13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */; };
 		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
-		13C20DFC24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DFB24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift */; };
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
 		50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */; };
 		50F495A024BDEB6500AE4C08 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959F24BDEB6500AE4C08 /* main.swift */; };
@@ -22,8 +22,6 @@
 		7562BBE424826103008A9BD2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7562BBE324826102008A9BD2 /* README.md */; };
 		75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkManager.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
-		BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */; };
-		BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */; };
 		BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */; };
 		BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */; };
 		BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */; };
@@ -38,7 +36,6 @@
 		F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */; };
 		F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379276E24A0A4A50087FF2B /* CredentialsManager.swift */; };
 		F379277124A0A52E0087FF2B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277024A0A52E0087FF2B /* Log.swift */; };
-		F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */; };
 		F3915F0724AB1A1B00E6614D /* itl_80211_state+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,8 +58,8 @@
 		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
 		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
 		138D3CC924CE663B00793AC1 /* BugReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReporter.swift; sourceTree = "<group>"; };
+		13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiConfigWindow.swift; sourceTree = "<group>"; };
 		13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsGeneralView.swift; sourceTree = "<group>"; };
-		13C20DFB24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewWiFiInfoModal.swift; sourceTree = "<group>"; };
 		1DCA020324BD00E800F37995 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2181E9B524C24FF600E3C73D /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -84,9 +81,7 @@
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		88392FB371F67D2475A1BD60 /* id */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A6B1F45424B9C60A00EBBE79 /* vi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiPopoverView.swift; sourceTree = "<group>"; };
 		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
-		BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinPopWindow.swift; sourceTree = "<group>"; };
 		BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
 		BCFA32E72424D2BE00E23603 /* HeliPort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeliPort.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,7 +101,6 @@
 		F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenuItem+Extensions.swift"; sourceTree = "<group>"; };
 		F379276E24A0A4A50087FF2B /* CredentialsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsManager.swift; sourceTree = "<group>"; };
 		F379277024A0A52E0087FF2B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WifiPopupWindow.swift; sourceTree = "<group>"; };
 		F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_80211_state+Description.swift"; sourceTree = "<group>"; };
 		F86A8972243CD40800CBABC2 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
@@ -138,7 +132,6 @@
 		13C20DFD24D92E3800B1E713 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				13C20DFB24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift */,
 				1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */,
 				13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */,
 				1380C36424D5580200A448CF /* PrefsWindow.swift */,
@@ -181,9 +174,7 @@
 				BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */,
 				BCA4DFAC243A307B002A862A /* StatusMenu.swift */,
 				BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */,
-				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
-				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
-				F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */,
+				13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */,
 				13C20DFD24D92E3800B1E713 /* Preferences */,
 			);
 			path = Appearance;
@@ -446,12 +437,10 @@
 			files = (
 				75FDF38C2481D25A00B2A601 /* Api.c in Sources */,
 				F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */,
-				13C20DFC24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift in Sources */,
 				F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */,
 				F33A1F3F24C8347F008ED2BD /* NSLocalizedString+Extensions.swift in Sources */,
 				F379277124A0A52E0087FF2B /* Log.swift in Sources */,
 				F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */,
-				BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */,
 				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
 				F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */,
 				F3915F0724AB1A1B00E6614D /* itl_80211_state+Description.swift in Sources */,
@@ -464,8 +453,7 @@
 				13AF73B624B25E170015867C /* StatusMenu.swift in Sources */,
 				138D3CC824CE635800793AC1 /* Commands.swift in Sources */,
 				13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */,
-				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
-				F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */,
+				13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */,
 				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
