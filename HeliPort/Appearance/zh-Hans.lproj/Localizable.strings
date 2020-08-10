@@ -39,7 +39,7 @@
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";
 "Launch At Login" = "登陆时自动启动";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "网络名称：";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "无可用网络";

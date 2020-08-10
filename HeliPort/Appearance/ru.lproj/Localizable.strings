@@ -39,7 +39,7 @@
 "Join Other Network..." = "Подключиться к другой сети...";
 "Join" = "Подключиться";
 "Launch At Login" = "Запускать при старте";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Имя сети:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Нет доступных сетей";

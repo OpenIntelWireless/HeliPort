@@ -39,7 +39,7 @@
 "Join Other Network..." = "Sambungkan ke Jaringan Lain...";
 "Join" = "Sambungkan";
 "Launch At Login" = "Jalankan ketika Login";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Nama Jaringan:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Tidak Ada Jaringan";

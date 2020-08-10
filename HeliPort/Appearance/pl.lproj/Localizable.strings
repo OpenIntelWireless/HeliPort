@@ -39,7 +39,7 @@
 "Join Other Network..." = "Przyłącz się do innej sieci...";
 "Join" = "Połącz";
 "Launch At Login" = "Uruchom przy logowaniu";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Nazwa sieci:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Brak dostępnej sieci";

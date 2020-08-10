@@ -39,7 +39,7 @@
 "Join Other Network..." = "Diğer Kablosuz Ağ'a Bağlan...";
 "Join" = "Bağlan";
 "Launch At Login" = "Başlangıçta Çalıştır";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Kablosuz Ağ Adı:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Ağ Bağlantısı Mevcut Değil";

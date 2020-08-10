@@ -39,7 +39,7 @@
 "Join Other Network..." = "Εισέλθετε σε Άλλο Δίκτυο...";
 "Join" = "Είσοδος";
 "Launch At Login" = "Αυτόματη Εκκίνηση";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Ονομα Δικτύου:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Κανένα Διαθέσιμο Δίκτυο";

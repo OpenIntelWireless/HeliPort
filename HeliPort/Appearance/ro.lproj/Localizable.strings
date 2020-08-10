@@ -39,7 +39,7 @@
 "Join Other Network..." = "Conectează-te la o altă rețea...";
 "Join" = "Conectează-te";
 "Launch At Login" = "Rulează la pornirea calculatorului";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Numele Rețelei:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Nicio rețea disponibilă";

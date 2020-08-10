@@ -39,7 +39,7 @@
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
 "Launch At Login" = "Chạy khi khởi động";
-"Network Name"	 = "Network Name"	; // FIXME
+"Network Name" = "Network Name"; // FIXME
 "Network Name:" = "Tên mạng:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "Không tìm thấy mạng";
