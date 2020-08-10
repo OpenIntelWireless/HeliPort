@@ -67,8 +67,8 @@
 "Username:" = "Nome utente:";
 "verify your credentials to show the stored password" = "verifica le tue credenziali per mostrare la password salvata";
 "Version: " = "Versione: ";
-"View saved credentials from keychain for the selected network." = "Mostra le credenziali salvate della rete selezionata sul portachiavi.";
-"View saved credentials from keychain for this network." = "Mostra le credenziali salvate di questa rete sul portachiavi.";
+"View saved credentials from keychain for the selected network." = "Mostra le credenziali salvate sul portachiavi della rete selezionata.";
+"View saved credentials from keychain for this network." = "Mostra le credenziali salvate sul portachiavi di questa rete.";
 "Visit OpenIntelWireless on GitHub" = "Visita OpenIntelWireless su GitHub";
 "WEP" = "WEP";
 "WPA/WPA2 Enterprise" = "WPA/WPA2 Enterprise";
