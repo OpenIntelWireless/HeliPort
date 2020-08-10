@@ -50,6 +50,11 @@ final class CredentialsManager {
         return try? JSONDecoder().decode(NetworkAuth.self, from: jsonData)
     }
 
+    func remove(_ network: NetworkInfo) {
+        Log.debug("Removing \(network.ssid) from keychain")
+        try? keychain.remove(network.keychainKey)
+    }
+
     func getStorageFromSsid(_ ssid: String) -> NetworkInfoStorageEntity? {
         guard let attributes = try? keychain.get(ssid, handler: {$0}),
             let json = attributes.comment,
@@ -86,6 +91,22 @@ final class CredentialsManager {
         try? keychain.comment(entityJson).set(authJson, key: ssid)
     }
 
+    func setPriority(_ ssid: String, _ priority: Int) {
+        guard let entity = getStorageFromSsid(ssid),
+            let auth = getAuthFromSsid(ssid) else {
+                return
+        }
+
+        entity.order = priority
+
+        guard let entityJson = try? String(data: JSONEncoder().encode(entity), encoding: .utf8),
+            let authJson = try? String(data: JSONEncoder().encode(auth), encoding: .utf8) else {
+            return
+        }
+
+        try? keychain.comment(entityJson).set(authJson, key: ssid)
+    }
+
     func getSavedNetworks() -> [NetworkInfo] {
         return (keychain.allKeys().compactMap { ssid in
             return getStorageFromSsid(ssid)
@@ -95,6 +116,22 @@ final class CredentialsManager {
             $0.order < $1.order
         }.map { entity in
             entity.network
+        }
+    }
+
+    func getSavedNetworksEntity() -> [NetworkInfoStorageEntity] {
+        return (keychain.allKeys().compactMap { ssid in
+            return getStorageFromSsid(ssid)
+        } as [NetworkInfoStorageEntity]).filter { entity in
+            entity.version == NetworkInfoStorageEntity.CURRENT_VERSION
+        }.sorted {
+            $0.order < $1.order
+        }.map { entity in
+            guard let auth = getAuthFromSsid(entity.network.ssid) else {
+                return entity
+            }
+            entity.network.auth = auth
+            return entity
         }
     }
 }

@@ -31,13 +31,9 @@ final class NetworkManager {
                        _ callback: ((_ result: Bool) -> Void)? = nil) {
 
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("Network security not supported: ", comment: "")
-                + networkInfo.auth.security.description
-            alert.alertStyle = .critical
-            DispatchQueue.main.async {
-                alert.runModal()
-            }
+            let alert = Alert(text: NSLocalizedString("Network security not supported: ")
+                + networkInfo.auth.security.description)
+            alert.show()
             return
         }
 
@@ -50,6 +46,8 @@ final class NetworkManager {
                         if savePassword {
                             CredentialsManager.instance.save(networkInfo)
                         }
+                    } else {
+                        Log.error("Failed to connect to: \(networkInfo.ssid)")
                     }
                     callback?(result)
                 }
@@ -168,7 +166,7 @@ final class NetworkManager {
     }
 
     class func isReachable() -> Bool {
-        guard let reachability = SCNetworkReachabilityCreateWithName(nil, "www.apple.com") else {
+        guard let reachability = SCNetworkReachabilityCreateWithName(nil, "captive.apple.com") else {
             return false
         }
         var address = sockaddr_in()
@@ -186,23 +184,28 @@ final class NetworkManager {
     }
 
     class func getRouterAddress(bsd: String) -> String? {
-        let dynamicCreate = SCDynamicStoreCreate(kCFAllocatorDefault, "router-ip" as CFString, nil, nil)
-        let keyIPv4 = "State:/Network/Global/IPv4" as CFString
-        let keyIPv6 = "State:/Network/Global/IPv6" as CFString
-        let dictionary = SCDynamicStoreCopyValue(dynamicCreate, keyIPv4)
-            ?? SCDynamicStoreCopyValue(dynamicCreate, keyIPv6)
+        // from Goshin
+        let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
 
-        guard let interface = dictionary?[kSCDynamicStorePropNetPrimaryInterface] as? String, interface == bsd else {
-            Log.error("Could not find interface")
+        let routerCommand = ["-c", "netstat -rn", "|", "egrep -o", "default.*\(bsd)"]
+        guard let routerOutput = Commands.execute(executablePath: .shell, args: routerCommand).0 else {
             return nil
         }
 
-        guard let ipRouterAddr = dictionary?["Router"] as? String else {
-            Log.error("Could not find router ip")
-            return nil
+        let regex = try? NSRegularExpression.init(pattern: ipAddressRegex, options: [])
+        let firstMatch = regex?.firstMatch(in: routerOutput,
+                                        options: [],
+                                        range: NSRange(location: 0, length: routerOutput.count))
+        if let range = firstMatch?.range(at: 1) {
+            if let swiftRange = Range(range, in: routerOutput) {
+                let ipAddr = String(routerOutput[swiftRange])
+                return ipAddr
+            }
+        } else {
+            Log.debug("Could not find router ip address")
         }
 
-        return ipRouterAddr
+        return nil
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194

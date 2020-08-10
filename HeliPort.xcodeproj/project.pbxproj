@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */; };
+		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
+		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
+		138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC924CE663B00793AC1 /* BugReporter.swift */; };
 		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
+		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
+		13C20DFC24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DFB24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift */; };
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
 		50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */; };
 		50F495A024BDEB6500AE4C08 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959F24BDEB6500AE4C08 /* main.swift */; };
@@ -27,6 +33,8 @@
 		F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */; };
 		F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */; };
 		F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */; };
+		F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33A1F3A24C83016008ED2BD /* Alert.swift */; };
+		F33A1F3F24C8347F008ED2BD /* NSLocalizedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33A1F3E24C8347F008ED2BD /* NSLocalizedString+Extensions.swift */; };
 		F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */; };
 		F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379276E24A0A4A50087FF2B /* CredentialsManager.swift */; };
 		F379277124A0A52E0087FF2B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277024A0A52E0087FF2B /* Log.swift */; };
@@ -49,6 +57,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsSavedNetworksView.swift; sourceTree = "<group>"; };
+		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
+		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
+		138D3CC924CE663B00793AC1 /* BugReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReporter.swift; sourceTree = "<group>"; };
+		13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsGeneralView.swift; sourceTree = "<group>"; };
+		13C20DFB24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewWiFiInfoModal.swift; sourceTree = "<group>"; };
 		1DCA020324BD00E800F37995 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2181E9B524C24FF600E3C73D /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -68,6 +82,7 @@
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		88392FB371F67D2475A1BD60 /* id */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		A6B1F45424B9C60A00EBBE79 /* vi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiPopoverView.swift; sourceTree = "<group>"; };
 		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
@@ -86,6 +101,8 @@
 		F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkManager+Data.swift"; sourceTree = "<group>"; };
 		F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_phy_mode+Description.swift"; sourceTree = "<group>"; };
 		F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl80211_security+Description.swift"; sourceTree = "<group>"; };
+		F33A1F3A24C83016008ED2BD /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		F33A1F3E24C8347F008ED2BD /* NSLocalizedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLocalizedString+Extensions.swift"; sourceTree = "<group>"; };
 		F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenuItem+Extensions.swift"; sourceTree = "<group>"; };
 		F379276E24A0A4A50087FF2B /* CredentialsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsManager.swift; sourceTree = "<group>"; };
 		F379277024A0A52E0087FF2B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -118,6 +135,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		13C20DFD24D92E3800B1E713 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				13C20DFB24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift */,
+				1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */,
+				13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */,
+				1380C36424D5580200A448CF /* PrefsWindow.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 		27E333CBDEE9F043281383C3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +184,7 @@
 				BCA4DFAA2438CF25002A862A /* WiFiPopoverView.swift */,
 				BCAF807E243DBA8C0034C8C7 /* JoinPopWindow.swift */,
 				F379277324A0DADD0087FF2B /* WifiPopupWindow.swift */,
+				13C20DFD24D92E3800B1E713 /* Preferences */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -202,12 +231,16 @@
 		F34B2B8B24AA4C08009AB1BB /* Supporting files */ = {
 			isa = PBXGroup;
 			children = (
+				F33A1F3A24C83016008ED2BD /* Alert.swift */,
 				F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */,
 				F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */,
 				F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */,
 				F379277024A0A52E0087FF2B /* Log.swift */,
 				F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */,
+				F33A1F3E24C8347F008ED2BD /* NSLocalizedString+Extensions.swift */,
 				F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */,
+				138D3CC724CE635800793AC1 /* Commands.swift */,
+				138D3CC924CE663B00793AC1 /* BugReporter.swift */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -293,6 +326,7 @@
 				ko,
 				es,
 				"pt-BR",
+				id,
 				it,
 				tr,
 				el,
@@ -371,7 +405,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    echo \"error: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    exit 1\n  else\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  fi\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelif which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then \n    ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    echo \"error: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    exit 1\n  else\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  fi\nfi\n";
 		};
 		D0F7C8CBDEABDEEE298EDA22 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -412,19 +446,27 @@
 			files = (
 				75FDF38C2481D25A00B2A601 /* Api.c in Sources */,
 				F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */,
+				13C20DFC24D917DE00B1E713 /* PrefsViewWiFiInfoModal.swift in Sources */,
 				F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */,
+				F33A1F3F24C8347F008ED2BD /* NSLocalizedString+Extensions.swift in Sources */,
 				F379277124A0A52E0087FF2B /* Log.swift in Sources */,
 				F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */,
 				BCA4DFAB2438CF25002A862A /* WiFiPopoverView.swift in Sources */,
 				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
 				F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */,
 				F3915F0724AB1A1B00E6614D /* itl_80211_state+Description.swift in Sources */,
+				F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
+				1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */,
+				138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */,
 				13AF73B624B25E170015867C /* StatusMenu.swift in Sources */,
+				138D3CC824CE635800793AC1 /* Commands.swift in Sources */,
+				13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */,
 				BCAF807F243DBA8C0034C8C7 /* JoinPopWindow.swift in Sources */,
 				F379277424A0DADD0087FF2B /* WifiPopupWindow.swift in Sources */,
+				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
 			);
@@ -440,6 +482,7 @@
 				50B86ABC24B22F75008E4FE4 /* zh-Hans */,
 				C60CDDC124B88D5A00E1F69D /* ko */,
 				50B86ABD24B22FEE008E4FE4 /* pt-BR */,
+				88392FB371F67D2475A1BD60 /* id */,
 				6A54F80824B24B9700B8D651 /* it */,
 				6A78687824B26AF6007832EE /* tr */,
 				42979EFF24B3A27200F15FBD /* el */,
@@ -633,6 +676,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HeliPort/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -657,6 +701,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = HeliPort/Info.plist;

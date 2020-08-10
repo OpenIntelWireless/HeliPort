@@ -90,17 +90,17 @@ class StatusBarIcon: NSObject {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
             case 7:
-                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning1")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthPoor")
             case 6:
-                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning2")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
             case 5:
-                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning3")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
             case 4:
-                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning4")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning4")
             case 3:
-                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning3")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
             case 2:
-                statusBar.button?.image = NSImage.init(named: "WiFiStateScanning2")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
                 StatusBarIcon.count = 8
             default:
                 return

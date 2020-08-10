@@ -74,4 +74,6 @@ kern_return_t associate_ssid(const char *ssid, const char *pwd);
 
 kern_return_t dis_associate_ssid(const char *ssid);
 
+void api_terminate(void);
+
 #endif /* Api_h */
