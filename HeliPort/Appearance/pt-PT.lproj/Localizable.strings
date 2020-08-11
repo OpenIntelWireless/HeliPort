@@ -90,5 +90,5 @@
 "itlwm API Version: " = "Versão de API do itlwm: ";
 "itlwm Version Mismatch" = "Versão do itlwm incompatível";
 "itlwm is not running" = "O itlwm não está a ser executado";
-"none" = "Nenhum"; // FIXME
+"none" = "Nenhum";
 "verify your credentials to show the stored password" = "verifique as suas credenciais para mostrar a palavra-passe guardada";
