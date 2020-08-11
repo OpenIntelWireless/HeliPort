@@ -26,6 +26,7 @@ class WiFiConfigWindow: NSWindow {
     private var networkInfo: NetworkInfo?
     private var authenticated = false
     private var getAuthInfoCallback: ((_ auth: NetworkAuth, _ savePassword: Bool) -> Void)?
+    private var errorState: ErrorState?
 
     private let icon: NSImageView = {
         let image = NSImageView(frame: NSRect.zero)
@@ -150,6 +151,20 @@ class WiFiConfigWindow: NSWindow {
         return button
     }()
 
+    private let errorImage: NSImageView = {
+        let imageView = NSImageView(image: NSImage(named: NSImage.cautionName)!)
+        imageView.image?.size = NSSize(width: 20, height: 20)
+        imageView.isHidden = true
+        return imageView
+    }()
+
+    private let errorLabel: NSTextField = {
+        let textField = NSTextField(labelWithString: "")
+        textField.font = NSFont.systemFont(ofSize: 12)
+        textField.isHidden = true
+        return textField
+    }()
+
     private let leftButton: NSButton = {
         let button = NSButton()
         button.action = #selector(buttonClicked(_:))
@@ -170,16 +185,15 @@ class WiFiConfigWindow: NSWindow {
 
     convenience init(windowState: WindowState = .joinWiFi,
                      networkInfo: NetworkInfo? = nil,
+                     error: ErrorState? = nil,
                      getAuthInfoCallback: ((_ auth: NetworkAuth, _ savePassword: Bool) -> Void)? = nil) {
-        self.init(contentRect: NSRect(x: 0,
-                                      y: 0,
-                                      width: 450,
-                                      height: 247),
+        self.init(contentRect: NSRect(x: 0, y: 0, width: 450, height: 247),
                   styleMask: .titled,
                   backing: .buffered,
                   defer: false,
                   windowState: windowState,
-                  network: networkInfo,
+                  networkInfo: networkInfo,
+                  error: error,
                   getAuthInfoCallback: getAuthInfoCallback)
     }
 
@@ -188,7 +202,8 @@ class WiFiConfigWindow: NSWindow {
          backing backingStoreType: NSWindow.BackingStoreType,
          defer flag: Bool,
          windowState: WindowState,
-         network: NetworkInfo?,
+         networkInfo: NetworkInfo?,
+         error: ErrorState?,
          getAuthInfoCallback: ((_ auth: NetworkAuth, _ savePassword: Bool) -> Void)? = nil) {
 
         self.windowState = windowState
@@ -197,8 +212,9 @@ class WiFiConfigWindow: NSWindow {
                    backing: backingStoreType,
                    defer: flag)
 
-        self.networkInfo = network
+        self.networkInfo = networkInfo
         self.getAuthInfoCallback = getAuthInfoCallback
+        self.errorState = error
 
         NSApplication.shared.activate(ignoringOtherApps: true)
 
@@ -236,6 +252,8 @@ class WiFiConfigWindow: NSWindow {
         view.addSubview(titleLabel)
         view.addSubview(subTitleLabel)
         view.addSubview(gridView)
+        view.addSubview(errorImage)
+        view.addSubview(errorLabel)
         view.addSubview(rightButton)
         view.addSubview(leftButton)
 
@@ -246,34 +264,34 @@ class WiFiConfigWindow: NSWindow {
     private func setupConstraints() {
         view.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         let inset: CGFloat = 20
-        // Icon
+
         icon.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: inset).isActive = true
         icon.topAnchor.constraint(equalTo: view.topAnchor, constant: inset - 8).isActive = true
         icon.widthAnchor.constraint(equalToConstant: 66).isActive = true
         icon.heightAnchor.constraint(equalToConstant: 66).isActive = true
 
-        // Title
         titleLabel.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: inset).isActive = true
         titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: inset).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -inset).isActive = true
 
-        // Subtitle
         subTitleLabel.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: inset).isActive = true
         subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
         subTitleLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor).isActive = true
 
-        // Grid view
         gridView.topAnchor.constraint(equalTo: icon.bottomAnchor, constant: 18).isActive = true
         gridView.leadingAnchor.constraint(equalTo: icon.leadingAnchor).isActive = true
         gridView.trailingAnchor.constraint(equalTo: subTitleLabel.trailingAnchor).isActive = true
 
-        // Right button
-        rightButton.topAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 30).isActive = true
+        errorImage.leadingAnchor.constraint(equalTo: icon.leadingAnchor).isActive = true
+        errorImage.topAnchor.constraint(equalTo: gridView.bottomAnchor, constant: 8).isActive = true
+        errorLabel.leadingAnchor.constraint(equalTo: errorImage.trailingAnchor, constant: 8).isActive = true
+        errorLabel.centerYAnchor.constraint(equalTo: errorImage.centerYAnchor).isActive = true
+
+        rightButton.topAnchor.constraint(equalTo: errorImage.bottomAnchor, constant: 16).isActive = true
         rightButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -inset).isActive = true
         rightButton.trailingAnchor.constraint(equalTo: gridView.trailingAnchor).isActive = true
         rightButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
 
-        // Left button
         leftButton.topAnchor.constraint(equalTo: rightButton.topAnchor).isActive = true
         leftButton.bottomAnchor.constraint(equalTo: rightButton.bottomAnchor).isActive = true
         leftButton.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor, constant: -12).isActive = true
@@ -284,6 +302,13 @@ class WiFiConfigWindow: NSWindow {
         guard networkInfo != nil || windowState == .joinWiFi else {
             Log.error("Network info cannot be nil for \(String(describing: windowState)) state")
             return
+        }
+
+        if let errorState = errorState {
+            errorLabel.stringValue = errorState.localizedString
+            errorLabel.isHidden = false
+            errorImage.isHidden = false
+            Log.debug(errorState.rawValue)
         }
 
         switch windowState {
@@ -546,6 +571,18 @@ enum WindowState {
     case joinWiFi
     case connectWiFi
     case viewCredentialsWiFi
+}
+
+// MARK: Error state
+
+enum ErrorState: String {
+    case timeout = "Connection timeout."
+    case failed = "Connection failed."
+    case cannotConnect = "Cannot connect."
+    case incorrectPassword = "Incorrect password."
+    var localizedString: String {
+        return NSLocalizedString(self.rawValue)
+    }
 }
 
 // MARK: Localization strings
