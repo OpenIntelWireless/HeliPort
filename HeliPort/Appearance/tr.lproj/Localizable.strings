@@ -46,6 +46,7 @@
 "No Status Information Avaliable" = "Durum Bilgisi Mevcut Değil";
 "None" = "Hiçbiri";
 "Open Network Preferences..." = "Ağ Tercihlerini Aç...";
+"Open Network Preferences..." = "Ağ Tercihlerini Aç...";
 "Open Wireless Diagnostics..." = "Kablosuz Tanılamayı Aç...";
 "Password" = "Şifre";
 "Password:" = "Şifre:";
@@ -63,7 +64,7 @@
 "Unavailable" = "Mevcut Değil";
 "Unknown" = "Bilinmiyor";
 "Unreachable" = "Bağlantı Yok";
-"Updates:" = "Güncellemeler:"
+"Updates:" = "Güncellemeler:";
 "Username:" = "Kullanıcı Adı:";
 "Version: " = "Versiyon: ";
 "View saved credentials from keychain for the selected network." = "Seçili ağa ait güvenik bilgilerini anahtar zinciri üzerinden göster.";
