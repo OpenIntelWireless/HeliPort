@@ -15,12 +15,12 @@
 "%@'s Info" = "%@ Bilgileri";
 "About HeliPort" = "HeliPort Hakkında";
 "Address: " = "MAC Adresi: ";
-"Auto Join" = "Otomatik Bağlantı"; 
-"Automatically check for updates." = "Güncellemeleri otomatik olarak kontrol et."; 
+"Auto Join" = "Otomatik Bağlantı";
+"Automatically check for updates." = "Güncellemeleri otomatik olarak kontrol et.";
 "Automatically download new updates." = "Güncellemeleri otomatik olarak indir.";
 "Cancel" = "İptal";
 "Check for Updates..." = "Güncellemeleri Kontrol Et...";
-"Close" = "Kapat"; 
+"Close" = "Kapat";
 "Create Diagnostics Report..." = "Tanı Raporu Oluştur...";
 "Create Network..." = "Ağ Oluştur...";
 "Disconnect from: " = "Bağlantıyı Kapat: ";
@@ -41,10 +41,12 @@
 "Launch At Login" = "Başlangıçta Çalıştır";
 "Network Name" = "Kablosuz Ağ Adı";
 "Network Name:" = "Kablosuz Ağ Adı:";
+"Network Preferences" = "Ağ Tercihleri";
 "Networks" = "Ağlar";
 "No Network Avaliable" = "Ağ Bağlantısı Mevcut Değil";
 "No Status Information Avaliable" = "Durum Bilgisi Mevcut Değil";
 "None" = "Hiçbiri";
+"Open Network Preferences..." = "Ağ Tercihlerini Aç...";
 "Open Network Preferences..." = "Ağ Tercihlerini Aç...";
 "Open Wireless Diagnostics..." = "Kablosuz Tanılamayı Aç...";
 "Password" = "Şifre";
@@ -53,7 +55,7 @@
 "Reachable" = "Bağlantı Var";
 "Remember this network" = "Bu ağı hatırla";
 "Remove Wi-Fi network %@?" = "%@ ağı silinecek?";
-"Remove" = "Sil"; 
+"Remove" = "Sil";
 "Saved Networks:" = "Kayıtlı Ağlar:";
 "Security" = "Şifreleme Tipi";
 "Security:" = "Şifreleme Tipi";
@@ -63,7 +65,7 @@
 "Unavailable" = "Mevcut Değil";
 "Unknown" = "Bilinmiyor";
 "Unreachable" = "Bağlantı Yok";
-"Updates:" = "Güncellemeler:"
+"Updates:" = "Güncellemeler:";
 "Username:" = "Kullanıcı Adı:";
 "Version: " = "Versiyon: ";
 "View saved credentials from keychain for the selected network." = "Seçili ağa ait güvenik bilgilerini anahtar zinciri üzerinden göster.";
