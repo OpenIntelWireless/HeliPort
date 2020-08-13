@@ -39,9 +39,9 @@
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
 "Launch At Login" = "Chạy khi khởi động";
-"Network Name" = "Network Name"; // FIXME
+"Network Name" = "Tên mạng"; // FIXME
 "Network Name:" = "Tên mạng:";
-"Networks" = "Networks"; // FIXME
+"Networks" = "Mạng"; // FIXME
 "No Network Avaliable" = "Không tìm thấy mạng";
 "No Status Information Avaliable" = "Không có thông tin trạng thái";
 "None" = "Không";
@@ -56,7 +56,7 @@
 "Remove Wi-Fi network %@?" = "Xoá mạng Wi-Fi %@?"; // FIXME
 "Remove" = "Xoá bỏ"; // FIXME
 "Saved Networks:" = "Các mạng đã lưu:"; // FIXME
-"Security" = "Security"; // FIXME
+"Security" = "Bảo mật"; // FIXME
 "Security:" = "Bảo mật:";
 "Show password" = "Hiển thị mật khẩu";
 "Turn Wi-Fi Off" = "Tắt Wi-Fi";
