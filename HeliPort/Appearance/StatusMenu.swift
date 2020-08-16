@@ -244,6 +244,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             currentRunLoop.add(self.statusUpdateTimer!, forMode: .common)
             currentRunLoop.run()
         }
+
+        NSApp.servicesProvider = self
     }
 
     required init(coder: NSCoder) {
@@ -574,6 +576,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
             Log.debug("Disconnected from \(ssid)")
+        }
+    }
+
+    @objc func toggleWiFiServiceHandler(_ pboard: NSPasteboard, userData: String, error: NSErrorPointer) {
+        Log.debug("Handle Toggle WiFi service")
+        DispatchQueue.main.async {
+            self.clickMenuItem(self.switchItem)
         }
     }
 }
