@@ -426,7 +426,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case .turnWiFiOff:
             power_off()
         case .joinNetworks:
-            let joinPop = JoinPopWindow()
+            let joinPop = WiFiConfigWindow()
             joinPop.show()
         case .createNetwork:
             let alert = Alert(text: .notImplemented)

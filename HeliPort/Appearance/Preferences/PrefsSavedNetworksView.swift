@@ -39,7 +39,7 @@ class PrefsSavedNetworksView: NSView {
 
     let tableView: NSTableView = {
         let table = NSTableView()
-        table.columnAutoresizingStyle = .uniformColumnAutoresizingStyle
+        table.columnAutoresizingStyle = .reverseSequentialColumnAutoresizingStyle
         table.registerForDraggedTypes([.rowOrder])
 
         let font = NSFont.systemFont(ofSize: 12)
@@ -71,13 +71,13 @@ class PrefsSavedNetworksView: NSView {
 
     let modifyItemSegment: NSSegmentedControl = {
         let removeImage = NSImage(named: NSImage.removeTemplateName)!
-        let editImage = NSImage(named: NSImage.quickLookTemplateName)!
-        let button = NSSegmentedControl(images: [removeImage, editImage],
+        let viewImage = NSImage(named: NSImage.quickLookTemplateName)!
+        let button = NSSegmentedControl(images: [removeImage, viewImage],
                                         trackingMode: .momentary,
                                         target: self,
                                         action: #selector(modifyItemClicked(_:)))
         button.setEnabled(false, forSegment: .remove)
-        button.setEnabled(false, forSegment: .edit)
+        button.setEnabled(false, forSegment: .view)
         return button
     }()
 
@@ -154,24 +154,24 @@ extension PrefsSavedNetworksView {
         switch selectedSegment {
         case .remove:
             removeNetwork()
-        case .edit:
-            editNetwork()
+        case .view:
+            viewNetwork()
         default:
             Log.debug("Modify item not implemented \(selectedSegment)")
         }
     }
 
-    private func editNetwork() {
+    private func viewNetwork() {
         let index = tableView.selectedRow
         let networkInfo = savedNetworks[index].network
 
         guard let currentWindow = window else {
-            Log.error("Could not show edit window due to window == nil")
+            Log.error("Could not show view window due to window == nil")
              return
         }
 
-        let viewCredentials = PrefsViewWiFiInfoModal(networkInfo: networkInfo)
-        currentWindow.beginSheet(viewCredentials, completionHandler: { _ in })
+        let viewCredentials = WiFiConfigWindow(windowState: .viewCredentialsWiFi, networkInfo: networkInfo)
+        currentWindow.beginSheet(viewCredentials)
     }
 
     private func removeNetwork() {
@@ -229,7 +229,7 @@ extension PrefsSavedNetworksView {
 
 private extension Int {
     static let remove = 0
-    static let edit = 1
+    static let view = 1
 }
 
 // MARK: Table view delegate
@@ -271,7 +271,7 @@ extension PrefsSavedNetworksView: NSTableViewDelegate {
     func tableViewSelectionDidChange(_ notification: Notification) {
         let selected = tableView.selectedRow != -1
         modifyItemSegment.setEnabled(selected, forSegment: .remove)
-        modifyItemSegment.setEnabled(selected, forSegment: .edit)
+        modifyItemSegment.setEnabled(selected, forSegment: .view)
     }
 }
 
