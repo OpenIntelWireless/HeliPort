@@ -16,52 +16,39 @@
 import Foundation
 import Cocoa
 
-class WifiMenuItemView: NSView {
+class WifiMenuItemView: NSVisualEffectView {
 
     let statusImage: NSImageView = {
         let statusImage = NSImageView()
         statusImage.image = NSImage(named: NSImage.menuOnStateTemplateName)
-        statusImage.image?.isTemplate = true
-        statusImage.translatesAutoresizingMaskIntoConstraints = false
-        statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         statusImage.isHidden = true
+        statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return statusImage
     }()
 
     let ssidLabel: NSTextField = {
-        let ssidLabel = NSTextField()
-        ssidLabel.isBordered = false
-        ssidLabel.usesSingleLineMode = true
-        ssidLabel.maximumNumberOfLines = 1
-        ssidLabel.drawsBackground = false
-        ssidLabel.isEditable = false
-        ssidLabel.isSelectable = false
+        let ssidLabel = NSTextField(labelWithString: "")
         ssidLabel.font = NSFont.systemFont(ofSize: 14)
-        ssidLabel.translatesAutoresizingMaskIntoConstraints = false
         return ssidLabel
     }()
 
     let lockImage: NSImageView = {
         let lockImage = NSImageView()
-        lockImage.image = NSImage.init(named: NSImage.lockLockedTemplateName)
-        lockImage.image?.isTemplate = true
-        lockImage.translatesAutoresizingMaskIntoConstraints = false
+        lockImage.image = NSImage(named: NSImage.lockLockedTemplateName)
         lockImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return lockImage
     }()
 
     let signalImage: NSImageView = {
         let signalImage = NSImageView()
-        signalImage.image?.isTemplate = true
-        signalImage.translatesAutoresizingMaskIntoConstraints = false
         signalImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return signalImage
     }()
 
     var isMouseOver: Bool = false {
         willSet(hover) {
-            (superview as? NSVisualEffectView)?.material = hover ? .selection : .popover
-            (superview as? NSVisualEffectView)?.isEmphasized = hover
+            material = hover ? .selection : .menu
+            isEmphasized = hover
             ssidLabel.textColor = hover ? .white : .textColor
             if #available(OSX 10.14, *) {
                 statusImage.contentTintColor = hover ? .white : .textColor
@@ -73,6 +60,7 @@ class WifiMenuItemView: NSView {
 
     var visible: Bool = true {
         willSet(visible) {
+            isHidden = !visible
             heightConstraint.constant = visible ? 19 : 0
             layoutSubtreeIfNeeded()
         }
@@ -90,7 +78,7 @@ class WifiMenuItemView: NSView {
         willSet(networkInfo) {
             ssidLabel.stringValue = networkInfo.ssid
             lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
-            signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
+            signalImage.image = StatusBarIcon.getRssiImage(Int16(networkInfo.rssi))
             layoutSubtreeIfNeeded()
         }
     }
@@ -98,6 +86,8 @@ class WifiMenuItemView: NSView {
     var heightConstraint: NSLayoutConstraint!
 
     func setupLayout() {
+        subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+
         heightConstraint = heightAnchor.constraint(equalToConstant: 19)
         heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
         heightConstraint.isActive = true
@@ -129,6 +119,7 @@ class WifiMenuItemView: NSView {
         self.addSubview(ssidLabel)
         self.addSubview(lockImage)
         self.addSubview(signalImage)
+        self.material = .menu
 
         setupLayout()
     }
@@ -161,20 +152,5 @@ class WifiMenuItemView: NSView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    class func getRssiImage(_ RSSI: Int) -> NSImage? {
-        var signalImageName: NSImage
-        switch RSSI {
-        case ..<(-100):
-            signalImageName = #imageLiteral(resourceName: "WiFiStateScanning1")
-        case ..<(-80):
-            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
-        case ..<(-60):
-            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
-        default:
-            signalImageName = #imageLiteral(resourceName: "WiFiStateOn")
-        }
-        return signalImageName
     }
 }

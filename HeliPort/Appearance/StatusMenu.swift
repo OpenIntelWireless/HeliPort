@@ -55,7 +55,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     get_station_info(&staInfo)
                     DispatchQueue.main.async {
                         guard isReachable else { StatusBarIcon.warning(); return }
-                        StatusBarIcon.signalStrength(RSSI: staInfo.rssi)
+                        StatusBarIcon.signalStrength(rssi: staInfo.rssi)
                     }
                 }
             case ITL80211_S_SCAN:
@@ -81,6 +81,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 toggleLaunchItem,
                 checkUpdateItem,
                 quitSeparator,
+                aboutItem,
                 quitItem
             ]
 
@@ -119,7 +120,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             hiddenItems.forEach { $0.isHidden = !visible }
             enabledNetworkCardItems.forEach { $0.isHidden = !isNetworkCardAvailable }
-            connectedNetworkInfoItems.forEach { $0.isHidden = !(visible && status == ITL80211_S_RUN) }
+            connectedNetworkInfoItems.forEach { $0.isHidden = !(visible && self.isNetworkConnected) }
             notImplementedItems.forEach { $0.isHidden = true }
         }
     }
@@ -490,7 +491,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var nss: String = .unavailable
             self.isNetworkConnected = false
             var staInfo = station_info_t()
+            var entity: NetworkInfoStorageEntity?
+            var hideDisconnect = true
             if self.status == ITL80211_S_RUN && get_station_info(&staInfo) == KERN_SUCCESS {
+                entity = CredentialsManager.instance.getStorageFromSsid(String(cString: &staInfo.ssid.0))
+                hideDisconnect = entity?.autoJoin ?? false
                 self.isNetworkConnected = true
                 let bsd = String(self.bsdItem.title).replacingOccurrences(of: String.interfaceName, with: "",
                                                                           options: .regularExpression, range: nil)
@@ -516,9 +521,14 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 noise = "\(staInfo.noise) dBm"
                 txRate = "\(staInfo.rate) Mbps"
                 phyMode = staInfo.op_mode.description
-                mcsIndex = String(staInfo.cur_mcs)
+                mcsIndex = "\(staInfo.cur_mcs)"
                 nss = .unknown
             }
+
+            if self.showAllOptions && self.isNetworkConnected {
+                hideDisconnect = false
+            }
+
             DispatchQueue.main.async {
                 self.disconnectItem.title = .disconnectNet + disconnectName
                 self.ipAddresssItem.title = .ipAddr + ipAddr
@@ -534,6 +544,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.phyModeItem.title = .phyModeStr + phyMode
                 self.mcsIndexItem.title = .mcsStr + mcsIndex
                 self.nssItem.title = .nssStr + nss
+                self.disconnectItem.isHidden = hideDisconnect
                 guard self.isNetworkCardEnabled,
                     let wifiItemView = self.networkItemList.first?.view as? WifiMenuItemView else { return }
                 wifiItemView.visible = self.isNetworkConnected
@@ -611,7 +622,7 @@ private extension String {
     static let aboutHeliport = NSLocalizedString("About HeliPort")
     static let quitHeliport = NSLocalizedString("Quit HeliPort")
     static let launchLogin = NSLocalizedString("Launch At Login")
-    static let disconnectNet = NSLocalizedString("Disconnect from: ")
+    static let disconnectNet = NSLocalizedString("Disconnect from ")
     static let ipAddr = NSLocalizedString("    IP Address: ")
     static let routerStr = NSLocalizedString("    Router: ")
     static let internetStr = NSLocalizedString("    Internet: ")

@@ -78,10 +78,10 @@ class StatusBarIcon: NSObject {
         statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateError")
     }
 
-    class func signalStrength(RSSI: Int16) {
+    class func signalStrength(rssi: Int16) {
         timer?.invalidate()
         timer = nil
-        let signalImage = WifiMenuItemView.getRssiImage(Int(RSSI))
+        let signalImage = getRssiImage(rssi)
         statusBar.button?.image = signalImage
     }
 
@@ -106,5 +106,20 @@ class StatusBarIcon: NSObject {
                 return
             }
         }
+    }
+
+    class func getRssiImage(_ RSSI: Int16) -> NSImage? {
+        var signalImageName: NSImage
+        switch RSSI {
+        case ..<(-100):
+            signalImageName = #imageLiteral(resourceName: "WiFiStateScanning1")
+        case ..<(-80):
+            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
+        case ..<(-60):
+            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
+        default:
+            signalImageName = #imageLiteral(resourceName: "WiFiStateOn")
+        }
+        return signalImageName
     }
 }
