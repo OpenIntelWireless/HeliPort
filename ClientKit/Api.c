@@ -84,7 +84,7 @@ bool get_network_list(network_info_list_t *list) {
         if (list->count >= MAX_NETWORK_LIST_LENGTH) {
             break;
         }
-        if (memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
+        if (strlen(sta_info.ssid) > 0 && memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
             continue;
         }
         struct ioctl_network_info *info = &list->networks[list->count++];
