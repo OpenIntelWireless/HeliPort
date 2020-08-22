@@ -81,7 +81,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 toggleLaunchItem,
                 checkUpdateItem,
                 quitSeparator,
-                quitItem
+                quitItem,
+                aboutItem
             ]
 
             let connectedNetworkInfoItems: [NSMenuItem] = [
@@ -188,7 +189,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let createNetworkItem = NSMenuItem(title: .createNetwork)
     private let networkPanelItem = NSMenuItem(title: .openNetworkPrefs)
 
-    private let aboutItem = NSMenuItem(title: .aboutHeliport)
+    private let aboutItem : NSMenuItem = { let aboutItem = NSMenuItem(title: .aboutHeliport)
+            aboutItem.isHidden = true
+            return aboutItem
+        }()
     private let checkUpdateItem = NSMenuItem(title: .checkUpdates)
     private let quitSeparator = NSMenuItem.separator()
     private let quitItem = NSMenuItem(title: .quitHeliport,
