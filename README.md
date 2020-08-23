@@ -8,6 +8,16 @@ Intel WiFi Client for [itlwm](https://github.com/zxystd/itlwm)
 
 If you have any questions or feedback, feel free to [![Join the chat at https://gitter.im/OpenIntelWireless/itlwm](https://badges.gitter.im/OpenIntelWireless/itlwm.svg)](https://gitter.im/OpenIntelWireless/itlwm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## Download
+
+### Latest Stable Version
+
+[![Download from https://github.com/OpenIntelWireless/HeliPort/releases/latest](https://img.shields.io/github/v/release/OpenIntelWireless/HeliPort?color=%2300AABB&label=Download)](https://github.com/OpenIntelWireless/HeliPort/releases/latest)
+
+### Latest Alpha Version
+
+[![Download from https://github.com/OpenIntelWireless/HeliPort/releases](https://img.shields.io/github/v/release/OpenIntelWireless/HeliPort?include_prereleases&label=Download)](https://github.com/OpenIntelWireless/HeliPort/releases)
+
 ## Status
 
 This App is currently functional, we're still working on it to make it even better.
