@@ -30,6 +30,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
+    // Preference Key for Wifi mode
+    private let prefKeyWifiService: String = "WifiServiceMode"
+
     // One instance at a time
     private var preferenceWindow: PrefsWindow?
 
@@ -145,6 +148,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     private var isNetworkCardEnabled: Bool = false {
         willSet(newState) {
+            if newState != isWifiServiceEnabled {
+                if isWifiServiceEnabled {
+                    power_on()
+                } else {
+                    power_off()
+                }
+            }
             statusItem.title = newState ? .wifiOn : .wifiOff
             switchItem.title = newState ? .turnWiFiOff : .turnWiFiOn
             if newState != isNetworkCardEnabled {
@@ -157,6 +167,15 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var isAutoLaunch: Bool = false {
         willSet(newState) {
             toggleLaunchItem.state = newState ? .on : .off
+        }
+    }
+
+    /** Indicates whether Wifi service is turned on/off manually */
+    private var isWifiServiceEnabled: Bool = true {
+        didSet {
+            if oldValue != isWifiServiceEnabled {
+                UserDefaults.standard.setValue(isWifiServiceEnabled, forKey: prefKeyWifiService)
+            }
         }
     }
 
@@ -226,6 +245,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         delegate = self
         setupMenuHeaderAndFooter()
         getDeviceInfo()
+
+        // Read user preference of Wifi mode
+        UserDefaults.standard.register(defaults: [prefKeyWifiService: true as Bool])
+        isWifiServiceEnabled = UserDefaults.standard.bool(forKey: prefKeyWifiService)
 
         DispatchQueue.global(qos: .default).async {
             self.updateStatus()
@@ -423,8 +446,10 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
         case .turnWiFiOn:
             power_on()
+            isWifiServiceEnabled = true
         case .turnWiFiOff:
             power_off()
+            isWifiServiceEnabled = false
         case .joinNetworks:
             let joinPop = WiFiConfigWindow()
             joinPop.show()
