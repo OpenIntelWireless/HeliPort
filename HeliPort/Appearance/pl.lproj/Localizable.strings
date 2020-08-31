@@ -23,7 +23,7 @@
 "Close" = "Close"; // FIXME
 "Create Diagnostics Report..." = "Utwórz raport diagnostyczny...";
 "Create Network..." = "Utwórz sieć...";
-"Disconnect from: " = "Rozłącz z: ";
+"Disconnect from " = "Rozłącz z ";
 "Dismiss" = "Dismiss"; // FIXME
 "Drag networks into the order you prefer." = "Drag networks into the order you prefer."; // FIXME
 "Dynamic WEP" = "Dynamiczny WEP";
