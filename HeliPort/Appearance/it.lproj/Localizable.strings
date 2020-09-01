@@ -23,7 +23,7 @@
 "Close" = "Chiudi";
 "Create Diagnostics Report..." = "Crea resoconto di diagnosi...";
 "Create Network..." = "Crea rete...";
-"Disconnect from: " = "Disconnetti da: ";
+"Disconnect from " = "Disconnetti da ";
 "Dismiss" = "Chiudi";
 "Drag networks into the order you prefer." = "Sposta le reti nell'ordine che preferisci.";
 "Dynamic WEP" = "WEP Dinamico";

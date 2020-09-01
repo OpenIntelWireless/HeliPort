@@ -23,7 +23,7 @@
 "Close" = "Закрыть";
 "Create Diagnostics Report..." = "Создать отчет...";
 "Create Network..." = "Создать сеть...";
-"Disconnect from: " = "Отключиться от: ";
+"Disconnect from " = "Отключиться от ";
 "Dismiss" = "Пропустить";
 "Drag networks into the order you prefer." = "Изменяйте порядок сетей перетаскиванием.";
 "Dynamic WEP" = "Динамический WEP";

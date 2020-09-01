@@ -23,7 +23,7 @@
 "Close" = "Đóng";
 "Create Diagnostics Report..." = "Tạo báo cáo lỗi...";
 "Create Network..." = "Tạo mạng mới...";
-"Disconnect from: " = "Huỷ kết nối: ";
+"Disconnect from " = "Huỷ kết nối ";
 "Dismiss" = "Bỏ qua";
 "Drag networks into the order you prefer." = "Di chuyển thứ tự mạng theo ý bạn.";
 "Dynamic WEP" = "WEP cố định";

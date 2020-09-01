@@ -23,7 +23,7 @@
 "Close" = "Cerrar";
 "Create Diagnostics Report..." = "Crear Informe de Diagnósticos...";
 "Create Network..." = "Crear Red...";
-"Disconnect from: " = "Desconectarse de: ";
+"Disconnect from " = "Desconectarse de ";
 "Dismiss" = "Descartar"; 
 "Drag networks into the order you prefer." = "Arrastra las redes en el orden de tu preferencia.";
 "Dynamic WEP" = "WEP Dinámico";
@@ -59,8 +59,8 @@
 "Security" = "Seguridad";
 "Security:" = "Seguridad";
 "Show password" = "Mostrar contraseña";
-"Turn Wi-Fi Off" = "Activar Wi-Fi";
-"Turn Wi-Fi On" = "Desactivar Wi-Fi";
+"Turn Wi-Fi Off" = "Desactivar Wi-Fi";
+"Turn Wi-Fi On" = "Activar Wi-Fi";
 "Unavailable" = "No Disponible";
 "Unknown" = "Desconocido";
 "Unreachable" = "Inalcanzable";

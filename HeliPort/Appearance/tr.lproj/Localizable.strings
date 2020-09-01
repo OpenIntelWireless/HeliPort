@@ -23,7 +23,7 @@
 "Close" = "Kapat";
 "Create Diagnostics Report..." = "Tanı Raporu Oluştur...";
 "Create Network..." = "Ağ Oluştur...";
-"Disconnect from: " = "Bağlantıyı Kapat: ";
+"Disconnect from " = "Bağlantıyı Kapat ";
 "Dismiss" = "Reddet";
 "Drag networks into the order you prefer." = "Ağları tercih sırasına göre sürükleyin.";
 "Dynamic WEP" = "Dinamik WEP";
