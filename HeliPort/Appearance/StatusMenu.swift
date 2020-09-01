@@ -540,10 +540,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 wifiItemView.connected = self.isNetworkConnected
                 if self.isNetworkConnected {
                     self.isNetworkListEmpty = false
-                    wifiItemView.networkInfo = NetworkInfo(
+                    let connectedNetworkInfo = NetworkInfo(
                         ssid: String(cString: &staInfo.ssid.0),
                         rssi: Int(staInfo.rssi)
                     )
+                    connectedNetworkInfo.auth.security = NetworkManager.getSecurityType(staInfo)
+                    wifiItemView.networkInfo = connectedNetworkInfo
                 }
             }
         }

@@ -291,4 +291,41 @@ final class NetworkManager {
         //TODO wpa3
         return ITL80211_SECURITY_UNKNOWN
     }
+
+    class func getSecurityType(_ info: ioctl_sta_info) -> itl80211_security {
+        if info.supported_rsnprotos & ITL80211_PROTO_RSN.rawValue != 0 {
+            //wpa2
+            if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
+                if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
+                    return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED
+                }
+                return ITL80211_SECURITY_WPA2_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_PSK.rawValue != 0 {
+                if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
+                    return ITL80211_SECURITY_WPA_PERSONAL_MIXED
+                }
+                return ITL80211_SECURITY_WPA2_PERSONAL
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_8021X.rawValue != 0 {
+                return ITL80211_SECURITY_WPA2_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_PSK.rawValue != 0 {
+                return ITL80211_SECURITY_PERSONAL
+            }
+        } else if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
+            //wpa
+            if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
+                return ITL80211_SECURITY_WPA_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_PSK.rawValue != 0 {
+                return ITL80211_SECURITY_WPA_PERSONAL
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_8021X.rawValue != 0 {
+                return ITL80211_SECURITY_WPA_ENTERPRISE
+            } else if info.rsn_akms & ITL80211_AKM_SHA256_PSK.rawValue != 0 {
+                return ITL80211_SECURITY_ENTERPRISE
+            }
+        } else if info.supported_rsnprotos == 0 {
+            return ITL80211_SECURITY_NONE
+        }
+        //TODO wpa3
+        return ITL80211_SECURITY_UNKNOWN
+    }
+
 }
