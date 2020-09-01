@@ -544,7 +544,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                         ssid: String(cString: &staInfo.ssid.0),
                         rssi: Int(staInfo.rssi)
                     )
-                    connectedNetworkInfo.auth.security = NetworkManager.getSecurityType(staInfo)
+                    var network_info = ioctl_network_info()
+                    network_info.supported_rsnprotos = staInfo.supported_rsnprotos
+                    network_info.rsn_akms = staInfo.rsn_akms
+                    //TODO: be careful if getSecurityType in the future needs other fields in network_info which is not set from staInfo
+                    connectedNetworkInfo.auth.security = NetworkManager.getSecurityType(network_info)
                     wifiItemView.networkInfo = connectedNetworkInfo
                 }
             }
