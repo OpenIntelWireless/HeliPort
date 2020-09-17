@@ -78,7 +78,7 @@ jobs:
     - name: Generate Release Notes
       run: |
         echo '### The latest updates are:' >> ReleaseNotes.md
-        git log -"$(git rev-list --count $(git rev-list --tags | head -n 1)..HEAD)" --format="- %H %s" | grep -v '.git\|Merge\|yml\|CI' | sed  '/^$/d' >> ReleaseNotes.md
+        git log -"$(git rev-list --count $(git rev-list --tags | grep -v 'alpha\|Alpha' | head -n 1)..HEAD)" --format="- %H %s" | grep -v '.git\|Merge\|yml\|CI' | sed  '/^$/d' >> ReleaseNotes.md
 
     - name: Delete Old Prerelease
       uses: dev-drprasad/delete-tag-and-release@v0.1.2
