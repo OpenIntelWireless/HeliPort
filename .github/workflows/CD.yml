@@ -1,8 +1,9 @@
-name: Distribute GitHub Prerelease
+name: Distribute GitHub Release
 
 on:
   push:
     branches: master
+  workflow_dispatch:
 
 jobs:
 
@@ -11,8 +12,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: '5'
 
     - name: Prepare Env
       run: |
@@ -24,7 +23,7 @@ jobs:
       run: |
         git fetch --prune --unshallow --tags
         GIT_SHA="$(git rev-parse --short HEAD)"
-        CUR_TAG="$(git tag -l | grep 'alpha\|beta' | tail -1)"
+        CUR_TAG="$(git tag -l | grep -i 'alpha' | tail -1)"
         eval $(grep -m 1 "MARKETING_VERSION =" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
 
         if [[ "$(git log -1 --pretty=format:%s)" != *"GH Release"* ]]; then
@@ -57,19 +56,19 @@ jobs:
         cp -R ${XCBUILD_PATH}/*.dmg Artifacts
 
     - name: Setup Prerelease Variables
-      if: contains(github.event.head_commit.message, 'GH release') == false
+      if: github.event_name == 'push'
       run: |
         echo "::set-env name=REL_TAG::v${VER}-alpha"
         echo "::set-env name=IS_PRE::true"
 
     - name: Setup Release Variables
-      if: contains(github.event.head_commit.message, 'GH release')
+      if: github.event_name == 'workflow_dispatch'
       run: |
         echo "::set-env name=REL_TAG::v${VER}"
         echo "::set-env name=IS_PRE::false"
 
     - name: Generate Prerelease Release Notes
-      if: contains(github.event.head_commit.message, 'GH release') == false
+      if: github.event_name == 'push'
       run: |
         echo '### Disclaimer:' >> ReleaseNotes.md
         echo '***This alpha version is for testing only.***' >> ReleaseNotes.md
@@ -78,8 +77,8 @@ jobs:
 
     - name: Generate Release Notes
       run: |
-        echo '### The latest five updates are:' >> ReleaseNotes.md
-        git log -"5" --format="- %H %s" | sed '/^$/d' >> ReleaseNotes.md
+        echo '### The latest updates are:' >> ReleaseNotes.md
+        git log -"$(git rev-list --count $(git rev-list --tags | head -n 1)..HEAD)" --format="- %H %s" | grep -v '.git\|Merge\|yml\|CI' | sed  '/^$/d' >> ReleaseNotes.md
 
     - name: Delete Old Prerelease
       uses: dev-drprasad/delete-tag-and-release@v0.1.2
@@ -89,7 +88,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Init GitHub Release
-      if: contains(github.event.head_commit.message, 'GH release')
+      if: github.event_name == 'workflow_dispatch'
       uses: ncipollo/release-action@v1
       with:
         bodyFile: ReleaseNotes.md
@@ -97,7 +96,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Generate Sparkle Appcast
-      if: contains(github.event.head_commit.message, 'GH release')
+      if: github.event_name == 'workflow_dispatch'
       run: |
         mkdir sparkle
         cd sparkle
