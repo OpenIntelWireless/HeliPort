@@ -34,8 +34,8 @@
 "Find and join a Wi-Fi network." = "Find and join a Wi-Fi network."; // FIXME
 "General" = "عام";
 "HeliPort API Version: " = "نسخة HeliPort API: ";
-"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path";
-"Interface Name: " = "Interface Name: ";
+"HeliPort running at an unexpected path" = "HeliPort running at an unexpected path"; // FIXME
+"Interface Name: " = "Interface Name: "; // FIXME
 "Join Other Network..." = "انضمام إلى شبكة أخرى...";
 "Join" = "انضمام";
 "Launch At Login" = "فتح عند الدخول";
@@ -43,8 +43,8 @@
 "Network Name:" = "إسم الشبكة:";
 "Network Preferences" = "تفضيلات الشبكة";
 "Networks" = "الشبكات";
-"No Network Avaliable" = "Ağ Bağlantısı Mevcut Değil";
-"No Status Information Avaliable" = "Durum Bilgisi Mevcut Değil";
+"No Network Avaliable" = "No Network Avaliable"; // FIXME
+"No Status Information Avaliable" = "No Status Information Avaliable"; // FIXME
 "None" = "Hiçbiri";
 "Open Network Preferences..." = "تفضيلات الشبكة...";
 "Open Network Preferences..." = "تفضيلات الشبكة...";
