@@ -30,12 +30,12 @@ jobs:
           sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = ${GIT_SHA};/g" HeliPort.xcodeproj/project.pbxproj
         fi
 
-        echo "::set-env name=VER::$MARKETING_VERSION"
-        echo "::set-env name=SHORT_SHA::$GIT_SHA"
+        echo "VER=$MARKETING_VERSION" >> $GITHUB_ENV
+        echo "SHORT_SHA=$GIT_SHA" >> $GITHUB_ENV
         if [[ -z $CUR_TAG ]]; then
-          echo "::set-env name=OLD_PRE_TAG::NULL"
+          echo "OLD_PRE_TAG=NULL" >> $GITHUB_ENV
         else
-          echo "::set-env name=OLD_PRE_TAG::$CUR_TAG"
+          echo "OLD_PRE_TAG=$CUR_TAG">> $GITHUB_ENV
         fi
       shell: zsh {0}
 
@@ -58,14 +58,14 @@ jobs:
     - name: Setup Prerelease Variables
       if: github.event_name == 'push'
       run: |
-        echo "::set-env name=REL_TAG::v${VER}-alpha"
-        echo "::set-env name=IS_PRE::true"
+        echo "REL_TAG=v${VER}-alpha" >> $GITHUB_ENV
+        echo "IS_PRE=true" >> $GITHUB_ENV
 
     - name: Setup Release Variables
       if: github.event_name == 'workflow_dispatch'
       run: |
-        echo "::set-env name=REL_TAG::v${VER}"
-        echo "::set-env name=IS_PRE::false"
+        echo "REL_TAG=v${VER}" >> $GITHUB_ENV
+        echo "IS_PRE=false" >> $GITHUB_ENV
 
     - name: Generate Prerelease Release Notes
       if: github.event_name == 'push'
