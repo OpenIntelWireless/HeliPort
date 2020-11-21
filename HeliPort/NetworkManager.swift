@@ -90,9 +90,7 @@ final class NetworkManager {
                 guard var network = element as? ioctl_network_info else {
                     continue
                 }
-                let ssid = String(cString: &network.ssid.0)
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
-                    .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression)
+                let ssid = String.getSSIDFromCString(cString: &network.ssid.0)
                 guard !ssid.isEmpty else {
                     continue
                 }

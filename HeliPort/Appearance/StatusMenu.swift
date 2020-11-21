@@ -497,7 +497,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 let ipAddress = NetworkManager.getLocalAddress(bsd: bsd)
                 let routerAddress = NetworkManager.getRouterAddress(bsd: bsd)
                 let isReachable = NetworkManager.isReachable()
-                disconnectName = String(cString: &staInfo.ssid.0)
+                disconnectName = String.getSSIDFromCString(cString: &staInfo.ssid.0)
                 ipAddr = ipAddress ?? .unknown
                 routerAddr = routerAddress ?? .unknown
                 internet = isReachable ? .reachable : .unreachable
@@ -541,7 +541,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 if self.isNetworkConnected {
                     self.isNetworkListEmpty = false
                     wifiItemView.networkInfo = NetworkInfo(
-                        ssid: String(cString: &staInfo.ssid.0),
+                        ssid: String.getSSIDFromCString(cString: &staInfo.ssid.0),
                         rssi: Int(staInfo.rssi)
                     )
                 }

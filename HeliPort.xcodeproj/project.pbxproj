@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1317990A256986E5006957D8 /* String+NonNullTerminated.swift */; };
 		1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */; };
 		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
 		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		0511882B253635BD00847009 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1317990A256986E5006957D8 /* String+NonNullTerminated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NonNullTerminated.swift"; sourceTree = "<group>"; };
 		1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsSavedNetworksView.swift; sourceTree = "<group>"; };
 		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
 		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */,
 				138D3CC724CE635800793AC1 /* Commands.swift */,
 				138D3CC924CE663B00793AC1 /* BugReporter.swift */,
+				1317990A256986E5006957D8 /* String+NonNullTerminated.swift */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
+				1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
