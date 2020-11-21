@@ -14,6 +14,7 @@ jobs:
 
     - name: Prepare Env
       run: |
+        sudo xcode-select -s "/Applications/Xcode_12.2.app"
         pod install
 
     - name: Check Strings
