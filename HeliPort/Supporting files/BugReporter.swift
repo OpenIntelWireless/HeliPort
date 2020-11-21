@@ -14,32 +14,76 @@
  */
 
 import Cocoa
+import OSLog
 
 class BugReporter {
 
-    public class func generateBugReport() {
+    private class func generateHeliPortLog() -> String {
 
         // MARK: HeliPort log
 
         let appIdentifier = Bundle.main.bundleIdentifier!
+
+        if #available(OSX 10.15, *) {
+            do {
+                let logStore = try OSLogStore.local()
+                let lastBoot = logStore.position(timeIntervalSinceLatestBoot: 0)
+                let matchingPredicate = NSPredicate(format: "subsystem == '\(appIdentifier)'")
+                let enumerator = try logStore.getEntries(with: [],
+                                                         at: lastBoot,
+                                                         matching: matchingPredicate)
+                let allEntries = Array(enumerator)
+                let osLogEntryLogObjects = allEntries.compactMap { $0 as? OSLogEntryLog }
+                var entryStr = ""
+                for item in osLogEntryLogObjects where item.subsystem == appIdentifier {
+                    entryStr += "\n\(item.date);    \(item.subsystem);    \(item.category);    \(item.composedMessage)"
+                }
+                if entryStr.count == 0 {
+                    entryStr += "No logs for HeliPort."
+                }
+                return entryStr
+            } catch {
+                Log.error("Could not generate bug report \(error)")
+                return "No logs for HeliPort."
+            }
+        } else {
+            let appLogCommand = ["show", "--predicate",
+                                      "(subsystem == '\(appIdentifier)')", "--info", "--last", "boot"]
+            let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
+            return appLog
+        }
+    }
+
+    private class func generateItlwmLog() -> String {
+        if #available(OSX 11.0, *) {
+            return "Cannot get itlwm logs for devices on macOS Big Sur or higher.\n" +
+                    "Please follow this guide to get itlwm logs: \n" +
+                    "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg"
+        } else {
+            let itlwmLogCommand = ["show", "--predicate",
+                                   "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
+                                   "--last", "boot"]
+            let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand).0 ?? "No logs for itlwm"
+            return itlwmLog
+        }
+    }
+
+    public class func generateBugReport() {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "Unknown"
         let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
-        let appLogCommand = ["show", "--predicate",
-                                  "(subsystem == '\(appIdentifier)')", "--info", "--last", "boot"]
-        let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
+
+        let appLog = generateHeliPortLog()
 
         // MARK: itlwm log
 
         var drv_info = ioctl_driver_info()
         _ = ioctl_get(Int32(IOCTL_80211_DRIVER_INFO.rawValue), &drv_info, MemoryLayout<ioctl_driver_info>.size)
-        var itlwmVersion = String(cString: &drv_info.driver_version.0)
-        var itlwmFwVersion = String(cString: &drv_info.fw_version.0)
-        if itlwmVersion.isEmpty { itlwmVersion = "Unknown" }
-        if itlwmFwVersion.isEmpty { itlwmFwVersion = "Unknown" }
-        let itlwmLogCommand = ["show", "--predicate",
-                               "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
-                               "--last", "boot"]
-        let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand).0 ?? "No logs for itlwm"
+        var itlwmVer = String(cString: &drv_info.driver_version.0)
+        var itlwmFwVer = String(cString: &drv_info.fw_version.0)
+        if itlwmVer.isEmpty { itlwmVer = "Unknown" }
+        if itlwmFwVer.isEmpty { itlwmFwVer = "Unknown" }
+
+        let itlwmLog = generateItlwmLog()
 
         // MARK: Get itlwm name if loaded (itlwm or itlwmx)
 
@@ -63,20 +107,23 @@ class BugReporter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
         let dateRan = "Time ran: \(formatter.string(from: date))"
+        let osVersion = ProcessInfo().operatingSystemVersionString
         let appOutput = """
                         \(appLog)
 
                         \(dateRan)
                         HeliPort Version: \(appVersion) (Build \(appBuildVer))
+
+                        macOS \(osVersion)
                         """
         let itlwmOutput = """
                           \(itlwmLog)
 
                           \(dateRan)
-                          \(itlwmName != nil ? """
-                                                 \(itlwmName!) loaded
-                                                 \(itlwmName!) version: \(itlwmVersion) (Firmware: \(itlwmFwVersion))
-                                                 """ : "Kext not loaded")
+                          \(itlwmName != nil ?  "\(itlwmName!) loaded version: \(itlwmVer) (Firmware: \(itlwmFwVer))" :
+                                "Kext not loaded")
+
+                          macOS \(osVersion)
                           """
 
         let fileManager = FileManager.default
