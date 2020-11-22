@@ -18,126 +18,192 @@ import Cocoa
 
 class WifiMenuItemView: NSView {
 
-    let statusImage: NSImageView = {
+    // MARK: Initializers
+
+    private var currentWindow: NSWindow?
+    private var heightConstraint: NSLayoutConstraint!
+
+    private let menuBarHeight: CGFloat = {
+        if #available(macOS 11, *) {
+            return 22
+        } else {
+            return 19
+        }
+    }()
+
+    private let effectView: NSVisualEffectView = {
+        let effectView = NSVisualEffectView()
+        effectView.material = .popover
+        effectView.state = .active
+        effectView.isEmphasized = true
+        effectView.blendingMode = .behindWindow
+        return effectView
+    }()
+
+    private let statusImage: NSImageView = {
         let statusImage = NSImageView()
-        statusImage.image = NSImage(named: NSImage.menuOnStateTemplateName)
-        statusImage.image?.isTemplate = true
-        statusImage.translatesAutoresizingMaskIntoConstraints = false
         statusImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         statusImage.isHidden = true
+
+        if #available(OSX 11.0, *) {
+            statusImage.image = NSImage(named: NSImage.menuOnStateTemplateName)?
+                                .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 13,
+                                                                                     weight: .bold,
+                                                                                     scale: .small))
+        } else {
+            statusImage.image = NSImage(named: NSImage.menuOnStateTemplateName)
+        }
+
         return statusImage
     }()
 
-    let ssidLabel: NSTextField = {
-        let ssidLabel = NSTextField()
-        ssidLabel.isBordered = false
-        ssidLabel.usesSingleLineMode = true
-        ssidLabel.maximumNumberOfLines = 1
-        ssidLabel.drawsBackground = false
-        ssidLabel.isEditable = false
-        ssidLabel.isSelectable = false
-        ssidLabel.font = NSFont.systemFont(ofSize: 14)
-        ssidLabel.translatesAutoresizingMaskIntoConstraints = false
-        return ssidLabel
-    }()
-
-    let lockImage: NSImageView = {
+    private let lockImage: NSImageView = {
         let lockImage = NSImageView()
-        lockImage.image = NSImage.init(named: NSImage.lockLockedTemplateName)
-        lockImage.image?.isTemplate = true
-        lockImage.translatesAutoresizingMaskIntoConstraints = false
         lockImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+
+        if #available(OSX 11.0, *) {
+            lockImage.image = NSImage(named: NSImage.lockLockedTemplateName)?
+                              .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 14,
+                                                                                   weight: .semibold,
+                                                                                   scale: .medium))
+        } else {
+            lockImage.image = NSImage(named: NSImage.lockLockedTemplateName)
+        }
+
         return lockImage
     }()
 
-    let signalImage: NSImageView = {
+    private let signalImage: NSImageView = {
         let signalImage = NSImageView()
-        signalImage.image?.isTemplate = true
-        signalImage.translatesAutoresizingMaskIntoConstraints = false
         signalImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return signalImage
     }()
 
-    var isMouseOver: Bool = false {
-        willSet(hover) {
-            (superview as? NSVisualEffectView)?.material = hover ? .selection : .popover
-            (superview as? NSVisualEffectView)?.isEmphasized = hover
-            ssidLabel.textColor = hover ? .white : .textColor
-            if #available(OSX 10.14, *) {
-                statusImage.contentTintColor = hover ? .white : .textColor
-                lockImage.contentTintColor = hover ? .white : .textColor
-                signalImage.contentTintColor = hover ? .white : .textColor
-            }
+    private let ssidLabel: NSTextField = {
+        let ssidLabel = NSTextField(labelWithString: "")
+
+        if #available(macOS 11, *) {
+            ssidLabel.font = NSFont.menuFont(ofSize: 0)
+        } else {
+            ssidLabel.font = NSFont.systemFont(ofSize: 14)
         }
+
+        return ssidLabel
+    }()
+
+    public init(networkInfo: NetworkInfo) {
+        self.networkInfo = networkInfo
+        super.init(frame: NSRect(x: 0, y: 0, width: 0, height: menuBarHeight))
+
+        self.addSubview(effectView)
+        effectView.addSubview(statusImage)
+        effectView.addSubview(ssidLabel)
+        effectView.addSubview(lockImage)
+        effectView.addSubview(signalImage)
+
+        setupLayout()
     }
 
-    var visible: Bool = true {
-        willSet(visible) {
-            heightConstraint.constant = visible ? 19 : 0
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: Public
+
+    public var networkInfo: NetworkInfo {
+        willSet(networkInfo) {
+            ssidLabel.stringValue = networkInfo.ssid
+            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
+            signalImage.image = StatusBarIcon.getRssiImage(Int16(networkInfo.rssi))
             layoutSubtreeIfNeeded()
         }
     }
 
-    var connected: Bool = false {
+    public var visible: Bool = true {
+        willSet(visible) {
+            isHidden = !visible
+            heightConstraint.constant = visible ? menuBarHeight : 0
+            layoutSubtreeIfNeeded()
+        }
+    }
+
+    public var connected: Bool = false {
         willSet(connected) {
             statusImage.isHidden = !connected
         }
     }
 
-    var currentWindow: NSWindow?
-
-    var networkInfo: NetworkInfo {
-        willSet(networkInfo) {
-            ssidLabel.stringValue = networkInfo.ssid
-            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
-            signalImage.image = WifiMenuItemView.getRssiImage(networkInfo.rssi)
-            layoutSubtreeIfNeeded()
+    public func checkHighlight() {
+        if visible, let position = currentWindow?.mouseLocationOutsideOfEventStream {
+            isMouseOver = bounds.contains(convert(position, from: nil))
         }
     }
 
-    var heightConstraint: NSLayoutConstraint!
+    // MARK: Private
 
-    func setupLayout() {
-        heightConstraint = heightAnchor.constraint(equalToConstant: 19)
+    private var isMouseOver: Bool = false {
+        willSet(hover) {
+            effectView.material = hover ? .selection : .popover
+            effectView.isEmphasized = hover
+
+            ssidLabel.textColor = hover ? .selectedMenuItemTextColor : .controlTextColor
+
+            statusImage.cell?.backgroundStyle = hover ? .emphasized : .normal
+            lockImage.cell?.backgroundStyle = hover ? .emphasized : .normal
+            signalImage.cell?.backgroundStyle = hover ? .emphasized : .normal
+        }
+    }
+
+    private func setupLayout() {
+
+        let effectPadding: CGFloat
+        let statusPadding: CGFloat
+        let statusWidth: CGFloat
+        let lockWidth: CGFloat
+        if #available(macOS 11, *) {
+            effectView.wantsLayer = true
+            effectView.layer?.cornerRadius = 4
+            effectView.layer?.masksToBounds = true
+            effectPadding = 5
+            statusPadding = 10
+            statusWidth = 15
+            lockWidth = 16
+        } else {
+            effectPadding = 0
+            statusPadding = 6
+            statusWidth = 12
+            lockWidth = 10
+        }
+
+        heightConstraint = heightAnchor.constraint(equalToConstant: menuBarHeight)
         heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
         heightConstraint.isActive = true
 
         statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6).isActive = true
-        statusImage.widthAnchor.constraint(equalToConstant: 12).isActive = true
+        statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: statusPadding).isActive = true
+        statusImage.widthAnchor.constraint(equalToConstant: statusWidth).isActive = true
 
         ssidLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         ssidLabel.leadingAnchor.constraint(equalTo: statusImage.trailingAnchor, constant: 3).isActive = true
-        ssidLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        ssidLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         lockImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         lockImage.leadingAnchor.constraint(equalTo: ssidLabel.trailingAnchor, constant: 10).isActive = true
-        lockImage.widthAnchor.constraint(equalToConstant: 10).isActive = true
+        lockImage.widthAnchor.constraint(equalToConstant: lockWidth).isActive = true
 
         signalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1).isActive = true
         signalImage.leadingAnchor.constraint(equalTo: lockImage.trailingAnchor, constant: 12).isActive = true
         signalImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
         signalImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
+
+        effectView.translatesAutoresizingMaskIntoConstraints = false
+        effectView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        effectView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: effectPadding).isActive = true
+        effectView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -effectPadding).isActive = true
+        effectView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        effectView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
 
-    init(networkInfo: NetworkInfo) {
-        self.networkInfo = networkInfo
-        super.init(frame: NSRect.zero)
-
-        self.addSubview(statusImage)
-        self.addSubview(ssidLabel)
-        self.addSubview(lockImage)
-        self.addSubview(signalImage)
-
-        setupLayout()
-    }
-
-    func checkHighlight() {
-        if visible, let position = currentWindow?.mouseLocationOutsideOfEventStream {
-            isMouseOver = bounds.contains(convert(position, from: nil))
-        }
-    }
+    // MARK: Overrides
 
     override func mouseUp(with event: NSEvent) {
         isMouseOver = false // NSWindow pop up could escape mouseExit
@@ -159,22 +225,15 @@ class WifiMenuItemView: NSView {
         checkHighlight()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    class func getRssiImage(_ RSSI: Int) -> NSImage? {
-        var signalImageName: NSImage
-        switch RSSI {
-        case ..<(-100):
-            signalImageName = #imageLiteral(resourceName: "WiFiStateScanning1")
-        case ..<(-80):
-            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
-        case ..<(-60):
-            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
-        default:
-            signalImageName = #imageLiteral(resourceName: "WiFiStateOn")
+    override func layout() {
+        super.layout()
+        if #available(macOS 11, *) {
+            effectView.frame = CGRect(x: 5,                     // effectPadding
+                                      y: 0,
+                                      width: bounds.width - 10, // effectPadding * 2
+                                      height: bounds.height)
+        } else {
+            effectView.frame = bounds
         }
-        return signalImageName
     }
 }
