@@ -15,6 +15,7 @@
 
 import Cocoa
 import OSLog
+import IOKit
 
 class BugReporter {
 
@@ -38,33 +39,62 @@ class BugReporter {
                 for item in osLogEntryLogObjects where item.subsystem == appIdentifier {
                     entryStr += "\n\(item.date);    \(item.subsystem);    \(item.category);    \(item.composedMessage)"
                 }
-                if entryStr.count == 0 {
-                    entryStr += "No logs for HeliPort."
-                }
                 return entryStr
             } catch {
                 Log.error("Could not generate bug report \(error)")
-                return "No logs for HeliPort."
+                return .heliportCouldNotGetLogs
             }
         } else {
             let appLogCommand = ["show", "--predicate",
                                       "(subsystem == '\(appIdentifier)')", "--info", "--last", "boot"]
-            let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
-            return appLog
+            let appLog = Commands.execute(executablePath: .log, args: appLogCommand)
+            if let stringVal = appLog.0, appLog.1 == 0 {
+                return stringVal
+            } else {
+                return .scriptFailed
+            }
         }
     }
 
     private class func generateItlwmLog() -> String {
         if #available(OSX 11.0, *) {
-            return "Cannot get itlwm logs for devices on macOS Big Sur or higher.\n" +
-                    "Please follow this guide to get itlwm logs: \n" +
-                    "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg"
+            var response: String?
+            let masterPort = IOServiceGetMatchingService(kIOMasterPortDefault, nil)
+            let gOptionsRef = IORegistryEntryFromPath(masterPort, "IODeviceTree:/options")
+            let msgbufRef = CFStringCreateWithCString(kCFAllocatorDefault,
+                                                    "msgbuf",
+                                                    CFStringBuiltInEncodings.UTF8.rawValue)
+            if let valueRef = IORegistryEntryCreateCFProperty(gOptionsRef, msgbufRef, kCFAllocatorDefault, 0) {
+                var valueItlwm: String?
+                if let data = valueRef.takeUnretainedValue() as? Data {
+                    valueItlwm = String(data: data, encoding: .ascii)
+                } else {
+                    valueItlwm = valueRef.takeRetainedValue() as? String
+                }
+                if let valueItlwm = valueItlwm, valueItlwm == "1048576" {
+                    // Boot var is available, get the dmesg
+                    response = NSAppleScript(source:
+                                            """
+                                            do shell script \"sudo dmesg | grep -i itlwm\" with administrator privileges
+                                            """)!.executeAndReturnError(nil).stringValue
+                } else {
+                    response = .msgbufNotCorrectVal
+                }
+            } else {
+                response = .msgbufNotInBootArgs
+            }
+
+            return response ?? .scriptFailed
         } else {
             let itlwmLogCommand = ["show", "--predicate",
                                    "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
                                    "--last", "boot"]
-            let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand).0 ?? "No logs for itlwm"
-            return itlwmLog
+            let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand)
+            if let stringVal = itlwmLog.0, itlwmLog.1 == 0 {
+                return stringVal
+            } else {
+                return .scriptFailed
+            }
         }
     }
 
@@ -73,6 +103,26 @@ class BugReporter {
         let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
 
         let appLog = generateHeliPortLog()
+
+        if appLog == .heliportCouldNotGetLogs {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Could not generate report for HeliPort.",
+                              options: ["Dismiss"],
+                              errorText: appLog)
+                    .show()
+            }
+            return
+        } else if appLog == .scriptFailed {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Command failed to fetch logs for HeliPort.",
+                              options: ["Dismiss"],
+                              errorText: appLog)
+                    .show()
+            }
+            return
+        }
 
         // MARK: itlwm log
 
@@ -84,6 +134,30 @@ class BugReporter {
         if itlwmFwVer.isEmpty { itlwmFwVer = "Unknown" }
 
         let itlwmLog = generateItlwmLog()
+
+        if itlwmLog == .msgbufNotInBootArgs || itlwmLog == .msgbufNotCorrectVal {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Make sure you have `msgbuf=1048576` in your NVRAM" +
+                                " or Bootloader's boot-args before generating logs for itlwm.",
+                              options: ["Dismiss"],
+                              helpAnchor: "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg",
+                              errorText: itlwmLog)
+                    .show()
+            }
+            return
+        } else if itlwmLog == .scriptFailed {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Could not read logs for `itlwm`." +
+                                " Make sure you allow `HeliPort` to read logs when prompted.",
+                              options: ["Dismiss"],
+                              helpAnchor: "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg",
+                              errorText: itlwmLog)
+                    .show()
+            }
+            return
+        }
 
         // MARK: Get itlwm name if loaded (itlwm or itlwmx)
 
@@ -156,7 +230,10 @@ class BugReporter {
                                 "zip -r -X -m \(zipName) \(reportDirName)"]
         let outputExitCode = Commands.execute(executablePath: .shell, args: zipCommand).1
         guard outputExitCode == 0 else {
-            Log.error("Could not create zip file")
+            Log.error("Could not create zip file: Exit code: \(outputExitCode)")
+            DispatchQueue.main.async {
+                Alert(text: "Could not create zip file for generated log.").show()
+            }
             return
         }
 
@@ -165,4 +242,17 @@ class BugReporter {
         NSWorkspace.shared.selectFile("\(desktopUrl.path)/\(zipName)",
                                       inFileViewerRootedAtPath: desktopUrl.path)
     }
+}
+
+private extension String {
+
+    // MARK: HeliPort Generation errors
+
+    static let heliportCouldNotGetLogs = "HELIPORT-OSLOGSTORE"
+
+    // MARK: ITLWM Generation errors
+
+    static let msgbufNotInBootArgs = "MSGBUF-NOT-FOUND"
+    static let msgbufNotCorrectVal = "MSGBUF-WRONG-VALUE"
+    static let scriptFailed = "SCRIPT-FAILED"
 }
