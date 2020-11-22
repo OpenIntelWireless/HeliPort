@@ -10,7 +10,8 @@ import Foundation
 
 public extension String {
     static func getSSIDFromCString(cString: UnsafePointer<UInt8>) -> String {
-        var string = String(cString: cString)
+        var string = String(cString: cString).trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression)
         if string.count > NWID_LEN {
             let pointer = UnsafeRawPointer(cString)
             let nsString = NSString(bytes: pointer, length: Int(NWID_LEN), encoding: Encoding.utf8.rawValue)
@@ -20,8 +21,6 @@ public extension String {
                 string = "\(string.prefix(Int(NWID_LEN)))"
             }
         }
-        return string.trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression)
-
+        return string
     }
 }
