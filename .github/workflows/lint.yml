@@ -14,4 +14,4 @@ jobs:
       with:
         url: https://github.com/realm/SwiftLint
         version: '*'
-    - run: swiftlint lint .
+    - run: swiftlint lint --strict .
