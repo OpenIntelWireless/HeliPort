@@ -112,7 +112,7 @@ bool connect_network(const char *ssid, const char *pwd) {
         if (get_80211_state(&state) && state == ITL80211_S_RUN) {
             station_info_t sta_info;
             if (get_station_info(&sta_info) == KERN_SUCCESS) {
-                return strcmp(ssid, (char*)sta_info.ssid) == 0;
+                return strncmp(ssid, (char*)sta_info.ssid, NWID_LEN) == 0;
             }
         }
         sleep(1);
