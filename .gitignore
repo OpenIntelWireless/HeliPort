@@ -8,6 +8,7 @@
 
 ## User settings
 xcuserdata/
+*.xcscheme
 
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
@@ -45,8 +46,6 @@ playground.xcworkspace
 Pods/
 
 # Temp files
-TMP.strings
-NEW.strings
 Artifacts/
 sparkle/
 ReleaseNotes.md

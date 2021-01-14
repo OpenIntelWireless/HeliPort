@@ -19,27 +19,37 @@ class PrefsSavedNetworksView: NSView {
 
     // MARK: Saved networks array
 
-    var savedNetworks: [NetworkInfoStorageEntity] = []
+    private var savedNetworks: [NetworkInfoStorageEntity] = []
 
     // MARK: Properties
 
-    let savedNetworksLabel: NSTextField = {
+    private let savedNetworksLabel: NSTextField = {
         let label = NSTextField(labelWithString: .savedNetworks)
         return label
     }()
 
-    let scrollView: NSScrollView = {
+    private let scrollView: NSScrollView = {
         let view = NSScrollView()
         view.hasHorizontalScroller = true
         view.hasVerticalScroller = true
         view.autohidesScrollers = true
         view.focusRingType = .exterior
+        view.borderType = .bezelBorder
         return view
     }()
 
-    let tableView: NSTableView = {
+    private let tableView: NSTableView = {
         let table = NSTableView()
-        table.columnAutoresizingStyle = .reverseSequentialColumnAutoresizingStyle
+
+        if #available(OSX 11.0, *) {
+            table.style = .fullWidth
+        }
+
+        if #available(OSX 10.13, *) {
+            table.usesAutomaticRowHeights = true
+        }
+
+        table.columnAutoresizingStyle = .uniformColumnAutoresizingStyle
         table.registerForDraggedTypes([.rowOrder])
 
         let font = NSFont.systemFont(ofSize: 12)
@@ -63,15 +73,22 @@ class PrefsSavedNetworksView: NSView {
         return table
     }()
 
-    let orderItemsLabel: NSTextField = {
+    private let orderItemsLabel: NSTextField = {
         let orderPreferenceString: String = .dragNetworks
         let label = NSTextField(labelWithString: orderPreferenceString)
         return label
     }()
 
-    let modifyItemSegment: NSSegmentedControl = {
-        let removeImage = NSImage(named: NSImage.removeTemplateName)!
-        let viewImage = NSImage(named: NSImage.quickLookTemplateName)!
+    private let modifyItemSegment: NSSegmentedControl = {
+        var removeImage: NSImage
+        var viewImage: NSImage
+        if #available(OSX 11.0, *) {
+            removeImage = NSImage(systemSymbolName: "minus", accessibilityDescription: "minus")!
+            viewImage = NSImage(systemSymbolName: "eye", accessibilityDescription: "eye")!
+        } else {
+            removeImage = NSImage(named: NSImage.removeTemplateName)!
+            viewImage = NSImage(named: NSImage.quickLookTemplateName)!
+        }
         let button = NSSegmentedControl(images: [removeImage, viewImage],
                                         trackingMode: .momentary,
                                         target: self,
@@ -169,7 +186,6 @@ extension PrefsSavedNetworksView {
             Log.error("Could not show view window due to window == nil")
              return
         }
-
         let viewCredentials = WiFiConfigWindow(windowState: .viewCredentialsWiFi, networkInfo: networkInfo)
         currentWindow.beginSheet(viewCredentials)
     }
@@ -237,30 +253,31 @@ private extension Int {
 extension PrefsSavedNetworksView: NSTableViewDelegate {
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard tableColumn != nil else { return nil }
+        guard let tableColumn = tableColumn else { return nil }
 
-        var view: NSView? = tableView.makeView(withIdentifier: .textViewId, owner: self) as? NSTextField
-        if view == nil {
-            view = NSTextField(labelWithString: "")
-            view?.identifier = .textViewId
-        }
+        var view: NSView?
 
         let networkEntity = savedNetworks[row]
 
-        switch tableColumn!.identifier {
-        case .ssidId:
-            (view as? NSTextField)!.stringValue = networkEntity.network.ssid
-        case .securityId:
-            (view as? NSTextField)!.stringValue = networkEntity.network.auth.security.description
-        case .autoenabledId:
-            view = tableView.makeView(withIdentifier: .checkboxId, owner: self) as? NSButton
-            if view == nil {
-                view = NSButton(checkboxWithTitle: "",
-                                target: self,
-                                action: #selector(autoJoinCheckboxChanged(_:)))
-                view?.identifier = .checkboxId
+        switch tableColumn.identifier {
+        case .ssidId, .securityId:
+            let textField = (tableView.makeView(withIdentifier: .textViewId, owner: self) as? NSTextField) ??
+                                       NSTextField(labelWithString: "")
+            textField.identifier = .textViewId
+            if tableColumn.identifier == .ssidId {
+                textField.stringValue = networkEntity.network.ssid
+            } else {
+                textField.stringValue = "\(networkEntity.network.auth.security)"
             }
-            (view as? NSButton)!.state = networkEntity.autoJoin ? .on : .off
+            view = textField
+        case .autoenabledId:
+            let checkbox = (tableView.makeView(withIdentifier: .checkboxId, owner: self) as? NSButton) ??
+                                      NSButton(checkboxWithTitle: "",
+                                               target: self,
+                                               action: #selector(autoJoinCheckboxChanged(_:)))
+            checkbox.identifier = .checkboxId
+            checkbox.state = networkEntity.autoJoin ? .on : .off
+            view = checkbox
         default:
             break
         }
@@ -347,7 +364,6 @@ private extension NSPasteboard.PasteboardType {
 // MARK: User Interface Identifiers
 
 private extension NSUserInterfaceItemIdentifier {
-
     static let ssidId: NSUserInterfaceItemIdentifier = .init(rawValue: "ssidColumn")
     static let securityId: NSUserInterfaceItemIdentifier = .init(rawValue: "securityColumn")
     static let autoenabledId: NSUserInterfaceItemIdentifier = .init(rawValue: "autoenabledColumn")

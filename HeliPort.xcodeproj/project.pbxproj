@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1317990A256986E5006957D8 /* String+NonNullTerminated.swift */; };
 		1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */; };
 		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
 		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		0511882B253635BD00847009 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1317990A256986E5006957D8 /* String+NonNullTerminated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NonNullTerminated.swift"; sourceTree = "<group>"; };
 		1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsSavedNetworksView.swift; sourceTree = "<group>"; };
 		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
 		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */,
 				138D3CC724CE635800793AC1 /* Commands.swift */,
 				138D3CC924CE663B00793AC1 /* BugReporter.swift */,
+				1317990A256986E5006957D8 /* String+NonNullTerminated.swift */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
+				1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,9 +507,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "HeliPort Launcher/HeliPort_Launcher.entitlements";
-				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "HeliPort Launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -514,7 +516,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OpenIntelWireless.HeliPort-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -524,9 +525,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "HeliPort Launcher/HeliPort_Launcher.entitlements";
-				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "HeliPort Launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -535,7 +534,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OpenIntelWireless.HeliPort-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -575,6 +573,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -637,6 +637,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -664,11 +666,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
-				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = HeliPort/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -677,7 +676,6 @@
 				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
 				SWIFT_VERSION = 5.0;
 			};
@@ -689,11 +687,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
-				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = HeliPort/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -704,7 +699,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;

@@ -14,32 +14,150 @@
  */
 
 import Cocoa
+import OSLog
+import IOKit
 
 class BugReporter {
 
-    public class func generateBugReport() {
+    private class func generateHeliPortLog() -> String {
 
         // MARK: HeliPort log
 
         let appIdentifier = Bundle.main.bundleIdentifier!
+
+        if #available(OSX 10.15, *) {
+            do {
+                let logStore = try OSLogStore.local()
+                let lastBoot = logStore.position(timeIntervalSinceLatestBoot: 0)
+                let matchingPredicate = NSPredicate(format: "subsystem == '\(appIdentifier)'")
+                let enumerator = try logStore.getEntries(with: [],
+                                                         at: lastBoot,
+                                                         matching: matchingPredicate)
+                let allEntries = Array(enumerator)
+                let osLogEntryLogObjects = allEntries.compactMap { $0 as? OSLogEntryLog }
+                var entryStr = ""
+                for item in osLogEntryLogObjects where item.subsystem == appIdentifier {
+                    entryStr += "\n\(item.date);    \(item.subsystem);    \(item.category);    \(item.composedMessage)"
+                }
+                return entryStr
+            } catch {
+                Log.error("Could not generate bug report \(error)")
+                return .heliportCouldNotGetLogs
+            }
+        } else {
+            let appLogCommand = ["show", "--predicate",
+                                      "(subsystem == '\(appIdentifier)')", "--info", "--last", "boot"]
+            let appLog = Commands.execute(executablePath: .log, args: appLogCommand)
+            if let stringVal = appLog.0, appLog.1 == 0 {
+                return stringVal
+            } else {
+                return .scriptFailed
+            }
+        }
+    }
+
+    private class func generateItlwmLog() -> String {
+        if #available(OSX 11.0, *) {
+            var response: String?
+            let masterPort = IOServiceGetMatchingService(kIOMasterPortDefault, nil)
+            let gOptionsRef = IORegistryEntryFromPath(masterPort, "IODeviceTree:/options")
+            let msgbufRef = CFStringCreateWithCString(kCFAllocatorDefault,
+                                                    "msgbuf",
+                                                    CFStringBuiltInEncodings.UTF8.rawValue)
+            if let valueRef = IORegistryEntryCreateCFProperty(gOptionsRef, msgbufRef, kCFAllocatorDefault, 0) {
+                var valueItlwm: String?
+                if let data = valueRef.takeUnretainedValue() as? Data {
+                    valueItlwm = String(data: data, encoding: .ascii)
+                } else {
+                    valueItlwm = valueRef.takeRetainedValue() as? String
+                }
+                if let valueItlwm = valueItlwm, valueItlwm == "1048576" {
+                    // Boot var is available, get the dmesg
+                    response = NSAppleScript(source:
+                                            """
+                                            do shell script \"sudo dmesg | grep -i itlwm\" with administrator privileges
+                                            """)!.executeAndReturnError(nil).stringValue
+                } else {
+                    response = .msgbufNotCorrectVal
+                }
+            } else {
+                response = .msgbufNotInBootArgs
+            }
+
+            return response ?? .scriptFailed
+        } else {
+            let itlwmLogCommand = ["show", "--predicate",
+                                   "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
+                                   "--last", "boot"]
+            let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand)
+            if let stringVal = itlwmLog.0, itlwmLog.1 == 0 {
+                return stringVal
+            } else {
+                return .scriptFailed
+            }
+        }
+    }
+
+    public class func generateBugReport() {
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "Unknown"
         let appBuildVer = Bundle.main.infoDictionary?["CFBundleVersion"] ?? "Unknown"
-        let appLogCommand = ["show", "--predicate",
-                                  "(subsystem == '\(appIdentifier)')", "--info", "--last", "boot"]
-        let appLog = Commands.execute(executablePath: .log, args: appLogCommand).0 ?? "No logs for HeliPort"
+
+        let appLog = generateHeliPortLog()
+
+        if appLog == .heliportCouldNotGetLogs {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Could not generate report for HeliPort.",
+                              options: ["Dismiss"],
+                              errorText: appLog)
+                    .show()
+            }
+            return
+        } else if appLog == .scriptFailed {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Command failed to fetch logs for HeliPort.",
+                              options: ["Dismiss"],
+                              errorText: appLog)
+                    .show()
+            }
+            return
+        }
 
         // MARK: itlwm log
 
         var drv_info = ioctl_driver_info()
         _ = ioctl_get(Int32(IOCTL_80211_DRIVER_INFO.rawValue), &drv_info, MemoryLayout<ioctl_driver_info>.size)
-        var itlwmVersion = String(cString: &drv_info.driver_version.0)
-        var itlwmFwVersion = String(cString: &drv_info.fw_version.0)
-        if itlwmVersion.isEmpty { itlwmVersion = "Unknown" }
-        if itlwmFwVersion.isEmpty { itlwmFwVersion = "Unknown" }
-        let itlwmLogCommand = ["show", "--predicate",
-                               "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
-                               "--last", "boot"]
-        let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand).0 ?? "No logs for itlwm"
+        var itlwmVer = String(cString: &drv_info.driver_version.0)
+        var itlwmFwVer = String(cString: &drv_info.fw_version.0)
+        if itlwmVer.isEmpty { itlwmVer = "Unknown" }
+        if itlwmFwVer.isEmpty { itlwmFwVer = "Unknown" }
+
+        let itlwmLog = generateItlwmLog()
+
+        if itlwmLog == .msgbufNotInBootArgs || itlwmLog == .msgbufNotCorrectVal {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Make sure you have `msgbuf=1048576` in your NVRAM" +
+                                " or Bootloader's boot-args before generating logs for itlwm.",
+                              options: ["Dismiss"],
+                              helpAnchor: "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg",
+                              errorText: itlwmLog)
+                    .show()
+            }
+            return
+        } else if itlwmLog == .scriptFailed {
+            DispatchQueue.main.async {
+                CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: "Could not read logs for `itlwm`." +
+                                " Make sure you allow `HeliPort` to read logs when prompted.",
+                              options: ["Dismiss"],
+                              helpAnchor: "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg",
+                              errorText: itlwmLog)
+                    .show()
+            }
+            return
+        }
 
         // MARK: Get itlwm name if loaded (itlwm or itlwmx)
 
@@ -63,20 +181,23 @@ class BugReporter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSS"
         let dateRan = "Time ran: \(formatter.string(from: date))"
+        let osVersion = ProcessInfo().operatingSystemVersionString
         let appOutput = """
                         \(appLog)
 
                         \(dateRan)
                         HeliPort Version: \(appVersion) (Build \(appBuildVer))
+
+                        macOS \(osVersion)
                         """
         let itlwmOutput = """
                           \(itlwmLog)
 
                           \(dateRan)
-                          \(itlwmName != nil ? """
-                                                 \(itlwmName!) loaded
-                                                 \(itlwmName!) version: \(itlwmVersion) (Firmware: \(itlwmFwVersion))
-                                                 """ : "Kext not loaded")
+                          \(itlwmName != nil ?  "\(itlwmName!) loaded version: \(itlwmVer) (Firmware: \(itlwmFwVer))" :
+                                "Kext not loaded")
+
+                          macOS \(osVersion)
                           """
 
         let fileManager = FileManager.default
@@ -109,7 +230,10 @@ class BugReporter {
                                 "zip -r -X -m \(zipName) \(reportDirName)"]
         let outputExitCode = Commands.execute(executablePath: .shell, args: zipCommand).1
         guard outputExitCode == 0 else {
-            Log.error("Could not create zip file")
+            Log.error("Could not create zip file: Exit code: \(outputExitCode)")
+            DispatchQueue.main.async {
+                Alert(text: "Could not create zip file for generated log.").show()
+            }
             return
         }
 
@@ -118,4 +242,17 @@ class BugReporter {
         NSWorkspace.shared.selectFile("\(desktopUrl.path)/\(zipName)",
                                       inFileViewerRootedAtPath: desktopUrl.path)
     }
+}
+
+private extension String {
+
+    // MARK: HeliPort Generation errors
+
+    static let heliportCouldNotGetLogs = "HELIPORT-OSLOGSTORE"
+
+    // MARK: ITLWM Generation errors
+
+    static let msgbufNotInBootArgs = "MSGBUF-NOT-FOUND"
+    static let msgbufNotCorrectVal = "MSGBUF-WRONG-VALUE"
+    static let scriptFailed = "SCRIPT-FAILED"
 }
