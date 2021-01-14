@@ -75,7 +75,11 @@ class WiFiConfigWindow: NSWindow {
         let pop = NSPopUpButton(frame: .zero, pullsDown: false)
         pop.addItem(withTitle: .none)
         pop.menu?.addItem(.separator())
+
+        // swiftlint:disable comment_spacing
+
         pop.addItems(withTitles: [
+
             //.wep,
             .wpa_1_2_Personal,
             //.wpa_2_3_Personal,
@@ -90,6 +94,9 @@ class WiFiConfigWindow: NSWindow {
             //.wpa2Enterprise
             //,.wpa3Enterprise
         ])
+
+        // swiftlint:enable comment_spacing
+
         pop.action = #selector(security(_:))
         return pop
     }()

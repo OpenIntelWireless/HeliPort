@@ -57,45 +57,32 @@ class BugReporter {
     }
 
     private class func generateItlwmLog() -> String {
-        if #available(OSX 11.0, *) {
-            var response: String?
-            let masterPort = IOServiceGetMatchingService(kIOMasterPortDefault, nil)
-            let gOptionsRef = IORegistryEntryFromPath(masterPort, "IODeviceTree:/options")
-            let msgbufRef = CFStringCreateWithCString(kCFAllocatorDefault,
-                                                    "msgbuf",
-                                                    CFStringBuiltInEncodings.UTF8.rawValue)
-            if let valueRef = IORegistryEntryCreateCFProperty(gOptionsRef, msgbufRef, kCFAllocatorDefault, 0) {
-                var valueItlwm: String?
-                if let data = valueRef.takeUnretainedValue() as? Data {
-                    valueItlwm = String(data: data, encoding: .ascii)
-                } else {
-                    valueItlwm = valueRef.takeRetainedValue() as? String
-                }
-                if let valueItlwm = valueItlwm, valueItlwm == "1048576" {
-                    // Boot var is available, get the dmesg
-                    response = NSAppleScript(source:
-                                            """
-                                            do shell script \"sudo dmesg | grep -i itlwm\" with administrator privileges
-                                            """)!.executeAndReturnError(nil).stringValue
-                } else {
-                    response = .msgbufNotCorrectVal
-                }
-            } else {
-                response = .msgbufNotInBootArgs
-            }
+        var response: String?
+        let masterPort = IOServiceGetMatchingService(kIOMasterPortDefault, nil)
+        let gOptionsRef = IORegistryEntryFromPath(masterPort, "IODeviceTree:/options")
+        let keyRef = CFStringCreateWithCString(kCFAllocatorDefault,
+                                                "boot-args",
+                                                CFStringBuiltInEncodings.UTF8.rawValue)
 
-            return response ?? .scriptFailed
-        } else {
-            let itlwmLogCommand = ["show", "--predicate",
-                                   "(process == 'kernel' && eventMessage CONTAINS[c] 'itlwm')",
-                                   "--last", "boot"]
-            let itlwmLog = Commands.execute(executablePath: .log, args: itlwmLogCommand)
-            if let stringVal = itlwmLog.0, itlwmLog.1 == 0 {
-                return stringVal
+        if let valueRef = IORegistryEntryCreateCFProperty(gOptionsRef, keyRef, kCFAllocatorDefault, 0) {
+            var bootArgs: String?
+            if let data = valueRef.takeUnretainedValue() as? Data {
+                bootArgs = String(data: data, encoding: .ascii)
             } else {
-                return .scriptFailed
+                bootArgs = valueRef.takeRetainedValue() as? String
+            }
+            if bootArgs?.contains("msgbuf=1048576") != nil {
+                // boot-args is available, get dmesg logs
+                response = NSAppleScript(source:
+                                         """
+                                         do shell script \"sudo dmesg | grep -i itlwm\" with administrator privileges
+                                         """)!.executeAndReturnError(nil).stringValue
+            } else {
+                response = .msgbufInvalid
             }
         }
+
+        return response ?? .scriptFailed
     }
 
     public class func generateBugReport() {
@@ -104,19 +91,12 @@ class BugReporter {
 
         let appLog = generateHeliPortLog()
 
-        if appLog == .heliportCouldNotGetLogs {
+        if appLog == .heliportCouldNotGetLogs || appLog == .scriptFailed {
             DispatchQueue.main.async {
                 CriticalAlert(message: "Error occurred while generating bug report.",
-                              informativeText: "Could not generate report for HeliPort.",
-                              options: ["Dismiss"],
-                              errorText: appLog)
-                    .show()
-            }
-            return
-        } else if appLog == .scriptFailed {
-            DispatchQueue.main.async {
-                CriticalAlert(message: "Error occurred while generating bug report.",
-                              informativeText: "Command failed to fetch logs for HeliPort.",
+                              informativeText: appLog == .heliportCouldNotGetLogs ?
+                                              "Could not generate report for HeliPort." :
+                                              "Command failed to fetch logs for HeliPort.",
                               options: ["Dismiss"],
                               errorText: appLog)
                     .show()
@@ -135,26 +115,21 @@ class BugReporter {
 
         let itlwmLog = generateItlwmLog()
 
-        if itlwmLog == .msgbufNotInBootArgs || itlwmLog == .msgbufNotCorrectVal {
+        if itlwmLog == .msgbufInvalid || itlwmLog == .scriptFailed {
             DispatchQueue.main.async {
-                CriticalAlert(message: "Error occurred while generating bug report.",
-                              informativeText: "Make sure you have `msgbuf=1048576` in your NVRAM" +
-                                " or Bootloader's boot-args before generating logs for itlwm.",
-                              options: ["Dismiss"],
-                              helpAnchor: "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg",
+                let alert = CriticalAlert(message: "Error occurred while generating bug report.",
+                              informativeText: itlwmLog == .msgbufInvalid ?
+                                               "Make sure you have `msgbuf=1048576` in your NVRAM" +
+                                               " or Bootloader's boot-args before generating logs for itlwm." :
+                                               "Could not read logs for `itlwm`." +
+                                               " Make sure you allow `HeliPort` to read logs when prompted.",
+                              options: ["Dismiss", "Open Documentation"],
+                              helpAnchor: .dmesgHelpURL,
                               errorText: itlwmLog)
-                    .show()
-            }
-            return
-        } else if itlwmLog == .scriptFailed {
-            DispatchQueue.main.async {
-                CriticalAlert(message: "Error occurred while generating bug report.",
-                              informativeText: "Could not read logs for `itlwm`." +
-                                " Make sure you allow `HeliPort` to read logs when prompted.",
-                              options: ["Dismiss"],
-                              helpAnchor: "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg",
-                              errorText: itlwmLog)
-                    .show()
+
+                if alert.show() == .alertSecondButtonReturn {
+                    NSWorkspace.shared.open(URL(string: .dmesgHelpURL)!)
+                }
             }
             return
         }
@@ -252,7 +227,9 @@ private extension String {
 
     // MARK: ITLWM Generation errors
 
-    static let msgbufNotInBootArgs = "MSGBUF-NOT-FOUND"
-    static let msgbufNotCorrectVal = "MSGBUF-WRONG-VALUE"
+    static let msgbufInvalid = "MSGBUF-INVALID"
     static let scriptFailed = "SCRIPT-FAILED"
+
+    // MARK: DOC URL
+    static let dmesgHelpURL = "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg"
 }

@@ -4,12 +4,9 @@ excluded:
 identifier_name:
   allowed_symbols: "_"
 
-# Following values are all for warnings
-type_body_length:
-  - 400
-
-function_body_length:
-  - 70
-
-file_length:
-  - 600
+disabled_rules:
+  - function_body_length
+  - type_body_length
+  - file_length
+  - cyclomatic_complexity
+  - inclusive_language

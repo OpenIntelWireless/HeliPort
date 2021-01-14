@@ -65,9 +65,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
         #else
-        guard pathComponents[pathComponents.count - 2] != "Applications"
-                //|| pathComponents[pathComponents.count - 2] != "Release"
-        else {
+        guard pathComponents[pathComponents.count - 2] != "Applications" else {
             return
         }
         #endif

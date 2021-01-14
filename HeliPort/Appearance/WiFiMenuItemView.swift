@@ -214,8 +214,8 @@ class WifiMenuItemView: NSView {
     }
 
     override func viewWillMove(toWindow newWindow: NSWindow?) {
-        //Fix mouseUp event after losing focus
-        //https://stackoverflow.com/questions/15075033/weird-issue-with-nsmenuitem-custom-view-and-mouseup
+        // Fix mouseUp event after losing focus
+        // https://stackoverflow.com/questions/15075033/weird-issue-with-nsmenuitem-custom-view-and-mouseup
         super.viewWillMove(toWindow: newWindow)
         newWindow?.becomeKey()
         currentWindow = newWindow

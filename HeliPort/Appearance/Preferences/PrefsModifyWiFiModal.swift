@@ -56,6 +56,9 @@ class PrefsViewWiFiInfoModal: NSWindow {
         let pop = NSPopUpButton(frame: NSRect.zero)
         pop.addItem(withTitle: .none)
         pop.menu?.addItem(.separator())
+
+        // swiftlint:disable comment_spacing
+
         //pop?.addItem(withTitle: NSLocalizedString("WEP", comment: ""))
         pop.addItem(withTitle: .wpa1_2_Personal)
         //pop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Personal", comment: ""))
@@ -67,6 +70,9 @@ class PrefsViewWiFiInfoModal: NSWindow {
         //pop?.addItem(withTitle: NSLocalizedString("WPA2/WPA3 Enterprise", comment: ""))
         pop.addItem(withTitle: .wpa2Enterprise)
         //pop?.addItem(withTitle: NSLocalizedString("WPA3 Enterprise", comment: ""))
+
+        // swiftlint:enable comment_spacing
+
         pop.action = #selector(security(_:))
         pop.selectItem(withTitle: .wpa2Personal)
         pop.isEnabled = false
@@ -252,7 +258,7 @@ class PrefsViewWiFiInfoModal: NSWindow {
             securityPop.topAnchor.constraint(equalTo: securityLabel.topAnchor, constant: -4),
             securityPop.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-            //Username label
+            // Username label
             usernameLabel.leadingAnchor.constraint(equalTo: icon.leadingAnchor),
             usernameLabel.widthAnchor.constraint(equalTo: securityLabel.widthAnchor),
             usernameLabel.heightAnchor.constraint(equalTo: usernameBox.heightAnchor),
@@ -262,7 +268,7 @@ class PrefsViewWiFiInfoModal: NSWindow {
             usernameBox.topAnchor.constraint(equalTo: usernameLabel.topAnchor, constant: -4),
             usernameBox.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-            //Password label
+            // Password label
             passwdLabel.leadingAnchor.constraint(equalTo: icon.leadingAnchor),
             passwdLabel.widthAnchor.constraint(equalTo: usernameLabel.widthAnchor),
             passwdLabel.heightAnchor.constraint(equalTo: passwdSecureBox.heightAnchor),
