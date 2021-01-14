@@ -49,7 +49,12 @@ class PrefsWindow: NSWindow {
         toolbar!.insertItem(withItemIdentifier: .networks, at: 1)
         toolbar!.selectedItemIdentifier = .general
 
+        if #available(OSX 11.0, *) {
+            self.toolbarStyle = .preference
+        }
+
         // Set selected item
+
         clickToolbarItem(NSToolbarItem(itemIdentifier: toolbar!.selectedItemIdentifier!))
     }
 
@@ -124,13 +129,21 @@ extension PrefsWindow: NSToolbarDelegate {
         case .networks:
             toolbarItem.label = .networks
             toolbarItem.paletteLabel = .networks
-            toolbarItem.image = #imageLiteral(resourceName: "WiFi")
+            if #available(OSX 11.0, *) {
+                toolbarItem.image = NSImage(systemSymbolName: "wifi", accessibilityDescription: .general)
+            } else {
+                toolbarItem.image = #imageLiteral(resourceName: "WiFi")
+            }
             toolbarItem.isEnabled = true
             return toolbarItem
         case .general:
             toolbarItem.label = .general
             toolbarItem.paletteLabel = .general
-            toolbarItem.image = NSImage(named: NSImage.preferencesGeneralName)
+            if #available(OSX 11.0, *) {
+                toolbarItem.image = NSImage(systemSymbolName: "gearshape", accessibilityDescription: .general)
+            } else {
+                toolbarItem.image = NSImage(named: NSImage.preferencesGeneralName)
+            }
             toolbarItem.isEnabled = true
             return toolbarItem
         default:

@@ -19,6 +19,7 @@ class Commands {
     enum ExecutablePath: String {
         case shell = "/bin/sh"
         case log = "/usr/bin/log"
+        case nvram = "/usr/sbin/nvram"
     }
 
     // MARK: Run command and returns the output and exit status.
