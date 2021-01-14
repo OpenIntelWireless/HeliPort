@@ -34,11 +34,6 @@ jobs:
         fi
       shell: zsh {0}
 
-    - name: SwiftLint
-      uses: norio-nomura/action-swiftlint@3.2.1
-      env:
-        DIFF_BASE: ${{ github.base_ref }}
-
     - name: Debug Build
       run: |
         xcodebuild -workspace HeliPort.xcworkspace -scheme HeliPort -configuration Debug -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}

@@ -61,8 +61,8 @@ class BugReporter {
         let masterPort = IOServiceGetMatchingService(kIOMasterPortDefault, nil)
         let gOptionsRef = IORegistryEntryFromPath(masterPort, "IODeviceTree:/options")
         let keyRef = CFStringCreateWithCString(kCFAllocatorDefault,
-                                                "boot-args",
-                                                CFStringBuiltInEncodings.UTF8.rawValue)
+                                               "boot-args",
+                                               CFStringBuiltInEncodings.UTF8.rawValue)
 
         if let valueRef = IORegistryEntryCreateCFProperty(gOptionsRef, keyRef, kCFAllocatorDefault, 0) {
             var bootArgs: String?
@@ -71,7 +71,7 @@ class BugReporter {
             } else {
                 bootArgs = valueRef.takeRetainedValue() as? String
             }
-            if bootArgs?.contains("msgbuf=1048576") != nil {
+            if bootArgs != nil, bootArgs!.contains("msgbuf=1048576") {
                 // boot-args is available, get dmesg logs
                 response = NSAppleScript(source:
                                          """
