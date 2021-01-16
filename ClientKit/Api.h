@@ -38,10 +38,6 @@ typedef struct {
 
 typedef struct ioctl_sta_info station_info_t;
 
-enum itl80211_security get_security_info_sta(station_info_t *sta_info);
-
-enum itl80211_security get_security_type(struct ioctl_network_info info);
-
 bool open_adapter(io_connect_t *connection_t);
 
 void close_adapter(io_connect_t connection);

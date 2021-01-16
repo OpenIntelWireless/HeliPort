@@ -19,42 +19,6 @@
 
 static pthread_mutex_t* api_mutex = NULL;
 
-enum itl80211_security get_security_type(struct ioctl_network_info info) {
-    if ((info.supported_rsnprotos & ITL80211_PROTO_RSN) != 0) {
-        //wpa2
-        if ((info.rsn_akms & ITL80211_AKM_8021X) != 0) {
-            if ((info.supported_rsnprotos & ITL80211_PROTO_WPA) != 0) {
-                return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED;
-            }
-            return ITL80211_SECURITY_WPA2_ENTERPRISE;
-        } else if ((info.rsn_akms & ITL80211_AKM_PSK) != 0) {
-            if ((info.supported_rsnprotos & ITL80211_PROTO_WPA) != 0) {
-                return ITL80211_SECURITY_WPA_PERSONAL_MIXED;
-            }
-            return ITL80211_SECURITY_WPA2_PERSONAL;
-        } else if ((info.rsn_akms & ITL80211_AKM_SHA256_8021X) != 0) {
-            return ITL80211_SECURITY_WPA2_ENTERPRISE;
-        } else if ((info.rsn_akms & ITL80211_AKM_SHA256_PSK) != 0) {
-            return ITL80211_SECURITY_PERSONAL;
-        }
-    } else if ((info.supported_rsnprotos & ITL80211_PROTO_WPA) != 0) {
-        //wpa
-        if ((info.rsn_akms & ITL80211_AKM_8021X) != 0) {
-            return ITL80211_SECURITY_WPA_ENTERPRISE;
-        } else if ((info.rsn_akms & ITL80211_AKM_PSK) != 0) {
-            return ITL80211_SECURITY_WPA_PERSONAL;
-        } else if ((info.rsn_akms & ITL80211_AKM_SHA256_8021X) != 0) {
-            return ITL80211_SECURITY_WPA_ENTERPRISE;
-        } else if ((info.rsn_akms & ITL80211_AKM_SHA256_PSK) != 0) {
-            return ITL80211_SECURITY_ENTERPRISE;
-        }
-    } else if (info.supported_rsnprotos == 0) {
-        return ITL80211_SECURITY_NONE;
-    }
-    //TODO wpa3
-    return ITL80211_SECURITY_UNKNOWN;
-}
-
 bool get_platform_info(platform_info_t *info) {
     memset(info, 0, sizeof(platform_info_t));
 
@@ -101,13 +65,16 @@ error:
     return false;
 }
 
-bool get_networks(network_info_list_t *list) {
+bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
 
     struct ioctl_scan scan;
     struct ioctl_network_info network_info_ret;
     io_connect_t con;
+    struct ioctl_sta_info sta_info;
     scan.version = IOCTL_VERSION;
+
+    get_station_info(&sta_info);
 
     if (!open_adapter(&con)) {
         goto error;
@@ -116,6 +83,9 @@ bool get_networks(network_info_list_t *list) {
     while (_nake_ioctl(con, &oid, true, &network_info_ret, sizeof(struct ioctl_network_info)) == kIOReturnSuccess) {
         if (list->count >= MAX_NETWORK_LIST_LENGTH) {
             break;
+        }
+        if (strlen(sta_info.ssid) > 0 && memcmp(sta_info.bssid, network_info_ret.bssid, ETHER_ADDR_LEN) == 0) {
+            continue;
         }
         struct ioctl_network_info *info = &list->networks[list->count++];
         memcpy(info, &network_info_ret, sizeof(struct ioctl_network_info));
@@ -129,48 +99,6 @@ bool get_networks(network_info_list_t *list) {
 
 error:
     return false;
-}
-
-bool get_network_list(network_info_list_t *list) {
-    bool return_value = get_networks(list);
-    
-    if (return_value) {
-        // Remove sta from list if available
-        struct ioctl_sta_info sta_info;
-        get_station_info(&sta_info);
-        for (int i = 0; i < list->count; i++) {
-            struct ioctl_network_info* info = &list->networks[i];
-            if (strlen(sta_info.ssid) > 0 && memcmp(sta_info.bssid, info->bssid, ETHER_ADDR_LEN) == 0) {
-                // Replace sta network with last element in list and replace the last element in array with zero.
-                memset(info, 0, sizeof(struct ioctl_network_info));
-                if (i + 1 < list->count) {
-                    struct ioctl_network_info replaceWith = list->networks[list->count - 1];
-                    list->networks[i] = replaceWith;
-                    memset(&list->networks[list->count - 1], 0, sizeof(struct ioctl_network_info));
-                }
-                list->count--;
-                break;
-            }
-        }
-    }
-
-    return return_value;
-}
-
-enum itl80211_security get_security_info_sta(station_info_t *sta_info) {
-    enum itl80211_security security = ITL80211_SECURITY_UNKNOWN;
-    network_info_list_t *list = (network_info_list_t *) malloc(sizeof(network_info_list_t));
-    if (get_networks(list)) {
-        for (int i = 0; i < list->count; i++) {
-            struct ioctl_network_info info = list->networks[i];
-            if (strlen(sta_info->ssid) > 0 && memcmp(sta_info->bssid, info.bssid, ETHER_ADDR_LEN) == 0) {
-                security = get_security_type(info);
-                break;
-            }
-        }
-    }
-    free(list);
-    return security;
 }
 
 bool connect_network(const char *ssid, const char *pwd) {

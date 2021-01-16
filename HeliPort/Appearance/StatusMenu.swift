@@ -111,6 +111,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 enableLoggingItem,
                 diagnoseItem,
 
+                securityItem,
                 countryCodeItem,
                 nssItem,
 
@@ -505,7 +506,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 ipAddr = ipAddress ?? .unknown
                 routerAddr = routerAddress ?? .unknown
                 internet = isReachable ? .reachable : .unreachable
-                security = "\(get_security_info_sta(&staInfo))"
+                security = .unknown
                 bssid = String(format: "%02x:%02x:%02x:%02x:%02x:%02x",
                                staInfo.bssid.0,
                                staInfo.bssid.1,
@@ -519,7 +520,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 rssi = "\(staInfo.rssi) dBm"
                 noise = "\(staInfo.noise) dBm"
                 txRate = "\(staInfo.rate) Mbps"
-                phyMode = "\(staInfo.op_mode)"
+                phyMode = staInfo.op_mode.description
                 mcsIndex = "\(staInfo.cur_mcs)"
                 nss = .unknown
             }

@@ -47,7 +47,7 @@ extension itl80211_security: CustomStringConvertible {
         case ITL80211_SECURITY_WPA3_TRANSITION:
             return "WPA3 Transition"
         default:
-            return NSLocalizedString("Unknown")
+            return "Unknown"
         }
     }
 }
