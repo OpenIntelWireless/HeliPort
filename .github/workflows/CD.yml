@@ -27,8 +27,10 @@ jobs:
         CUR_TAG="$(git tag -l | grep -i 'alpha' | tail -1)"
         eval $(grep -m 1 "MARKETING_VERSION =" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
 
-        if [[ "$(git log -1 --pretty=format:%s)" != *"GH Release"* ]]; then
+        if [[ "$GITHUB_EVENT_NAME" != 'workflow_dispatch' ]]; then
           sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = \"\$(MARKETING_VERSION)-alpha-${GIT_SHA}\";/g" HeliPort.xcodeproj/project.pbxproj
+        else
+          sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = \"\$(MARKETING_VERSION)-stable-${GIT_SHA}\";/g" HeliPort.xcodeproj/project.pbxproj
         fi
 
         echo "VER=$MARKETING_VERSION" >> $GITHUB_ENV
@@ -121,7 +123,7 @@ jobs:
             '            ]]>'
             '            </description>'
             "            <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>"
-            "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/OpenIntelWireless/HeliPort/releases/latest/download/HeliPort.dmg\" sparkle:version=\"${VER}\" sparkle:shortVersionString=\"${VER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.dmg)/>"
+            "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/OpenIntelWireless/HeliPort/releases/latest/download/HeliPort.dmg\" sparkle:version=\"${VER}-stable-${SHORT_SHA}\" sparkle:shortVersionString=\"${VER}\" type=\"application/octet-stream\" $(./sparkle/bin/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.dmg)/>"
             '        </item>'
             '    </channel>'
             '</rss>'
