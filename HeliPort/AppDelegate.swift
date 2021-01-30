@@ -42,8 +42,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             Log.error("itlwm kext not loaded!")
             #if !DEBUG
             let alert = CriticalAlert(message: NSLocalizedString("itlwm is not running"),
-                                      options: [NSLocalizedString("Dismiss")])
-            alert.show()
+                                      options: [NSLocalizedString("Dismiss"),
+                                                NSLocalizedString("Quit HeliPort")])
+
+            if alert.show() == .alertSecondButtonReturn {
+                NSApp.terminate(nil)
+            }
+
             #endif
             return false
         }
@@ -94,10 +99,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             "\n" + NSLocalizedString("itlwm API Version: ") + String(drv_info.version)
         let alert = CriticalAlert(message: NSLocalizedString("itlwm Version Mismatch"),
                                   informativeText: text,
-                                  options: [
-                                    NSLocalizedString("Quit HeliPort"),
-                                    NSLocalizedString("Visit OpenIntelWireless on GitHub")
-                                  ]
+                                  options: [NSLocalizedString("Quit HeliPort"),
+                                            NSLocalizedString("Visit OpenIntelWireless on GitHub")]
         )
 
         if alert.show() == .alertSecondButtonReturn {
