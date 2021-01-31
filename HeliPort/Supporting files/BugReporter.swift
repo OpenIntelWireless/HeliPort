@@ -19,6 +19,22 @@ import IOKit
 
 class BugReporter {
 
+    private static let openPanel: NSOpenPanel = {
+        let openPanel = NSOpenPanel()
+
+        openPanel.title = NSLocalizedString("Choose a folder to output the bug report")
+        openPanel.message = NSLocalizedString("The bug report will be generated in the seleted folder")
+        openPanel.showsResizeIndicator = true
+        openPanel.canChooseDirectories = true
+        openPanel.canChooseFiles = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.canCreateDirectories = true
+
+        NSApplication.shared.activate(ignoringOtherApps: true)
+
+        return openPanel
+    }()
+
     private class func generateHeliPortLog() -> String {
 
         // MARK: HeliPort log
@@ -93,11 +109,11 @@ class BugReporter {
 
         if appLog == .heliportCouldNotGetLogs || appLog == .scriptFailed {
             DispatchQueue.main.async {
-                CriticalAlert(message: "Error occurred while generating bug report.",
+                CriticalAlert(message: NSLocalizedString("Error occurred while generating bug report."),
                               informativeText: appLog == .heliportCouldNotGetLogs ?
-                                              "Could not generate report for HeliPort." :
-                                              "Command failed to fetch logs for HeliPort.",
-                              options: ["Dismiss"],
+                                NSLocalizedString("Could not generate report for HeliPort.") :
+                                NSLocalizedString("Command failed to fetch logs for HeliPort."),
+                              options: [NSLocalizedString("Dismiss")],
                               errorText: appLog)
                     .show()
             }
@@ -117,13 +133,13 @@ class BugReporter {
 
         if itlwmLog == .msgbufInvalid || itlwmLog == .scriptFailed {
             DispatchQueue.main.async {
-                let alert = CriticalAlert(message: "Error occurred while generating bug report.",
+                let alert = CriticalAlert(message: NSLocalizedString("Error occurred while generating bug report."),
                               informativeText: itlwmLog == .msgbufInvalid ?
-                                               "Make sure you have `msgbuf=1048576` in your NVRAM" +
-                                               " or Bootloader's boot-args before generating logs for itlwm." :
-                                               "Could not read logs for `itlwm`." +
-                                               " Make sure you allow `HeliPort` to read logs when prompted.",
-                              options: ["Dismiss", "Open Documentation"],
+                                NSLocalizedString("Make sure you have `msgbuf=1048576` in your NVRAM" +
+                                                  " or Bootloader's boot-args before generating logs for itlwm.") :
+                                NSLocalizedString("Could not read logs for `itlwm`." +
+                                                  " Make sure you allow `HeliPort` to read logs when prompted."),
+                              options: [NSLocalizedString("Dismiss"), NSLocalizedString("Open Documentation")],
                               helpAnchor: .dmesgHelpURL,
                               errorText: itlwmLog)
 
@@ -175,47 +191,64 @@ class BugReporter {
                           macOS \(osVersion)
                           """
 
-        let fileManager = FileManager.default
-        guard let desktopUrl = fileManager.urls(for: .desktopDirectory,
-                                                 in: .userDomainMask).first else {
-                                                    Log.error("Could not get desktop path to generate bug report.")
-                                                    return
-        }
+        DispatchQueue.main.async {
+            openPanel.begin { (result) -> Void in
+                var folderUrl: URL?
+                if result.rawValue == NSFileHandlingPanelOKButton {
+                    folderUrl = openPanel.url
+                }
 
-        let reportDirName = "bugreport_\(UInt16.random(in: UInt16.min...UInt16.max))"
-        let reportDirUrl = desktopUrl.appendingPathComponent(reportDirName, isDirectory: true)
+                // Back to background
+                DispatchQueue.global().async {
+                    guard folderUrl != nil else {
+                        Log.error("Could not get path to generate bug report.")
+                        DispatchQueue.main.async {
+                            CriticalAlert(message: NSLocalizedString("Could not get path to generate bug report."),
+                                          options: ["Dismiss"]).show()
+                        }
+                        return
+                    }
 
-        // MARK: Write to files
+                    let reportDirName = "bugreport_\(UInt16.random(in: UInt16.min...UInt16.max))"
+                    let reportDirUrl = folderUrl!.appendingPathComponent(reportDirName, isDirectory: true)
 
-        do {
-            try fileManager.createDirectory(at: reportDirUrl, withIntermediateDirectories: true, attributes: nil)
-            let heliPortFile = reportDirUrl.appendingPathComponent("HeliPort_logs.log")
-            let itlwmFile = reportDirUrl.appendingPathComponent("\(itlwmName ?? "itlwm")_logs.log")
-            try appOutput.write(to: heliPortFile, atomically: true, encoding: .utf8)
-            try itlwmOutput.write(to: itlwmFile, atomically: true, encoding: .utf8)
-        } catch {
-            Log.error("\(error)")
-            return
-        }
+                    // MARK: Write to files
 
-        // MARK: Zip file
+                    do {
+                        try FileManager.default.createDirectory(at: reportDirUrl,
+                                                                withIntermediateDirectories: true,
+                                                                attributes: nil)
+                        let heliPortFile = reportDirUrl.appendingPathComponent("HeliPort_logs.log")
+                        let itlwmFile = reportDirUrl.appendingPathComponent("\(itlwmName ?? "itlwm")_logs.log")
+                        try appOutput.write(to: heliPortFile, atomically: true, encoding: .utf8)
+                        try itlwmOutput.write(to: itlwmFile, atomically: true, encoding: .utf8)
+                    } catch {
+                        Log.error("\(error)")
+                        return
+                    }
 
-        let zipName = reportDirName + ".zip"
-        let zipCommand = ["-c", "cd \(desktopUrl.path) && " +
-                                "zip -r -X -m \(zipName) \(reportDirName)"]
-        let outputExitCode = Commands.execute(executablePath: .shell, args: zipCommand).1
-        guard outputExitCode == 0 else {
-            Log.error("Could not create zip file: Exit code: \(outputExitCode)")
-            DispatchQueue.main.async {
-                Alert(text: "Could not create zip file for generated log.").show()
+                    // MARK: Zip file
+
+                    let zipName = reportDirName + ".zip"
+                    let zipCommand = ["-c", "cd \(folderUrl!.path) && " +
+                                            "zip -r -X -m \(zipName) \(reportDirName)"]
+                    let outputExitCode = Commands.execute(executablePath: .shell, args: zipCommand).1
+                    guard outputExitCode == 0 else {
+                        Log.error("Could not create zip file: Exit code: \(outputExitCode)")
+                        DispatchQueue.main.async {
+                            CriticalAlert(message: NSLocalizedString("Could not create zip file for generated log."),
+                                          options: [NSLocalizedString("Dismiss")]).show()
+                        }
+                        return
+                    }
+
+                    // MARK: Select zip file
+
+                    NSWorkspace.shared.selectFile("\(folderUrl!.path)/\(zipName)",
+                                                  inFileViewerRootedAtPath: folderUrl!.path)
+                }
             }
-            return
         }
-
-        // MARK: Select zip file
-
-        NSWorkspace.shared.selectFile("\(desktopUrl.path)/\(zipName)",
-                                      inFileViewerRootedAtPath: desktopUrl.path)
     }
 }
 
