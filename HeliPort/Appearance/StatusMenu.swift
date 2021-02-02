@@ -494,7 +494,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var entity: NetworkInfoStorageEntity?
             var hideDisconnect = true
             if self.status == ITL80211_S_RUN && get_station_info(&staInfo) == KERN_SUCCESS {
+                #if !DEBUG
                 entity = CredentialsManager.instance.getStorageFromSsid(String(cString: &staInfo.ssid.0))
+                #endif
                 hideDisconnect = entity?.autoJoin ?? false
                 self.isNetworkConnected = true
                 let bsd = String(self.bsdItem.title).replacingOccurrences(of: String.interfaceName, with: "",

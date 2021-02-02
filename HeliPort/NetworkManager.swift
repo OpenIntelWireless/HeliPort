@@ -256,7 +256,7 @@ final class NetworkManager {
 
     class func getSecurityType(_ info: ioctl_network_info) -> itl80211_security {
         if info.supported_rsnprotos & ITL80211_PROTO_RSN.rawValue != 0 {
-            //wpa2
+            // WPA2
             if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
                 if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
                     return ITL80211_SECURITY_WPA_ENTERPRISE_MIXED
@@ -273,7 +273,7 @@ final class NetworkManager {
                 return ITL80211_SECURITY_PERSONAL
             }
         } else if info.supported_rsnprotos & ITL80211_PROTO_WPA.rawValue != 0 {
-            //wpa
+            // WPA
             if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
                 return ITL80211_SECURITY_WPA_ENTERPRISE
             } else if info.rsn_akms & ITL80211_AKM_PSK.rawValue != 0 {
@@ -286,7 +286,6 @@ final class NetworkManager {
         } else if info.supported_rsnprotos == 0 {
             return ITL80211_SECURITY_NONE
         }
-        //TODO wpa3
         return ITL80211_SECURITY_UNKNOWN
     }
 }
