@@ -59,8 +59,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                     }
                 }
             case ITL80211_S_SCAN:
-                // no change in status bar icon when scanning
-                break
+                /*
+                 * API does not report bgscan to HeliPort. During ITL80211_S_RUN the status
+                 * will never change to ITL80211_S_SCAN unless users manually disassociate.
+                 * Set the icon to disconnected here so it displays correctly when users manually disassociate.
+                 */
+                StatusBarIcon.disconnected()
             default:
                 StatusBarIcon.error()
             }
