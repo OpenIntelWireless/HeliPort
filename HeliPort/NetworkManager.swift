@@ -27,6 +27,8 @@ final class NetworkManager {
         ITL80211_SECURITY_PERSONAL
     ]
 
+    static var credentialLock = false
+
     class func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
                        _ callback: ((_ result: Bool) -> Void)? = nil) {
 
@@ -109,17 +111,36 @@ final class NetworkManager {
         }
     }
 
-    class func connectSavedNetworks() {
+    class func connectSavedNetworks(_ scannedNetworks: [NetworkInfo]) {
         DispatchQueue.global(qos: .background).async {
             let dispatchSemaphore = DispatchSemaphore(value: 0)
             var connected = false
-            for network in CredentialsManager.instance.getSavedNetworks() where !connected {
+
+            // We can get here stuck below for a bit waiting for credential passwords.
+            // Only allow one autoconnect request at a time and drop the rest
+            if self.credentialLock {
+                return
+            }
+
+            self.credentialLock = true
+
+            // Filter for only scanned networks
+            let savedNetworks = CredentialsManager.instance.getSavedNetworks()
+                .filter { entity in
+                    scannedNetworks.contains { element in
+                        element.ssid == entity.ssid }
+            }
+
+            for network in savedNetworks where !connected {
+                Log.debug("Auto-joining \(network.ssid)")
                 connect(networkInfo: network) { (result: Bool) -> Void in
                     connected = result
                     dispatchSemaphore.signal()
                 }
                 dispatchSemaphore.wait()
             }
+
+            self.credentialLock = false
         }
     }
 
