@@ -111,18 +111,23 @@ final class NetworkManager {
 
     class func scanSavedNetworks() {
         DispatchQueue.global(qos: .background).async {
+            let savedNetworks: [NetworkInfo] = CredentialsManager.instance.getSavedNetworks()
+            guard savedNetworks.count > 0 else {
+                Log.debug("No network saved for auto join")
+                return
+            }
+            var targetNetworks: [NetworkInfo]?
+            let dispatchSemaphore = DispatchSemaphore(value: 0)
             let scanTimer: Timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
-                let dispatchSemaphore = DispatchSemaphore(value: 0)
-                var targetNetworks: [NetworkInfo]?
                 NetworkManager.scanNetwork { networkList in
-                    targetNetworks = CredentialsManager.instance.getSavedNetworks().filter { networkList.contains($0) }
+                    targetNetworks = savedNetworks.filter { networkList.contains($0) }
                     dispatchSemaphore.signal()
                 }
                 dispatchSemaphore.wait()
                 if targetNetworks != nil, targetNetworks!.count > 0 {
                     // This will stop the timer completely
                     timer.invalidate()
-                    Log.debug("Auto connect timer stopped")
+                    Log.debug("Auto join timer stopped")
                     connectSavedNetworks(networks: targetNetworks!)
                 }
             }
