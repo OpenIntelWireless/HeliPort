@@ -109,11 +109,36 @@ final class NetworkManager {
         }
     }
 
-    class func connectSavedNetworks() {
+    class func scanSavedNetworks() {
+        DispatchQueue.global(qos: .background).async {
+            let scanTimer: Timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+                let dispatchSemaphore = DispatchSemaphore(value: 0)
+                var targetNetworks: [NetworkInfo]?
+                NetworkManager.scanNetwork { networkList in
+                    targetNetworks = CredentialsManager.instance.getSavedNetworks().filter { networkList.contains($0) }
+                    dispatchSemaphore.signal()
+                }
+                dispatchSemaphore.wait()
+                if targetNetworks != nil, targetNetworks!.count > 0 {
+                    // This will stop the timer completely
+                    timer.invalidate()
+                    Log.debug("Auto connect timer stopped")
+                    connectSavedNetworks(networks: targetNetworks!)
+                }
+            }
+            // Start executing code inside the timer immediately
+            scanTimer.fire()
+            let currentRunLoop = RunLoop.current
+            currentRunLoop.add(scanTimer, forMode: .common)
+            currentRunLoop.run()
+        }
+    }
+
+    private class func connectSavedNetworks(networks: [NetworkInfo]) {
         DispatchQueue.global(qos: .background).async {
             let dispatchSemaphore = DispatchSemaphore(value: 0)
             var connected = false
-            for network in CredentialsManager.instance.getSavedNetworks() where !connected {
+            for network in networks where !connected {
                 connect(networkInfo: network) { (result: Bool) -> Void in
                     connected = result
                     dispatchSemaphore.signal()

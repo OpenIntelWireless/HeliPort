@@ -383,7 +383,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             get_power_state(&power)
             if get_80211_state(&state) && power &&
                 (state != ITL80211_S_RUN.rawValue || get_station_info(&stationInfo) != KERN_SUCCESS) {
-                NetworkManager.connectSavedNetworks()
+                NetworkManager.scanSavedNetworks()
             }
         }
     }
