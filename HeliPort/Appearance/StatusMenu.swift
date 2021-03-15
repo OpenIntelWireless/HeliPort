@@ -182,7 +182,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let hardwareInfoSeparator = NSMenuItem.separator()
 
     private var networkItemList = [NSMenuItem]()
-    private let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
+                                          // 200 will cause serious lag when scrolling
+    private let maxNetworkListLength = 75 // MAX_NETWORK_LIST_LENGTH
     private let networkItemListSeparator: NSMenuItem = {
         let networkItemListSeparator =  NSMenuItem.separator()
         networkItemListSeparator.isHidden = true
@@ -572,6 +573,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         NetworkManager.scanNetwork { networkList in
             self.isNetworkListEmpty = networkList.count == 0 && !self.isNetworkConnected
             var networkList = networkList
+            if networkList.count > self.networkItemList.count {
+                Log.error("Number of scanned networks (\(networkList.count)) exceeds maximum (\(self.networkItemList.count))")
+            }
             for index in 1 ..< self.networkItemList.count {
                 if let view = self.networkItemList[index].view as? WifiMenuItemView {
                     if networkList.count > 0 {

@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_NETWORK_LIST_LENGTH 50
+#define MAX_NETWORK_LIST_LENGTH 200
 #define MAX_SSID_LENGTH 32
 
 typedef struct {
