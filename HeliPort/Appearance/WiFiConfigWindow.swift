@@ -83,18 +83,20 @@ class WiFiConfigWindow: NSWindow {
             //.wep,
             .wpa_1_2_Personal,
             //.wpa_2_3_Personal,
+            .wpaPersonal,
             .wpa2Personal
             //,.wpa3Personal
         ])
+        /*
         pop.menu?.addItem(.separator())
         pop.addItems(withTitles: [
-            //.dynamicWEP,
-            //.wpa_1_2_Enterprise,
-            //.wpa_2_3_Enterprise,
-            //.wpa2Enterprise
-            //,.wpa3Enterprise
+            .dynamicWEP,
+            .wpa_1_2_Enterprise,
+            .wpa_2_3_Enterprise,
+            .wpa2Enterprise,
+            .wpa3Enterprise
         ])
-
+         */
         // swiftlint:enable comment_spacing
 
         pop.action = #selector(security(_:))
@@ -363,6 +365,10 @@ class WiFiConfigWindow: NSWindow {
     }
 
     func show() {
+        guard !securityPop.title.isEmpty else {
+            Log.error("WiFiConfigWindow not shown due to unknown security type")
+            return
+        }
         makeKeyAndOrderFront(self)
     }
 
@@ -455,6 +461,7 @@ extension WiFiConfigWindow {
             networkBox.becomeFirstResponder()
         case .wpa_1_2_Personal,
              .wpa_2_3_Personal,
+             .wpaPersonal,
              .wpa2Personal,
              .wpa3Personal:
             gridView.row(at: .usernameRow).isHidden = true
@@ -531,16 +538,18 @@ extension WiFiConfigWindow {
         let network = NetworkInfo(ssid: networkBox.stringValue)
         network.auth.password = passwdInputBox.stringValue
 
-        switch securityPop.indexOfSelectedItem {
-        case 0:
+        switch securityPop.title {
+        case .none:
             network.auth.security = ITL80211_SECURITY_NONE
-        case 2:
+        case .wpa_1_2_Personal:
             network.auth.security = ITL80211_SECURITY_WPA_PERSONAL_MIXED
-        case 3:
+        case .wpaPersonal:
+            network.auth.security = ITL80211_SECURITY_WPA_PERSONAL
+        case .wpa2Personal:
             network.auth.security = ITL80211_SECURITY_WPA2_PERSONAL
-        case 5:
+        case .wpa_1_2_Enterprise:
             network.auth.security = ITL80211_SECURITY_WPA_ENTERPRISE_MIXED
-        case 6:
+        case .wpa2Enterprise:
             network.auth.security = ITL80211_SECURITY_WPA2_ENTERPRISE
         default:
             network.auth.security = ITL80211_SECURITY_UNKNOWN
@@ -616,6 +625,7 @@ private extension String {
     static let wep = NSLocalizedString(ITL80211_SECURITY_WEP.description)
     static let wpa_1_2_Personal = NSLocalizedString(ITL80211_SECURITY_WPA_PERSONAL_MIXED.description)
     static let wpa_2_3_Personal = NSLocalizedString("WPA2/WPA3 Personal")
+    static let wpaPersonal = NSLocalizedString(ITL80211_SECURITY_WPA_PERSONAL.description)
     static let wpa2Personal = NSLocalizedString(ITL80211_SECURITY_WPA2_PERSONAL.description)
     static let wpa3Personal = NSLocalizedString(ITL80211_SECURITY_WPA3_PERSONAL.description)
     static let dynamicWEP = NSLocalizedString(ITL80211_SECURITY_DYNAMIC_WEP.description)
