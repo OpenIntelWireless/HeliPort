@@ -209,7 +209,7 @@ class WifiMenuItemView: NSView {
         isMouseOver = false // NSWindow pop up could escape mouseExit
         enclosingMenuItem?.menu?.cancelTracking()
         if !connected {
-            NetworkManager.connect(networkInfo: networkInfo)
+            NetworkManager.connect(networkInfo: networkInfo, saveNetwork: true)
         }
     }
 
