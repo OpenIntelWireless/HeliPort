@@ -574,7 +574,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             self.isNetworkListEmpty = networkList.count == 0 && !self.isNetworkConnected
             var networkList = networkList
             if networkList.count > self.networkItemList.count {
-                Log.error("Number of scanned networks (\(networkList.count)) exceeds maximum (\(self.networkItemList.count))")
+                Log.error("Number of scanned networks (\(networkList.count))" +
+                          " exceeds maximum (\(self.networkItemList.count))")
             }
             for index in 1 ..< self.networkItemList.count {
                 if let view = self.networkItemList[index].view as? WifiMenuItemView {

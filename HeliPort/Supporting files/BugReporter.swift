@@ -74,28 +74,17 @@ class BugReporter {
 
     private class func generateItlwmLog() -> String {
         var response: String?
-        let masterPort = IOServiceGetMatchingService(kIOMasterPortDefault, nil)
-        let gOptionsRef = IORegistryEntryFromPath(masterPort, "IODeviceTree:/options")
-        let keyRef = CFStringCreateWithCString(kCFAllocatorDefault,
-                                               "boot-args",
-                                               CFStringBuiltInEncodings.UTF8.rawValue)
 
-        if let valueRef = IORegistryEntryCreateCFProperty(gOptionsRef, keyRef, kCFAllocatorDefault, 0) {
-            var bootArgs: String?
-            if let data = valueRef.takeUnretainedValue() as? Data {
-                bootArgs = String(data: data, encoding: .ascii)
-            } else {
-                bootArgs = valueRef.takeRetainedValue() as? String
-            }
-            if bootArgs != nil, bootArgs!.contains("msgbuf=1048576") {
-                // boot-args is available, get dmesg logs
-                response = NSAppleScript(source:
-                                         """
-                                         do shell script \"sudo dmesg | grep -i itlwm\" with administrator privileges
-                                         """)!.executeAndReturnError(nil).stringValue
-            } else {
-                response = .msgbufInvalid
-            }
+        if KextInfo("as.lvs1974.DebugEnhancer").kextDidLoad() {
+            // msgbuf size is sufficient, collect dmesg logs
+            response = NSAppleScript(source:
+                                     // swiftlint:disable line_length
+                                     """
+                                     do shell script \"sudo dmesg | grep -E \\"itlwm|Airport|IO80211|EAPOL\\"\" with administrator privileges
+                                     """)!.executeAndReturnError(nil).stringValue
+                                     // swiftlint:enable line_length
+        } else {
+            response = .msgbufInsufficient
         }
 
         return response ?? .scriptFailed
@@ -131,12 +120,12 @@ class BugReporter {
 
         let itlwmLog = generateItlwmLog()
 
-        if itlwmLog == .msgbufInvalid || itlwmLog == .scriptFailed {
+        if itlwmLog == .msgbufInsufficient || itlwmLog == .scriptFailed {
             DispatchQueue.main.async {
                 let alert = CriticalAlert(message: NSLocalizedString("Error occurred while generating bug report."),
-                              informativeText: itlwmLog == .msgbufInvalid ?
-                                NSLocalizedString("Make sure you have `msgbuf=1048576` in your NVRAM" +
-                                                  " or Bootloader's boot-args before generating logs for itlwm.") :
+                              informativeText: itlwmLog == .msgbufInsufficient ?
+                                NSLocalizedString("Make sure you have installed `DebugEnhancer.kext`" +
+                                                  " before collecting logs for itlwm.") :
                                 NSLocalizedString("Could not read logs for `itlwm`." +
                                                   " Make sure you allow `HeliPort` to read logs when prompted."),
                               options: [NSLocalizedString("Dismiss"), NSLocalizedString("Open Documentation")],
@@ -201,7 +190,7 @@ class BugReporter {
                 // Back to background
                 DispatchQueue.global().async {
                     guard folderUrl != nil else {
-                        Log.error("Could not get path to generate bug report.")
+                        Log.error("Could not get path to store bug report.")
                         DispatchQueue.main.async {
                             CriticalAlert(message: NSLocalizedString("Could not get path to generate bug report."),
                                           options: ["Dismiss"]).show()
@@ -236,7 +225,7 @@ class BugReporter {
                     guard outputExitCode == 0 else {
                         Log.error("Could not create zip file: Exit code: \(outputExitCode)")
                         DispatchQueue.main.async {
-                            CriticalAlert(message: NSLocalizedString("Could not create zip file for generated log."),
+                            CriticalAlert(message: NSLocalizedString("Could not create zip file for generated logs."),
                                           options: [NSLocalizedString("Dismiss")]).show()
                         }
                         return
@@ -260,9 +249,9 @@ private extension String {
 
     // MARK: ITLWM Generation errors
 
-    static let msgbufInvalid = "MSGBUF-INVALID"
+    static let msgbufInsufficient = "MSGBUF-INSUFFICIENT"
     static let scriptFailed = "SCRIPT-FAILED"
 
     // MARK: DOC URL
-    static let dmesgHelpURL = "https://openintelwireless.github.io/itlwm/Troubleshooting.html#using-dmesg"
+    static let dmesgHelpURL = "https://docs.oiw.workers.dev/itlwm/Troubleshooting.html#runtime-logs"
 }
