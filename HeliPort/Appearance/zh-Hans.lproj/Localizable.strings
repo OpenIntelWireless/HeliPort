@@ -18,7 +18,6 @@
 "Auto Join" = "自动连接";
 "Automatically check for updates." = "自动检查更新";
 "Automatically download new updates." = "自动下载更新";
-" before collecting logs for itlwm." = "在为 itlwm 获取诊断报告之前";
 "Cancel" = "取消";
 "Check for Updates..." = "检查更新...";
 "Choose a folder to output the bug report" = "选择输出诊断报告的文件夹";
@@ -47,7 +46,7 @@
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";
 "Launch At Login" = "登陆时自动启动";
-"Make sure you have installed `DebugEnhancer.kext`" = "请确保您已经安装了 `DebugEnhancer.kext`";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "请确保您在为 itlwm 获取诊断报告之前已经安装了 `DebugEnhancer.kext`";
 "Network Name" = "网络名称";
 "Network Name:" = "网络名称：";
 "Networks" = "网络";
