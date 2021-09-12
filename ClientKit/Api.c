@@ -65,6 +65,36 @@ error:
     return false;
 }
 
+bool get_network_ssid(char *ssid)
+{
+    struct ioctl_nw_id nwid;
+    if (ioctl_get(IOCTL_80211_NW_ID, &nwid, sizeof(struct ioctl_nw_id)) != KERN_SUCCESS) {
+        goto error;
+    }
+    
+    memcpy(ssid, nwid.nwid, nwid.len);
+    
+    return true;
+    
+error:
+    return false;
+}
+
+bool get_network_bssid(char *bssid)
+{
+    struct ioctl_nw_bssid nwbssid;
+    if (ioctl_get(IOCTL_80211_NW_BSSID, &nwbssid, sizeof(struct ioctl_nw_bssid)) != KERN_SUCCESS) {
+        goto error;
+    }
+    
+    memcpy(bssid, nwbssid.bssid, ETHER_ADDR_LEN);
+    
+    return true;
+    
+error:
+    return false;
+}
+
 bool get_network_list(network_info_list_t *list) {
     memset(list, 0, sizeof(network_info_list_t));
 
