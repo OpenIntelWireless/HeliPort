@@ -1,5 +1,5 @@
 //
-//  itl_80211_state+Status.swift
+//  itl_80211_state+Extensions.swift
 //  HeliPort
 //
 //  Created by Igor Kulman on 30/06/2020.
@@ -15,7 +15,7 @@
 
 import Foundation
 
-extension itl_80211_state: CustomStringConvertible {
+extension itl_80211_state: CustomStringConvertible, Comparable {
     public var description: String {
         switch self {
         case ITL80211_S_INIT:
@@ -29,5 +29,9 @@ extension itl_80211_state: CustomStringConvertible {
         default:
             return "Wi-Fi: Status unavailable"
         }
+    }
+
+    public static func < (lhs: itl_80211_state, rhs: itl_80211_state) -> Bool {
+        lhs.rawValue < rhs.rawValue
     }
 }

@@ -39,7 +39,7 @@
 		F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */; };
 		F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379276E24A0A4A50087FF2B /* CredentialsManager.swift */; };
 		F379277124A0A52E0087FF2B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277024A0A52E0087FF2B /* Log.swift */; };
-		F3915F0724AB1A1B00E6614D /* itl_80211_state+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */; };
+		F3915F0724AB1A1B00E6614D /* itl_80211_state+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3915F0624AB1A1B00E6614D /* itl_80211_state+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -105,7 +105,7 @@
 		F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenuItem+Extensions.swift"; sourceTree = "<group>"; };
 		F379276E24A0A4A50087FF2B /* CredentialsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsManager.swift; sourceTree = "<group>"; };
 		F379277024A0A52E0087FF2B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_80211_state+Description.swift"; sourceTree = "<group>"; };
+		F3915F0624AB1A1B00E6614D /* itl_80211_state+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_80211_state+Extensions.swift"; sourceTree = "<group>"; };
 		F86A8972243CD40800CBABC2 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
 		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 				138D3CC724CE635800793AC1 /* Commands.swift */,
 				5088F70726BEA46F009E3A15 /* KextInfo.swift */,
 				F379277024A0A52E0087FF2B /* Log.swift */,
-				F3915F0624AB1A1B00E6614D /* itl_80211_state+Description.swift */,
+				F3915F0624AB1A1B00E6614D /* itl_80211_state+Extensions.swift */,
 				F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */,
 				F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */,
 				F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */,
@@ -398,7 +398,7 @@
 				F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */,
 				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
 				F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */,
-				F3915F0724AB1A1B00E6614D /* itl_80211_state+Description.swift in Sources */,
+				F3915F0724AB1A1B00E6614D /* itl_80211_state+Extensions.swift in Sources */,
 				5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */,
 				F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
