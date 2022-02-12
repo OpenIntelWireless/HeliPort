@@ -91,7 +91,7 @@ class PrefsSavedNetworksView: NSView {
         }
         let button = NSSegmentedControl(images: [removeImage, viewImage],
                                         trackingMode: .momentary,
-                                        target: self,
+                                        target: NSSegmentedControl.self,
                                         action: #selector(modifyItemClicked(_:)))
         button.setEnabled(false, forSegment: .remove)
         button.setEnabled(false, forSegment: .view)
