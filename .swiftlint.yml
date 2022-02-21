@@ -1,5 +1,6 @@
 excluded:
-- Pods
+- SourcePackages
+- build # Alternative derived path used in CI
 
 identifier_name:
   allowed_symbols: "_"

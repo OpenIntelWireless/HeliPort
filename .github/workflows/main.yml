@@ -1,51 +1,170 @@
-name: Build and Lint
+name: CI
 
-on: 
+on:
   - push
   - pull_request
+  - workflow_dispatch
 
 jobs:
-  CI:
 
-    runs-on: macos-10.15
+  CI:
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Prepare Env
-      run: |
-        sudo xcode-select -s "/Applications/Xcode_12.2.app"
-        pod install
+    - uses: actions/cache@v2
+      with:
+        path: build/SourcePackages
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
 
-    - name: Check Strings
+    - name: Install Dependencies
+      run: brew install create-dmg
+      env:
+        HOMEBREW_NO_INSTALL_CLEANUP: 1
+        HOMEBREW_NO_AUTO_UPDATE: 1
+
+    - name: Manage Version
+      if: (github.event_name == 'push' && github.ref_name == 'master') || github.event_name == 'workflow_dispatch'
       run: |
-        for file (./HeliPort/Appearance/**/*.strings) {
-          plutil -lint $file
-          if [[ $file != *"zh-Hans"* ]]; then
-            grep -Hn "：" $file >> /tmp/chnCol.txt
-          fi
-        }
-        echo ""
-        if [[ $(cat /tmp/chnCol.txt) != "" ]]; then
-          echo "ERROR!!! Chinese Colon\"：\" exists in:"
-          echo ""
-          cat /tmp/chnCol.txt
-          exit 1
+        git fetch --prune --unshallow --tags
+        GIT_SHA="$(git rev-parse --short HEAD)"
+        CUR_TAG="$(git tag -l | grep -i 'alpha' | tail -1)"
+        eval $(grep -m 1 "MARKETING_VERSION =" HeliPort.xcodeproj/project.pbxproj | tr -d ';' | tr -d '\t' | tr -d " ")
+
+        if [[ "$GITHUB_EVENT_NAME" != 'workflow_dispatch' ]]; then
+          sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = \"\$(MARKETING_VERSION)-alpha-${GIT_SHA}\";/g" HeliPort.xcodeproj/project.pbxproj
+        else
+          sed -i '' -e "s/CURRENT_PROJECT_VERSION =.*/CURRENT_PROJECT_VERSION = \"\$(MARKETING_VERSION)-stable-${GIT_SHA}\";/g" HeliPort.xcodeproj/project.pbxproj
+        fi
+
+        echo "VER=$MARKETING_VERSION" >> $GITHUB_ENV
+        echo "SHORT_SHA=$GIT_SHA" >> $GITHUB_ENV
+        if [[ -z $CUR_TAG ]]; then
+          echo "OLD_PRE_TAG=NULL" >> $GITHUB_ENV
+        else
+          echo "OLD_PRE_TAG=$CUR_TAG">> $GITHUB_ENV
         fi
       shell: zsh {0}
 
-    - name: SwiftLint
-      run: |
-        function stripPWD() {
-          sed -E "s/$(pwd|sed 's/\//\\\//g')\///"
-        }
-
-        function convertToGitHubActionsLoggingCommands() {
-          sed -E 's/^(.*):([0-9]+):([0-9]+): (warning|error|[^:]+): (.*)/::\4 file=\1,line=\2,col=\3::\5/'
-        }
-
-        set -o pipefail && swiftlint | stripPWD | convertToGitHubActionsLoggingCommands
-
     - name: Debug Build
+      if: github.event_name != 'workflow_dispatch'
       run: |
-        xcodebuild -workspace HeliPort.xcworkspace -scheme HeliPort -configuration Debug -derivedDataPath build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+        xcodebuild -scheme HeliPort -configuration Debug -derivedDataPath build -disableAutomaticPackageResolution CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+    - name: Release Build
+      run: |
+        xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build -disableAutomaticPackageResolution CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+
+    - name: Create Disk Image
+      if: (github.event_name == 'push' && github.ref_name == 'master') || github.event_name == 'workflow_dispatch'
+      run: |
+        XCBUILD_PATH="build/Build/Products/Release"
+        cp LICENSE $XCBUILD_PATH
+        cd $XCBUILD_PATH
+        curl -sLO https://openintelwireless.github.io/HeliPort/dmg/VolumeIcon.icns
+        curl -sLO https://openintelwireless.github.io/HeliPort/dmg/dmg-background.tiff
+        create-dmg \
+          --volname "HeliPort" \
+          --volicon "VolumeIcon.icns" \
+          --background "dmg-background.tiff" \
+          --window-pos 200 120 \
+          --window-size 660 420 \
+          --text-size 12 \
+          --eula "LICENSE" \
+          --icon-size 160 \
+          --icon "HeliPort.app" 180 170 \
+          --hide-extension "HeliPort.app" \
+          --app-drop-link 480 170 \
+          "HeliPort.dmg" \
+          "./HeliPort.app"
+        cd -
+        mkdir Artifacts
+        cp -R ${XCBUILD_PATH}/*.dmg Artifacts
+
+    - name: Setup Prerelease Variables
+      if: github.event_name == 'push' && github.ref_name == 'master'
+      run: |
+        echo "REL_TAG=v${VER}-alpha" >> $GITHUB_ENV
+        echo "IS_PRE=true" >> $GITHUB_ENV
+
+        echo '### Disclaimer:' >> ReleaseNotes.md
+        echo '***This alpha version is for testing only.***' >> ReleaseNotes.md
+        echo 'It is not ready for daily use and we do not guarantee its usability.' >> ReleaseNotes.md
+        echo 'If you discovered an issue and you do not have debugging skills, please check with the [Gitter Chat Room](https://gitter.im/OpenIntelWireless/itlwm) in advance before opening an Issue.' >> ReleaseNotes.md
+
+    - name: Setup Release Variables
+      if: github.event_name == 'workflow_dispatch'
+      run: |
+        echo "REL_TAG=v${VER}" >> $GITHUB_ENV
+        echo "IS_PRE=false" >> $GITHUB_ENV
+
+    - name: Generate Release Notes
+      if: (github.event_name == 'push' && github.ref_name == 'master') || github.event_name == 'workflow_dispatch'
+      run: |
+        echo '### The latest updates are:' >> ReleaseNotes.md
+        git log -"$(git rev-list --count $(git rev-list -1 "$(git tag -l | grep -v 'alpha' | tail -1)")..HEAD)" --format="- %H %s" | grep -v '.git\|Merge\|yml\|CI' | sed  '/^$/d' >> ReleaseNotes.md
+
+    - name: Delete Old Prerelease
+      if: (github.event_name == 'push' && github.ref_name == 'master') || github.event_name == 'workflow_dispatch'
+      uses: dev-drprasad/delete-tag-and-release@v0.1.2
+      with:
+        tag_name: ${{ env.OLD_PRE_TAG }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Generate Sparkle Appcast
+      if: github.event_name == 'workflow_dispatch'
+      run: |
+        REPO_COMMIT_URL='https://github.com/OpenIntelWireless/HeliPort/commit/'
+        INDENT='                    '
+        PART1="${INDENT}<li><a class=\"commit-link\" data-hovercard-type=\"commit\" data-hovercard-url=\"${REPO_COMMIT_URL}"
+        PART2="/hovercard\" href=\"${REPO_COMMIT_URL}"
+        PART3="\"><tt>"
+        PART4='</tt></a> '
+        PART5='</li>'
+        CHANGELOG="$(git log -"$(git rev-list --count $(git rev-list -1 "$(git tag -l | grep -v 'alpha' | tail -1)")..HEAD)" --format="${PART1}%H${PART2}%H${PART3}%h${PART4}%s${PART5}" | cat)"
+
+        SPARKLE_BIN='./build/SourcePackages/artifacts/Sparkle/bin'
+        PUBDATE="$(date +"%a, %d %b %Y %T %z")"
+        APPCAST=(
+            '<?xml version="1.0" standalone="yes"?>'
+            '<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">'
+            '    <channel>'
+            '        <title>HeliPort</title>'
+            '        <item>'
+            "            <title>${VER}</title>"
+            "            <pubDate>${PUBDATE}</pubDate>"
+            '            <description><![CDATA['
+            '                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/19.4.0/primer.min.css"><meta charset="UTF-8"><div class="markdown-body"><h3>The latest updates are:</h3><ul>'
+            "${CHANGELOG}"
+            '                </ul></div>'
+            '            ]]>'
+            '            </description>'
+            '            <sparkle:minimumSystemVersion>10.12</sparkle:minimumSystemVersion>'
+            "            <enclosure url=\"https://heliport.bat-bat.workers.dev/https://github.com/OpenIntelWireless/HeliPort/releases/latest/download/HeliPort.dmg\" sparkle:version=\"${VER}-stable-${SHORT_SHA}\" sparkle:shortVersionString=\"${VER}\" type=\"application/octet-stream\" $($SPARKLE_BIN/sign_update -s ${SPARKLE_KEY} ./Artifacts/HeliPort.dmg)/>"
+            '        </item>'
+            '    </channel>'
+            '</rss>'
+        )
+
+        for appcast in "${APPCAST[@]}"; do
+            echo "${appcast}" >> ./Artifacts/appcast.xml
+        done
+      shell: zsh {0}
+      env:
+        SPARKLE_KEY: ${{ secrets.SPARKLE_KEY }}
+
+    - name: Publish GitHub Release
+      if: ((github.event_name == 'push' && github.ref_name == 'master') || github.event_name == 'workflow_dispatch') && contains(github.event.head_commit.message, 'Bump version') == false
+      uses: ncipollo/release-action@v1
+      with:
+        allowUpdates: true
+        replacesArtifacts: true
+        prerelease: ${{ env.IS_PRE }}
+        bodyFile: ReleaseNotes.md
+        artifacts: "./Artifacts/*"
+        tag: ${{ env.REL_TAG }}
+        token: ${{ secrets.GITHUB_TOKEN }}
