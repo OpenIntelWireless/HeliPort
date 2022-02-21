@@ -1,6 +1,6 @@
 # HeliPort
 
-![GiHub Actions](https://github.com/OpenIntelWireless/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
+[![CI](https://github.com/OpenIntelWireless/HeliPort/actions/workflows/main.yml/badge.svg)](https://github.com/OpenIntelWireless/HeliPort/actions/workflows/main.yml)
 
 Intel WiFi Client for [itlwm](https://github.com/OpenIntelWireless/itlwm)
 
