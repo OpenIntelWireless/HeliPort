@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,8 @@
 		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
 		5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5088F70726BEA46F009E3A15 /* KextInfo.swift */; };
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
+		50C5F2D027C23074009E3F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2CF27C23074009E3F68 /* KeychainAccess */; };
+		50C5F2D327C230D6009E3F68 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2D227C230D6009E3F68 /* Sparkle */; };
 		50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */; };
 		50F495A024BDEB6500AE4C08 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959F24BDEB6500AE4C08 /* main.swift */; };
 		50F495AC24BDEBB500AE4C08 /* HeliPort Launcher.app in Embed Launcher */ = {isa = PBXBuildFile; fileRef = 50F4959D24BDEB6500AE4C08 /* HeliPort Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -29,7 +31,6 @@
 		BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */; };
 		BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EC2424D2BF00E23603 /* Assets.xcassets */; };
 		BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EE2424D2BF00E23603 /* MainMenu.xib */; };
-		D47DD664F9B2939B57C54DF4 /* Pods_HeliPort.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */; };
 		F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */; };
 		F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */; };
 		F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */; };
@@ -67,7 +68,6 @@
 		1DCA020324BD00E800F37995 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2181E9B524C24FF600E3C73D /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.release.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.release.xcconfig"; sourceTree = "<group>"; };
 		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5088F70726BEA46F009E3A15 /* KextInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KextInfo.swift; sourceTree = "<group>"; };
 		50B86AB924B22E9B008E4FE4 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -97,7 +97,6 @@
 		BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort.entitlements; sourceTree = "<group>"; };
 		C60CDDC124B88D5A00E1F69D /* ko */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DA4BF11B24BE2C1D00F295C1 /* pt-PT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeliPort.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkManager+Data.swift"; sourceTree = "<group>"; };
 		F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_phy_mode+Description.swift"; sourceTree = "<group>"; };
 		F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl80211_security+Description.swift"; sourceTree = "<group>"; };
@@ -111,7 +110,6 @@
 		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
 		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
 		F8F6CF0E243D67D800965B43 /* IoctlId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IoctlId.h; sourceTree = "<group>"; };
-		FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HeliPort.debug.xcconfig"; path = "Target Support Files/Pods-HeliPort/Pods-HeliPort.debug.xcconfig"; sourceTree = "<group>"; };
 		FE29EB4F24B9CE1200285757 /* pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,7 +125,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D47DD664F9B2939B57C54DF4 /* Pods_HeliPort.framework in Frameworks */,
+				50C5F2D027C23074009E3F68 /* KeychainAccess in Frameworks */,
+				50C5F2D327C230D6009E3F68 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,15 +143,6 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
-		27E333CBDEE9F043281383C3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */,
-				2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		50F4959E24BDEB6500AE4C08 /* HeliPort Launcher */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,14 +151,6 @@
 				50F495A724BDEB6700AE4C08 /* HeliPort_Launcher.entitlements */,
 			);
 			path = "HeliPort Launcher";
-			sourceTree = "<group>";
-		};
-		A3DAA5EDB2CAD33F8A53CAD7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				DEE10AB0115816EC5C117043 /* Pods_HeliPort.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BCF712FA243C9EB100BE3C05 /* Appearance */ = {
@@ -193,8 +175,6 @@
 				BCFA32E92424D2BE00E23603 /* HeliPort */,
 				50F4959E24BDEB6500AE4C08 /* HeliPort Launcher */,
 				BCFA32E82424D2BE00E23603 /* Products */,
-				27E333CBDEE9F043281383C3 /* Pods */,
-				A3DAA5EDB2CAD33F8A53CAD7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -278,12 +258,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BCFA32F52424D2BF00E23603 /* Build configuration list for PBXNativeTarget "HeliPort" */;
 			buildPhases = (
-				D0F7C8CBDEABDEEE298EDA22 /* [CP] Check Pods Manifest.lock */,
 				75E3976A2487FAF600E84DB8 /* Lint */,
 				BCFA32E32424D2BE00E23603 /* Sources */,
 				BCFA32E42424D2BE00E23603 /* Frameworks */,
 				BCFA32E52424D2BE00E23603 /* Resources */,
-				06A84524B547923DB0EAD0C7 /* [CP] Embed Pods Frameworks */,
 				50F495AB24BDEB7A00AE4C08 /* Embed Launcher */,
 			);
 			buildRules = (
@@ -291,6 +269,10 @@
 			dependencies = (
 			);
 			name = HeliPort;
+			packageProductDependencies = (
+				50C5F2CF27C23074009E3F68 /* KeychainAccess */,
+				50C5F2D227C230D6009E3F68 /* Sparkle */,
+			);
 			productName = HeliPort;
 			productReference = BCFA32E72424D2BE00E23603 /* HeliPort.app */;
 			productType = "com.apple.product-type.application";
@@ -338,6 +320,10 @@
 				ar,
 			);
 			mainGroup = BCFA32DE2424D2BE00E23603;
+			packageReferences = (
+				50C5F2CE27C23074009E3F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				50C5F2D127C230D6009E3F68 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			productRefGroup = BCFA32E82424D2BE00E23603 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -371,23 +357,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		06A84524B547923DB0EAD0C7 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HeliPort/Pods-HeliPort-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HeliPort/Pods-HeliPort-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HeliPort/Pods-HeliPort-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		75E3976A2487FAF600E84DB8 /* Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -403,30 +372,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelif which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then \n    ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  if [ \"${CONFIGURATION}\" = \"Debug\" ]; then\n    echo \"error: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n    exit 1\n  else\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  fi\nfi\n";
-		};
-		D0F7C8CBDEABDEEE298EDA22 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-HeliPort-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
+			shellPath = /bin/zsh;
+			shellScript = "GITHUB_ACTIONS=y\n\nfunction stripPWD() {\n  sed \"s/$(pwd | sed 's/\\//\\\\\\//g')\\///\"\n}\n\nfunction convertToGitHubActionsLoggingCommands() {\n  sed -E 's/^(.*):([0-9]+):([0-9]+): (warning|error|[^:]+): (.*)/::\\4 file=\\1,line=\\2,col=\\3::\\5/'\n}\n\nif which swiftlint >/dev/null; then\n  if [[ ! -z ${GITHUB_ACTIONS+x} ]]; then\n    swiftlint | stripPWD | convertToGitHubActionsLoggingCommands && exit ${PIPESTATUS[0]}\n  else\n    swiftlint\n  fi\nelse\n  TIP=\"SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n  if [ \"${CONFIGURATION}\" == \"Debug\" ]; then\n    echo \"error: $TIP\"\n    exit 1\n  else\n    echo \"warning: $TIP\"\n  fi\nfi\n\nerrCount=0\nfor file (./HeliPort/Appearance/**/*.strings) {\n  plutil -lint $file\n  if [[ $file != *\"zh-Han\"* ]]; then\n    local output=\"$(grep -Hn \"：\" $file | cut -d: -f1-2)\"\n    if [[ ! -z $output ]]; then\n      ((errCount+=1))\n      echo \"${output}: error: Unexpected Chinese colon\"\n    fi\n  fi\n}\n\nif [ $errCount -gt 0 ]; then\n  exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -539,7 +486,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.OpenIntelWireless.HeliPort-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -548,6 +494,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -600,7 +547,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -612,6 +558,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -666,7 +613,6 @@
 		};
 		BCFA32F62424D2BF00E23603 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD651AE794A9A932898331AD /* Pods-HeliPort.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
@@ -687,20 +633,17 @@
 		};
 		BCFA32F72424D2BF00E23603 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B879D3A8D737E5EF06C350F /* Pods-HeliPort.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = HeliPort/HeliPort.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
-				GCC_OPTIMIZATION_LEVEL = s;
 				INFOPLIST_FILE = HeliPort/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.5.0;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
@@ -740,6 +683,38 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		50C5F2CE27C23074009E3F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		50C5F2D127C230D6009E3F68 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		50C5F2CF27C23074009E3F68 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50C5F2CE27C23074009E3F68 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		50C5F2D227C230D6009E3F68 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50C5F2D127C230D6009E3F68 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BCFA32DF2424D2BE00E23603 /* Project object */;
 }
