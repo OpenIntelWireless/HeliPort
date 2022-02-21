@@ -1,8 +1,8 @@
 # HeliPort
 
-![GiHub Actions](https://github.com/zxystd/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
+![GiHub Actions](https://github.com/OpenIntelWireless/HeliPort/workflows/Build%20and%20Test/badge.svg?branch=master)
 
-Intel WiFi Client for [itlwm](https://github.com/zxystd/itlwm)
+Intel WiFi Client for [itlwm](https://github.com/OpenIntelWireless/itlwm)
 
 ## Chat
 
@@ -20,15 +20,15 @@ If you have any questions or feedback, feel free to [![Join the chat at https://
 
 ## Status
 
-This App is currently functional, we're still trying make it even better.
+The App is currently functional, we're still trying make it even better.
 
 ### To-Do's
 
-Visit [Projects](https://github.com/zxystd/HeliPort/projects) for more information
+Visit [Projects](https://github.com/OpenIntelWireless/HeliPort/projects) for more information
 
 ## Issues
 
-Issues for this project are for bug tracking and feature requests only, please carefully fill in all the blanks in the correct Issue Template.
+Issues for this project are for bug tracking only, please carefully fill in all the blanks in the correct Issue Template.
 
 The following types of "Issues" will be considered as invalid and will be closed and locked immediately:
 
