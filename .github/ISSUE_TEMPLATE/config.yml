@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Gitter Chat Room
+    url: https://gitter.im/OpenIntelWireless
+    about: Please ask related questions here.
+  - name: Official Documentation
+    url: https://OpenIntelWireless.github.io
+    about: Place to find instructions, FAQ, and more info.
+  - name: Official Documentation (Mirror)
+    url: https://docs.oiw.workers.dev
+    about: Docs mirror hosted on Cloudflare.

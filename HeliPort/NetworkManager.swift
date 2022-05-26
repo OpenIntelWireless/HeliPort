@@ -168,7 +168,12 @@ final class NetworkManager {
             return nil
         }
         let bsdData = Data(bsd.utf8)
-        var managementInfoBase = [CTL_NET, AF_ROUTE, 0, AF_LINK, NET_RT_IFLIST, bsdIndex]
+        var managementInfoBase = [CTL_NET,
+                                  AF_ROUTE,
+                                  0,
+                                  AF_LINK,
+                                  NET_RT_IFLIST,
+                                  bsdIndex]
 
         if sysctl(&managementInfoBase, 6, nil, &length, nil, 0) < 0 {
             Log.error("Could not determine length of info data structure")
@@ -214,28 +219,7 @@ final class NetworkManager {
     }
 
     class func getRouterAddress(bsd: String) -> String? {
-        // from Goshin
-        let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
-
-        let routerCommand = ["-c", "netstat -rn", "|", "egrep -o", "default.*\(bsd)"]
-        guard let routerOutput = Commands.execute(executablePath: .shell, args: routerCommand).0 else {
-            return nil
-        }
-
-        let regex = try? NSRegularExpression.init(pattern: ipAddressRegex, options: [])
-        let firstMatch = regex?.firstMatch(in: routerOutput,
-                                        options: [],
-                                        range: NSRange(location: 0, length: routerOutput.count))
-        if let range = firstMatch?.range(at: 1) {
-            if let swiftRange = Range(range, in: routerOutput) {
-                let ipAddr = String(routerOutput[swiftRange])
-                return ipAddr
-            }
-        } else {
-            Log.debug("Could not find router ip address")
-        }
-
-        return nil
+        return getRouterAddressFromSysctl(bsd) ?? getRouterAddressFromNetstat(bsd)
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
@@ -317,5 +301,96 @@ final class NetworkManager {
             return ITL80211_SECURITY_NONE
         }
         return ITL80211_SECURITY_UNKNOWN
+    }
+
+    private class func getRouterAddressFromNetstat(_ bsd: String) -> String? {
+        var ipAddr: String?
+
+        autoreleasepool {
+            // from Goshin
+            let ipAddressRegex = #"\s([a-fA-F0-9\.:]+)(\s|%)"# // for ipv4 and ipv6
+
+            let routerCommand = ["-c", "netstat -rn", "|", "egrep -o", "default.*\(bsd)"]
+            guard let routerOutput = Commands.execute(executablePath: .shell, args: routerCommand).0 else { return }
+            let regex = try? NSRegularExpression.init(pattern: ipAddressRegex, options: [])
+            let firstMatch = regex?.firstMatch(in: routerOutput,
+                                               options: [],
+                                               range: NSRange(location: 0, length: routerOutput.count))
+            if let range = firstMatch?.range(at: 1) {
+                if let swiftRange = Range(range, in: routerOutput) {
+                    ipAddr = String(routerOutput[swiftRange])
+                }
+            } else {
+                Log.debug("Could not find router ip address")
+            }
+        }
+
+        return ipAddr
+    }
+
+    // Modified from https://stackoverflow.com/a/67780630 to support ipv6 and bsd filtering
+    // See https://opensource.apple.com/source/network_cmds/network_cmds-606.40.2/netstat.tproj/route.c
+    private class func getRouterAddressFromSysctl(_ bsd: String) -> String? {
+        var mib: [Int32] = [CTL_NET,
+                            PF_ROUTE,
+                            0,
+                            0,
+                            NET_RT_DUMP2,
+                            0]
+        let mibSize = u_int(mib.count)
+
+        var bufSize = 0
+        sysctl(&mib, mibSize, nil, &bufSize, nil, 0)
+
+        let buf = UnsafeMutablePointer<UInt8>.allocate(capacity: bufSize)
+        defer { buf.deallocate() }
+        buf.initialize(repeating: 0, count: bufSize)
+
+        guard sysctl(&mib, mibSize, buf, &bufSize, nil, 0) == 0 else { return nil }
+
+        // Routes
+        var next = buf
+        let lim = next.advanced(by: bufSize)
+        while next < lim {
+            let rtm = next.withMemoryRebound(to: rt_msghdr2.self, capacity: 1) { $0.pointee }
+            var ifname = [CChar](repeating: 0, count: Int(IFNAMSIZ + 1))
+            if_indextoname(UInt32(rtm.rtm_index), &ifname)
+
+            if String(cString: ifname) == bsd, let addr = getRouterAddressFromRTM(rtm, next) {
+                return addr
+            }
+
+            next = next.advanced(by: Int(rtm.rtm_msglen))
+        }
+
+        return nil
+    }
+
+    private class func getRouterAddressFromRTM(_ rtm: rt_msghdr2,
+                                               _ ptr: UnsafeMutablePointer<UInt8>) -> String? {
+        var rawAddr = ptr.advanced(by: MemoryLayout<rt_msghdr2>.stride)
+
+        for idx in 0..<RTAX_MAX {
+            let sockAddr = rawAddr.withMemoryRebound(to: sockaddr.self, capacity: 1) { $0.pointee }
+
+            if (rtm.rtm_addrs & (1 << idx)) != 0 && idx == RTAX_GATEWAY {
+                switch Int32(sockAddr.sa_family) {
+                case AF_INET:
+                    let sAddr = rawAddr.withMemoryRebound(to: sockaddr_in.self, capacity: 1) { $0.pointee }.sin_addr
+                    // Take the first match, assuming its destination is "default"
+                    return String(cString: inet_ntoa(sAddr), encoding: .ascii)
+                case AF_INET6: // Not tested, maybe a garbage address from ipv4 will come first?
+                    var sAddr6 = rawAddr.withMemoryRebound(to: sockaddr_in6.self, capacity: 1) { $0.pointee }.sin6_addr
+                    var addrV6 = [CChar](repeating: 0, count: Int(INET6_ADDRSTRLEN))
+                    inet_ntop(AF_INET6, &sAddr6, &addrV6, socklen_t(INET6_ADDRSTRLEN))
+                    return String(cString: addrV6, encoding: .ascii)
+                default: break
+                }
+            }
+
+            rawAddr = rawAddr.advanced(by: Int(sockAddr.sa_len))
+        }
+
+        return nil
     }
 }

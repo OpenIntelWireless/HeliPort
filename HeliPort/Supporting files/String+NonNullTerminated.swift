@@ -16,16 +16,22 @@
 import Foundation
 
 public extension String {
-    static func getSSIDFromCString(cString: UnsafePointer<UInt8>) -> String {
-        var string = String(cString: cString).trimmingCharacters(in: .whitespacesAndNewlines)
-            .replacingOccurrences(of: "[\n,\r]*", with: "", options: .regularExpression)
-        if string.count > NWID_LEN {
-            let pointer = UnsafeRawPointer(cString)
-            let nsString = NSString(bytes: pointer, length: Int(NWID_LEN), encoding: Encoding.utf8.rawValue)
-            if let nsString = nsString {
-                string = nsString as String
-            } else {
-                string = "\(string.prefix(Int(NWID_LEN)))"
+    static func getSSIDFromCString(cString: UnsafePointer<CUnsignedChar>) -> String {
+        var string = String(cString: cString)
+        // Fixes memory leak, see https://stackoverflow.com/a/37584615
+        autoreleasepool {
+            string = string.trimmingCharacters(in: .whitespacesAndNewlines)
+                           .replacingOccurrences(of: "[\n,\r]*",
+                                                 with: "",
+                                                 options: .regularExpression)
+            if string.count > NWID_LEN {
+                let pointer = UnsafeRawPointer(cString)
+                let nsString = NSString(bytes: pointer, length: Int(NWID_LEN), encoding: Encoding.utf8.rawValue)
+                if let nsString = nsString {
+                    string = nsString as String
+                } else {
+                    string = "\(string.prefix(Int(NWID_LEN)))"
+                }
             }
         }
         return string

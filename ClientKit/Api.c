@@ -138,6 +138,8 @@ bool connect_network(const char *ssid, const char *pwd) {
 
     int timeout = 20;
     while (timeout-- > 0) {
+        // Sleep first to wait for state to change
+        sleep(1);
         uint32_t state;
         if (get_80211_state(&state) && state == ITL80211_S_RUN) {
             station_info_t sta_info;
@@ -145,7 +147,6 @@ bool connect_network(const char *ssid, const char *pwd) {
                 return strncmp(ssid, (char*)sta_info.ssid, NWID_LEN) == 0;
             }
         }
-        sleep(1);
     }
 
 error:

@@ -40,7 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let interface = String(cString: &drv_info.bsd_name.0)
         guard !version.isEmpty, !interface.isEmpty else {
             Log.error("itlwm kext not loaded!")
-            #if !DEBUG
+#if !DEBUG
             let alert = CriticalAlert(message: NSLocalizedString("itlwm is not running"),
                                       options: [NSLocalizedString("Dismiss"),
                                                 NSLocalizedString("Quit HeliPort")])
@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 NSApp.terminate(nil)
             }
 
-            #endif
+#endif
             return false
         }
 
@@ -64,16 +64,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func checkRunPath() {
         let pathComponents = (Bundle.main.bundlePath as NSString).pathComponents
 
-        #if DEBUG
+#if DEBUG
         // Normal users should never use the Debug Version
         guard pathComponents[pathComponents.count - 2] != "Debug" else {
             return
         }
-        #else
+#else
         guard pathComponents[pathComponents.count - 2] != "Applications" else {
             return
         }
-        #endif
+#endif
 
         Log.error("Running path unexpected!")
 
@@ -94,9 +94,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         Log.error("itlwm API mismatch!")
 
-        #if !DEBUG
+#if !DEBUG
         let text = NSLocalizedString("HeliPort API Version: ") + String(IOCTL_VERSION) +
-            "\n" + NSLocalizedString("itlwm API Version: ") + String(drv_info.version)
+                   "\n" + NSLocalizedString("itlwm API Version: ") + String(drv_info.version)
         let alert = CriticalAlert(message: NSLocalizedString("itlwm Version Mismatch"),
                                   informativeText: text,
                                   options: [NSLocalizedString("Quit HeliPort"),
@@ -109,7 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         NSApp.terminate(nil)
-        #endif
+#endif
     }
 
     func applicationWillTerminate(_ notification: Notification) {

@@ -27,7 +27,7 @@ class PrefsGeneralView: NSView {
 
     let autoUpdateCheckbox: NSButton = {
         let checkbox = NSButton(checkboxWithTitle: .autoCheckUpdate,
-                                target: self,
+                                target: NSButton.self,
                                 action: #selector(checkboxChanged(_:)))
         checkbox.identifier = .autoUpdateId
         return checkbox
@@ -35,7 +35,7 @@ class PrefsGeneralView: NSView {
 
     let autoDownloadCheckbox: NSButton = {
         let checkbox = NSButton(checkboxWithTitle: .autoDownload,
-                                target: self,
+                                target: NSButton.self,
                                 action: #selector(checkboxChanged(_:)))
         checkbox.identifier = .autoDownloadId
         return checkbox

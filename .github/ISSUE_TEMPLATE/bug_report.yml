@@ -1,0 +1,49 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: Steps to reproduce the behavior.<br/>If applicable, add screenshots to help explain your problem.
+      placeholder: |
+        1. 
+        2. 
+        3. 
+        4. 
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Software Version
+      description: What version of our software are you running?
+      placeholder: v0.0.0
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: OS Version
+      description: What version of macOS are you running?
+      placeholder: "12.2.1"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      placeholder: Drag and drop the bug report archive here...
+    validations:
+      required: true
