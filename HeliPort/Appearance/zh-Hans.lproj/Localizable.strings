@@ -20,7 +20,13 @@
 "Automatically download new updates." = "自动下载更新";
 "Cancel" = "取消";
 "Check for Updates..." = "检查更新...";
+"Choose a folder to output the bug report" = "选择输出诊断报告的文件夹";
 "Close" = "关闭";
+"Command failed to fetch logs for HeliPort." = "命令无法获取 Heliport 的诊断报告。";
+"Could not create zip file for generated logs." = "无法生成诊断报告的压缩文件。";
+"Could not generate report for HeliPort." = "无法生成 Heliport 的诊断报告";
+"Could not get path to generate bug report." = "无法获取生成诊断报告的路径";
+"Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "无法读取 itlwm 的日志。请确保在提示时允许 `HeliPort` 读取日志。";
 "Create Diagnostics Report..." = "创建诊断报告...";
 "Create Network..." = "创建网络...";
 "Disconnect from " = "断开 ";
@@ -30,6 +36,7 @@
 "Enable Wi-Fi Logging" = "启用Wi-Fi记录";
 "Encryption type unsupported" = "加密方式未支持";
 "Enter the name and security type of the network you want to join." = "输入您想要加入的网络的名称和安全性类型。";
+"Error occurred while generating bug report." = "生成诊断报告时发生错误";
 "FUNCTION NOT IMPLEMENTED" = "功能尚未实现";
 "Find and join a Wi-Fi network." = "查找并加入Wi-Fi网络。";
 "General" = "通用";
@@ -39,12 +46,14 @@
 "Join Other Network..." = "加入其他网络...";
 "Join" = "加入";
 "Launch At Login" = "登陆时自动启动";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "请确保您在为 itlwm 获取诊断报告之前已经安装了 `DebugEnhancer.kext`";
 "Network Name" = "网络名称";
 "Network Name:" = "网络名称：";
 "Networks" = "网络";
 "No Network Avaliable" = "无可用网络";
 "No Status Information Avaliable" = "状态信息不可用";
 "None" = "无";
+"Open Documentation" = "打开文档";
 "Open Network Preferences..." = "打开网络偏好设置...";
 "Open Wireless Diagnostics..." = "打开无线诊断...";
 "Password" = "密码";
@@ -58,6 +67,7 @@
 "Security" = "安全性";
 "Security:" = "安全性：";
 "Show password" = "显示密码";
+"The bug report will be generated in the seleted folder" = "诊断报告将在所选目录生成";
 "Turn Wi-Fi Off" = "关闭Wi-Fi";
 "Turn Wi-Fi On" = "开启Wi-Fi";
 "Unavailable" = "不可用";
