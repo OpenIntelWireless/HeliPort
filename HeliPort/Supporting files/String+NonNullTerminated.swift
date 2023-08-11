@@ -37,3 +37,11 @@ public extension String {
         return string
     }
 }
+
+public extension String {
+    init<T>(cCharArray: T) {
+        self = withUnsafeBytes(of: cCharArray) {
+            $0.withMemoryRebound(to: CChar.self) { String(cString: $0.baseAddress!)}
+        }
+    }
+}
