@@ -61,7 +61,10 @@ class WifiMenuItemView: NSView {
         let lockImage = NSImageView()
         lockImage.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        if #available(OSX 11.0, *) {
+        if #available(OSX 14.0, *) {
+            lockImage.image = #imageLiteral(resourceName: "WifiSecurityPadlock")
+        }
+        else if #available(OSX 11.0, *) {
             lockImage.image = NSImage(named: NSImage.lockLockedTemplateName)?
                               .withSymbolConfiguration(NSImage.SymbolConfiguration(pointSize: 14,
                                                                                    weight: .semibold,
@@ -97,10 +100,18 @@ class WifiMenuItemView: NSView {
         translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(effectView)
-        effectView.addSubview(statusImage)
-        effectView.addSubview(ssidLabel)
-        effectView.addSubview(lockImage)
-        effectView.addSubview(signalImage)
+        if #available(OSX 14.0, *) {
+            effectView.addSubview(statusImage)
+            effectView.addSubview(signalImage)
+            effectView.addSubview(ssidLabel)
+            effectView.addSubview(lockImage)
+        } else
+        {
+            effectView.addSubview(statusImage)
+            effectView.addSubview(ssidLabel)
+            effectView.addSubview(lockImage)
+            effectView.addSubview(signalImage)
+        }
 
         setupLayout()
     }
@@ -180,21 +191,39 @@ class WifiMenuItemView: NSView {
         heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
         heightConstraint.isActive = true
 
-        statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: statusPadding).isActive = true
-        statusImage.widthAnchor.constraint(equalToConstant: statusWidth).isActive = true
+        if #available(OSX 14.0, *) {
+            statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: statusPadding).isActive = true
+            statusImage.widthAnchor.constraint(equalToConstant: statusWidth).isActive = true
 
-        ssidLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        ssidLabel.leadingAnchor.constraint(equalTo: statusImage.trailingAnchor, constant: 3).isActive = true
+            signalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1).isActive = true
+            signalImage.leadingAnchor.constraint(equalTo: statusImage.trailingAnchor, constant: 6).isActive = true
+            signalImage.widthAnchor.constraint(equalToConstant: 32).isActive = true
 
-        lockImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        lockImage.leadingAnchor.constraint(equalTo: ssidLabel.trailingAnchor, constant: 10).isActive = true
-        lockImage.widthAnchor.constraint(equalToConstant: lockWidth).isActive = true
+            ssidLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            ssidLabel.leadingAnchor.constraint(equalTo: signalImage.trailingAnchor, constant: 6).isActive = true
 
-        signalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1).isActive = true
-        signalImage.leadingAnchor.constraint(equalTo: lockImage.trailingAnchor, constant: 12).isActive = true
-        signalImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
-        signalImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
+            lockImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            lockImage.leadingAnchor.constraint(equalTo: ssidLabel.trailingAnchor, constant: 10).isActive = true
+            lockImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
+            lockImage.widthAnchor.constraint(equalToConstant: lockWidth).isActive = true
+        } else {
+            statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: statusPadding).isActive = true
+            statusImage.widthAnchor.constraint(equalToConstant: statusWidth).isActive = true
+
+            ssidLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            ssidLabel.leadingAnchor.constraint(equalTo: statusImage.trailingAnchor, constant: 3).isActive = true
+
+            lockImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+            lockImage.leadingAnchor.constraint(equalTo: ssidLabel.trailingAnchor, constant: 10).isActive = true
+            lockImage.widthAnchor.constraint(equalToConstant: lockWidth).isActive = true
+
+            signalImage.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 1).isActive = true
+            signalImage.leadingAnchor.constraint(equalTo: lockImage.trailingAnchor, constant: 12).isActive = true
+            signalImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
+            signalImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
+        }
 
         effectView.translatesAutoresizingMaskIntoConstraints = false
         effectView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
