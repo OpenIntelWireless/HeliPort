@@ -36,8 +36,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         _ = ioctl_get(Int32(IOCTL_80211_DRIVER_INFO.rawValue), &drv_info, MemoryLayout<ioctl_driver_info>.size)
 
-        let version = String(cString: &drv_info.driver_version.0)
-        let interface = String(cString: &drv_info.bsd_name.0)
+        let version = String(cCharArray: drv_info.driver_version)
+        let interface = String(cCharArray: drv_info.bsd_name)
         guard !version.isEmpty, !interface.isEmpty else {
             Log.error("itlwm kext not loaded!")
 #if !DEBUG

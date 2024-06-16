@@ -430,7 +430,7 @@ extension WiFiConfigWindow: NSTextFieldDelegate {
         }
 
         // password is too short, less than 8 characters
-        guard (!passwdInputBox.isHidden || !passwdSecureBox.isHidden),
+        guard !passwdInputBox.isHidden || !passwdSecureBox.isHidden,
             passwdSecureBox.stringValue.count >= 8,
             passwdInputBox.stringValue.count >= 8  else {
             rightButton.isEnabled = false

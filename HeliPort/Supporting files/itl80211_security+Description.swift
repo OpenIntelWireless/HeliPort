@@ -18,7 +18,7 @@ import Foundation
 extension itl80211_security: CustomStringConvertible {
     public var description: String {
         switch self {
-        case ITL80211_SECURITY_NONE :
+        case ITL80211_SECURITY_NONE:
             return "None"
         case ITL80211_SECURITY_WEP:
             return "WEP"

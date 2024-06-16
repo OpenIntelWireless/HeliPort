@@ -26,12 +26,12 @@ final class CredentialsManager {
     }
 
     func save(_ network: NetworkInfo) {
-        guard let networkAuthJson = try? String(data: JSONEncoder().encode(network.auth), encoding: .utf8) else {
+        guard let networkAuthJson = try? String(decoding: JSONEncoder().encode(network.auth), as: UTF8.self) else {
             return
         }
         network.auth = NetworkAuth()
         let entity = NetworkInfoStorageEntity(network)
-        guard let entityJson = try? String(data: JSONEncoder().encode(entity), encoding: .utf8) else {
+        guard let entityJson = try? String(decoding: JSONEncoder().encode(entity), as: UTF8.self) else {
             return
         }
 
@@ -83,8 +83,8 @@ final class CredentialsManager {
 
         entity.autoJoin = autoJoin
 
-        guard let entityJson = try? String(data: JSONEncoder().encode(entity), encoding: .utf8),
-            let authJson = try? String(data: JSONEncoder().encode(auth), encoding: .utf8) else {
+        guard let entityJson = try? String(decoding: JSONEncoder().encode(entity), as: UTF8.self),
+              let authJson = try? String(decoding: JSONEncoder().encode(auth), as: UTF8.self) else {
             return
         }
 
@@ -99,8 +99,8 @@ final class CredentialsManager {
 
         entity.order = priority
 
-        guard let entityJson = try? String(data: JSONEncoder().encode(entity), encoding: .utf8),
-            let authJson = try? String(data: JSONEncoder().encode(auth), encoding: .utf8) else {
+        guard let entityJson = try? String(decoding: JSONEncoder().encode(entity), as: UTF8.self),
+              let authJson = try? String(decoding: JSONEncoder().encode(auth), as: UTF8.self) else {
             return
         }
 

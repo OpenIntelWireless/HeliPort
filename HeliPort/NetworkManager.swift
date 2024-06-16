@@ -27,12 +27,12 @@ final class NetworkManager {
         ITL80211_SECURITY_PERSONAL
     ]
 
-    class func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
-                       _ callback: ((_ result: Bool) -> Void)? = nil) {
+    static func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
+                        _ callback: ((_ result: Bool) -> Void)? = nil) {
 
         guard supportedSecurityMode.contains(networkInfo.auth.security) else {
             let alert = Alert(text: NSLocalizedString("Network security not supported: ")
-                + networkInfo.auth.security.description)
+                              + networkInfo.auth.security.description)
             alert.show()
             return
         }
@@ -65,7 +65,7 @@ final class NetworkManager {
             }
 
             guard networkInfo.auth.security != ITL80211_SECURITY_NONE,
-                networkInfo.auth.password.isEmpty else {
+                  networkInfo.auth.password.isEmpty else {
                 getAuthInfoCallback(networkInfo.auth, saveNetwork)
                 return
             }
@@ -78,7 +78,7 @@ final class NetworkManager {
         }
     }
 
-    class func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {
+    static func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {
         DispatchQueue.global(qos: .background).async {
             var list = network_info_list_t()
             get_network_list(&list)
@@ -109,7 +109,7 @@ final class NetworkManager {
         }
     }
 
-    class func scanSavedNetworks() {
+    static func scanSavedNetworks() {
         DispatchQueue.global(qos: .background).async {
             let savedNetworks: [NetworkInfo] = CredentialsManager.instance.getSavedNetworks()
             guard savedNetworks.count > 0 else {
@@ -139,12 +139,12 @@ final class NetworkManager {
         }
     }
 
-    private class func connectSavedNetworks(networks: [NetworkInfo]) {
+    private static func connectSavedNetworks(networks: [NetworkInfo]) {
         DispatchQueue.global(qos: .background).async {
             let dispatchSemaphore = DispatchSemaphore(value: 0)
             var connected = false
             for network in networks where !connected {
-                connect(networkInfo: network) { (result: Bool) -> Void in
+                connect(networkInfo: network) { (result: Bool) in
                     connected = result
                     dispatchSemaphore.signal()
                 }
@@ -155,7 +155,7 @@ final class NetworkManager {
 
     // Credit: vadian
     // https://stackoverflow.com/a/31838376/13164334
-    class func getMACAddressFromBSD(bsd: String) -> String? {
+    static func getMACAddressFromBSD(bsd: String) -> String? {
         let MAC_ADDRESS_LENGTH = 6
         let separator = ":"
 
@@ -200,7 +200,7 @@ final class NetworkManager {
         return addressBytes.joined(separator: separator)
     }
 
-    class func isReachable() -> Bool {
+    static func isReachable() -> Bool {
         guard let reachability = SCNetworkReachabilityCreateWithName(nil, "captive.apple.com") else {
             return false
         }
@@ -218,12 +218,12 @@ final class NetworkManager {
         return isReachable && (!needsConnection || canConnectWithoutUserInteraction)
     }
 
-    class func getRouterAddress(bsd: String) -> String? {
+    static func getRouterAddress(bsd: String) -> String? {
         return getRouterAddressFromSysctl(bsd) ?? getRouterAddressFromNetstat(bsd)
     }
 
     // from https://stackoverflow.com/questions/30748480/swift-get-devices-wifi-ip-address/30754194#30754194
-    class func getLocalAddress(bsd: String) -> String? {
+    static func getLocalAddress(bsd: String) -> String? {
         // Get list of all interfaces on the local machine:
         var ifaddr: UnsafeMutablePointer<ifaddrs>?
         guard getifaddrs(&ifaddr) == 0, let firstAddr = ifaddr else {
@@ -268,7 +268,7 @@ final class NetworkManager {
         return ipV4 ?? ipV6
     }
 
-    class func getSecurityType(_ info: ioctl_network_info) -> itl80211_security {
+    static func getSecurityType(_ info: ioctl_network_info) -> itl80211_security {
         if info.supported_rsnprotos & ITL80211_PROTO_RSN.rawValue != 0 {
             // WPA2
             if info.rsn_akms & ITL80211_AKM_8021X.rawValue != 0 {
@@ -303,7 +303,7 @@ final class NetworkManager {
         return ITL80211_SECURITY_UNKNOWN
     }
 
-    private class func getRouterAddressFromNetstat(_ bsd: String) -> String? {
+    private static func getRouterAddressFromNetstat(_ bsd: String) -> String? {
         var ipAddr: String?
 
         autoreleasepool {
@@ -330,7 +330,7 @@ final class NetworkManager {
 
     // Modified from https://stackoverflow.com/a/67780630 to support ipv6 and bsd filtering
     // See https://opensource.apple.com/source/network_cmds/network_cmds-606.40.2/netstat.tproj/route.c
-    private class func getRouterAddressFromSysctl(_ bsd: String) -> String? {
+    private static func getRouterAddressFromSysctl(_ bsd: String) -> String? {
         var mib: [Int32] = [CTL_NET,
                             PF_ROUTE,
                             0,
@@ -366,8 +366,8 @@ final class NetworkManager {
         return nil
     }
 
-    private class func getRouterAddressFromRTM(_ rtm: rt_msghdr2,
-                                               _ ptr: UnsafeMutablePointer<UInt8>) -> String? {
+    private static func getRouterAddressFromRTM(_ rtm: rt_msghdr2,
+                                                _ ptr: UnsafeMutablePointer<UInt8>) -> String? {
         var rawAddr = ptr.advanced(by: MemoryLayout<rt_msghdr2>.stride)
 
         for idx in 0..<RTAX_MAX {

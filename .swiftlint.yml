@@ -11,3 +11,4 @@ disabled_rules:
   - file_length
   - cyclomatic_complexity
   - inclusive_language
+  - void_function_in_ternary

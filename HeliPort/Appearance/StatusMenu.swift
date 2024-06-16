@@ -366,9 +366,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
 
             if get_platform_info(&platformInfo) {
-                bsdName = String(cString: &platformInfo.device_info_str.0)
+                bsdName = String(cCharArray: platformInfo.device_info_str)
                 macAddr = NetworkManager.getMACAddressFromBSD(bsd: bsdName) ?? macAddr
-                itlwmVer = String(cString: &platformInfo.driver_info_str.0)
+                itlwmVer = String(cCharArray: platformInfo.driver_info_str)
             }
 
             DispatchQueue.main.async {
@@ -500,7 +500,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             var hideDisconnect = true
             if self.status == ITL80211_S_RUN && get_station_info(&staInfo) == KERN_SUCCESS {
                 #if !DEBUG
-                entity = CredentialsManager.instance.getStorageFromSsid(String(cString: &staInfo.ssid.0))
+                entity = CredentialsManager.instance.getStorageFromSsid(String(cCharArray: staInfo.ssid))
                 #endif
                 hideDisconnect = entity?.autoJoin ?? false
                 self.isNetworkConnected = true

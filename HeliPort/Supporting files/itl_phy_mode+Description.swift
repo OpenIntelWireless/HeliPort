@@ -24,7 +24,7 @@ extension itl_phy_mode: CustomStringConvertible {
             return "802.11b"
         case ITL80211_MODE_11G:
             return "802.11g"
-        case ITL80211_MODE_11N :
+        case ITL80211_MODE_11N:
             return "802.11n"
         case ITL80211_MODE_11AC:
             return "802.11ac"
