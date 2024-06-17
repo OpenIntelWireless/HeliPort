@@ -21,7 +21,7 @@ jobs:
           ${{ runner.os }}-spm-
 
     - name: Install Dependencies
-      run: brew install create-dmg
+      run: brew install create-dmg swiftlint
       env:
         HOMEBREW_NO_INSTALL_CLEANUP: 1
         HOMEBREW_NO_AUTO_UPDATE: 1
@@ -49,14 +49,17 @@ jobs:
         fi
       shell: zsh {0}
 
+    - name: Lint
+      run: swiftlint lint --reporter github-actions-logging
+
     - name: Debug Build
       if: github.event_name != 'workflow_dispatch'
       run: |
-        xcodebuild -scheme HeliPort -configuration Debug -derivedDataPath build -disableAutomaticPackageResolution CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        set -o pipefail && xcodebuild -scheme HeliPort -configuration Debug -derivedDataPath build -disableAutomaticPackageResolution CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcbeautify --renderer terminal
 
     - name: Release Build
       run: |
-        xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build -disableAutomaticPackageResolution CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty && exit ${PIPESTATUS[0]}
+        set -o pipefail && xcodebuild -scheme HeliPort -configuration Release -derivedDataPath build -disableAutomaticPackageResolution CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcbeautify
 
     - name: Create Disk Image
       if: (github.event_name == 'push' && github.ref_name == 'master') || github.event_name == 'workflow_dispatch'

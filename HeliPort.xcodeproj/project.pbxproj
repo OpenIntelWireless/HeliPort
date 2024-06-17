@@ -375,7 +375,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n  export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n  swiftlint\nelse\n  echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n\nerrCount=0\nfor file (./HeliPort/Appearance/**/*.strings) {\n  plutil -lint $file\n  if [[ $file != *\"zh-Han\"* ]]; then\n    local output=\"$(grep -Hn \"：\" $file | cut -d: -f1-2)\"\n    if [[ ! -z $output ]]; then\n      ((errCount+=1))\n      echo \"${output}: error: Unexpected Chinese colon\"\n    fi\n  fi\n}\n\nif [ $errCount -gt 0 ]; then\n  exit 1\nfi\n";
+			shellScript = "if [[ \"$GITHUB_ACTIONS\" != true ]]; then\n  if [[ \"$(uname -m)\" == arm64 ]]\n  then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\n  fi\n\n  if command -v swiftlint >/dev/null 2>&1\n  then\n    swiftlint\n  else\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\n  fi\nfi\n\n\nerrCount=0\nfor file (./HeliPort/Appearance/**/*.strings) {\n  plutil -lint $file\n  if [[ $file != *\"zh-Han\"* ]]; then\n    local output=\"$(grep -Hn \"：\" $file | cut -d: -f1-2)\"\n    if [[ ! -z $output ]]; then\n      ((errCount+=1))\n      echo \"${output}: error: Unexpected Chinese colon\"\n    fi\n  fi\n}\n\nif [ $errCount -gt 0 ]; then\n  exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
