@@ -93,7 +93,8 @@ class WifiMenuItemView: NSView {
 
     public init(networkInfo: NetworkInfo) {
         self.networkInfo = networkInfo
-        super.init(frame: NSRect(x: 0, y: 0, width: 0, height: menuBarHeight))
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubview(effectView)
         effectView.addSubview(statusImage)

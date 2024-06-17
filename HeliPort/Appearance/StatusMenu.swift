@@ -124,7 +124,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             hiddenItems.forEach { $0.isHidden = !visible }
             enabledNetworkCardItems.forEach { $0.isHidden = !isNetworkCardAvailable }
-            connectedNetworkInfoItems.forEach { $0.isHidden = !(visible && self.isNetworkConnected) }
+            connectedNetworkInfoItems.forEach { $0.isHidden = !(visible &&
+                                                                self.isNetworkConnected &&
+                                                                self.isNetworkCardEnabled) }
             notImplementedItems.forEach { $0.isHidden = true }
         }
     }
@@ -138,6 +140,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             for item in self.networkItemList {
                 (item.view as? WifiMenuItemView)?.visible = false
+            }
+
+            for index in (0 ..< self.items.count).reversed() where self.items[index].view is WifiMenuItemView {
+                if index >= self.headerLength {
+                    self.removeItem(at: index)
+                }
             }
         }
     }
@@ -182,8 +190,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let hardwareInfoSeparator = NSMenuItem.separator()
 
     private var networkItemList = [NSMenuItem]()
-                                          // 200 will cause serious lag when scrolling
-    private let maxNetworkListLength = 75 // MAX_NETWORK_LIST_LENGTH
+    private let maxNetworkListLength = MAX_NETWORK_LIST_LENGTH
     private let networkItemListSeparator: NSMenuItem = {
         let networkItemListSeparator =  NSMenuItem.separator()
         networkItemListSeparator.isHidden = true
@@ -277,27 +284,25 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(NSMenuItem.separator())
 
         headerLength = items.count
+        networkItemList.append(addNetworkItemPlaceholder())
 
-        for _ in 0..<maxNetworkListLength {
-            networkItemList.append(addNetworkItemPlaceholder())
-        }
-
-        insertItem(disconnectItem, at: headerLength + 1)
+        addItem(disconnectItem)
         disconnectItem.target = self
-        insertItem(ipAddresssItem, at: headerLength + 2)
-        insertItem(routerItem, at: headerLength + 3)
-        insertItem(internetItem, at: headerLength + 4)
-        insertItem(securityItem, at: headerLength + 5)
-        insertItem(bssidItem, at: headerLength + 6)
-        insertItem(channelItem, at: headerLength + 7)
-        insertItem(countryCodeItem, at: headerLength + 8)
-        insertItem(rssiItem, at: headerLength + 9)
-        insertItem(noiseItem, at: headerLength + 10)
-        insertItem(txRateItem, at: headerLength + 11)
-        insertItem(phyModeItem, at: headerLength + 12)
-        insertItem(mcsIndexItem, at: headerLength + 13)
-        insertItem(nssItem, at: headerLength + 14)
+        addItem(ipAddresssItem)
+        addItem(routerItem)
+        addItem(internetItem)
+        addItem(securityItem)
+        addItem(bssidItem)
+        addItem(channelItem)
+        addItem(countryCodeItem)
+        addItem(rssiItem)
+        addItem(noiseItem)
+        addItem(txRateItem)
+        addItem(phyModeItem)
+        addItem(mcsIndexItem)
+        addItem(nssItem)
 
+        headerLength = items.count
         addItem(networkItemListSeparator)
 
         addClickItem(manuallyJoinItem)
@@ -390,10 +395,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     }
 
     private func addNetworkItemPlaceholder() -> NSMenuItem {
-        let item = addItem(
+        let item = insertItem(
             withTitle: "placeholder",
             action: #selector(clickMenuItem(_:)),
-            keyEquivalent: ""
+            keyEquivalent: "",
+            at: headerLength
         )
         item.view = WifiMenuItemView(
             networkInfo: NetworkInfo(ssid: "placeholder")
@@ -553,7 +559,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                 self.nssItem.title = .nssStr + nss
                 self.disconnectItem.isHidden = hideDisconnect
                 guard self.isNetworkCardEnabled,
-                    let wifiItemView = self.networkItemList.first?.view as? WifiMenuItemView else { return }
+                      let wifiItemView = self.networkItemList.first?.view as? WifiMenuItemView else { return }
                 wifiItemView.visible = self.isNetworkConnected
                 wifiItemView.connected = self.isNetworkConnected
                 if self.isNetworkConnected {
@@ -573,17 +579,25 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         NetworkManager.scanNetwork { networkList in
             self.isNetworkListEmpty = networkList.count == 0 && !self.isNetworkConnected
             var networkList = networkList
-            if networkList.count > self.networkItemList.count {
+            if networkList.count > self.maxNetworkListLength {
                 Log.error("Number of scanned networks (\(networkList.count))" +
-                          " exceeds maximum (\(self.networkItemList.count))")
+                            " exceeds maximum (\(self.networkItemList.count))")
             }
-            for index in 1 ..< self.networkItemList.count {
-                if let view = self.networkItemList[index].view as? WifiMenuItemView {
+            for index in (self.headerLength ..< self.items.count).reversed()
+                where self.items[index].view is WifiMenuItemView {
+                self.removeItem(at: index)
+            }
+            for _ in (1 ..< self.networkItemList.count) {
+                self.networkItemList.removeLast()
+            }
+            for _ in 0 ..< networkList.count {
+                self.networkItemList.append(self.addNetworkItemPlaceholder())
+            }
+            for index in (self.headerLength ..< self.items.count) {
+                if let view = self.items[index].view as? WifiMenuItemView {
                     if networkList.count > 0 {
                         view.networkInfo = networkList.removeFirst()
                         view.visible = true
-                    } else {
-                        view.visible = false
                     }
                 }
             }

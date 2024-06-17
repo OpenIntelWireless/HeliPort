@@ -53,6 +53,7 @@ We desperately need contributors to help us improve this project, any help will 
 
 - [@1Revenger1](https://github.com/1Revenger1) for Keychain password management improvements
 - [@Bat.bat](https://github.com/williambj1) for repository management and Sparkle integration
+- [@diepeterpan](https://github.com/diepeterpan) for fixing UI artifacts on macOS Sonoma and performance optimizations
 - [@DogAndPot](https://github.com/DogAndPot) for initial UI implementation
 - [@ErrorErrorError](https://github.com/ErrorErrorError) for UI improvement, Preference Window implementation and more
 - [@Goshin](https://github.com/Goshin) for API implementation, Status Menu improvements and more
