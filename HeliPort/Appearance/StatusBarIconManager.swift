@@ -19,7 +19,7 @@ import Cocoa
 class StatusBarIcon: NSObject {
     static var statusBar: NSStatusItem!
     static var timer: Timer?
-    static var count: Int = 8
+    static var count: Int = 9
     static func on() {
         timer?.invalidate()
         timer = nil
@@ -89,19 +89,21 @@ class StatusBarIcon: NSObject {
         DispatchQueue.main.async {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
-            case 7:
+            case 8:
                 statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthPoor")
+            case 7:
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
             case 6:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
             case 5:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
-            case 4:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning4")
-            case 3:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
-            case 2:
                 statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
-                StatusBarIcon.count = 8
+            case 4:
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthPoor")
+            case 3:
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
+            case 2:
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
+                StatusBarIcon.count = 9
             default:
                 return
             }
@@ -113,9 +115,7 @@ class StatusBarIcon: NSObject {
         switch RSSI {
         case ..<(-100):
             signalImageName = #imageLiteral(resourceName: "WiFiStateScanning1")
-        case ..<(-80):
-            signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthFair")
-        case ..<(-60):
+        case ..<(-70):
             signalImageName = #imageLiteral(resourceName: "WiFiSignalStrengthGood")
         default:
             signalImageName = #imageLiteral(resourceName: "WiFiStateOn")

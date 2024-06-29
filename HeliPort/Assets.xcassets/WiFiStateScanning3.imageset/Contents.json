@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "WiFiStateScanning3.png",
+      "filename" : "WiFIStateScanning3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "WiFiStateScanning3@2x.png",
+      "filename" : "WiFIStateScanning3@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
