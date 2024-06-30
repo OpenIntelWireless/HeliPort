@@ -19,7 +19,7 @@ import Cocoa
 class StatusBarIcon: NSObject {
     static var statusBar: NSStatusItem!
     static var timer: Timer?
-    static var count: Int = 9
+    static var count: Int = 6
     static func on() {
         timer?.invalidate()
         timer = nil
@@ -89,21 +89,15 @@ class StatusBarIcon: NSObject {
         DispatchQueue.main.async {
             StatusBarIcon.count -= 1
             switch StatusBarIcon.count {
-            case 8:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthPoor")
-            case 7:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
-            case 6:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
             case 5:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning1")
             case 4:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiSignalStrengthPoor")
-            case 3:
                 statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
-            case 2:
+            case 3:
                 statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
-                StatusBarIcon.count = 9
+            case 2:
+                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
+                StatusBarIcon.count = 6
             default:
                 return
             }
