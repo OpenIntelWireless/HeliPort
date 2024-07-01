@@ -88,18 +88,28 @@ class StatusBarIcon: NSObject {
     @objc class func tick() {
         DispatchQueue.main.async {
             StatusBarIcon.count -= 1
+            var newImage: NSImage?
+            
             switch StatusBarIcon.count {
             case 5:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning1")
+                newImage = #imageLiteral(resourceName: "WiFiStateScanning1")
             case 4:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
+                newImage = #imageLiteral(resourceName: "WiFiStateScanning2")
             case 3:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning3")
+                newImage = #imageLiteral(resourceName: "WiFiStateScanning3")
             case 2:
-                statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateScanning2")
+                newImage = #imageLiteral(resourceName: "WiFiStateScanning2")
                 StatusBarIcon.count = 6
             default:
                 return
+            }
+
+            if let statusBarButton = statusBar.button {
+                let fadeTransition = CATransition()
+                fadeTransition.type = .fade
+                fadeTransition.duration = 0.3
+                statusBarButton.layer?.add(fadeTransition, forKey: kCATransition)
+                statusBarButton.image = newImage
             }
         }
     }
