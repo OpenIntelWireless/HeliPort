@@ -2,7 +2,7 @@
   "object": {
     "pins": [
       {
-        "package": "KeychainAccess",
+        "package": "keychainaccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {
           "branch": "master",
@@ -11,7 +11,7 @@
         }
       },
       {
-        "package": "Sparkle",
+        "package": "sparkle",
         "repositoryURL": "https://github.com/sparkle-project/Sparkle",
         "state": {
           "branch": null,
