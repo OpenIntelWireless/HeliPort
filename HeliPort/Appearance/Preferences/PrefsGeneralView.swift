@@ -73,7 +73,7 @@ class PrefsGeneralView: NSView {
         if isAutoUpdate {
             autoDownloadCheckbox.state = isAutoDownload ? .on : .off
         } else {
-            Log.debug("Cannot get auto update state")
+            Log.debug("Cannot get auto download state")
         }
 
         addSubview(gridView)
