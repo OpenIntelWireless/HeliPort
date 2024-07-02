@@ -15,13 +15,13 @@
 
 import Foundation
 import Cocoa
-import Sparkle
+import Sparkle.SPUStandardUpdaterController
 
 final class StatusMenu: NSMenu, NSMenuDelegate {
 
     // - MARK: Properties
 
-    private let heliPortUpdater = SUUpdater()
+    private let heliPortUpdater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
 
     private let networkListUpdatePeriod: Double = 5
     private let statusUpdatePeriod: Double = 2
@@ -444,8 +444,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let alert = Alert(text: .notImplemented)
             alert.show()
         case .openNetworkPrefs:
-            preferenceWindow?.close()
-            preferenceWindow = PrefsWindow()
+            if preferenceWindow == nil {
+                preferenceWindow = PrefsWindow()
+            }
             preferenceWindow?.show()
         case .checkUpdates:
             heliPortUpdater.checkForUpdates(self)
