@@ -79,7 +79,7 @@ class PrefsSavedNetworksView: NSView {
         return label
     }()
 
-    // Changed let modifyItemSegment to lazy var modifyItemSegment and target: NSSegmentControl.self to target: self to fix view/remove button
+    // Changed let modifyItemSegment to lazy var modifyItemSegment and target: NSSegmentedControl.self to target: self to fix view/remove button
     private lazy var modifyItemSegment: NSSegmentedControl = {
         var removeImage: NSImage
         var viewImage: NSImage
