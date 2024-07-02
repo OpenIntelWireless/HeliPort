@@ -100,18 +100,6 @@ class PrefsSavedNetworksView: NSView {
         return button
     }()
 
-    @objc func modifyItemClicked(_ sender: NSSegmentedControl) {
-        let selectedSegment = sender.selectedSegment
-        switch selectedSegment {
-        case .remove:
-            removeNetwork()
-        case .view:
-            viewNetwork()
-        default:
-            Log.debug("Modify item not implemented \(selectedSegment)")
-        }
-    }
-
     convenience init() {
         self.init(frame: NSRect.zero)
     }
@@ -179,6 +167,18 @@ class PrefsSavedNetworksView: NSView {
 // MARK: Action Items
 
 extension PrefsSavedNetworksView {
+    
+    @objc func modifyItemClicked(_ sender: NSSegmentedControl) {
+        let selectedSegment = sender.selectedSegment
+        switch selectedSegment {
+        case .remove:
+            removeNetwork()
+        case .view:
+            viewNetwork()
+        default:
+            Log.debug("Modify item not implemented \(selectedSegment)")
+        }
+    }
 
     private func viewNetwork() {
         let index = tableView.selectedRow
