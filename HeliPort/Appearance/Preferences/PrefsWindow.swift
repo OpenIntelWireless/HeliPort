@@ -42,11 +42,36 @@ class PrefsWindow: NSWindow {
 
         title = .networkPrefs
 
+        var hasGeneralItem = false
+        var hasNetworksItem = false
+        
         toolbar = NSToolbar(identifier: "NetworkPrefWindowToolbar")
         toolbar!.delegate = self
         toolbar!.displayMode = .iconAndLabel
-        toolbar!.insertItem(withItemIdentifier: .general, at: 0)
-        toolbar!.insertItem(withItemIdentifier: .networks, at: 1)
+        
+        if let toolbar = toolbar {
+            for item in toolbar.items {
+                switch item.itemIdentifier {
+                case .general:
+                    hasGeneralItem = true
+                case .networks:
+                    hasNetworksItem = true
+                default:
+                    break
+                }
+            }
+        }
+
+        if !hasGeneralItem {
+            toolbar!.insertItem(withItemIdentifier: .general, at: 0)
+            hasGeneralItem = true
+        }
+
+        if !hasNetworksItem {
+            toolbar!.insertItem(withItemIdentifier: .networks, at: 1)
+            hasNetworksItem = true
+        }
+        
         toolbar!.selectedItemIdentifier = .general
 
         if #available(OSX 11.0, *) {
