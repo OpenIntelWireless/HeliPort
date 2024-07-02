@@ -444,9 +444,8 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let alert = Alert(text: .notImplemented)
             alert.show()
         case .openNetworkPrefs:
-            if preferenceWindow == nil {
-                preferenceWindow = PrefsWindow()
-            }
+            preferenceWindow?.close()
+            preferenceWindow = PrefsWindow()
             preferenceWindow?.show()
         case .checkUpdates:
             heliPortUpdater.checkForUpdates(self)
