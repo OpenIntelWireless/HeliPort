@@ -22,7 +22,7 @@ class LoginItemManager {
 
     public class func isEnabled() -> Bool {
 
-        guard let jobs = 
+        guard let jobs =
             (LoginItemManager.self as DeprecationWarningWorkaround.Type).jobsDict
         else {
             return false
