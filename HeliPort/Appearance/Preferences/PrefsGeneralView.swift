@@ -14,11 +14,14 @@
  */
 
 import Cocoa
-import Sparkle
+import Sparkle.SPUStandardUpdaterController
 
 class PrefsGeneralView: NSView {
 
-    let updater = SUUpdater.shared()
+    let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+    var updater: SPUUpdater {
+        return updaterController.updater
+    }
 
     let updatesLabel: NSTextField = {
         let view = NSTextField(labelWithString: .startup)
@@ -59,17 +62,11 @@ class PrefsGeneralView: NSView {
         gridView.addRow(with: [updatesLabel])
         gridView.addColumn(with: [autoUpdateCheckbox, autoDownloadCheckbox])
 
-        if let isAutoUpdate = updater?.automaticallyChecksForUpdates {
-            autoUpdateCheckbox.state = isAutoUpdate ? .on : .off
-        } else {
-            Log.debug("Cannot get auto update state")
-        }
+        let isAutoUpdate = updater.automaticallyChecksForUpdates
+        autoUpdateCheckbox.state = isAutoUpdate ? .on : .off
 
-        if let isAutoDownload = updater?.automaticallyDownloadsUpdates {
-            autoDownloadCheckbox.state = isAutoDownload ? .on : .off
-        } else {
-            Log.debug("Cannot get auto download state")
-        }
+        let isAutoDownload = updater.automaticallyDownloadsUpdates
+        autoDownloadCheckbox.state = isAutoDownload ? .on : .off
 
         addSubview(gridView)
         setupConstraints()
@@ -97,9 +94,9 @@ extension PrefsGeneralView {
 
         switch identifier {
         case .autoUpdateId:
-            updater?.automaticallyChecksForUpdates = sender.state == .on
+            updater.automaticallyChecksForUpdates = sender.state == .on
         case .autoDownloadId:
-            updater?.automaticallyDownloadsUpdates = sender.state == .on
+            updater.automaticallyDownloadsUpdates = sender.state == .on
         default:
             break
         }
