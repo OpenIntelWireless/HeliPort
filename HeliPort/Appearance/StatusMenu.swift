@@ -444,7 +444,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let alert = Alert(text: .notImplemented)
             alert.show()
         case .openNetworkPrefs:
-            // Fix Pref Window opening
             if preferenceWindow == nil {
                 preferenceWindow = PrefsWindow()
             }
