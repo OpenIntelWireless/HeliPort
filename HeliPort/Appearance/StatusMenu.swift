@@ -28,7 +28,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     )
 
     private let networkListUpdatePeriod: Double = 5
-        private let statusUpdatePeriod: Double = 2
+    private let statusUpdatePeriod: Double = 2
 
     private var headerLength: Int = 0
     private var networkListUpdateTimer: Timer?
