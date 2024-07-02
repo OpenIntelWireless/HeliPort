@@ -18,7 +18,11 @@ import Sparkle.SPUStandardUpdaterController
 
 class PrefsGeneralView: NSView {
 
-    let updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+    let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
     var updater: SPUUpdater {
         return updaterController.updater
     }
@@ -73,7 +77,7 @@ class PrefsGeneralView: NSView {
         if isAutoUpdate {
             autoDownloadCheckbox.state = isAutoDownload ? .on : .off
         } else {
-            Log.debug("Cannot get auto download state")
+            Log.debug("Cannot get auto update state")
         }
 
         addSubview(gridView)
