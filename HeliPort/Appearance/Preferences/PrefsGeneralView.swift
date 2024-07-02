@@ -14,7 +14,7 @@
  */
 
 import Cocoa
-import Sparkle.SPUStandardUpdaterController
+import Sparkle
 
 class PrefsGeneralView: NSView {
 
