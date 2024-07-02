@@ -79,7 +79,8 @@ class PrefsSavedNetworksView: NSView {
         return label
     }()
 
-    private let modifyItemSegment: NSSegmentedControl = {
+    // Changed let modifyItemSegment to lazy var modifyItemSegment and target: NSSegmentControl.self to target: self to fix view/remove button
+    private lazy var modifyItemSegment: NSSegmentedControl = {
         var removeImage: NSImage
         var viewImage: NSImage
         if #available(OSX 11.0, *) {
@@ -93,10 +94,8 @@ class PrefsSavedNetworksView: NSView {
                                         trackingMode: .momentary,
                                         target: self,
                                         action: #selector(modifyItemClicked(_:)))
-        
         button.setEnabled(false, forSegment: .remove)
         button.setEnabled(false, forSegment: .view)
-        
         return button
     }()
 
@@ -167,7 +166,7 @@ class PrefsSavedNetworksView: NSView {
 // MARK: Action Items
 
 extension PrefsSavedNetworksView {
-    
+
     @objc func modifyItemClicked(_ sender: NSSegmentedControl) {
         let selectedSegment = sender.selectedSegment
         switch selectedSegment {
