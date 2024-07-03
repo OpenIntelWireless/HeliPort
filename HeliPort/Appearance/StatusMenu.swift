@@ -31,7 +31,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var statusUpdateTimer: Timer?
 
     // One instance at a time
-    lazy var preferenceWindow: PrefsWindow = {
+    private lazy var preferenceWindow: PrefsWindow = {
         return PrefsWindow()
     }()
 
@@ -446,6 +446,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let alert = Alert(text: .notImplemented)
             alert.show()
         case .openNetworkPrefs:
+            preferenceWindow.close()
             preferenceWindow.show()
         case .checkUpdates:
             heliPortUpdater.checkForUpdates(self)
