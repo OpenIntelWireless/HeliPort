@@ -59,7 +59,6 @@ final class NetworkManager {
             if let savedNetworkAuth = CredentialsManager.instance.get(networkInfo) {
                 networkInfo.auth = savedNetworkAuth
                 Log.debug("Connecting to network \(networkInfo.ssid) with saved password")
-                CredentialsManager.instance.setAutoJoin(networkInfo.ssid, true)
                 getAuthInfoCallback(networkInfo.auth, false)
                 return
             }
