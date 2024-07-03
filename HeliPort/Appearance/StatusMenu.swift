@@ -31,9 +31,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var statusUpdateTimer: Timer?
 
     // One instance at a time
-    private lazy var preferenceWindow: PrefsWindow = {
-        return PrefsWindow()
-    }()
+    private lazy var preferenceWindow = PrefsWindow()
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
