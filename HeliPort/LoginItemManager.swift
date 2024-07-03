@@ -23,10 +23,10 @@ class LoginItemManager {
     public class func isEnabled() -> Bool {
 
         guard let jobs =
-            (SMCopyAllJobDictionaries(kSMDomainUserLaunchd).takeRetainedValue() as? [[String: AnyObject]])
-            else {
-                return false
-            }
+            (LoginItemManager.self as DeprecationWarningWorkaround.Type).jobsDict
+        else {
+            return false
+        }
 
         let job = jobs.first { $0["Label"] as? String? == launcherId }
 
@@ -35,5 +35,17 @@ class LoginItemManager {
 
     public class func setStatus(enabled: Bool) {
         SMLoginItemSetEnabled(launcherId as CFString, enabled)
+    }
+}
+
+private protocol DeprecationWarningWorkaround {
+    static var jobsDict: [[String: AnyObject]]? { get }
+}
+
+extension LoginItemManager: DeprecationWarningWorkaround {
+    // Workaround to silence "'SMCopyAllJobDictionaries' was deprecated in OS X 10.10" warning
+    @available(*, deprecated)
+    static var jobsDict: [[String: AnyObject]]? {
+        SMCopyAllJobDictionaries(kSMDomainUserLaunchd)?.takeRetainedValue() as? [[String: AnyObject]]
     }
 }
