@@ -31,7 +31,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var statusUpdateTimer: Timer?
 
     // One instance at a time
-    private var preferenceWindow: PrefsWindow?
+    lazy var preferenceWindow: PrefsWindow = {
+        return PrefsWindow()
+    }()
 
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
@@ -444,10 +446,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             let alert = Alert(text: .notImplemented)
             alert.show()
         case .openNetworkPrefs:
-            if preferenceWindow == nil {
-                preferenceWindow = PrefsWindow()
-            }
-            preferenceWindow?.show()
+            preferenceWindow.show()
         case .checkUpdates:
             heliPortUpdater.checkForUpdates(self)
         case .launchLogin:
