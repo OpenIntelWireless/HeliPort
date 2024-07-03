@@ -74,7 +74,7 @@ class PrefsGeneralView: NSView {
         }
 
         let isAutoDownload = updater.automaticallyDownloadsUpdates
-        if isAutoUpdate {
+        if isAutoDownload {
             autoDownloadCheckbox.state = isAutoDownload ? .on : .off
         } else {
             Log.debug("Cannot get auto download state")
