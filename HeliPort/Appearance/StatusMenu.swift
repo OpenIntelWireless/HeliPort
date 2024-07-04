@@ -33,6 +33,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     // One instance at a time
     private lazy var preferenceWindow = PrefsWindow()
 
+    private var previousStatus: itl_80211_state = ITL80211_S_INIT
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
             /* Only allow if network card is enabled or if the network card does not load
@@ -42,6 +43,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             guard isNetworkCardEnabled || !isNetworkCardAvailable else { return }
 
             statusItem.title = NSLocalizedString(status.description)
+
+            // if state changes when connected it will
+            // disconnect to ensure the functionality of Auto Join
+            if previousStatus == ITL80211_S_RUN && status != ITL80211_S_RUN {
+                disassociateSSID(disconnectItem)
+            }
 
             switch status {
             case ITL80211_S_INIT:
@@ -68,6 +75,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             default:
                 StatusBarIcon.error()
             }
+            previousStatus = status
         }
     }
 
