@@ -438,8 +438,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             // try to connect saved networks
             NetworkManager.scanSavedNetworks()
         case .turnWiFiOff:
-            // Disconnect from the network first to ensure the functionality of AutoJoin
-            disassociateSSID(disconnectItem)
+            // If connected, disconnect from the network first to ensure
+            // the functionality of AutoJoin
+            if self.status == ITL80211_S_RUN {
+                disassociateSSID(disconnectItem)
+            }
             power_off()
         case .joinNetworks:
             let joinPop = WiFiConfigWindow()
