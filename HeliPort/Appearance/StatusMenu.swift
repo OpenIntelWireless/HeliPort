@@ -438,7 +438,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             // try to connect saved networks
             NetworkManager.scanSavedNetworks()
         case .turnWiFiOff:
-            // If connected, disconnect from the network first to ensure
+            // If connected, disconnect from the network before call `power_off()` to ensure
             // the functionality of AutoJoin
             if self.status == ITL80211_S_RUN {
                 disassociateSSID(disconnectItem)
