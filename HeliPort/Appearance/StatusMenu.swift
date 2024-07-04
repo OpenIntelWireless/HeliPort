@@ -15,13 +15,17 @@
 
 import Foundation
 import Cocoa
-import Sparkle
+import Sparkle.SPUStandardUpdaterController
 
 final class StatusMenu: NSMenu, NSMenuDelegate {
 
     // - MARK: Properties
 
-    private let heliPortUpdater = SUUpdater()
+    private let heliPortUpdater = SPUStandardUpdaterController(
+        startingUpdater: true,
+        updaterDelegate: nil,
+        userDriverDelegate: nil
+    )
 
     private let networkListUpdatePeriod: Double = 5
     private let statusUpdatePeriod: Double = 2
@@ -30,7 +34,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
-    // One instance at a time
+    // Lazy initialization of preferenceWindow as a non-optional
     private lazy var preferenceWindow = PrefsWindow()
 
     private var status: itl_80211_state = ITL80211_S_INIT {
@@ -435,7 +439,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
         case .turnWiFiOn:
             power_on()
+            // try to connect saved networks
+            NetworkManager.scanSavedNetworks()
         case .turnWiFiOff:
+            // Disconnect from the network first to ensure the functionality of AutoJoin
+            disassociateSSID(disconnectItem)
             power_off()
         case .joinNetworks:
             let joinPop = WiFiConfigWindow()
