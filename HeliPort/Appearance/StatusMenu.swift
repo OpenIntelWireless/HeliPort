@@ -15,17 +15,13 @@
 
 import Foundation
 import Cocoa
-import Sparkle.SPUStandardUpdaterController
+import Sparkle
 
 final class StatusMenu: NSMenu, NSMenuDelegate {
 
     // - MARK: Properties
 
-    private let heliPortUpdater = SPUStandardUpdaterController(
-        startingUpdater: true,
-        updaterDelegate: nil,
-        userDriverDelegate: nil
-    )
+    private let heliPortUpdater = SUUpdater()
 
     private let networkListUpdatePeriod: Double = 5
     private let statusUpdatePeriod: Double = 2
@@ -34,7 +30,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
-    // Lazy initialization of preferenceWindow as a non-optional
+    // One instance at a time
     private lazy var preferenceWindow = PrefsWindow()
 
     private var status: itl_80211_state = ITL80211_S_INIT {
@@ -616,6 +612,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                                                              options: .regularExpression,
                                                              range: nil)
         DispatchQueue.global().async {
+            CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
             Log.debug("Disconnected from \(ssid)")
         }
