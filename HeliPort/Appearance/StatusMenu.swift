@@ -30,7 +30,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
-    private var isTemporaryDisableNeeded: Bool = false
+    private var isDisconnecting: Bool = false
 
     // One instance at a time
     private lazy var preferenceWindow = PrefsWindow()
@@ -46,11 +46,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             statusItem.title = NSLocalizedString(status.description)
 
-            // if status changes while connected, it will
-            // disconnect to ensure Auto Join functionality
-            // (i.e., preventing it from reconnecting to a network with Auto Join disabled)
-            if previousStatus == ITL80211_S_RUN && status != ITL80211_S_RUN && !isTemporaryDisableNeeded {
-                Log.debug("Status changed while connected to a network")
+            if status != ITL80211_S_RUN && previousStatus == ITL80211_S_RUN && !isDisconnecting {
                 disassociateSSID(disconnectItem)
                 NetworkManager.scanSavedNetworks()
             }
@@ -620,18 +616,13 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         let ssid = String(sender.title).replacingOccurrences(of: String.disconnectNet, with: "",
                                                              options: .regularExpression,
                                                              range: nil)
-
-        Log.debug("Temporary disabling line 52 for 3 seconds")
-        isTemporaryDisableNeeded = true
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            self.isTemporaryDisableNeeded = false
-            Log.debug("Line 52 re-enabled after 3 seconds")
-        }
-
+        isDisconnecting = true
         DispatchQueue.global().async {
             dis_associate_ssid(ssid)
-            Log.debug("Disconnected from \(ssid)")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                self.isDisconnecting = false
+                Log.debug("Disconnected from \(ssid)")
+            }
         }
     }
 
