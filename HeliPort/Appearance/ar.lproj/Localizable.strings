@@ -21,6 +21,12 @@
 "Cancel" = "إلغاء";
 "Check for Updates..." = "تحقق من التحديثات...";
 "Close" = "إغلاق";
+"Choose a folder to output the bug report" = "Choose a folder to output the bug report"; // FIXME
+"Command failed to fetch logs for HeliPort." = "Command failed to fetch logs for HeliPort."; // FIXME
+"Could not create zip file for generated logs." = "Could not create zip file for generated logs."; // FIXME
+"Could not generate report for HeliPort." = "Could not generate report for HeliPort."; // FIXME
+"Could not get path to generate bug report." = "Could not get path to generate bug report."; // FIXME
+"Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted."; // FIXME
 "Create Diagnostics Report..." = "Create Diagnostics Report..."; // FIXME
 "Create Network..." = "Create Network..."; // FIXME
 "Disconnect from " = "Disconnect from "; // FIXME
@@ -39,6 +45,8 @@
 "Join Other Network..." = "انضمام إلى شبكة أخرى...";
 "Join" = "انضمام";
 "Launch At Login" = "فتح عند الدخول";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm."; // FIXME
+"Error occurred while generating bug report." = "Error occurred while generating bug report."; // FIXME
 "Network Name" = "إسم الشبكة";
 "Network Name:" = "إسم الشبكة:";
 "Network Preferences" = "تفضيلات الشبكة";
@@ -47,7 +55,7 @@
 "No Status Information Avaliable" = "No Status Information Avaliable"; // FIXME
 "None" = "Hiçbiri";
 "Open Network Preferences..." = "تفضيلات الشبكة...";
-"Open Network Preferences..." = "تفضيلات الشبكة...";
+"Open Documentation" = "Open Documentation"; // FIXME
 "Open Wireless Diagnostics..." = "Open Wireless Diagnostics..."; // FIXME
 "Password" = "كلمة السر";
 "Password:" = "كلمة السر:";
@@ -60,6 +68,7 @@
 "Security" = "الأمان";
 "Security:" = "الأمان:";
 "Show password" = "إظهار كلمة السر";
+"The bug report will be generated in the seleted folder" = "The bug report will be generated in the seleted folder"; // FIXME
 "Turn Wi-Fi Off" = "إيقاف Wi-Fi";
 "Turn Wi-Fi On" = "تشغيل Wi-Fi";
 "Unavailable" = "غير متوفر";

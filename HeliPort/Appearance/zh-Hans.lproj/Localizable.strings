@@ -55,6 +55,7 @@
 "None" = "无";
 "Open Documentation" = "打开文档";
 "Open Network Preferences..." = "打开网络偏好设置...";
+"Network Preferences" = "Network Preferences"; // FIXME
 "Open Wireless Diagnostics..." = "打开无线诊断...";
 "Password" = "密码";
 "Password:" = "密码：";
