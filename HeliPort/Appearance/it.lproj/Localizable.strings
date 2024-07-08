@@ -21,6 +21,12 @@
 "Cancel" = "Annulla";
 "Check for Updates..." = "Controlla gli aggiornameti...";
 "Close" = "Chiudi";
+"Choose a folder to output the bug report" = "Choose a folder to output the bug report"; // FIXME
+"Command failed to fetch logs for HeliPort." = "Command failed to fetch logs for HeliPort."; // FIXME
+"Could not create zip file for generated logs." = "Could not create zip file for generated logs."; // FIXME
+"Could not generate report for HeliPort." = "Could not generate report for HeliPort."; // FIXME
+"Could not get path to generate bug report." = "Could not get path to generate bug report."; // FIXME
+"Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted."; // FIXME
 "Create Diagnostics Report..." = "Crea resoconto di diagnosi...";
 "Create Network..." = "Crea rete...";
 "Disconnect from " = "Disconnetti da ";
@@ -39,6 +45,8 @@
 "Join Other Network..." = "Accedi a un'altra rete...";
 "Join" = "Connetti";
 "Launch At Login" = "Avvia al login";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm."; // FIXME
+"Error occurred while generating bug report." = "Error occurred while generating bug report."; // FIXME
 "Network Name" = "Nome della Rete";
 "Network Name:" = "Nome della Rete:";
 "Network Preferences" = "Preferenze di Rete";
@@ -46,6 +54,7 @@
 "No Network Avaliable" = "Nessuna rete disponibile";
 "No Status Information Avaliable" = "Nessuna informazione di stato disponibile";
 "None" = "Nessuna";
+"Open Documentation" = "Open Documentation"; // FIXME
 "Open Network Preferences..." = "Apri Preferenze di Rete...";
 "Open Wireless Diagnostics..." = "Apri Diagnosi Wireless...";
 "Password" = "Password";
@@ -59,6 +68,7 @@
 "Security" = "Sicurezza";
 "Security:" = "Sicurezza:";
 "Show password" = "Mostra la password";
+"The bug report will be generated in the seleted folder" = "The bug report will be generated in the seleted folder"; // FIXME
 "Turn Wi-Fi Off" = "Disattiva il Wi-Fi";
 "Turn Wi-Fi On" = "Attiva il Wi-Fi";
 "Unavailable" = "Non disponibile";

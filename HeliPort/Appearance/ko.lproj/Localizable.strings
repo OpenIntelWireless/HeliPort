@@ -21,6 +21,12 @@
 "Cancel" = "취소";
 "Check for Updates..." = "업데이트 확인...";
 "Close" = "Close"; // FIXME
+"Choose a folder to output the bug report" = "Choose a folder to output the bug report"; // FIXME
+"Command failed to fetch logs for HeliPort." = "Command failed to fetch logs for HeliPort."; // FIXME
+"Could not create zip file for generated logs." = "Could not create zip file for generated logs."; // FIXME
+"Could not generate report for HeliPort." = "Could not generate report for HeliPort."; // FIXME
+"Could not get path to generate bug report." = "Could not get path to generate bug report."; // FIXME
+"Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted."; // FIXME
 "Create Diagnostics Report..." = "진단 리포트 생성...";
 "Create Network..." = "네트워크 생성...";
 "Disconnect from " = "연결 해제 ";
@@ -30,6 +36,7 @@
 "Enable Wi-Fi Logging" = "Wi-Fi 로그 기록 활성화";
 "Encryption type unsupported" = "Encryption type unsupported"; // FIXME
 "Enter the name and security type of the network you want to join." = "연결하려는 네트워크의 이름 및 보안 유형을 입력하십시오.";
+"Error occurred while generating bug report." = "Error occurred while generating bug report."; // FIXME
 "FUNCTION NOT IMPLEMENTED" = "기능이 구현되지 않았습니다";
 "Find and join a Wi-Fi network." = "Wi-Fi 네트워크를 찾아서 연결합니다.";
 "General" = "General"; // FIXME
@@ -39,14 +46,16 @@
 "Join Other Network..." = "다른 네트워크에 연결...";
 "Join" = "연결";
 "Launch At Login" = "로그인 시 론칭";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm."; // FIXME
 "Network Name" = "Network Name"; // FIXME
 "Network Name:" = "네트워크 이름:";
 "Networks" = "Networks"; // FIXME
 "No Network Avaliable" = "사용 가능한 네트워크 없음";
 "No Status Information Avaliable" = "상태 정보가 없음";
 "None" = "없음";
-"Open Network Preferences..." = "Open Network Preferences..."; // FIXME
+"Open Documentation" = "Open Documentation"; // FIXME
 "Open Network Preferences..." = "네트워크 환경설정 열기...";
+"Network Preferences" = "Network Preferences"; // FIXME
 "Open Wireless Diagnostics..." = "무선 진단 열기...";
 "Password" = "암호";
 "Password:" = "암호:";
@@ -59,6 +68,7 @@
 "Security" = "Security"; // FIXME
 "Security:" = "보안:";
 "Show password" = "암호 보기";
+"The bug report will be generated in the seleted folder" = "The bug report will be generated in the seleted folder"; // FIXME
 "Turn Wi-Fi Off" = "Wi-Fi 끄기";
 "Turn Wi-Fi On" = "Wi-Fi 켜기";
 "Unavailable" = "사용할 수 없음";
