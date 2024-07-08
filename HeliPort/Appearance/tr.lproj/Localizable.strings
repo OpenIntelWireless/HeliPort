@@ -21,6 +21,12 @@
 "Cancel" = "İptal";
 "Check for Updates..." = "Güncellemeleri Kontrol Et...";
 "Close" = "Kapat";
+"Choose a folder to output the bug report" = "Choose a folder to output the bug report"; // FIXME
+"Command failed to fetch logs for HeliPort." = "Command failed to fetch logs for HeliPort."; // FIXME
+"Could not create zip file for generated logs." = "Could not create zip file for generated logs."; // FIXME
+"Could not generate report for HeliPort." = "Could not generate report for HeliPort."; // FIXME
+"Could not get path to generate bug report." = "Could not get path to generate bug report."; // FIXME
+"Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted."; // FIXME
 "Create Diagnostics Report..." = "Tanı Raporu Oluştur...";
 "Create Network..." = "Ağ Oluştur...";
 "Disconnect from " = "Bağlantıyı Kapat ";
@@ -39,6 +45,8 @@
 "Join Other Network..." = "Diğer Kablosuz Ağa Bağlan...";
 "Join" = "Bağlan";
 "Launch At Login" = "Başlangıçta Çalıştır";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm."; // FIXME
+"Error occurred while generating bug report." = "Error occurred while generating bug report."; // FIXME
 "Network Name" = "Kablosuz Ağ Adı";
 "Network Name:" = "Kablosuz Ağ Adı:";
 "Network Preferences" = "Ağ Tercihleri";
@@ -46,7 +54,7 @@
 "No Network Avaliable" = "Ağ Bağlantısı Mevcut Değil";
 "No Status Information Avaliable" = "Durum Bilgisi Mevcut Değil";
 "None" = "Hiçbiri";
-"Open Network Preferences..." = "Ağ Tercihlerini Aç...";
+"Open Documentation" = "Open Documentation"; // FIXME
 "Open Network Preferences..." = "Ağ Tercihlerini Aç...";
 "Open Wireless Diagnostics..." = "Kablosuz Tanılamayı Aç...";
 "Password" = "Şifre";
@@ -60,6 +68,7 @@
 "Security" = "Şifreleme Tipi";
 "Security:" = "Şifreleme Tipi";
 "Show password" = "Şifreyi göster";
+"The bug report will be generated in the seleted folder" = "The bug report will be generated in the seleted folder"; // FIXME
 "Turn Wi-Fi Off" = "Wi-Fi Kapat";
 "Turn Wi-Fi On" = "Wi-Fi Aç";
 "Unavailable" = "Mevcut Değil";
