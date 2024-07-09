@@ -30,12 +30,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private var networkListUpdateTimer: Timer?
     private var statusUpdateTimer: Timer?
 
-    private var isDisconnecting: Bool = false
-
     // One instance at a time
     private lazy var preferenceWindow = PrefsWindow()
 
-    private var previousStatus: itl_80211_state = ITL80211_S_INIT
     private var status: itl_80211_state = ITL80211_S_INIT {
         didSet {
             /* Only allow if network card is enabled or if the network card does not load
@@ -45,11 +42,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             guard isNetworkCardEnabled || !isNetworkCardAvailable else { return }
 
             statusItem.title = NSLocalizedString(status.description)
-
-            if status != ITL80211_S_RUN && previousStatus == ITL80211_S_RUN && !isDisconnecting {
-                disassociateSSID(disconnectItem)
-                NetworkManager.scanSavedNetworks()
-            }
 
             switch status {
             case ITL80211_S_INIT:
@@ -76,7 +68,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             default:
                 StatusBarIcon.error()
             }
-            previousStatus = status
         }
     }
 
@@ -444,7 +435,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
         case .turnWiFiOn:
             power_on()
+            NetworkManager.scanSavedNetworks()
         case .turnWiFiOff:
+            if status == ITL80211_S_RUN {
+                disassociateSSID(disconnectItem)
+            }
             power_off()
         case .joinNetworks:
             let joinPop = WiFiConfigWindow()
@@ -616,13 +611,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         let ssid = String(sender.title).replacingOccurrences(of: String.disconnectNet, with: "",
                                                              options: .regularExpression,
                                                              range: nil)
-        isDisconnecting = true
         DispatchQueue.global().async {
             dis_associate_ssid(ssid)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                self.isDisconnecting = false
-                Log.debug("Disconnected from \(ssid)")
-            }
+            Log.debug("Disconnected from \(ssid)")
         }
     }
 
