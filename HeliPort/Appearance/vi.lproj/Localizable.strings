@@ -21,6 +21,12 @@
 "Cancel" = "Huỷ bỏ";
 "Check for Updates..." = "Kiểm tra cập nhật...";
 "Close" = "Đóng";
+"Choose a folder to output the bug report" = "Choose a folder to output the bug report"; // FIXME
+"Command failed to fetch logs for HeliPort." = "Command failed to fetch logs for HeliPort."; // FIXME
+"Could not create zip file for generated logs." = "Could not create zip file for generated logs."; // FIXME
+"Could not generate report for HeliPort." = "Could not generate report for HeliPort."; // FIXME
+"Could not get path to generate bug report." = "Could not get path to generate bug report."; // FIXME
+"Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted."; // FIXME
 "Create Diagnostics Report..." = "Tạo báo cáo lỗi...";
 "Create Network..." = "Tạo mạng mới...";
 "Disconnect from " = "Ngắt kết nối ";
@@ -39,6 +45,8 @@
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
 "Launch At Login" = "Chạy khi khởi động";
+"Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm."; // FIXME
+"Error occurred while generating bug report." = "Error occurred while generating bug report."; // FIXME
 "Network Name" = "Tên mạng";
 "Network Name:" = "Tên mạng:";
 "Networks" = "Mạng";
@@ -46,7 +54,8 @@
 "No Status Information Avaliable" = "Không có thông tin trạng thái";
 "None" = "Không";
 "Open Network Preferences..." = "Mở Cài đặt mạng...";
-"Open Network Preferences..." = "Mở Cài đặt mạng...";
+"Open Documentation" = "Open Documentation"; // FIXME
+"Network Preferences" = "Network Preferences"; // FIXME
 "Open Wireless Diagnostics..." = "Sửa lỗi Wifi...";
 "Password" = "Mật khẩu";
 "Password:" = "Mật khẩu:";
@@ -59,6 +68,7 @@
 "Security" = "Bảo mật";
 "Security:" = "Bảo mật:";
 "Show password" = "Hiển thị mật khẩu";
+"The bug report will be generated in the seleted folder" = "The bug report will be generated in the seleted folder"; // FIXME
 "Turn Wi-Fi Off" = "Tắt Wi-Fi";
 "Turn Wi-Fi On" = "Bật Wi-Fi";
 "Unavailable" = "Không có sẵn";
