@@ -37,7 +37,7 @@
 "Encryption type unsupported" = "Loại mã hoá không được hỗ trợ";
 "Enter the name and security type of the network you want to join." = "Nhập tên và loại bảo mật của mạng mà bạn muốn kết nối.";
 "FUNCTION NOT IMPLEMENTED" = "CHỨC NĂNG CHƯA THÍCH HỢP";
-"Find and join a Wi-Fi network." = "Tìm và kết nối một mạng Wi-fi.";
+"Find and join a Wi-Fi network." = "Tìm và kết nối một mạng Wi-Fi.";
 "General" = "Cài đặt chung";
 "HeliPort API Version: " = "Phiên bản API HeliPort: ";
 "HeliPort running at an unexpected path" = "Đường dẫn của HeliPort không đúng";
