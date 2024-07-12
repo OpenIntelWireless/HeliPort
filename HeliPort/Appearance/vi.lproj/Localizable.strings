@@ -23,8 +23,8 @@
 "Close" = "Đóng";
 "Choose a folder to output the bug report" = "Chọn thư mục để xuất báo cáo lỗi";
 "Command failed to fetch logs for HeliPort." = "Lệnh không thể tìm nạp nhật ký cho HeliPort."; 
-"Could not create zip file for generated logs." = "Không thể tạo ra file zip cho nhật ký được tạo ra.";
-"Could not generate report for HeliPort." = "Không thể tạo ra báo cáo cho HeliPort."; 
+"Could not create zip file for generated logs." = "Không thể tạo file zip cho nhật ký được tạo.";
+"Could not generate report for HeliPort." = "Không thể tạo báo cáo cho HeliPort."; 
 "Could not get path to generate bug report." = "Không thể lấy đường dẫn để tạo báo cáo lỗi.";
 "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." = "Không thể đọc nhật ký cho `itlwm`. Hãy chắn chắn rằng bạn cho phép `HeliPort` đọc nhật ký khi được yêu cầu.";
 "Create Diagnostics Report..." = "Tạo Báo cáo chẩn đoán...";
@@ -68,7 +68,7 @@
 "Security" = "Bảo mật";
 "Security:" = "Bảo mật:";
 "Show password" = "Hiển thị mật khẩu";
-"The bug report will be generated in the seleted folder" = "Báo cáo lỗi sẽ được tạo ra trong thư mục đã chọn";
+"The bug report will be generated in the seleted folder" = "Báo cáo lỗi sẽ được tạo trong thư mục đã chọn";
 "Turn Wi-Fi Off" = "Tắt Wi-Fi";
 "Turn Wi-Fi On" = "Bật Wi-Fi";
 "Unavailable" = "Không có sẵn";
