@@ -44,7 +44,7 @@
 "Interface Name: " = "Tên mạng: ";
 "Join Other Network..." = "Kết nối mạng khác...";
 "Join" = "Kết nối";
-"Launch At Login" = "Chạy khi khởi động";
+"Launch At Login" = "Mở khi đăng nhập";
 "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." = "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm."; // FIXME
 "Error occurred while generating bug report." = "Error occurred while generating bug report."; // FIXME
 "Network Name" = "Tên mạng";
