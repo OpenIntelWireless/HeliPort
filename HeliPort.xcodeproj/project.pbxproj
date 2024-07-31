@@ -19,6 +19,7 @@
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
 		50C5F2D027C23074009E3F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2CF27C23074009E3F68 /* KeychainAccess */; };
 		50C5F2D327C230D6009E3F68 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2D227C230D6009E3F68 /* Sparkle */; };
+		50E7700F2C5A7CE100DB1160 /* UpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */; };
 		50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */; };
 		50F495A024BDEB6500AE4C08 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959F24BDEB6500AE4C08 /* main.swift */; };
 		50F495AC24BDEBB500AE4C08 /* HeliPort Launcher.app in Embed Launcher */ = {isa = PBXBuildFile; fileRef = 50F4959D24BDEB6500AE4C08 /* HeliPort Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -73,6 +74,7 @@
 		50B86AB924B22E9B008E4FE4 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50B86ABC24B22F75008E4FE4 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		50B86ABD24B22FEE008E4FE4 /* pt-BR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		50F4959D24BDEB6500AE4C08 /* HeliPort Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HeliPort Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F4959F24BDEB6500AE4C08 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				F379276E24A0A4A50087FF2B /* CredentialsManager.swift */,
 				50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */,
 				75FDF38A2481D22000B2A601 /* NetworkManager.swift */,
+				50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */,
 				BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */,
 				7557CDF324935260000F0F71 /* Credits.rtf */,
 				F34B2B8B24AA4C08009AB1BB /* Supporting files */,
@@ -415,6 +418,7 @@
 				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
+				50E7700F2C5A7CE100DB1160 /* UpdateManager.swift in Sources */,
 				1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
