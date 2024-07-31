@@ -22,20 +22,21 @@ class PrefsGeneralView: NSView {
 
     let updatesLabel: NSTextField = {
         let view = NSTextField(labelWithString: .startup)
+        view.alignment = .right
         return view
     }()
 
-    let autoUpdateCheckbox: NSButton = {
+    lazy var autoUpdateCheckbox: NSButton = {
         let checkbox = NSButton(checkboxWithTitle: .autoCheckUpdate,
-                                target: NSButton.self,
+                                target: self,
                                 action: #selector(checkboxChanged(_:)))
         checkbox.identifier = .autoUpdateId
         return checkbox
     }()
 
-    let autoDownloadCheckbox: NSButton = {
+    lazy var autoDownloadCheckbox: NSButton = {
         let checkbox = NSButton(checkboxWithTitle: .autoDownload,
-                                target: NSButton.self,
+                                target: self,
                                 action: #selector(checkboxChanged(_:)))
         checkbox.identifier = .autoDownloadId
         return checkbox
