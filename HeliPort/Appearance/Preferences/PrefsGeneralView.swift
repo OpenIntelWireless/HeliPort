@@ -18,8 +18,6 @@ import Sparkle
 
 class PrefsGeneralView: NSView {
 
-    let updater = SUUpdater.shared()
-
     let updatesLabel: NSTextField = {
         let view = NSTextField(labelWithString: .startup)
         view.alignment = .right
@@ -60,17 +58,8 @@ class PrefsGeneralView: NSView {
         gridView.addRow(with: [updatesLabel])
         gridView.addColumn(with: [autoUpdateCheckbox, autoDownloadCheckbox])
 
-        if let isAutoUpdate = updater?.automaticallyChecksForUpdates {
-            autoUpdateCheckbox.state = isAutoUpdate ? .on : .off
-        } else {
-            Log.debug("Cannot get auto update state")
-        }
-
-        if let isAutoDownload = updater?.automaticallyDownloadsUpdates {
-            autoDownloadCheckbox.state = isAutoDownload ? .on : .off
-        } else {
-            Log.debug("Cannot get auto download state")
-        }
+        autoUpdateCheckbox.state = UpdateManager.sharedUpdater.automaticallyChecksForUpdates ? .on : .off
+        autoDownloadCheckbox.state = UpdateManager.sharedUpdater.automaticallyDownloadsUpdates ? .on : .off
 
         addSubview(gridView)
         setupConstraints()
@@ -98,9 +87,9 @@ extension PrefsGeneralView {
 
         switch identifier {
         case .autoUpdateId:
-            updater?.automaticallyChecksForUpdates = sender.state == .on
+            UpdateManager.sharedUpdater.automaticallyChecksForUpdates = sender.state == .on
         case .autoDownloadId:
-            updater?.automaticallyDownloadsUpdates = sender.state == .on
+            UpdateManager.sharedUpdater.automaticallyDownloadsUpdates = sender.state == .on
         default:
             break
         }

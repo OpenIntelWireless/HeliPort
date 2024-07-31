@@ -21,8 +21,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
     // - MARK: Properties
 
-    private let heliPortUpdater = SUUpdater()
-
     private let networkListUpdatePeriod: Double = 5
     private let statusUpdatePeriod: Double = 2
 
@@ -202,7 +200,12 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
     private let networkPanelItem = NSMenuItem(title: .openNetworkPrefs)
 
     private let aboutItem = NSMenuItem(title: .aboutHeliport)
-    private let checkUpdateItem = NSMenuItem(title: .checkUpdates)
+    private let checkUpdateItem = {
+        let item = NSMenuItem(title: .checkUpdates)
+        item.target = UpdateManager.sharedController
+        item.action = #selector(SPUStandardUpdaterController.checkForUpdates(_:))
+        return item
+    }()
     private let quitSeparator = NSMenuItem.separator()
     private let quitItem = NSMenuItem(title: .quitHeliport,
                                       action: #selector(clickMenuItem(_:)), keyEquivalent: "q")
@@ -312,7 +315,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         addItem(NSMenuItem.separator())
 
         addClickItem(toggleLaunchItem)
-        addClickItem(checkUpdateItem)
+        addItem(checkUpdateItem)
         addClickItem(aboutItem)
 
         addItem(quitSeparator)
@@ -446,8 +449,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
         case .openNetworkPrefs:
             preferenceWindow.close()
             preferenceWindow.show()
-        case .checkUpdates:
-            heliPortUpdater.checkForUpdates(self)
         case .launchLogin:
             LoginItemManager.setStatus(enabled: LoginItemManager.isEnabled() ? false : true)
             isAutoLaunch = LoginItemManager.isEnabled()
