@@ -366,7 +366,8 @@ class WiFiConfigWindow: NSWindow {
 
     func show() {
         guard !securityPop.title.isEmpty else {
-            Log.error("WiFiConfigWindow not shown due to unknown security type")
+            Log.error("WiFiConfigWindow not shown due to unsupported security type: " +
+                      (networkInfo?.auth.security.description ?? "unknown"))
             return
         }
         makeKeyAndOrderFront(self)
@@ -467,7 +468,11 @@ extension WiFiConfigWindow {
             gridView.row(at: .usernameRow).isHidden = true
             gridView.row(at: .passwordRow).isHidden = false
             gridView.row(at: .showPassRow).isHidden = false
-            passwdSecureBox.becomeFirstResponder()
+            if networkBox.isHidden || !networkBox.stringValue.isEmpty {
+                passwdSecureBox.becomeFirstResponder()
+            } else {
+                networkBox.becomeFirstResponder()
+            }
         case .wpa_1_2_Enterprise,
              .wpa_2_3_Enterprise,
              .wpa2Enterprise,
@@ -479,6 +484,7 @@ extension WiFiConfigWindow {
         default:
             let alert = NSAlert()
             alert.messageText = .encryptionUnsupported
+            alert.informativeText = networkInfo?.auth.security.description ?? ""
             alert.alertStyle = .critical
             alert.runModal()
             return
