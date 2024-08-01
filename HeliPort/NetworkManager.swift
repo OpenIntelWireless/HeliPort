@@ -39,7 +39,7 @@ final class NetworkManager {
 
         let getAuthInfoCallback: (_ auth: NetworkAuth, _ savePassword: Bool) -> Void = { auth, savePassword in
             DispatchQueue.global(qos: .background).async {
-                StatusBarIcon.connecting()
+                StatusBarIcon.shared().connecting()
                 let result = connect_network(networkInfo.ssid, auth.password)
                 DispatchQueue.main.async {
                     if result {

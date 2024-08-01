@@ -15,6 +15,9 @@
 		13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */; };
 		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
+		505EC11D2C5BD89400F4E4EA /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */; };
+		505EC11F2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */; };
+		505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */; };
 		5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5088F70726BEA46F009E3A15 /* KextInfo.swift */; };
 		50B86ABA24B22E9B008E4FE4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50B86AB824B22E9B008E4FE4 /* Localizable.strings */; };
 		50C5F2D027C23074009E3F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2CF27C23074009E3F68 /* KeychainAccess */; };
@@ -28,7 +31,6 @@
 		75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkManager.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
 		BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */; };
-		BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */; };
 		BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */; };
 		BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EC2424D2BF00E23603 /* Assets.xcassets */; };
 		BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EE2424D2BF00E23603 /* MainMenu.xib */; };
@@ -70,6 +72,9 @@
 		2181E9B524C24FF600E3C73D /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
+		505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconLegacy.swift; sourceTree = "<group>"; };
+		505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconModern.swift; sourceTree = "<group>"; };
 		5088F70726BEA46F009E3A15 /* KextInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KextInfo.swift; sourceTree = "<group>"; };
 		50B86AB924B22E9B008E4FE4 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50B86ABC24B22F75008E4FE4 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -90,7 +95,6 @@
 		A6B1F45424B9C60A00EBBE79 /* vi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemView.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
 		BCFA32E72424D2BE00E23603 /* HeliPort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeliPort.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCFA32EC2424D2BF00E23603 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -145,6 +149,16 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		505EC11B2C5BD85300F4E4EA /* StatusBarIcon */ = {
+			isa = PBXGroup;
+			children = (
+				505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */,
+				505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */,
+				505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */,
+			);
+			path = StatusBarIcon;
+			sourceTree = "<group>";
+		};
 		50F4959E24BDEB6500AE4C08 /* HeliPort Launcher */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,9 +172,9 @@
 		BCF712FA243C9EB100BE3C05 /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
+				505EC11B2C5BD85300F4E4EA /* StatusBarIcon */,
 				50B86AB824B22E9B008E4FE4 /* Localizable.strings */,
 				BCFA32EE2424D2BF00E23603 /* MainMenu.xib */,
-				BCF712F8243C8BE800BE3C05 /* StatusBarIconManager.swift */,
 				BCA4DFAC243A307B002A862A /* StatusMenu.swift */,
 				BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */,
 				13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */,
@@ -400,12 +414,13 @@
 				F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */,
 				F33A1F3F24C8347F008ED2BD /* NSLocalizedString+Extensions.swift in Sources */,
 				F379277124A0A52E0087FF2B /* Log.swift in Sources */,
+				505EC11F2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift in Sources */,
 				F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */,
-				BCF712F9243C8BE800BE3C05 /* StatusBarIconManager.swift in Sources */,
 				F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */,
 				F3915F0724AB1A1B00E6614D /* itl_80211_state+Extensions.swift in Sources */,
 				5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */,
 				F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */,
+				505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
 				1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */,
@@ -415,6 +430,7 @@
 				138D3CC824CE635800793AC1 /* Commands.swift in Sources */,
 				13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */,
 				13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */,
+				505EC11D2C5BD89400F4E4EA /* StatusBarIconManager.swift in Sources */,
 				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,

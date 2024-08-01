@@ -115,7 +115,7 @@ class WifiMenuItemView: NSView {
         willSet(networkInfo) {
             ssidLabel.stringValue = networkInfo.ssid
             lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
-            signalImage.image = StatusBarIcon.getRssiImage(Int16(networkInfo.rssi))
+            signalImage.image = StatusBarIcon.shared().getRssiImage(rssi: Int16(networkInfo.rssi))
             layoutSubtreeIfNeeded()
         }
     }

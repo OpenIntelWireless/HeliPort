@@ -23,11 +23,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         checkAPI()
 
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusBar.button?.image = #imageLiteral(resourceName: "WiFiStateOff")
-        statusBar.button?.image?.isTemplate = true
-        statusBar.menu = StatusMenu()
 
-        StatusBarIcon.statusBar = statusBar
+        let iconProvider: StatusBarIconProvider = {
+            if #available(macOS 11, *) {
+                return StatusBarIconModern()
+            }
+            return StatusBarIconLegacy()
+        }()
+        _ = StatusBarIcon.shared(statusBar: statusBar, icons: iconProvider)
+
+        statusBar.menu = StatusMenu()
     }
 
     private var drv_info = ioctl_driver_info()

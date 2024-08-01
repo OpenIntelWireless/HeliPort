@@ -43,17 +43,17 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
 
             switch status {
             case ITL80211_S_INIT:
-                StatusBarIcon.disconnected()
+                StatusBarIcon.shared().disconnected()
             case ITL80211_S_AUTH, ITL80211_S_ASSOC:
-                StatusBarIcon.connecting()
+                StatusBarIcon.shared().connecting()
             case ITL80211_S_RUN:
                 DispatchQueue.global(qos: .background).async {
                     let isReachable = NetworkManager.isReachable()
                     var staInfo = station_info_t()
                     get_station_info(&staInfo)
                     DispatchQueue.main.async {
-                        guard isReachable else { StatusBarIcon.warning(); return }
-                        StatusBarIcon.signalStrength(rssi: staInfo.rssi)
+                        guard isReachable else { StatusBarIcon.shared().warning(); return }
+                        StatusBarIcon.shared().signalStrength(rssi: staInfo.rssi)
                     }
                 }
             case ITL80211_S_SCAN:
@@ -62,9 +62,9 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                  * will never change to ITL80211_S_SCAN unless users manually disassociate.
                  * Set the icon to disconnected here so it displays correctly when users manually disassociate.
                  */
-                StatusBarIcon.disconnected()
+                StatusBarIcon.shared().disconnected()
             default:
-                StatusBarIcon.error()
+                StatusBarIcon.shared().error()
             }
         }
     }
@@ -159,7 +159,7 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             statusItem.title = newState ? .wifiOn : .wifiOff
             switchItem.title = newState ? .turnWiFiOff : .turnWiFiOn
             if newState != isNetworkCardEnabled {
-                newState ? StatusBarIcon.on() : StatusBarIcon.off()
+                newState ? StatusBarIcon.shared().on() : StatusBarIcon.shared().off()
                 self.isNetworkListEmpty = true
             }
         }

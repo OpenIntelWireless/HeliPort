@@ -60,4 +60,5 @@ We desperately need contributors to help us improve this project, any help will 
 - [@igorkulman](https://github.com/igorkulman) for code refactoring, password management and more
 - [@zxystd](https://github.com/zxystd) for writing [itlwm](https://github.com/OpenIntelWireless/itlwm) and APIs
 - [Everyone](https://github.com/OpenIntelWireless/HeliPort/pulls?q=is%3Apr+label%3Adocumentation+is%3Aclosed) who contributed to localization files
-- All WiFi icons are from <https://icons8.com/>
+- Legacy WiFi icons are from <https://icons8.com/>
+- Modern WiFi icons are from <https://github.com/framework7io/framework7-icons> (MIT License)
