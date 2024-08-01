@@ -129,7 +129,7 @@ jobs:
         PART5='</li>'
         CHANGELOG="$(git log -"$(git rev-list --count $(git rev-list -1 "$(git tag -l | grep -v 'alpha' | tail -1)")..HEAD)" --format="${PART1}%H${PART2}%H${PART3}%h${PART4}%s${PART5}" | cat)"
 
-        SPARKLE_BIN='./build/SourcePackages/artifacts/Sparkle/bin'
+        SPARKLE_BIN='./build/SourcePackages/artifacts/sparkle/Sparkle/bin'
         PUBDATE="$(date +"%a, %d %b %Y %T %z")"
         APPCAST=(
             '<?xml version="1.0" standalone="yes"?>'
