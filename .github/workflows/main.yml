@@ -21,7 +21,9 @@ jobs:
           ${{ runner.os }}-spm-
 
     - name: Install Dependencies
-      run: brew install create-dmg swiftlint
+      run: |
+        brew install create-dmg swiftlint
+        python -m pip install pycountry
       env:
         HOMEBREW_NO_INSTALL_CLEANUP: 1
         HOMEBREW_NO_AUTO_UPDATE: 1
@@ -51,6 +53,54 @@ jobs:
 
     - name: Lint
       run: swiftlint lint --reporter github-actions-logging
+
+    - name: i18n Stats
+      run: |
+        import os, sys, json
+        from pycountry import languages
+        from collections import defaultdict
+
+        def get_lang_name(code):
+            if '-' in code:
+                code = code.split('-')[0]
+            lang = languages.get(alpha_2=code)
+            return lang.name if lang else code
+
+        def write_stats(file_path):
+            with open(file_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+
+            if data["version"] != "1.0":
+                raise ValueError(f"Unsupported version: {data['version']}")
+
+            strings = data["strings"]
+            localizations = defaultdict(int)
+
+            for string in strings.values():
+                for lang_code in string["localizations"].keys():
+                    localizations[lang_code] += 1
+
+            summary = ["## i18n Stats", "",
+                      "| Language | Code | Completion |",
+                      "| :-- | :-- | --: |"]
+
+            for lang_code, count in localizations.items():
+                summary.append(f"| {get_lang_name(lang_code)} | {lang_code} | {(count / len(strings) * 100):.2f}% |")
+
+            summary.extend(["",
+                            f"- **Total Languages**: {len(localizations)}",
+                            f"- **Total Strings**: {len(strings)}"])
+
+            with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+                f.write('\n'.join(summary) + '\n')
+
+        try:
+            write_stats("HeliPort/Appearance/Localizable.xcstrings")
+        except Exception as e:
+            print(f"::error::{str(e)}")
+            sys.exit(1)
+
+      shell: python
 
     - name: Debug Build
       if: github.event_name != 'workflow_dispatch'
