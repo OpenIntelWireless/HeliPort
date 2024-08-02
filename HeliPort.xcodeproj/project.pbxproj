@@ -72,6 +72,7 @@
 		2181E9B524C24FF600E3C73D /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2A66531D24B6E172002F88EE /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		42979EFF24B3A27200F15FBD /* el */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = el; path = el.lproj/Localizable.strings; sourceTree = "<group>"; };
+		50028B202C5C88460068760B /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
 		505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconLegacy.swift; sourceTree = "<group>"; };
 		505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconModern.swift; sourceTree = "<group>"; };
@@ -80,6 +81,7 @@
 		50B86ABC24B22F75008E4FE4 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		50B86ABD24B22FEE008E4FE4 /* pt-BR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
+		50E83E872C5C86580028B51A /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		50F4959D24BDEB6500AE4C08 /* HeliPort Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HeliPort Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		50F4959F24BDEB6500AE4C08 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -336,6 +338,8 @@
 				"pt-PT",
 				cs,
 				ar,
+				ro,
+				uk,
 			);
 			mainGroup = BCFA32DE2424D2BE00E23603;
 			packageReferences = (
@@ -461,6 +465,8 @@
 				DA4BF11B24BE2C1D00F295C1 /* pt-PT */,
 				2181E9B524C24FF600E3C73D /* cs */,
 				0511882B253635BD00847009 /* ar */,
+				50E83E872C5C86580028B51A /* ro */,
+				50028B202C5C88460068760B /* uk */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
