@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1317990A256986E5006957D8 /* String+NonNullTerminated.swift */; };
+		1317990B256986E5006957D8 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1317990A256986E5006957D8 /* String+Extensions.swift */; };
 		1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */; };
 		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
 		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
@@ -16,6 +16,7 @@
 		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
 		5013B8FB2C5C8C8D002C5006 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */; };
+		5013B8FD2C5DF244002C5006 /* NSApp+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */; };
 		505EC11D2C5BD89400F4E4EA /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */; };
 		505EC11F2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */; };
 		505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */; };
@@ -60,7 +61,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1317990A256986E5006957D8 /* String+NonNullTerminated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+NonNullTerminated.swift"; sourceTree = "<group>"; };
+		1317990A256986E5006957D8 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsSavedNetworksView.swift; sourceTree = "<group>"; };
 		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
 		138D3CC724CE635800793AC1 /* Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiConfigWindow.swift; sourceTree = "<group>"; };
 		13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsGeneralView.swift; sourceTree = "<group>"; };
 		5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSApp+Extensions.swift"; sourceTree = "<group>"; };
 		505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
 		505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconLegacy.swift; sourceTree = "<group>"; };
 		505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconModern.swift; sourceTree = "<group>"; };
@@ -218,9 +220,10 @@
 				F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */,
 				F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */,
 				F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */,
+				5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */,
 				F33A1F3E24C8347F008ED2BD /* NSLocalizedString+Extensions.swift */,
 				F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */,
-				1317990A256986E5006957D8 /* String+NonNullTerminated.swift */,
+				1317990A256986E5006957D8 /* String+Extensions.swift */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -422,7 +425,8 @@
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
 				50E7700F2C5A7CE100DB1160 /* UpdateManager.swift in Sources */,
-				1317990B256986E5006957D8 /* String+NonNullTerminated.swift in Sources */,
+				5013B8FD2C5DF244002C5006 /* NSApp+Extensions.swift in Sources */,
+				1317990B256986E5006957D8 /* String+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

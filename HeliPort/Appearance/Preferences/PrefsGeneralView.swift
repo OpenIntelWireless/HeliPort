@@ -29,6 +29,7 @@ class PrefsGeneralView: NSView {
                                 target: self,
                                 action: #selector(checkboxChanged(_:)))
         checkbox.identifier = .autoUpdateId
+        checkbox.state = UpdateManager.sharedUpdater.automaticallyChecksForUpdates ? .on : .off
         return checkbox
     }()
 
@@ -37,6 +38,29 @@ class PrefsGeneralView: NSView {
                                 target: self,
                                 action: #selector(checkboxChanged(_:)))
         checkbox.identifier = .autoDownloadId
+        checkbox.state = UpdateManager.sharedUpdater.automaticallyDownloadsUpdates ? .on : .off
+        return checkbox
+    }()
+
+    let appearanceLabel: NSTextField = {
+        let view = NSTextField(labelWithString: .appearance)
+        view.alignment = .right
+        return view
+    }()
+
+    lazy var legacyUICheckbox: NSButton = {
+        let checkbox = NSButton(checkboxWithTitle: .useLegacyUI,
+                                target: self,
+                                action: #selector(self.checkboxChanged(_:)))
+        checkbox.identifier = .legacyUIId
+
+        if #available(macOS 11, *) {
+            checkbox.state = UserDefaults.standard.bool(forKey: .DefaultsKey.legacyUI) ? .on : .off
+        } else {
+            checkbox.state = .on
+            checkbox.isEnabled = false
+        }
+
         return checkbox
     }()
 
@@ -53,13 +77,10 @@ class PrefsGeneralView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
 
-        autoUpdateCheckbox.target = self
-        autoDownloadCheckbox.target = self
         gridView.addRow(with: [updatesLabel])
         gridView.addColumn(with: [autoUpdateCheckbox, autoDownloadCheckbox])
-
-        autoUpdateCheckbox.state = UpdateManager.sharedUpdater.automaticallyChecksForUpdates ? .on : .off
-        autoDownloadCheckbox.state = UpdateManager.sharedUpdater.automaticallyDownloadsUpdates ? .on : .off
+        let appearanceRow = gridView.addRow(with: [appearanceLabel, legacyUICheckbox])
+        appearanceRow.topPadding = 5
 
         addSubview(gridView)
         setupConstraints()
@@ -90,6 +111,17 @@ extension PrefsGeneralView {
             UpdateManager.sharedUpdater.automaticallyChecksForUpdates = sender.state == .on
         case .autoDownloadId:
             UpdateManager.sharedUpdater.automaticallyDownloadsUpdates = sender.state == .on
+        case .legacyUIId:
+            if #available(macOS 11, *) {
+                UserDefaults.standard.set(sender.state == .on, forKey: .DefaultsKey.legacyUI)
+                let alert = CriticalAlert(message: .heliportRestart,
+                                          informativeText: .restartInfoText,
+                                          options: [.restart, .later])
+
+                if alert.show() == .alertFirstButtonReturn {
+                    NSApp.restartApp()
+                }
+            }
         default:
             break
         }
@@ -99,10 +131,21 @@ extension PrefsGeneralView {
 private extension NSUserInterfaceItemIdentifier {
     static let autoUpdateId = NSUserInterfaceItemIdentifier(rawValue: "AutoUpdateCheckbox")
     static let autoDownloadId = NSUserInterfaceItemIdentifier(rawValue: "AutoDownloadCheckbox")
+
+    static let legacyUIId = NSUserInterfaceItemIdentifier(rawValue: "legacyUICheckbox")
 }
 
 private extension String {
     static let startup = NSLocalizedString("Updates:")
     static let autoCheckUpdate = NSLocalizedString("Automatically check for updates.")
     static let autoDownload = NSLocalizedString("Automatically download new updates.")
+
+    static let appearance = NSLocalizedString("Appearance:")
+    static let useLegacyUI = NSLocalizedString("Use Legacy UI")
+
+    static let heliportRestart = NSLocalizedString("HeliPort Restart Required")
+    static let restartInfoText =
+        NSLocalizedString("Switching appearance requires a restart of the application to take effect.")
+    static let restart = NSLocalizedString("Restart")
+    static let later = NSLocalizedString("Later")
 }

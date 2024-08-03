@@ -24,8 +24,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let statusBar = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
+        let legacyUIEnabled = {
+            if #unavailable(macOS 11) {
+                return true
+            }
+            return UserDefaults.standard.bool(forKey: .DefaultsKey.legacyUI)
+        }()
+
+        Log.debug("UI appearance: \(legacyUIEnabled ? "legacy" : "modern")")
+
         let iconProvider: StatusBarIconProvider = {
-            if #available(macOS 11, *) {
+            if #available(macOS 11, *), !legacyUIEnabled {
                 return StatusBarIconModern()
             }
             return StatusBarIconLegacy()

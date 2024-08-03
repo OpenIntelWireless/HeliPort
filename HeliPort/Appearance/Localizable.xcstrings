@@ -1987,6 +1987,17 @@
         }
       }
     },
+    "Appearance:" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外观:"
+          }
+        }
+      }
+    },
     "Auto Join" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3965,6 +3976,17 @@
         }
       }
     },
+    "HeliPort Restart Required" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HeliPort 需要重启"
+          }
+        }
+      }
+    },
     "HeliPort running at an unexpected path" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4662,6 +4684,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加入其他网络..."
+          }
+        }
+      }
+    },
+    "Later" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "稍后"
           }
         }
       }
@@ -6530,6 +6563,17 @@
         }
       }
     },
+    "Restart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重启"
+          }
+        }
+      }
+    },
     "Saved Networks:" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -6942,6 +6986,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示密码"
+          }
+        }
+      }
+    },
+    "Switching appearance requires a restart of the application to take effect." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换外观需要重新启动应用程序才能生效。"
           }
         }
       }
@@ -7607,6 +7662,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更新："
+          }
+        }
+      }
+    },
+    "Use Legacy UI" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用传统界面"
           }
         }
       }

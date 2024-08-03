@@ -16,6 +16,10 @@
 import Foundation
 
 public extension String {
+    enum DefaultsKey {
+        static let legacyUI = "legacyUIEnabled"
+    }
+
     static func getSSIDFromCString(cString: UnsafePointer<CUnsignedChar>) -> String {
         var string = String(cString: cString)
         // Fixes memory leak, see https://stackoverflow.com/a/37584615
@@ -36,9 +40,7 @@ public extension String {
         }
         return string
     }
-}
 
-public extension String {
     init<T>(cCharArray: T) {
         self = withUnsafeBytes(of: cCharArray) {
             $0.withMemoryRebound(to: CChar.self) { String(cString: $0.baseAddress!)}
