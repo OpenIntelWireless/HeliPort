@@ -1,5 +1,5 @@
 //
-//  WiFiMenuItemView.swift
+//  WiFiMenuItemViewLegacy.swift
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/4/3.
@@ -13,32 +13,11 @@
  * https://opensource.org/licenses/BSD-3-Clause
  */
 
-import Foundation
 import Cocoa
 
-class WifiMenuItemView: NSView {
+class WifiMenuItemViewLegacy: SelectableMenuItemView, WifiMenuItemView {
 
     // MARK: Initializers
-
-    private var currentWindow: NSWindow?
-    private var heightConstraint: NSLayoutConstraint!
-
-    private let menuBarHeight: CGFloat = {
-        if #available(macOS 11, *) {
-            return 22
-        } else {
-            return 19
-        }
-    }()
-
-    private let effectView: NSVisualEffectView = {
-        let effectView = NSVisualEffectView()
-        effectView.material = .popover
-        effectView.state = .active
-        effectView.isEmphasized = true
-        effectView.blendingMode = .behindWindow
-        return effectView
-    }()
 
     private let statusImage: NSImageView = {
         let statusImage = NSImageView()
@@ -91,18 +70,27 @@ class WifiMenuItemView: NSView {
         return ssidLabel
     }()
 
-    public init(networkInfo: NetworkInfo) {
+    init(networkInfo: NetworkInfo) {
         self.networkInfo = networkInfo
-        super.init(frame: .zero)
-        translatesAutoresizingMaskIntoConstraints = false
+        let height: NSMenuItem.ItemHeight = {
+            if #available(macOS 11, *) {
+                return .textModern
+            }
+            return .textLegacy
+        }()
+        super.init(height: height, hoverStyle: .selection)
 
-        self.addSubview(effectView)
-        effectView.addSubview(statusImage)
-        effectView.addSubview(ssidLabel)
-        effectView.addSubview(lockImage)
-        effectView.addSubview(signalImage)
+        addSubview(statusImage)
+        addSubview(ssidLabel)
+        addSubview(lockImage)
+        addSubview(signalImage)
 
         setupLayout()
+
+        // willSet/didSet will not be called during initialization
+        defer {
+            self.networkInfo = networkInfo
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -114,17 +102,10 @@ class WifiMenuItemView: NSView {
     public var networkInfo: NetworkInfo {
         willSet(networkInfo) {
             ssidLabel.stringValue = networkInfo.ssid
-            lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
-            signalImage.image = StatusBarIcon.shared().getRssiImage(rssi: Int16(networkInfo.rssi))
             layoutSubtreeIfNeeded()
         }
-    }
-
-    public var visible: Bool = true {
-        willSet(visible) {
-            isHidden = !visible
-            heightConstraint.constant = visible ? menuBarHeight : 0
-            layoutSubtreeIfNeeded()
+        didSet {
+            updateImages()
         }
     }
 
@@ -134,18 +115,16 @@ class WifiMenuItemView: NSView {
         }
     }
 
-    public func checkHighlight() {
-        if visible, let position = currentWindow?.mouseLocationOutsideOfEventStream {
-            isMouseOver = bounds.contains(convert(position, from: nil))
-        }
+    public func updateImages() {
+        signalImage.image = StatusBarIcon.shared().getRssiImage(rssi: Int16(networkInfo.rssi))
+        lockImage.isHidden = networkInfo.auth.security == ITL80211_SECURITY_NONE
     }
 
-    // MARK: Private
+    // MARK: Overrides
 
-    private var isMouseOver: Bool = false {
+    override var isMouseOver: Bool {
         willSet(hover) {
-            effectView.material = hover ? .selection : .popover
-            effectView.isEmphasized = hover
+            super.isMouseOver = hover
 
             ssidLabel.textColor = hover ? .selectedMenuItemTextColor : .controlTextColor
 
@@ -155,30 +134,16 @@ class WifiMenuItemView: NSView {
         }
     }
 
-    private func setupLayout() {
+    override func setupLayout() {
+        super.setupLayout()
 
-        let effectPadding: CGFloat
-        let statusPadding: CGFloat
-        let statusWidth: CGFloat
-        let lockWidth: CGFloat
-        if #available(macOS 11, *) {
-            effectView.wantsLayer = true
-            effectView.layer?.cornerRadius = 4
-            effectView.layer?.masksToBounds = true
-            effectPadding = 5
-            statusPadding = 10
-            statusWidth = 15
-            lockWidth = 16
-        } else {
-            effectPadding = 0
-            statusPadding = 6
-            statusWidth = 12
-            lockWidth = 10
-        }
-
-        heightConstraint = heightAnchor.constraint(equalToConstant: menuBarHeight)
-        heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
-        heightConstraint.isActive = true
+        let (statusPadding, statusWidth, lockWidth): (CGFloat, CGFloat, CGFloat) = {
+            if #available(macOS 11, *) {
+                return (10, 15, 16)
+            } else {
+                return (6, 12, 10)
+            }
+        }()
 
         statusImage.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         statusImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: statusPadding).isActive = true
@@ -195,46 +160,17 @@ class WifiMenuItemView: NSView {
         signalImage.leadingAnchor.constraint(equalTo: lockImage.trailingAnchor, constant: 12).isActive = true
         signalImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12).isActive = true
         signalImage.widthAnchor.constraint(equalToConstant: 18).isActive = true
-
-        effectView.translatesAutoresizingMaskIntoConstraints = false
-        effectView.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        effectView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: effectPadding).isActive = true
-        effectView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -effectPadding).isActive = true
-        effectView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        effectView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
 
-    // MARK: Overrides
-
-    override func mouseUp(with event: NSEvent) {
-        isMouseOver = false // NSWindow pop up could escape mouseExit
-        enclosingMenuItem?.menu?.cancelTracking()
+    override func performMenuItemAction() {
         if !connected {
             NetworkManager.connect(networkInfo: networkInfo, saveNetwork: true)
         }
-    }
 
-    override func viewWillMove(toWindow newWindow: NSWindow?) {
-        // Fix mouseUp event after losing focus
-        // https://stackoverflow.com/questions/15075033/weird-issue-with-nsmenuitem-custom-view-and-mouseup
-        super.viewWillMove(toWindow: newWindow)
-        newWindow?.becomeKey()
-        currentWindow = newWindow
-    }
+        isMouseOver = false // NSWindow pop up could escape mouseExit
 
-    override func draw(_ rect: NSRect) {
-        checkHighlight()
-    }
-
-    override func layout() {
-        super.layout()
-        if #available(macOS 11, *) {
-            effectView.frame = CGRect(x: 5,                     // effectPadding
-                                      y: 0,
-                                      width: bounds.width - 10, // effectPadding * 2
-                                      height: bounds.height)
-        } else {
-            effectView.frame = bounds
-        }
+        guard let menuItem = enclosingMenuItem, let menu = menuItem.menu else { return }
+        menu.cancelTracking()
+        menu.performActionForItem(at: menu.index(of: menuItem))
     }
 }

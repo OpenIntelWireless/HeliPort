@@ -41,7 +41,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }()
         _ = StatusBarIcon.shared(statusBar: statusBar, icons: iconProvider)
 
-        statusBar.menu = StatusMenu()
+        if #available(macOS 11, *), !legacyUIEnabled {
+            statusBar.menu = StatusMenuModern()
+        } else {
+            statusBar.menu = StatusMenuLegacy()
+        }
     }
 
     private var drv_info = ioctl_driver_info()

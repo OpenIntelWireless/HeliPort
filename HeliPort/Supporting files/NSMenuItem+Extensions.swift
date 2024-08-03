@@ -17,6 +17,12 @@ import Foundation
 import Cocoa
 
 extension NSMenuItem {
+    enum ItemHeight: CGFloat {
+        case textLegacy = 19
+        case textModern = 22
+        case networkModern = 32
+    }
+
     convenience init(title: String) {
         self.init(title: title, action: nil, keyEquivalent: "")
     }
