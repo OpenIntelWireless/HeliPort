@@ -1990,6 +1990,12 @@
     "Appearance:" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aparência"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3979,6 +3985,12 @@
     "HeliPort Restart Required" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicialização do Heliport Necessária"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4691,6 +4703,12 @@
     "Known Network" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rede Conhecida"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4702,6 +4720,12 @@
     "Known Networks" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redes Conhecidas"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4713,6 +4737,12 @@
     "Later" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais Tarde"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5863,6 +5893,12 @@
     "Other Networks" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outras Redes"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5874,6 +5910,12 @@
     "Other..." : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Outra…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6610,6 +6652,12 @@
     "Restart" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7037,6 +7085,12 @@
     "Switching appearance requires a restart of the application to take effect." : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração na aparência exige que o aplicativo seja reiniciado para que a mudança tenha efeito."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7713,6 +7767,12 @@
     "Use Legacy UI" : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar Interface Antiga"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8603,6 +8663,12 @@
     "Wi-Fi Settings..." : {
       "extractionState" : "manual",
       "localizations" : {
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de Wi-Fi…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
