@@ -21,7 +21,7 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
     // - MARK: Menu items
 
     private lazy var statusItem: NSMenuItem = {
-        let item = NSMenuItem()
+        let item = HPMenuItem()
         let view = StateSwitchMenuItemView(title: .Modern.wifi) { sender in
             _ = sender.state == .on ? power_on() : power_off()
         }
@@ -30,13 +30,13 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
     }()
 
     private let knownSectionItem: NSMenuItem = {
-        let item = NSMenuItem()
+        let item = HPMenuItem()
         item.view = SectionMenuItemView(title: .Modern.knownNetwork)
         return item
     }()
 
     private lazy var otherSectionItem: NSMenuItem = {
-        let item = SelectableMenuItem()
+        let item = HPMenuItem(highlightable: true)
         item.isHidden = true
         item.view = SectionMenuItemView(title: .Modern.otherNetworks) { expand in
             self.otherNetworkItemList.filter { $0.isEnabled }
@@ -46,8 +46,8 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         return item
     }()
 
-    private let manuallyJoinItem = NSMenuItem(title: .Modern.joinNetworks)
-    private let networkPanelItem = NSMenuItem(title: .Modern.wifiSettings)
+    private let manuallyJoinItem = HPMenuItem(title: .Modern.joinNetworks)
+    private let networkPanelItem = HPMenuItem(title: .Modern.wifiSettings)
 
     lazy var enabledNetworkCardItems: [NSMenuItem] = []
 
@@ -257,7 +257,9 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         super.addClickItem(item)
     }
 
-    override func addNetworkItem(_ item: NSMenuItem = SelectableMenuItem(), insertAt: Int? = nil, hidden: Bool = false,
+    override func addNetworkItem(_ item: NSMenuItem = HPMenuItem(highlightable: true),
+                                 insertAt: Int? = nil,
+                                 hidden: Bool = false,
                                  networkInfo: NetworkInfo = NetworkInfo(ssid: "placeholder")) -> NSMenuItem {
         item.view = WifiMenuItemViewModern(networkInfo: networkInfo)
         return super.addNetworkItem(item, insertAt: insertAt, hidden: hidden, networkInfo: networkInfo)

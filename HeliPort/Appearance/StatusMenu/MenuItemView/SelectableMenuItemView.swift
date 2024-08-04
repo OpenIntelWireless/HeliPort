@@ -15,13 +15,7 @@
 
 import Cocoa
 
-class SelectableMenuItem: NSMenuItem {
-    override func _canBeHighlighted() -> Bool {
-        return true
-    }
-}
-
-class SelectableMenuItemView: NSView {
+class SelectableMenuItemView: HidableMenuItemView {
 
     private class HoverView: NSView {
         override func draw(_ dirtyRect: NSRect) {
@@ -34,8 +28,6 @@ class SelectableMenuItemView: NSView {
     // MARK: Initializers
 
     private var currentWindow: NSWindow?
-    private var heightConstraint: NSLayoutConstraint!
-
     private let effectView: NSView?
 
     private let effectPadding: CGFloat = {
@@ -45,10 +37,7 @@ class SelectableMenuItemView: NSView {
         return 0
     }()
 
-    private let height: CGFloat
-
     init(height: NSMenuItem.ItemHeight, hoverStyle: HoverStyle) {
-        self.height = height.rawValue
         switch hoverStyle {
         case .none:
             effectView = nil
@@ -64,7 +53,7 @@ class SelectableMenuItemView: NSView {
             effectView = view
         }
 
-        super.init(frame: .zero)
+        super.init(height: height)
         if let view = effectView { self.addSubview(view) }
     }
 
@@ -74,19 +63,17 @@ class SelectableMenuItemView: NSView {
 
     // MARK: Public
 
-    public enum HoverStyle {
+    enum HoverStyle {
         case none
         case selection
         case greytint
     }
 
-    public func checkHighlight() {
+    func checkHighlight() {
         if effectView != nil, let position = currentWindow?.mouseLocationOutsideOfEventStream {
             isMouseOver = bounds.contains(convert(position, from: nil))
         }
     }
-
-    // MARK: Internal
 
     var isMouseOver: Bool = false {
         willSet(hover) {
@@ -107,10 +94,6 @@ class SelectableMenuItemView: NSView {
             effectView?.layer?.cornerRadius = 4
             effectView?.layer?.masksToBounds = true
         }
-
-        heightConstraint = heightAnchor.constraint(equalToConstant: self.height)
-        heightConstraint.priority = NSLayoutConstraint.Priority(rawValue: 1000)
-        heightConstraint.isActive = true
 
         effectView?.translatesAutoresizingMaskIntoConstraints = false
         effectView?.subviews.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }

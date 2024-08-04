@@ -15,7 +15,7 @@
 
 import Cocoa
 
-class KeyValueMenuItemView: NSView {
+class KeyValueMenuItemView: HidableMenuItemView {
 
     enum Inset: CGFloat {
         case standard = 14
@@ -34,7 +34,14 @@ class KeyValueMenuItemView: NSView {
         valueLabel.font = NSFont.systemFont(ofSize: 12, weight: .regular)
         valueLabel.textColor = .secondaryLabelColor
 
-        super.init(frame: .zero)
+        let height = {
+            if #available(macOS 11, *) {
+                return NSMenuItem.ItemHeight.textModern
+            }
+            return NSMenuItem.ItemHeight.textLegacy
+        }()
+
+        super.init(height: height)
         addSubview(keyLabel)
         addSubview(valueLabel)
 
@@ -45,15 +52,7 @@ class KeyValueMenuItemView: NSView {
         keyLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         valueLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        let height = {
-            if #available(macOS 11, *) {
-                return NSMenuItem.ItemHeight.textModern
-            }
-            return NSMenuItem.ItemHeight.textLegacy
-        }()
-
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: height.rawValue),
             keyLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             keyLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.rawValue),
             valueLabel.centerYAnchor.constraint(equalTo: centerYAnchor),

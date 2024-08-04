@@ -132,47 +132,47 @@ class StatusMenuBase: NSMenu, NSMenuDelegate {
 
     // - MARK: Common Menu items
 
-    let bsdItem = NSMenuItem(title: .interfaceName)
-    let macItem = NSMenuItem(title: .macAddress)
-    let itlwmVerItem = NSMenuItem(title: .itlwmVer)
+    let bsdItem = HPMenuItem(title: .interfaceName)
+    let macItem = HPMenuItem(title: .macAddress)
+    let itlwmVerItem = HPMenuItem(title: .itlwmVer)
 
-    let enableLoggingItem = NSMenuItem(title: .enableWiFiLog)
-    let createReportItem = NSMenuItem(title: .createReport)
-    let diagnoseItem = NSMenuItem(title: .openDiagnostics)
+    let enableLoggingItem = HPMenuItem(title: .enableWiFiLog)
+    let createReportItem = HPMenuItem(title: .createReport)
+    let diagnoseItem = HPMenuItem(title: .openDiagnostics)
     let hardwareInfoSeparator = NSMenuItem.separator()
 
     let networkItemListSeparator = NSMenuItem.separator()
 
-    let aboutItem = NSMenuItem(title: .aboutHeliport)
+    let aboutItem = HPMenuItem(title: .aboutHeliport)
     let checkUpdateItem = {
-         let item = NSMenuItem(title: .checkUpdates)
+         let item = HPMenuItem(title: .checkUpdates)
          item.target = UpdateManager.sharedController
          item.action = #selector(SPUStandardUpdaterController.checkForUpdates(_:))
          return item
      }()
     let quitSeparator = NSMenuItem.separator()
-    let quitItem = NSMenuItem(title: .quitHeliport,
+    let quitItem = HPMenuItem(title: .quitHeliport,
                               action: #selector(clickMenuItem(_:)), keyEquivalent: "q")
 
-    let toggleLaunchItem = NSMenuItem(title: .launchLogin,
+    let toggleLaunchItem = HPMenuItem(title: .launchLogin,
                                       action: #selector(clickMenuItem(_:)))
 
     // MARK: - WiFi connected items
 
-    let currentNetworkItem = SelectableMenuItem()
-    let ipAddresssItem = NSMenuItem(title: .ipAddr)
-    let routerItem = NSMenuItem(title: .routerStr)
-    let internetItem = NSMenuItem(title: .internetStr)
-    let securityItem = NSMenuItem(title: .securityStr)
-    let bssidItem = NSMenuItem(title: .bssidStr)
-    let channelItem = NSMenuItem(title: .channelStr)
-    let countryCodeItem = NSMenuItem(title: .countryCodeStr)
-    let rssiItem = NSMenuItem(title: .rssiStr)
-    let noiseItem = NSMenuItem(title: .noiseStr)
-    let txRateItem = NSMenuItem(title: .txRateStr)
-    let phyModeItem = NSMenuItem(title: .phyModeStr)
-    let mcsIndexItem = NSMenuItem(title: .mcsStr)
-    let nssItem = NSMenuItem(title: .nssStr)
+    let currentNetworkItem = HPMenuItem(highlightable: true)
+    let ipAddresssItem = HPMenuItem(title: .ipAddr)
+    let routerItem = HPMenuItem(title: .routerStr)
+    let internetItem = HPMenuItem(title: .internetStr)
+    let securityItem = HPMenuItem(title: .securityStr)
+    let bssidItem = HPMenuItem(title: .bssidStr)
+    let channelItem = HPMenuItem(title: .channelStr)
+    let countryCodeItem = HPMenuItem(title: .countryCodeStr)
+    let rssiItem = HPMenuItem(title: .rssiStr)
+    let noiseItem = HPMenuItem(title: .noiseStr)
+    let txRateItem = HPMenuItem(title: .txRateStr)
+    let phyModeItem = HPMenuItem(title: .phyModeStr)
+    let mcsIndexItem = HPMenuItem(title: .mcsStr)
+    let nssItem = HPMenuItem(title: .nssStr)
 
     // - MARK: Init
 
@@ -245,7 +245,9 @@ class StatusMenuBase: NSMenu, NSMenuDelegate {
         addItem(item)
     }
 
-    func addNetworkItem(_ item: NSMenuItem = SelectableMenuItem(), insertAt: Int? = nil, hidden: Bool = false,
+    func addNetworkItem(_ item: NSMenuItem = HPMenuItem(highlightable: true),
+                        insertAt: Int? = nil,
+                        hidden: Bool = false,
                         networkInfo: NetworkInfo = NetworkInfo(ssid: "placeholder")) -> NSMenuItem {
         item.isHidden = hidden
 

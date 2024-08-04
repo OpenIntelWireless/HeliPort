@@ -29,6 +29,8 @@
 		505EC11D2C5BD89400F4E4EA /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */; };
 		505EC11F2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */; };
 		505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */; };
+		50680FCA2C5FDB75008AF10F /* HidableMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50680FC92C5FDB75008AF10F /* HidableMenuItemView.swift */; };
+		5068784E2C5FE16C0046150A /* HPMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5068784D2C5FE16C0046150A /* HPMenuItem.swift */; };
 		5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5088F70726BEA46F009E3A15 /* KextInfo.swift */; };
 		50C5F2D027C23074009E3F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2CF27C23074009E3F68 /* KeychainAccess */; };
 		50C5F2D327C230D6009E3F68 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2D227C230D6009E3F68 /* Sparkle */; };
@@ -93,6 +95,8 @@
 		505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
 		505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconLegacy.swift; sourceTree = "<group>"; };
 		505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconModern.swift; sourceTree = "<group>"; };
+		50680FC92C5FDB75008AF10F /* HidableMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidableMenuItemView.swift; sourceTree = "<group>"; };
+		5068784D2C5FE16C0046150A /* HPMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPMenuItem.swift; sourceTree = "<group>"; };
 		5088F70726BEA46F009E3A15 /* KextInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KextInfo.swift; sourceTree = "<group>"; };
 		50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				5013B9052C5E1ED5002C5006 /* MenuItemView */,
+				5068784D2C5FE16C0046150A /* HPMenuItem.swift */,
 				5013B8FF2C5E1E00002C5006 /* StatusMenuBase.swift */,
 				5013B9012C5E1E36002C5006 /* StatusMenuLegacy.swift */,
 				5013B9032C5E1EA9002C5006 /* StatusMenuModern.swift */,
@@ -169,6 +174,7 @@
 		5013B9052C5E1ED5002C5006 /* MenuItemView */ = {
 			isa = PBXGroup;
 			children = (
+				50680FC92C5FDB75008AF10F /* HidableMenuItemView.swift */,
 				5013B9062C5E1EF2002C5006 /* KeyValueMenuItemView.swift */,
 				5013B9082C5E1FF4002C5006 /* SectionMenuItemView.swift */,
 				5013B90A2C5E2029002C5006 /* SelectableMenuItemView.swift */,
@@ -447,6 +453,7 @@
 				75FDF38C2481D25A00B2A601 /* Api.c in Sources */,
 				F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */,
 				F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */,
+				5068784E2C5FE16C0046150A /* HPMenuItem.swift in Sources */,
 				5013B9102C5E2265002C5006 /* WiFiMenuItemViewLegacy.swift in Sources */,
 				F33A1F3F24C8347F008ED2BD /* NSLocalizedString+Extensions.swift in Sources */,
 				F379277124A0A52E0087FF2B /* Log.swift in Sources */,
@@ -462,6 +469,7 @@
 				5013B9002C5E1E00002C5006 /* StatusMenuBase.swift in Sources */,
 				505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
+				50680FCA2C5FDB75008AF10F /* HidableMenuItemView.swift in Sources */,
 				5013B9072C5E1EF2002C5006 /* KeyValueMenuItemView.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
 				1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */,

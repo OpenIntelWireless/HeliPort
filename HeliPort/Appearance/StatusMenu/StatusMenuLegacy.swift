@@ -198,7 +198,9 @@ final class StatusMenuLegacy: StatusMenuBase, StatusMenuItems {
 
     // - MARK: Overrides
 
-    override func addNetworkItem(_ item: NSMenuItem = SelectableMenuItem(), insertAt: Int? = nil, hidden: Bool = false,
+    override func addNetworkItem(_ item: NSMenuItem = HPMenuItem(highlightable: true),
+                                 insertAt: Int? = nil,
+                                 hidden: Bool = false,
                                  networkInfo: NetworkInfo = NetworkInfo(ssid: "placeholder")) -> NSMenuItem {
         item.view = WifiMenuItemViewLegacy(networkInfo: networkInfo)
 
