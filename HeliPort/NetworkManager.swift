@@ -1,5 +1,5 @@
 //
-//  NetworkInfo.swift
+//  NetworkManager.swift
 //  HeliPort
 //
 //  Created by 梁怀宇 on 2020/3/23.
@@ -14,7 +14,6 @@
  */
 
 import Foundation
-import Cocoa
 import SystemConfiguration
 
 final class NetworkManager {
@@ -78,7 +77,33 @@ final class NetworkManager {
         }
     }
 
-    static func scanNetwork(callback: @escaping (_ networkInfoList: [NetworkInfo]) -> Void) {
+    static func scanNetwork(sortBy areInIncreasingOrder: @escaping (NetworkInfo, NetworkInfo) -> Bool
+                                = { $0.ssid < $1.ssid },
+                            callback: @escaping (_ sortedNetworkInfoList: [NetworkInfo]) -> Void) {
+        scanNetwork { result in
+            callback(result.sorted(by: areInIncreasingOrder))
+        }
+    }
+
+    static func scanNetwork(sortBy areInIncreasingOrder: @escaping (NetworkInfo, NetworkInfo) -> Bool
+                                = { $0.ssid < $1.ssid },
+                            callback: @escaping (_ knownNetworks: [NetworkInfo],
+                                                 _ otherNetworks: [NetworkInfo]) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            let savedSSIDs = CredentialsManager.instance.getSavedNetworkSSIDs()
+            scanNetwork { result in
+                let known = result.filter { savedSSIDs.contains($0.ssid) }
+                let other = result.subtracting(known)
+
+                DispatchQueue.main.async {
+                    callback(known.sorted(by: areInIncreasingOrder),
+                             other.sorted(by: areInIncreasingOrder))
+                }
+            }
+        }
+    }
+
+    private static func scanNetwork(callback: @escaping (_ networkInfoList: Set<NetworkInfo>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             var list = network_info_list_t()
             get_network_list(&list)
@@ -87,10 +112,10 @@ final class NetworkManager {
             let networks = Mirror(reflecting: list.networks).children.map({ $0.value }).prefix(Int(list.count))
 
             for element in networks {
-                guard var network = element as? ioctl_network_info else {
+                guard let network = element as? ioctl_network_info else {
                     continue
                 }
-                let ssid = String.getSSIDFromCString(cString: &network.ssid.0)
+                let ssid = String(ssid: network.ssid)
                 guard !ssid.isEmpty else {
                     continue
                 }
@@ -104,7 +129,7 @@ final class NetworkManager {
             }
 
             DispatchQueue.main.async {
-                callback(Array(result).sorted { $0.ssid < $1.ssid })
+                callback(result)
             }
         }
     }
@@ -116,19 +141,15 @@ final class NetworkManager {
                 Log.debug("No network saved for auto join")
                 return
             }
-            var targetNetworks: [NetworkInfo]?
-            let dispatchSemaphore = DispatchSemaphore(value: 0)
             let scanTimer: Timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
                 NetworkManager.scanNetwork { networkList in
-                    targetNetworks = savedNetworks.filter { networkList.contains($0) }
-                    dispatchSemaphore.signal()
-                }
-                dispatchSemaphore.wait()
-                if targetNetworks != nil, targetNetworks!.count > 0 {
-                    // This will stop the timer completely
-                    timer.invalidate()
-                    Log.debug("Auto join timer stopped")
-                    connectSavedNetworks(networks: targetNetworks!)
+                    let targetNetworks = savedNetworks.filter { networkList.contains($0) }
+                    if targetNetworks.count > 0 {
+                        // This will stop the timer completely
+                        timer.invalidate()
+                        Log.debug("Auto join timer stopped")
+                        connectSavedNetworks(networks: targetNetworks)
+                    }
                 }
             }
             // Start executing code inside the timer immediately

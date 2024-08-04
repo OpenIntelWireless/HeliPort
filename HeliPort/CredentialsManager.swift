@@ -20,8 +20,10 @@ final class CredentialsManager {
     static let instance: CredentialsManager = CredentialsManager()
 
     private let keychain: Keychain
+    private let ssidCache: NSCache = NSCache<NSString, NSSet>()
+    private let ssidCacheKey = NSString("savedSSIDs")
 
-    init() {
+    private init() {
         keychain = Keychain(service: Bundle.main.bundleIdentifier!)
     }
 
@@ -34,6 +36,8 @@ final class CredentialsManager {
         guard let entityJson = try? String(decoding: JSONEncoder().encode(entity), as: UTF8.self) else {
             return
         }
+
+        ssidCache.removeObject(forKey: ssidCacheKey)
 
         Log.debug("Saving password for network \(network.ssid)")
         try? keychain.comment(entityJson).set(networkAuthJson, key: network.keychainKey)
@@ -117,6 +121,15 @@ final class CredentialsManager {
         }.map { entity in
             entity.network
         }
+    }
+
+    func getSavedNetworkSSIDs() -> Set<String> {
+        if let cached = ssidCache.object(forKey: ssidCacheKey) as? Set<String> {
+            return cached
+        }
+        let savedSSIDs = Set(keychain.allKeys())
+        ssidCache.setObject(savedSSIDs as NSSet, forKey: ssidCacheKey)
+        return savedSSIDs
     }
 
     func getSavedNetworksEntity() -> [NetworkInfoStorageEntity] {

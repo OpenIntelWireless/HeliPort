@@ -13,13 +13,24 @@
 		138D3CC824CE635800793AC1 /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC724CE635800793AC1 /* Commands.swift */; };
 		138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC924CE663B00793AC1 /* BugReporter.swift */; };
 		13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */; };
-		13AF73B624B25E170015867C /* StatusMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCA4DFAC243A307B002A862A /* StatusMenu.swift */; };
 		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
 		5013B8FB2C5C8C8D002C5006 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */; };
 		5013B8FD2C5DF244002C5006 /* NSApp+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */; };
+		5013B9002C5E1E00002C5006 /* StatusMenuBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B8FF2C5E1E00002C5006 /* StatusMenuBase.swift */; };
+		5013B9022C5E1E36002C5006 /* StatusMenuLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B9012C5E1E36002C5006 /* StatusMenuLegacy.swift */; };
+		5013B9042C5E1EA9002C5006 /* StatusMenuModern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B9032C5E1EA9002C5006 /* StatusMenuModern.swift */; };
+		5013B9072C5E1EF2002C5006 /* KeyValueMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B9062C5E1EF2002C5006 /* KeyValueMenuItemView.swift */; };
+		5013B9092C5E1FF4002C5006 /* SectionMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B9082C5E1FF4002C5006 /* SectionMenuItemView.swift */; };
+		5013B90B2C5E2029002C5006 /* SelectableMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B90A2C5E2029002C5006 /* SelectableMenuItemView.swift */; };
+		5013B90E2C5E21F5002C5006 /* StateSwitchMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B90D2C5E21F5002C5006 /* StateSwitchMenuItemView.swift */; };
+		5013B9102C5E2265002C5006 /* WiFiMenuItemViewLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B90F2C5E2265002C5006 /* WiFiMenuItemViewLegacy.swift */; };
+		5013B9122C5E22AB002C5006 /* WiFiMenuItemViewModern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B9112C5E22AB002C5006 /* WiFiMenuItemViewModern.swift */; };
+		5013B9142C5E22F2002C5006 /* NSImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B9132C5E22F2002C5006 /* NSImage+Extensions.swift */; };
 		505EC11D2C5BD89400F4E4EA /* StatusBarIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */; };
 		505EC11F2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */; };
 		505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */; };
+		50680FCA2C5FDB75008AF10F /* HidableMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50680FC92C5FDB75008AF10F /* HidableMenuItemView.swift */; };
+		5068784E2C5FE16C0046150A /* HPMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5068784D2C5FE16C0046150A /* HPMenuItem.swift */; };
 		5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5088F70726BEA46F009E3A15 /* KextInfo.swift */; };
 		50C5F2D027C23074009E3F68 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2CF27C23074009E3F68 /* KeychainAccess */; };
 		50C5F2D327C230D6009E3F68 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 50C5F2D227C230D6009E3F68 /* Sparkle */; };
@@ -70,9 +81,22 @@
 		13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsGeneralView.swift; sourceTree = "<group>"; };
 		5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSApp+Extensions.swift"; sourceTree = "<group>"; };
+		5013B8FF2C5E1E00002C5006 /* StatusMenuBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuBase.swift; sourceTree = "<group>"; };
+		5013B9012C5E1E36002C5006 /* StatusMenuLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuLegacy.swift; sourceTree = "<group>"; };
+		5013B9032C5E1EA9002C5006 /* StatusMenuModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuModern.swift; sourceTree = "<group>"; };
+		5013B9062C5E1EF2002C5006 /* KeyValueMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueMenuItemView.swift; sourceTree = "<group>"; };
+		5013B9082C5E1FF4002C5006 /* SectionMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionMenuItemView.swift; sourceTree = "<group>"; };
+		5013B90A2C5E2029002C5006 /* SelectableMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableMenuItemView.swift; sourceTree = "<group>"; };
+		5013B90C2C5E20E1002C5006 /* Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridge.h; sourceTree = "<group>"; };
+		5013B90D2C5E21F5002C5006 /* StateSwitchMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateSwitchMenuItemView.swift; sourceTree = "<group>"; };
+		5013B90F2C5E2265002C5006 /* WiFiMenuItemViewLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemViewLegacy.swift; sourceTree = "<group>"; };
+		5013B9112C5E22AB002C5006 /* WiFiMenuItemViewModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemViewModern.swift; sourceTree = "<group>"; };
+		5013B9132C5E22F2002C5006 /* NSImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Extensions.swift"; sourceTree = "<group>"; };
 		505EC11C2C5BD89400F4E4EA /* StatusBarIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconManager.swift; sourceTree = "<group>"; };
 		505EC11E2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconLegacy.swift; sourceTree = "<group>"; };
 		505EC1202C5BD95700F4E4EA /* StatusBarIconModern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIconModern.swift; sourceTree = "<group>"; };
+		50680FC92C5FDB75008AF10F /* HidableMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HidableMenuItemView.swift; sourceTree = "<group>"; };
+		5068784D2C5FE16C0046150A /* HPMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HPMenuItem.swift; sourceTree = "<group>"; };
 		5088F70726BEA46F009E3A15 /* KextInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KextInfo.swift; sourceTree = "<group>"; };
 		50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateManager.swift; sourceTree = "<group>"; };
 		50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
@@ -83,7 +107,6 @@
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		BCA4DFAC243A307B002A862A /* StatusMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenu.swift; sourceTree = "<group>"; };
 		BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		BCFA32E72424D2BE00E23603 /* HeliPort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeliPort.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +159,33 @@
 			path = Preferences;
 			sourceTree = "<group>";
 		};
+		5013B8FE2C5E1B56002C5006 /* StatusMenu */ = {
+			isa = PBXGroup;
+			children = (
+				5013B9052C5E1ED5002C5006 /* MenuItemView */,
+				5068784D2C5FE16C0046150A /* HPMenuItem.swift */,
+				5013B8FF2C5E1E00002C5006 /* StatusMenuBase.swift */,
+				5013B9012C5E1E36002C5006 /* StatusMenuLegacy.swift */,
+				5013B9032C5E1EA9002C5006 /* StatusMenuModern.swift */,
+			);
+			path = StatusMenu;
+			sourceTree = "<group>";
+		};
+		5013B9052C5E1ED5002C5006 /* MenuItemView */ = {
+			isa = PBXGroup;
+			children = (
+				50680FC92C5FDB75008AF10F /* HidableMenuItemView.swift */,
+				5013B9062C5E1EF2002C5006 /* KeyValueMenuItemView.swift */,
+				5013B9082C5E1FF4002C5006 /* SectionMenuItemView.swift */,
+				5013B90A2C5E2029002C5006 /* SelectableMenuItemView.swift */,
+				5013B90D2C5E21F5002C5006 /* StateSwitchMenuItemView.swift */,
+				BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */,
+				5013B90F2C5E2265002C5006 /* WiFiMenuItemViewLegacy.swift */,
+				5013B9112C5E22AB002C5006 /* WiFiMenuItemViewModern.swift */,
+			);
+			path = MenuItemView;
+			sourceTree = "<group>";
+		};
 		505EC11B2C5BD85300F4E4EA /* StatusBarIcon */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,13 +209,12 @@
 		BCF712FA243C9EB100BE3C05 /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
+				5013B8FE2C5E1B56002C5006 /* StatusMenu */,
 				505EC11B2C5BD85300F4E4EA /* StatusBarIcon */,
+				13C20DFD24D92E3800B1E713 /* Preferences */,
+				13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */,
 				5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */,
 				BCFA32EE2424D2BF00E23603 /* MainMenu.xib */,
-				BCA4DFAC243A307B002A862A /* StatusMenu.swift */,
-				BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */,
-				13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */,
-				13C20DFD24D92E3800B1E713 /* Preferences */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -193,14 +242,15 @@
 		BCFA32E92424D2BE00E23603 /* HeliPort */ = {
 			isa = PBXGroup;
 			children = (
-				BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */,
-				BCFA32EC2424D2BF00E23603 /* Assets.xcassets */,
-				BCFA32F12424D2BF00E23603 /* Info.plist */,
 				BCF712FA243C9EB100BE3C05 /* Appearance */,
+				BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */,
 				F379276E24A0A4A50087FF2B /* CredentialsManager.swift */,
 				50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */,
 				75FDF38A2481D22000B2A601 /* NetworkManager.swift */,
 				50E7700E2C5A7CD600DB1160 /* UpdateManager.swift */,
+				5013B90C2C5E20E1002C5006 /* Bridge.h */,
+				BCFA32EC2424D2BF00E23603 /* Assets.xcassets */,
+				BCFA32F12424D2BF00E23603 /* Info.plist */,
 				BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */,
 				7557CDF324935260000F0F71 /* Credits.rtf */,
 				F34B2B8B24AA4C08009AB1BB /* Supporting files */,
@@ -224,6 +274,7 @@
 				F33A1F3E24C8347F008ED2BD /* NSLocalizedString+Extensions.swift */,
 				F34B2B8C24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift */,
 				1317990A256986E5006957D8 /* String+Extensions.swift */,
+				5013B9132C5E22F2002C5006 /* NSImage+Extensions.swift */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -402,21 +453,30 @@
 				75FDF38C2481D25A00B2A601 /* Api.c in Sources */,
 				F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */,
 				F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */,
+				5068784E2C5FE16C0046150A /* HPMenuItem.swift in Sources */,
+				5013B9102C5E2265002C5006 /* WiFiMenuItemViewLegacy.swift in Sources */,
 				F33A1F3F24C8347F008ED2BD /* NSLocalizedString+Extensions.swift in Sources */,
 				F379277124A0A52E0087FF2B /* Log.swift in Sources */,
+				5013B9122C5E22AB002C5006 /* WiFiMenuItemViewModern.swift in Sources */,
 				505EC11F2C5BD8ED00F4E4EA /* StatusBarIconLegacy.swift in Sources */,
 				F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */,
 				F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */,
+				5013B9092C5E1FF4002C5006 /* SectionMenuItemView.swift in Sources */,
 				F3915F0724AB1A1B00E6614D /* itl_80211_state+Extensions.swift in Sources */,
 				5088F70826BEA46F009E3A15 /* KextInfo.swift in Sources */,
 				F33A1F3B24C83016008ED2BD /* Alert.swift in Sources */,
+				5013B90E2C5E21F5002C5006 /* StateSwitchMenuItemView.swift in Sources */,
+				5013B9002C5E1E00002C5006 /* StatusMenuBase.swift in Sources */,
 				505EC1212C5BD95700F4E4EA /* StatusBarIconModern.swift in Sources */,
 				BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */,
+				50680FCA2C5FDB75008AF10F /* HidableMenuItemView.swift in Sources */,
+				5013B9072C5E1EF2002C5006 /* KeyValueMenuItemView.swift in Sources */,
 				BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */,
 				1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */,
 				138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */,
+				5013B9042C5E1EA9002C5006 /* StatusMenuModern.swift in Sources */,
 				75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */,
-				13AF73B624B25E170015867C /* StatusMenu.swift in Sources */,
+				5013B9022C5E1E36002C5006 /* StatusMenuLegacy.swift in Sources */,
 				138D3CC824CE635800793AC1 /* Commands.swift in Sources */,
 				13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */,
 				13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */,
@@ -424,8 +484,10 @@
 				1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */,
 				50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */,
 				F34B2B8D24AA4C1E009AB1BB /* NSMenuItem+Extensions.swift in Sources */,
+				5013B90B2C5E2029002C5006 /* SelectableMenuItemView.swift in Sources */,
 				50E7700F2C5A7CE100DB1160 /* UpdateManager.swift in Sources */,
 				5013B8FD2C5DF244002C5006 /* NSApp+Extensions.swift in Sources */,
+				5013B9142C5E22F2002C5006 /* NSImage+Extensions.swift in Sources */,
 				1317990B256986E5006957D8 /* String+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -623,7 +685,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
+				SWIFT_OBJC_BRIDGING_HEADER = HeliPort/Bridge.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -645,7 +707,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = ClientKit/Api.h;
+				SWIFT_OBJC_BRIDGING_HEADER = HeliPort/Bridge.h;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

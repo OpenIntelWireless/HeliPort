@@ -20,25 +20,12 @@ public extension String {
         static let legacyUI = "legacyUIEnabled"
     }
 
-    static func getSSIDFromCString(cString: UnsafePointer<CUnsignedChar>) -> String {
-        var string = String(cString: cString)
-        // Fixes memory leak, see https://stackoverflow.com/a/37584615
-        autoreleasepool {
-            string = string.trimmingCharacters(in: .whitespacesAndNewlines)
-                           .replacingOccurrences(of: "[\n,\r]*",
-                                                 with: "",
-                                                 options: .regularExpression)
-            if string.count > NWID_LEN {
-                let pointer = UnsafeRawPointer(cString)
-                let nsString = NSString(bytes: pointer, length: Int(NWID_LEN), encoding: Encoding.utf8.rawValue)
-                if let nsString = nsString {
-                    string = nsString as String
-                } else {
-                    string = "\(string.prefix(Int(NWID_LEN)))"
-                }
-            }
-        }
-        return string
+    init<T>(ssid: T) {
+        self = withUnsafeBytes(of: ssid) {
+            String(decoding: $0.prefix(Int(NWID_LEN)), as: UTF8.self)
+        }.trimmingCharacters(in: .whitespaces)
+         .replacingOccurrences(of: "\0", with: "")
+        self.unicodeScalars.removeAll(where: { CharacterSet.newlines.contains($0) })
     }
 
     init<T>(cCharArray: T) {

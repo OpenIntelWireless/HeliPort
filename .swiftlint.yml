@@ -4,6 +4,9 @@ excluded:
 
 identifier_name:
   allowed_symbols: "_"
+    
+large_tuple:
+  warning: 3
 
 disabled_rules:
   - function_body_length
