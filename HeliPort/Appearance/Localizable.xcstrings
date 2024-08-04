@@ -2701,7 +2701,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No se pudieron leer logs para ìtlwm`. Asegúrate de permitir a `HeliPort` leer logs cuando se te pregunte."
+            "value" : "No se pudieron leer logs para `itlwm`. Asegúrate de permitir a `HeliPort` leer logs cuando se te pregunte."
           }
         },
         "pt-BR" : {
@@ -3959,7 +3959,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Versión del API de HeliPort: "
+            "value" : "Versión de la API de HeliPort: "
           }
         },
         "fr" : {
@@ -4884,7 +4884,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Asegúrate de tener instalada `DebugEnhancer.kext`antes de recolectar logs para itlwm."
+            "value" : "Asegúrate de tener instalada `DebugEnhancer.kext` antes de recolectar logs para itlwm."
           }
         },
         "pt-BR" : {
