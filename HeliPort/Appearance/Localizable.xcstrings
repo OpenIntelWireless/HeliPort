@@ -1990,6 +1990,12 @@
     "Appearance:" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apariencia"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2470,6 +2476,12 @@
     "Choose a folder to output the bug report" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige una carpeta para guardar el informe de fallos"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2570,6 +2582,12 @@
     "Command failed to fetch logs for HeliPort." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha fallado el comando para obtener logs para HeliPort."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2593,6 +2611,12 @@
     "Could not create zip file for generated logs." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo crear el archivo zip para los logs generados."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2616,6 +2640,12 @@
     "Could not generate report for HeliPort." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo  generar informe para HeliPort."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2639,6 +2669,12 @@
     "Could not get path to generate bug report." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo  obtener la ruta para generar el informe de fallos."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2662,6 +2698,12 @@
     "Could not read logs for `itlwm`. Make sure you allow `HeliPort` to read logs when prompted." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudieron leer logs para `itlwm`. Asegúrate de permitir a `HeliPort` leer logs cuando se te pregunte."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3193,7 +3235,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "WEP Dinámico"
+            "value" : "WEP Dinámica"
           }
         },
         "fr" : {
@@ -3570,6 +3612,12 @@
     "Error occurred while generating bug report." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error al generar el informe de fallos."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3614,7 +3662,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Encuentra e ingresa a una red Wi-Fi. "
+            "value" : "Encuentra y accede a una red Wi-Fi. "
           }
         },
         "fr" : {
@@ -3825,6 +3873,12 @@
             "value" : "Allgemein"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3905,7 +3959,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Versión del API de HeliPort: "
+            "value" : "Versión de la API de HeliPort: "
           }
         },
         "fr" : {
@@ -3979,6 +4033,12 @@
     "HeliPort Restart Required" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se requiere reiniciar HeliPort"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4605,7 +4665,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acceder a otra red..."
+            "value" : "Acceder a Otra Red..."
           }
         },
         "fr" : {
@@ -4691,6 +4751,12 @@
     "Later" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más tarde"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4729,7 +4795,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lanzar al iniciar sesión"
+            "value" : "Lanzar al Iniciar Sesión"
           }
         },
         "fr" : {
@@ -4815,6 +4881,12 @@
     "Make sure you have installed `DebugEnhancer.kext` before collecting logs for itlwm." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asegúrate de tener instalada `DebugEnhancer.kext` antes de recolectar logs para itlwm."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5056,6 +5128,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nastavení sítě"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferencias de Red"
           }
         },
         "it" : {
@@ -5604,6 +5682,12 @@
     "Open Documentation" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Documentación"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6504,7 +6588,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Olvidar red Wi-Fi %@?"
+            "value" : "¿Olvidar red Wi-Fi %@?"
           }
         },
         "id" : {
@@ -6566,6 +6650,12 @@
     "Restart" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6993,6 +7083,12 @@
     "Switching appearance requires a restart of the application to take effect." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambiar apariencia requiere reinicar la aplicación para que tenga efecto."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7004,6 +7100,12 @@
     "The bug report will be generated in the seleted folder" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El informe de fallos se generará en la carpeta seleccionada"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7669,6 +7771,12 @@
     "Use Legacy UI" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar Legacy UI"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
