@@ -1996,6 +1996,12 @@
             "value" : "Apariencia"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giao diện:"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2713,7 +2719,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Không thể đọc nhật ký cho `itlwm`. Hãy chắn chắn rằng bạn cho phép `HeliPort` đọc nhật ký khi được yêu cầu."
+            "value" : "Không thể đọc nhật ký cho `itlwm`. Đảm bảo rằng bạn cho phép `HeliPort` đọc nhật ký khi được yêu cầu."
           }
         },
         "zh-Hans" : {
@@ -3627,7 +3633,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Đã xảy ra lỗi khi đang tạo báo cáo lỗi."
+            "value" : "Đã xảy ra lỗi khi tạo báo cáo lỗi."
           }
         },
         "zh-Hans" : {
@@ -4037,6 +4043,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se requiere reiniciar HeliPort"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yêu cầu Mở lại HeliPort"
           }
         },
         "zh-Hans" : {
@@ -4757,6 +4769,12 @@
             "value" : "Más tarde"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sau"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4896,7 +4914,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hãy chắc chắn rằng bạn đã cài đặt `DebugEnhancer.kext` trước khi thu nhật ký cho itlwm."
+            "value" : "Đảm bảo rằng bạn đã cài đặt `DebugEnhancer.kext` trước khi thu nhật ký cho itlwm."
           }
         },
         "zh-Hans" : {
@@ -6656,6 +6674,12 @@
             "value" : "Reiniciar"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Khởi động lại"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7087,6 +7111,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cambiar apariencia requiere reinicar la aplicación para que tenga efecto."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Thay đổi giao diện yêu cầu khởi động lại ứng dụng để có hiệu lực."
           }
         },
         "zh-Hans" : {
@@ -7775,6 +7805,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Usar Legacy UI"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sử dụng UI Kế thừa"
           }
         },
         "zh-Hans" : {
