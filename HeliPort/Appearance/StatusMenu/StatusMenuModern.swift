@@ -201,8 +201,8 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
             self.knownSectionItem.isHidden = knownList.isEmpty && !self.isNetworkConnected
             (self.knownSectionItem.view as? SectionMenuItemView)?
                 .title = (
-                    (self.isNetworkConnected ? knownList.count + 1 : knownList.count) > 1 ? .Modern.knownNetworks : .Modern.knownNetwork
-                )
+                    (self.isNetworkConnected ? knownList.count + 1 : knownList.count) > 1 ?
+                        .Modern.knownNetworks : .Modern.knownNetwork)
 
             if otherList.isEmpty {
                 self.manuallyJoinItem.isHidden = false
