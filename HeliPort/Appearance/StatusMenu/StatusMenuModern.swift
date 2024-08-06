@@ -239,20 +239,22 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
     }
 
     override func addClickItem(_ item: NSMenuItem) {
-        let view = SelectableMenuItemView(height: .textModern, hoverStyle: .greytint)
-        let label: NSTextField = {
-            let label = NSTextField(labelWithString: item.title)
-            label.font = NSFont.menuFont(ofSize: 0)
-            label.textColor = .controlTextColor
-            return label
-        }()
+        if item != toggleLaunchItem {
+            let view = SelectableMenuItemView(height: .textModern, hoverStyle: .greytint)
+            let label: NSTextField = {
+                let label = NSTextField(labelWithString: item.title)
+                label.font = NSFont.menuFont(ofSize: 0)
+                label.textColor = .controlTextColor
+                return label
+            }()
 
-        view.addSubview(label)
-        view.setupLayout()
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
+            view.addSubview(label)
+            view.setupLayout()
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
 
-        item.view = view
+            item.view = view
+        }
 
         super.addClickItem(item)
     }

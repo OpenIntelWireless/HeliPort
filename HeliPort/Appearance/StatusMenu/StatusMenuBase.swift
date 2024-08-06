@@ -125,9 +125,17 @@ class StatusMenuBase: NSMenu, NSMenuDelegate {
     }
 
     private var isAutoLaunch: Bool = false {
-        willSet(newState) {
-            toggleLaunchItem.state = newState ? .on : .off
+        didSet {
+            updateLaunchItemCheckmark()
         }
+    }
+
+    private func updateLaunchItemCheckmark() {
+        toggleLaunchItem.state = isAutoLaunch ? .on : .off
+    }
+
+    private func configureAutoLaunch() {
+        isAutoLaunch = LoginItemManager.isEnabled()
     }
 
     // - MARK: Common Menu items
@@ -179,7 +187,7 @@ class StatusMenuBase: NSMenu, NSMenuDelegate {
     init() {
         super.init(title: "")
         delegate = self
-        isAutoLaunch = LoginItemManager.isEnabled()
+        configureAutoLaunch()
 
         (self as? StatusMenuItems)?.setupMenu()
         getDeviceInfo()
