@@ -438,7 +438,11 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
             }
         case .turnWiFiOn:
             power_on()
+            NetworkManager.scanSavedNetworks()
         case .turnWiFiOff:
+            if status == ITL80211_S_RUN {
+                disassociateSSID(disconnectItem)
+            }
             power_off()
         case .joinNetworks:
             let joinPop = WiFiConfigWindow()
@@ -609,7 +613,6 @@ final class StatusMenu: NSMenu, NSMenuDelegate {
                                                              options: .regularExpression,
                                                              range: nil)
         DispatchQueue.global().async {
-            CredentialsManager.instance.setAutoJoin(ssid, false)
             dis_associate_ssid(ssid)
             Log.debug("Disconnected from \(ssid)")
         }
