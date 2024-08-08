@@ -181,6 +181,39 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         addClickItem(quitItem)
     }
 
+    private func configureMenuItemView(_ item: NSMenuItem, isToggle: Bool) {
+        let view = SelectableMenuItemView(height: .textModern, hoverStyle: .greytint)
+        let label: NSTextField = {
+            let label = NSTextField(labelWithString: item.title)
+            label.font = NSFont.menuFont(ofSize: 0)
+            label.textColor = .controlTextColor
+            return label
+        }()
+
+        view.addSubview(label)
+        view.setupLayout()
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
+        if isToggle {
+            let checkmarkImageView = NSImageView(image: NSImage(named: NSImage.menuOnStateTemplateName)!)
+            checkmarkImageView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(checkmarkImageView)
+            checkmarkImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            checkmarkImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
+            checkmarkImageView.isHidden = toggleLaunchItem.state != .on
+
+            let leadingConstraint = label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: toggleLaunchItem.state == .on ? 20 : 14)
+            leadingConstraint.isActive = true
+            view.leadingConstraint = leadingConstraint
+
+            toggleLaunchItem.addObserver(self, forKeyPath: "state", options: [.new, .old], context: nil)
+        } else {
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
+        }
+
+        item.view = view
+    }
+
     // - MARK: Menu Updates
 
     func setValueForItem(_ item: NSMenuItem, value: String) {
@@ -239,22 +272,30 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
     }
 
     override func addClickItem(_ item: NSMenuItem) {
-        let view = SelectableMenuItemView(height: .textModern, hoverStyle: .greytint)
-        let label: NSTextField = {
-            let label = NSTextField(labelWithString: item.title)
-            label.font = NSFont.menuFont(ofSize: 0)
-            label.textColor = .controlTextColor
-            return label
-        }()
-
-        view.addSubview(label)
-        view.setupLayout()
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-
-        item.view = view
-
+        configureMenuItemView(item, isToggle: item == toggleLaunchItem)
         super.addClickItem(item)
+    }
+
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?,
+                               change: [NSKeyValueChangeKey : Any]?,
+                               context: UnsafeMutableRawPointer?) {
+
+        if keyPath == "state", let item = object as? NSMenuItem, item == toggleLaunchItem {
+            if let view = item.view as? SelectableMenuItemView {
+                let checkmarkImageView = view.subviews.compactMap { $0 as? NSImageView }.first
+                checkmarkImageView?.isHidden = item.state != .on
+
+                // Updates the label constraint based on the state of the checkmark.
+                view.leadingConstraint?.constant = item.state == .on ? 20 : 14
+            }
+        }
+    }
+
+    override func removeObserver(_ observer: NSObject, forKeyPath keyPath: String) {
+        if observer == self && keyPath == "state" {
+            toggleLaunchItem.removeObserver(self, forKeyPath: keyPath)
+        }
+        super.removeObserver(observer, forKeyPath: keyPath)
     }
 
     override func addNetworkItem(_ item: NSMenuItem = HPMenuItem(highlightable: true),
@@ -278,5 +319,15 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         }
 
         super.setCurrentNetworkItem(with: info)
+    }
+}
+
+// Extension to store the leading constraint
+private var leadingConstraintKey: UInt8 = 0
+
+extension SelectableMenuItemView {
+    var leadingConstraint: NSLayoutConstraint? {
+        get { return objc_getAssociatedObject(self, &leadingConstraintKey) as? NSLayoutConstraint }
+        set { objc_setAssociatedObject(self, &leadingConstraintKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
 }
