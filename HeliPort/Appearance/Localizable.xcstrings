@@ -1996,6 +1996,12 @@
             "value" : "Apariencia"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aparência"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4039,6 +4045,12 @@
             "value" : "Se requiere reiniciar HeliPort"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reinicialização do Heliport Necessária"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4755,6 +4767,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Más tarde"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mais Tarde"
           }
         },
         "zh-Hans" : {
@@ -6656,6 +6674,12 @@
             "value" : "Reiniciar"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reiniciar"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7087,6 +7111,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cambiar apariencia requiere reinicar la aplicación para que tenga efecto."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A alteração na aparência exige que o aplicativo seja reiniciado para que a mudança tenha efeito."
           }
         },
         "zh-Hans" : {
@@ -7775,6 +7805,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Usar Legacy UI"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar Interface Antiga"
           }
         },
         "zh-Hans" : {
