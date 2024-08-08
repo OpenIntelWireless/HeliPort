@@ -92,6 +92,35 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         nssItem
     ]
 
+    override var isNetworkListEmpty: Bool {
+        willSet(empty) {
+            super.isNetworkListEmpty = empty
+            knownSectionItem.isHidden = empty
+
+            guard empty else { return }
+
+            otherSectionItem.isHidden = true
+            manuallyJoinItem.isHidden = true
+
+            knownNetworkItemList.forEach { $0.isHidden = true }
+            otherNetworkItemList.forEach { $0.isHidden = true }
+        }
+    }
+
+    override var isNetworkCardAvailable: Bool {
+        willSet(newState) {
+            super.isNetworkCardAvailable = newState
+            if !newState { (statusItem.view as? StateSwitchMenuItemView)?.isEnabled = false }
+        }
+    }
+
+    override var isNetworkCardEnabled: Bool {
+        willSet(newState) {
+            (statusItem.view as? StateSwitchMenuItemView)?.state = newState
+            super.isNetworkCardEnabled = newState
+        }
+    }
+
     private var knownNetworkItemList = [NSMenuItem]()
     private var otherNetworkItemList = [NSMenuItem]()
 
@@ -152,6 +181,39 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         addClickItem(quitItem)
     }
 
+    private func configureMenuItemView(_ item: NSMenuItem, isToggle: Bool) {
+        let view = SelectableMenuItemView(height: .textModern, hoverStyle: .greytint)
+        let label: NSTextField = {
+            let label = NSTextField(labelWithString: item.title)
+            label.font = NSFont.menuFont(ofSize: 0)
+            label.textColor = .controlTextColor
+            return label
+        }()
+
+        view.addSubview(label)
+        view.setupLayout()
+        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
+        if isToggle {
+            let checkmarkImageView = NSImageView(image: NSImage(named: NSImage.menuOnStateTemplateName)!)
+            checkmarkImageView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(checkmarkImageView)
+            checkmarkImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            checkmarkImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
+            checkmarkImageView.isHidden = toggleLaunchItem.state != .on
+
+            let leadingConstraint = label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: toggleLaunchItem.state == .on ? 20 : 14)
+            leadingConstraint.isActive = true
+            view.leadingConstraint = leadingConstraint
+
+            toggleLaunchItem.addObserver(self, forKeyPath: "state", options: [.new, .old], context: nil)
+        } else {
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
+        }
+
+        item.view = view
+    }
+
     // - MARK: Menu Updates
 
     func setValueForItem(_ item: NSMenuItem, value: String) {
@@ -200,35 +262,6 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
     }
 
     // - MARK: Overrides
-
-    override var isNetworkListEmpty: Bool {
-        willSet(empty) {
-            super.isNetworkListEmpty = empty
-            knownSectionItem.isHidden = empty
-
-            guard empty else { return }
-
-            otherSectionItem.isHidden = true
-            manuallyJoinItem.isHidden = true
-
-            knownNetworkItemList.forEach { $0.isHidden = true }
-            otherNetworkItemList.forEach { $0.isHidden = true }
-        }
-    }
-
-    override var isNetworkCardAvailable: Bool {
-        willSet(newState) {
-            super.isNetworkCardAvailable = newState
-            if !newState { (statusItem.view as? StateSwitchMenuItemView)?.isEnabled = false }
-        }
-    }
-
-    override var isNetworkCardEnabled: Bool {
-        willSet(newState) {
-            (statusItem.view as? StateSwitchMenuItemView)?.state = newState
-            super.isNetworkCardEnabled = newState
-        }
-    }
 
     override func menuWillOpen(_ menu: NSMenu) {
         super.menuWillOpen(menu)
@@ -286,41 +319,6 @@ final class StatusMenuModern: StatusMenuBase, StatusMenuItems {
         }
 
         super.setCurrentNetworkItem(with: info)
-    }
-
-    // - MARK: Private Methods
-
-    private func configureMenuItemView(_ item: NSMenuItem, isToggle: Bool) {
-        let view = SelectableMenuItemView(height: .textModern, hoverStyle: .greytint)
-        let label: NSTextField = {
-            let label = NSTextField(labelWithString: item.title)
-            label.font = NSFont.menuFont(ofSize: 0)
-            label.textColor = .controlTextColor
-            return label
-        }()
-
-        view.addSubview(label)
-        view.setupLayout()
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-
-        if isToggle {
-            let checkmarkImageView = NSImageView(image: NSImage(named: NSImage.menuOnStateTemplateName)!)
-            checkmarkImageView.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(checkmarkImageView)
-            checkmarkImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            checkmarkImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 2).isActive = true
-            checkmarkImageView.isHidden = toggleLaunchItem.state != .on
-
-            let leadingConstraint = label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: toggleLaunchItem.state == .on ? 20 : 14)
-            leadingConstraint.isActive = true
-            view.leadingConstraint = leadingConstraint
-
-            toggleLaunchItem.addObserver(self, forKeyPath: "state", options: [.new, .old], context: nil)
-        } else {
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 14).isActive = true
-        }
-
-        item.view = view
     }
 }
 
