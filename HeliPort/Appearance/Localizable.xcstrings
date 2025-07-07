@@ -1387,7 +1387,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "    Tasa Tx:"
+            "value" : "    Tasa Tx: "
           }
         },
         "fr" : {
