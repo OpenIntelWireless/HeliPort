@@ -1387,7 +1387,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "    Tasa Tx: "
+            "value" : "    Tasa Tx:"
           }
         },
         "fr" : {
@@ -4751,6 +4751,12 @@
     "Known Network" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Red Conocida"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4762,6 +4768,12 @@
     "Known Networks" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Redes Conocidas"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5947,6 +5959,12 @@
     "Other Networks" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otras Redes"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5958,6 +5976,12 @@
     "Other..." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otras…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7130,7 +7154,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cambiar apariencia requiere reinicar la aplicación para que tenga efecto."
+            "value" : "Cambiar apariencia requiere reiniciar la aplicación para que tenga efecto."
           }
         },
         "zh-Hans" : {
@@ -8711,6 +8735,12 @@
     "Wi-Fi Settings..." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de Wi-Fi…"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
