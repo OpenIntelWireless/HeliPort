@@ -112,7 +112,7 @@
             "value" : "    BSSID："
           }
         }
-      }
+      } 
     },
     "    Channel: " : {
       "extractionState" : "manual",
@@ -223,6 +223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "    信道："
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    頻道："
           }
         }
       }
@@ -337,6 +343,12 @@
             "state" : "translated",
             "value" : "    国家代码："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    國碼："
+          }
         }
       }
     },
@@ -449,6 +461,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "    网络："
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "網際網路："
           }
         }
       }
@@ -563,6 +581,12 @@
             "state" : "translated",
             "value" : "    IP 地址："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    IP 位址："
+          }
         }
       }
     },
@@ -676,6 +700,12 @@
             "state" : "translated",
             "value" : "    MCS 索引："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    MCS 索引："
+          }
         }
       }
     },
@@ -785,6 +815,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    噪音："
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "    噪音："
@@ -1015,6 +1051,12 @@
             "state" : "translated",
             "value" : "    PHY 模式："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    PHY 模式："
+          }
         }
       }
     },
@@ -1124,6 +1166,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    路由器："
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "    路由器："
@@ -1354,6 +1402,12 @@
             "state" : "translated",
             "value" : "    安全性："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    安全性："
+          }
         }
       }
     },
@@ -1463,6 +1517,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "    Tx 速率："
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "    Tx 速率："
@@ -1580,6 +1640,12 @@
             "state" : "translated",
             "value" : "\" 需要密码"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\" 需要密碼"
+          }
         }
       }
     },
@@ -1665,6 +1731,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 的密匙"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 的密匙"
@@ -1757,6 +1829,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 的信息"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 的資訊"
           }
         }
       }
@@ -1871,6 +1949,12 @@
             "state" : "translated",
             "value" : "关于 HeliPort"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關於 HeliPort"
+          }
         }
       }
     },
@@ -1984,6 +2068,12 @@
             "state" : "translated",
             "value" : "地址："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "位址："
+          }
         }
       }
     },
@@ -2000,6 +2090,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "外观:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外觀:"
           }
         }
       }
@@ -2084,6 +2180,12 @@
             "state" : "translated",
             "value" : "自动连接"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動連線"
+          }
         }
       }
     },
@@ -2167,6 +2269,12 @@
             "state" : "translated",
             "value" : "自动检查更新"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動檢查更新"
+          }
         }
       }
     },
@@ -2243,6 +2351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "自动下载更新"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動下載更新"
           }
         }
       }
@@ -2353,6 +2467,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
@@ -2470,6 +2590,12 @@
             "state" : "translated",
             "value" : "检查更新..."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "檢查更新..."
+          }
         }
       }
     },
@@ -2498,6 +2624,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "选择输出诊断报告的文件夹"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選取除錯報告的資料夾"
           }
         }
       }
@@ -2576,6 +2708,12 @@
             "state" : "translated",
             "value" : "关闭"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉"
+          }
         }
       }
     },
@@ -2604,6 +2742,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "命令无法获取 Heliport 的诊断报告。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指令無法取得 Heliport 日誌。"
           }
         }
       }
@@ -2634,6 +2778,12 @@
             "state" : "translated",
             "value" : "无法生成诊断报告的压缩文件。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法建立日誌的zip檔。"
+          }
         }
       }
     },
@@ -2662,6 +2812,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法生成 Heliport 的诊断报告"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法生成 Heliport 的診斷報告"
           }
         }
       }
@@ -2692,6 +2848,12 @@
             "state" : "translated",
             "value" : "无法获取生成诊断报告的路径"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法取得產出除錯報告的路徑"
+          }
         }
       }
     },
@@ -2720,6 +2882,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法读取 itlwm 的日志。请确保在提示时允许 `HeliPort` 读取日志。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法讀取 itlwm 日誌。請確認程式提示允許 `HeliPort` 讀取日誌時您有核准。"
           }
         }
       }
@@ -2828,6 +2996,12 @@
             "state" : "translated",
             "value" : "创建诊断报告..."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建立診斷報告..."
+          }
         }
       }
     },
@@ -2935,6 +3109,12 @@
             "state" : "translated",
             "value" : "创建网络..."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建立網路..."
+          }
         }
       }
     },
@@ -3036,6 +3216,12 @@
             "state" : "translated",
             "value" : "断开 "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "斷開 "
+          }
         }
       }
     },
@@ -3125,6 +3311,12 @@
             "state" : "translated",
             "value" : "忽略"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "忽略"
+          }
         }
       }
     },
@@ -3201,6 +3393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "拖动网络顺序来调整优先级。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依喜好拖拉調整網路優先順序。"
           }
         }
       }
@@ -3315,6 +3513,12 @@
             "state" : "translated",
             "value" : "动态WEP"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "動態 WEP"
+          }
         }
       }
     },
@@ -3422,6 +3626,12 @@
             "state" : "translated",
             "value" : "启用Wi-Fi记录"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用 Wi-Fi 日誌"
+          }
         }
       }
     },
@@ -3498,6 +3708,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "加密方式未支持"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加密方式未支援"
           }
         }
       }
@@ -3606,6 +3822,12 @@
             "state" : "translated",
             "value" : "输入您想要加入的网络的名称和安全性类型。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輸入您想加入的網路名稱及安全類型。"
+          }
         }
       }
     },
@@ -3634,6 +3856,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "生成诊断报告时发生错误"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "產出除錯報告時出錯!"
           }
         }
       }
@@ -3742,6 +3970,12 @@
             "state" : "translated",
             "value" : "查找并加入Wi-Fi网络。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查找並加入 Wi-Fi。"
+          }
         }
       }
     },
@@ -3849,6 +4083,12 @@
             "state" : "translated",
             "value" : "功能尚未实现"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "功能尚未實作"
+          }
         }
       }
     },
@@ -3931,6 +4171,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通用"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
           }
         }
       }
@@ -4027,6 +4273,12 @@
             "state" : "translated",
             "value" : "HeliPort API 版本: "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HeliPort API 版本: "
+          }
         }
       }
     },
@@ -4043,6 +4295,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HeliPort 需要重启"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HeliPort 需重啟"
           }
         }
       }
@@ -4132,6 +4390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HeliPort 已被阻止在非法路径运行"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HeliPort 在非法路徑上運行中"
           }
         }
       }
@@ -4240,6 +4504,12 @@
             "state" : "translated",
             "value" : "接口名称："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "界面名稱："
+          }
         }
       }
     },
@@ -4335,6 +4605,12 @@
             "state" : "translated",
             "value" : "itlwm API 版本: "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "itlwm API 版本: "
+          }
         }
       }
     },
@@ -4423,6 +4699,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "itlwm 未运行"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "itlwm 未運作"
           }
         }
       }
@@ -4518,6 +4800,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "itlwm 版本不匹配"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "itlwm 版本不符"
           }
         }
       }
@@ -4628,6 +4916,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加入"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "加入"
@@ -4745,6 +5039,12 @@
             "state" : "translated",
             "value" : "加入其他网络..."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "加入其他網路..."
+          }
         }
       }
     },
@@ -4783,6 +5083,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍后"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "稍後"
           }
         }
       }
@@ -4897,6 +5203,12 @@
             "state" : "translated",
             "value" : "登陆时自动启动"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入時啟用"
+          }
         }
       }
     },
@@ -4925,6 +5237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请确保您在为 itlwm 获取诊断报告之前已经安装了 `DebugEnhancer.kext`"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請確認想取得 itlwm 日誌前已安裝 `DebugEnhancer.kext`"
           }
         }
       }
@@ -5020,6 +5338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "网络名称"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "網路名稱"
           }
         }
       }
@@ -5134,6 +5458,12 @@
             "state" : "translated",
             "value" : "网络名称："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "網路名稱："
+          }
         }
       }
     },
@@ -5186,6 +5516,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "网络偏好设置"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "網路偏好"
           }
         }
       }
@@ -5269,6 +5605,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "网络"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "網路"
           }
         }
       }
@@ -5377,6 +5719,12 @@
             "state" : "translated",
             "value" : "无可用网络"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒網路可用"
+          }
         }
       }
     },
@@ -5477,6 +5825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "状态信息不可用"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "狀態不明"
           }
         }
       }
@@ -5584,6 +5938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無"
           }
         }
       }
@@ -5698,6 +6058,12 @@
             "state" : "translated",
             "value" : "无"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無"
+          }
         }
       }
     },
@@ -5726,6 +6092,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开文档"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開文件"
           }
         }
       }
@@ -5834,6 +6206,12 @@
             "state" : "translated",
             "value" : "打开网络偏好设置..."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開網路偏好..."
+          }
         }
       }
     },
@@ -5940,6 +6318,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开无线诊断..."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開無線診斷..."
           }
         }
       }
@@ -6076,6 +6460,12 @@
             "state" : "translated",
             "value" : "密码"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密碼"
+          }
         }
       }
     },
@@ -6188,6 +6578,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "密码："
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "密碼："
           }
         }
       }
@@ -6302,6 +6698,12 @@
             "state" : "translated",
             "value" : "退出 HeliPort"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 HeliPort"
+          }
         }
       }
     },
@@ -6408,6 +6810,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "可访问"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可觸及"
           }
         }
       }
@@ -6522,6 +6930,12 @@
             "state" : "translated",
             "value" : "记住该网络"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "記住此網路"
+          }
         }
       }
     },
@@ -6601,6 +7015,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "移除"
@@ -6688,6 +7108,12 @@
             "state" : "translated",
             "value" : "移除 Wi-Fi 网络 %@？"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除 Wi-Fi 網路 %@？"
+          }
         }
       }
     },
@@ -6704,6 +7130,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重启"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重啟"
           }
         }
       }
@@ -6787,6 +7219,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已保存的网络："
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已儲存的網路："
           }
         }
       }
@@ -6891,6 +7329,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全性"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "安全性"
@@ -7008,6 +7452,12 @@
             "state" : "translated",
             "value" : "安全性："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安全性："
+          }
         }
       }
     },
@@ -7121,6 +7571,12 @@
             "state" : "translated",
             "value" : "显示密码"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示密碼"
+          }
         }
       }
     },
@@ -7137,6 +7593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "切换外观需要重新启动应用程序才能生效。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切換外觀需重啟程式才會生效。"
           }
         }
       }
@@ -7166,6 +7628,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "诊断报告将在所选目录生成"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "除錯報告將放在在指定資料夾"
           }
         }
       }
@@ -7280,6 +7748,12 @@
             "state" : "translated",
             "value" : "关闭Wi-Fi"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉 Wi-Fi"
+          }
         }
       }
     },
@@ -7392,6 +7866,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开启Wi-Fi"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟 Wi-Fi"
           }
         }
       }
@@ -7506,6 +7986,12 @@
             "state" : "translated",
             "value" : "不可用"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒可用的"
+          }
         }
       }
     },
@@ -7615,6 +8101,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "未知"
@@ -7732,6 +8224,12 @@
             "state" : "translated",
             "value" : "不可访问"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法觸及"
+          }
         }
       }
     },
@@ -7809,6 +8307,12 @@
             "state" : "translated",
             "value" : "更新："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新："
+          }
         }
       }
     },
@@ -7825,6 +8329,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用传统界面"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用傳統界面"
           }
         }
       }
@@ -7933,6 +8443,12 @@
             "state" : "translated",
             "value" : "用户名："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用戶名："
+          }
         }
       }
     },
@@ -8009,6 +8525,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "验证您的密匙以显示存储的密码"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "驗証您的密匙以顯示儲存的密碼"
           }
         }
       }
@@ -8111,6 +8633,12 @@
             "state" : "translated",
             "value" : "版本："
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本："
+          }
         }
       }
     },
@@ -8188,6 +8716,12 @@
             "state" : "translated",
             "value" : "从钥匙串中查看所选网络的密匙。"
           }
+	},
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從鑰匙圈裹尋找已選取網路的密匙。"
+          }
         }
       }
     },
@@ -8264,6 +8798,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "从钥匙串中查看此网络的密匙。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從鑰匙圈裹尋找本網路的密匙。"
           }
         }
       }
@@ -8365,6 +8905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在 GitHub 上访问 OpenIntelWireless"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "參觀 GitHub 上的 OpenIntelWireless"
           }
         }
       }
@@ -8705,6 +9251,12 @@
             "state" : "translated",
             "value" : "Wi-Fi网络 \""
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi網路 \""
+          }
         }
       }
     },
@@ -8829,6 +9381,12 @@
             "state" : "translated",
             "value" : "Wi-Fi：已连接"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi：已連上"
+          }
         }
       }
     },
@@ -8941,6 +9499,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wi-Fi：正在连接"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi：連線中..."
           }
         }
       }
@@ -9055,6 +9619,12 @@
             "state" : "translated",
             "value" : "Wi-Fi：搜索网络..."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi：搜尋網路..."
+          }
         }
       }
     },
@@ -9167,6 +9737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wi-Fi: 关闭"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi: 關閉"
           }
         }
       }
@@ -9281,6 +9857,12 @@
             "state" : "translated",
             "value" : "Wi-Fi: 开启"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi: 開啟"
+          }
         }
       }
     },
@@ -9394,6 +9976,12 @@
             "state" : "translated",
             "value" : "Wi-Fi: 状态不可用"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wi-Fi: 狀態不明"
+          }
         }
       }
     },
@@ -9470,6 +10058,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA/WPA2企业级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA/WPA2 企業"
           }
         }
       }
@@ -9548,6 +10142,12 @@
             "state" : "translated",
             "value" : "WPA/WPA2个人级"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA/WPA2 私人"
+          }
         }
       }
     },
@@ -9624,6 +10224,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA2企业级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2 企業"
           }
         }
       }
@@ -9702,6 +10308,12 @@
             "state" : "translated",
             "value" : "WPA2个人级"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2 私人"
+          }
         }
       }
     },
@@ -9778,6 +10390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA2/WPA3企业级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2/WPA3 企業"
           }
         }
       }
@@ -9856,6 +10474,12 @@
             "state" : "translated",
             "value" : "WPA2/WPA3个人级"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2/WPA3 私人"
+          }
         }
       }
     },
@@ -9932,6 +10556,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA3企业级"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA3 企業"
           }
         }
       }
@@ -10010,6 +10640,12 @@
             "state" : "translated",
             "value" : "WPA3个人级"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA3 個人"
+          }
         }
       }
     },
@@ -10087,8 +10723,14 @@
             "state" : "translated",
             "value" : "您的 Mac 将不再加入此 Wi-Fi 网络。"
           }
-        }
-      }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的 Mac 不再加入此 Wi-Fi。"
+	  }
+	}
+      }	
     }
   },
   "version" : "1.0"
