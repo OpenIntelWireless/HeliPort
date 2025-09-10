@@ -44,6 +44,18 @@
 			<dict/>
 		</dict>
 	</array>
+	<key>SMAppService</key>
+	<dict>
+		<key>LoginItems</key>
+		<array>
+			<dict>
+				<key>Identifier</key>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)-Launcher</string>
+				<key>Enabled</key>
+				<true />
+			</dict>
+		</array>
+	</dict>
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
