@@ -16,6 +16,7 @@
 #include "Api.h"
 #include "mach/mach_port.h"
 #include "pthread.h"
+#include <stdio.h>
 
 static pthread_mutex_t* api_mutex = NULL;
 
@@ -27,10 +28,16 @@ bool get_platform_info(platform_info_t *info) {
         goto error;
     }
 
-    strcpy(info->device_info_str, driver_info.bsd_name);
-    strcpy(info->driver_info_str, driver_info.driver_version);
-    strcat(info->driver_info_str, " ");
-    strcat(info->driver_info_str, driver_info.fw_version);
+    // driver_version + " " + fw_version routinely exceeds the 32-byte
+    // driver_info_str; strcat here smashed the caller's stack. The kernel's
+    // strings also aren't guaranteed NUL-terminated, hence the %.*s bounds.
+    snprintf(info->device_info_str, sizeof(info->device_info_str), "%.*s",
+             (int)strnlen(driver_info.bsd_name, sizeof(driver_info.bsd_name)), driver_info.bsd_name);
+    snprintf(info->driver_info_str, sizeof(info->driver_info_str), "%.*s %.*s",
+             (int)strnlen(driver_info.driver_version, sizeof(driver_info.driver_version)),
+             driver_info.driver_version,
+             (int)strnlen(driver_info.fw_version, sizeof(driver_info.fw_version)),
+             driver_info.fw_version);
     return true;
 
 error:
@@ -297,12 +304,97 @@ kern_return_t associate_ssid(const char *ssid, const char *pwd)
     return ioctl_set(IOCTL_80211_ASSOCIATE, &ass, sizeof(struct ioctl_associate));
 }
 
+kern_return_t associate_ssid_enterprise(const char *ssid)
+{
+    struct ioctl_associate_enterprise req;
+    memset(&req, 0, sizeof(req));
+    req.version = IOCTL_VERSION;
+
+    size_t ssid_len = strnlen(ssid, NWID_LEN);
+    memcpy(req.nwid.nwid, ssid, ssid_len);
+    req.nwid.len = (unsigned int)ssid_len;
+
+    return ioctl_set(IOCTL_80211_ASSOCIATE_ENTERPRISE, &req, sizeof(req));
+}
+
 kern_return_t dis_associate_ssid(const char *ssid)
 {
     struct ioctl_disassociate dis;
     dis.version = IOCTL_VERSION;
     memcpy(dis.ssid, ssid, 32);
     return ioctl_set(IOCTL_80211_DISASSOCIATE, &dis, sizeof(struct ioctl_disassociate));
+}
+
+kern_return_t set_eap_pmk(const char *ssid, enum itl80211_eap_status status,
+                           const unsigned char *pmk, unsigned int pmk_len)
+{
+    struct ioctl_eap_pmk req;
+    memset(&req, 0, sizeof(req));
+    req.version = IOCTL_VERSION;
+
+    // strnlen, not strlen: never trust ssid to be a properly NUL-terminated
+    // string shorter than NWID_LEN just because the caller says so.
+    size_t ssid_len = strnlen(ssid, NWID_LEN);
+    memcpy(req.ssid, ssid, ssid_len);
+    req.ssid_len = (unsigned int)ssid_len;
+    req.status = status;
+
+    if (status == ITL_EAP_STATUS_SUCCESS) {
+        if (pmk == NULL || pmk_len != PMK_LEN) {
+            return KERN_INVALID_ARGUMENT;
+        }
+        memcpy(req.pmk, pmk, PMK_LEN);
+        req.pmk_len = PMK_LEN;
+    }
+
+    kern_return_t kr = ioctl_set(IOCTL_80211_WPA_KEY, &req, sizeof(req));
+
+    // Don't let a derived PMK linger in this stack frame any longer than
+    // the syscall that consumes it needs it for. memset_s, unlike memset,
+    // can't be optimized away as a dead store.
+    memset_s(&req, sizeof(req), 0, sizeof(req));
+
+    return kr;
+}
+
+kern_return_t send_eapol_frame(const unsigned char *frame, unsigned int len)
+{
+    if (frame == NULL || len < 18 || len > EAPOL_MAX_FRAME) {
+        return KERN_INVALID_ARGUMENT;
+    }
+    struct ioctl_eapol_tx *req = calloc(1, sizeof(*req));
+    if (req == NULL) {
+        return KERN_RESOURCE_SHORTAGE;
+    }
+    req->version = IOCTL_VERSION;
+    req->len = len;
+    memcpy(req->frame, frame, len);
+    kern_return_t kr = ioctl_set(IOCTL_80211_TX_EAPOL, req, sizeof(*req));
+    free(req);
+    return kr;
+}
+
+kern_return_t receive_eapol_frame(unsigned char *frame, unsigned int capacity, unsigned int *len)
+{
+    if (frame == NULL || len == NULL) {
+        return KERN_INVALID_ARGUMENT;
+    }
+    *len = 0;
+    struct ioctl_eapol_rx *rx = calloc(1, sizeof(*rx));
+    if (rx == NULL) {
+        return KERN_RESOURCE_SHORTAGE;
+    }
+    kern_return_t kr = ioctl_get(IOCTL_80211_RX_EAPOL, rx, sizeof(*rx));
+    if (kr == KERN_SUCCESS && rx->len > 0) {
+        if (rx->len > capacity || rx->len > EAPOL_MAX_FRAME) {
+            kr = KERN_INVALID_ARGUMENT;
+        } else {
+            memcpy(frame, rx->frame, rx->len);
+            *len = rx->len;
+        }
+    }
+    free(rx);
+    return kr;
 }
 
 void api_terminate(void) {

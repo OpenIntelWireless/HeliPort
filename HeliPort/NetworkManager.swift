@@ -23,7 +23,14 @@ final class NetworkManager {
         ITL80211_SECURITY_WPA_PERSONAL,
         ITL80211_SECURITY_WPA_PERSONAL_MIXED,
         ITL80211_SECURITY_WPA2_PERSONAL,
-        ITL80211_SECURITY_PERSONAL
+        ITL80211_SECURITY_PERSONAL,
+        ITL80211_SECURITY_WPA_ENTERPRISE_MIXED,
+        ITL80211_SECURITY_WPA2_ENTERPRISE
+    ]
+
+    private static let enterpriseSecurityModes = [
+        ITL80211_SECURITY_WPA_ENTERPRISE_MIXED,
+        ITL80211_SECURITY_WPA2_ENTERPRISE
     ]
 
     static func connect(networkInfo: NetworkInfo, saveNetwork: Bool = false,
@@ -39,6 +46,13 @@ final class NetworkManager {
         let getAuthInfoCallback: (_ auth: NetworkAuth, _ savePassword: Bool) -> Void = { auth, savePassword in
             DispatchQueue.global(qos: .background).async {
                 StatusBarIcon.shared().connecting()
+                EAPSupplicantManager.shared.endSession(reason: "connecting to \(networkInfo.ssid)")
+
+                if enterpriseSecurityModes.contains(auth.security) {
+                    connectEnterprise(networkInfo: networkInfo, auth: auth, savePassword: savePassword, callback)
+                    return
+                }
+
                 let result = connect_network(networkInfo.ssid, auth.password)
                 DispatchQueue.main.async {
                     if result {
@@ -74,6 +88,163 @@ final class NetworkManager {
                                  networkInfo: networkInfo,
                                  getAuthInfoCallback: getAuthInfoCallback).show()
             }
+        }
+    }
+
+    // Enterprise networks can't hand a plaintext password straight to
+    // connect_network(): the PSK-style ioctl expects a passphrase it derives
+    // a PMK from locally, but 802.1X requires an actual multi-round-trip EAP
+    // handshake with the RADIUS server (relayed through itlwm) before a PMK
+    // exists at all. EAPSupplicantManager owns that handshake and is the
+    // only thing that may hand a derived PMK down to itlwm.
+    private static func connectEnterprise(networkInfo: NetworkInfo,
+                                          auth: NetworkAuth,
+                                          savePassword: Bool,
+                                          _ callback: ((_ result: Bool) -> Void)?) {
+        guard KextEAPOLTransport.isSupported else {
+            Log.error("connectEnterprise: installed itlwm has no 802.1X support")
+            DispatchQueue.main.async {
+                Alert(text: NSLocalizedString("This version of itlwm doesn't support WPA2-Enterprise networks. " +
+                                              "Please update itlwm.")).show()
+            }
+            callback?(false)
+            return
+        }
+        EAPSupplicantManager.shared.useKextTransport()
+        beginEnterpriseAssociation(networkInfo: networkInfo, auth: auth,
+                                   savePassword: savePassword, callback)
+    }
+
+    private static func beginEnterpriseAssociation(networkInfo: NetworkInfo,
+                                                   auth: NetworkAuth,
+                                                   savePassword: Bool,
+                                                   _ callback: ((_ result: Bool) -> Void)?) {
+        // Must happen before the EAP handshake starts: this locks itlwm's
+        // ic_des_essid onto this SSID and kicks off 802.11 scan/auth/assoc
+        // with RSN AKM=8021X (no PSK). Skipping this is exactly the SSID
+        // race — a PMK delivered later via set_eap_pmk() would be rejected
+        // kernel-side because ic_des_essid would still be whatever the
+        // driver was last pointed at (or empty).
+        Log.debug("connectEnterprise: associating to \(networkInfo.ssid) " +
+                  "(usernameLength=\(auth.username.count), passwordLength=\(auth.password.count))")
+        let assocResult = associate_ssid_enterprise(networkInfo.ssid)
+        guard assocResult == KERN_SUCCESS else {
+            Log.error("connectEnterprise: associate_ssid_enterprise(\(networkInfo.ssid)) failed: \(assocResult)")
+            callback?(false)
+            return
+        }
+
+        // Start the EAP engine right away: the AP sends its EAP-Request/
+        // Identity within milliseconds of associating, and itlwm briefly
+        // reports the new BSS as RUN before it has actually left the old
+        // one, so polling for "associated" first is both too slow and
+        // unreliable. The watcher below only nudges (EAPOL-Start) and
+        // enforces a timeout.
+        startEnterpriseAuthentication(networkInfo: networkInfo, auth: auth,
+                                      savePassword: savePassword, callback)
+        watchEnterpriseAssociation(ssid: networkInfo.ssid)
+    }
+
+    private static let enterpriseAssociationTimeout: TimeInterval = 20
+
+    private static func watchEnterpriseAssociation(ssid: String) {
+        let queue = DispatchQueue(label: "org.openintelwireless.HeliPort.enterprise-assoc")
+        let start = Date()
+        var lastDescription = ""
+        var wasRunning = false
+
+        func poll() {
+            let elapsed = Date().timeIntervalSince(start)
+            let progress = EAPSupplicantManager.shared.progress()
+            // authenticate() starts the attempt asynchronously; give it a
+            // moment before treating "no active attempt" as "attempt over".
+            if !progress.active && elapsed > 2 {
+                Log.debug(String(format: "connectEnterprise: +%.2fs attempt for %@ ended, stop watching",
+                                 elapsed, ssid))
+                return
+            }
+            if progress.framesIn > 0 {
+                Log.debug(String(format: "connectEnterprise: +%.2fs EAP traffic from %@ is flowing, stop watching",
+                                 elapsed, ssid))
+                return
+            }
+
+            var state: UInt32 = 0
+            let gotState = get_80211_state(&state)
+            var ssidBuf = [CChar](repeating: 0, count: Int(MAX_SSID_LENGTH) + 1)
+            let gotSSID = get_network_ssid(&ssidBuf)
+            let currentSSID = gotSSID ? String(cString: ssidBuf) : ""
+            var bssidBuf = [CChar](repeating: 0, count: 6)
+            let gotBSSID = get_network_bssid(&bssidBuf)
+            let bssid = bssidBuf.map { String(format: "%02x", UInt8(bitPattern: $0)) }.joined(separator: ":")
+
+            let description = "state=\(gotState ? String(state) : "?") ssid=\(currentSSID) " +
+                "bssid=\(gotBSSID ? bssid : "?")"
+            if description != lastDescription {
+                Log.debug(String(format: "connectEnterprise: +%.2fs %@: %@", elapsed, ssid, description))
+                lastDescription = description
+            }
+
+            let running = gotState && state == ITL80211_S_RUN.rawValue && currentSSID == ssid &&
+                gotBSSID && bssid != "00:00:00:00:00:00"
+            if running && !wasRunning {
+                EAPSupplicantManager.shared.associationEstablished(bssid: bssid)
+            }
+            wasRunning = running
+
+            if elapsed >= enterpriseAssociationTimeout {
+                EAPSupplicantManager.shared.abortIfNoProgress(
+                    reason: "no EAP traffic within \(Int(enterpriseAssociationTimeout))s (last: \(description))")
+                return
+            }
+            queue.asyncAfter(deadline: .now() + 0.1, execute: poll)
+        }
+        queue.async(execute: poll)
+    }
+
+    private static func startEnterpriseAuthentication(networkInfo: NetworkInfo,
+                                                      auth: NetworkAuth,
+                                                      savePassword: Bool,
+                                                      _ callback: ((_ result: Bool) -> Void)?) {
+        EAPSupplicantManager.shared.authenticate(ssid: networkInfo.ssid, auth: auth) { result in
+            if case .failure = result {
+                abandonEnterpriseNetwork(networkInfo.ssid, reason: "EAP failed")
+            }
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    Log.debug("connectEnterprise: EAP succeeded for \(networkInfo.ssid); PMK handed to itlwm, " +
+                              "4-way handshake is up to the driver now")
+                    if savePassword {
+                        CredentialsManager.instance.save(networkInfo)
+                    }
+                    callback?(true)
+                case .failure(let error):
+                    Log.error("EAP authentication failed for \(networkInfo.ssid): \(error)")
+                    callback?(false)
+                }
+            }
+        }
+    }
+
+    // Without this the driver keeps ic_des_essid pinned to the enterprise
+    // SSID after a failure and silently re-associates to it (no keys, no
+    // traffic) instead of going back to scanning/auto-join.
+    static func abandonEnterpriseNetwork(_ ssid: String, reason: String) {
+        // itlwm's disassociate deauths whatever BSS it is on, regardless of
+        // the SSID passed. A late failure (e.g. a timeout after the user
+        // already switched networks) must not kick them off the new one.
+        var ssidBuf = [CChar](repeating: 0, count: Int(MAX_SSID_LENGTH) + 1)
+        let current = get_network_ssid(&ssidBuf) ? String(cString: ssidBuf) : ""
+        guard current == ssid else {
+            Log.debug("connectEnterprise: not releasing \(ssid) (\(reason)); driver has moved on to '\(current)'")
+            return
+        }
+        let result = dis_associate_ssid(ssid)
+        if result == KERN_SUCCESS {
+            Log.debug("connectEnterprise: released \(ssid) in itlwm (\(reason))")
+        } else {
+            Log.error("connectEnterprise: dis_associate_ssid(\(ssid)) failed: \(result) (\(reason))")
         }
     }
 

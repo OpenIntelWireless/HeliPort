@@ -57,6 +57,8 @@ final class CredentialsManager {
     func remove(_ network: NetworkInfo) {
         Log.debug("Removing \(network.ssid) from keychain")
         try? keychain.remove(network.keychainKey)
+        // Forgetting a network also forgets its trusted server certificate.
+        CertificatePinStore.shared.removePin(forSSID: network.ssid)
     }
 
     func getStorageFromSsid(_ ssid: String) -> NetworkInfoStorageEntity? {

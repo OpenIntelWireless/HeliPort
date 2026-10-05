@@ -191,6 +191,7 @@ final class StatusMenuLegacy: StatusMenuBase, StatusMenuItems {
         guard let ssid = sender.representedObject as? String else { return }
         DispatchQueue.global().async {
             CredentialsManager.instance.setAutoJoin(ssid, false)
+            EAPSupplicantManager.shared.endSession(reason: "user disconnected")
             dis_associate_ssid(ssid)
             Log.debug("Disconnected from \(ssid)")
         }

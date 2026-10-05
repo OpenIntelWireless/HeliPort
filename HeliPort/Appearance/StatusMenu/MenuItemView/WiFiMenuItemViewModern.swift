@@ -169,6 +169,7 @@ class WifiMenuItemViewModern: SelectableMenuItemView, WifiMenuItemView {
             connected = false
             updateImages()
             DispatchQueue.global().async {
+                EAPSupplicantManager.shared.endSession(reason: "user disconnected")
                 dis_associate_ssid(self.networkInfo.ssid)
                 Log.debug("Disconnected from \(self.networkInfo.ssid)")
             }

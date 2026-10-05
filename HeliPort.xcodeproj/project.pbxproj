@@ -3,10 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00348F1155FA84E415331A65 /* rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 78212649C46893635459BF65 /* rsa.c */; };
+		0504C0268378E37F4D1BABF3 /* sha1-pbkdf2.c in Sources */ = {isa = PBXBuildFile; fileRef = 815E17AA82F5EB1F02642067 /* sha1-pbkdf2.c */; };
+		0B1589DC1A81DF4036BAC095 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 0C0B8A2F8CDA2F0FAA3695FF /* common.c */; };
+		0B51B3B709116978C2D1B2FD /* rc4.c in Sources */ = {isa = PBXBuildFile; fileRef = C028D52966337052C4C9F806 /* rc4.c */; };
+		0BF63A6E07A34318B210F61B /* wpabuf.c in Sources */ = {isa = PBXBuildFile; fileRef = 29FDDC1A9FE256A9E03F55A0 /* wpabuf.c */; };
+		0EE80BEC0BE973F66C4A5D4C /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 2242FD83CC207AF96974C0B4 /* sha1.c */; };
+		11052A55F4EEE4E2C48E43A6 /* mschapv2.c in Sources */ = {isa = PBXBuildFile; fileRef = 34D776B5871D14211E1D3790 /* mschapv2.c */; };
+		1133F37E423F0137A6C6D781 /* sha256-prf.c in Sources */ = {isa = PBXBuildFile; fileRef = 009B895D1F362616B133562B /* sha256-prf.c */; };
 		1317990B256986E5006957D8 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1317990A256986E5006957D8 /* String+Extensions.swift */; };
 		1380C36124D54BFD00A448CF /* PrefsSavedNetworksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */; };
 		1380C36524D5580200A448CF /* PrefsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1380C36424D5580200A448CF /* PrefsWindow.swift */; };
@@ -14,6 +22,22 @@
 		138D3CCA24CE663B00793AC1 /* BugReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 138D3CC924CE663B00793AC1 /* BugReporter.swift */; };
 		13AB3CA824DE47D10093D283 /* WiFiConfigWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */; };
 		13C20DFA24D8B6D100B1E713 /* PrefsGeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */; };
+		16CB54E3B1772C1FF2327A46 /* sha1-tprf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0D477575876729A19FF39E35 /* sha1-tprf.c */; };
+		199252DF3FE3E54105E8FA7D /* eap_peap.c in Sources */ = {isa = PBXBuildFile; fileRef = 27736E34A8ABE1DC72EF307B /* eap_peap.c */; };
+		1BC0F467CD93E32364043B5E /* aes-siv.c in Sources */ = {isa = PBXBuildFile; fileRef = 29899BBF133300A5635B6F8F /* aes-siv.c */; };
+		26F5A90F762493A8A35B02D8 /* tlsv1_cred.c in Sources */ = {isa = PBXBuildFile; fileRef = 6437F5DB3DE06677511A0CB0 /* tlsv1_cred.c */; };
+		28B2140C1A597865BC95D637 /* tlsv1_client_read.c in Sources */ = {isa = PBXBuildFile; fileRef = 6E266BB229647EF94FE51435 /* tlsv1_client_read.c */; };
+		28C9E97E0238C96F0160D3AE /* sha256-tlsprf.c in Sources */ = {isa = PBXBuildFile; fileRef = D3A57396C1866713B0C92411 /* sha256-tlsprf.c */; };
+		2A0BA573ED4E81A578189CBC /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F02434F314CFFDE910E44 /* md5.c */; };
+		2AA073365EC0448F06B236D1 /* aes-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 861DE94400B859164A31CD09 /* aes-internal.c */; };
+		2AA70B89ABC5B26293B70416 /* crypto_internal-modexp.c in Sources */ = {isa = PBXBuildFile; fileRef = 77EE9983D5CC4B2135BAD09A /* crypto_internal-modexp.c */; };
+		365813FF7A7E645FD9419B1D /* EAPSupplicantBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = A568C8B954CFA2DFA7E670CF /* EAPSupplicantBridge.c */; };
+		36C8170819FB3FAB1ADB0AAC /* eap_peap_common.c in Sources */ = {isa = PBXBuildFile; fileRef = ACDA17B5CDB51D694657C675 /* eap_peap_common.c */; };
+		46CDE444F322CB61592ED57F /* eap_mschapv2.c in Sources */ = {isa = PBXBuildFile; fileRef = 8720A6B427029FC68101EA06 /* eap_mschapv2.c */; };
+		4B7FCAA18E519E5ACEA5495E /* wpa_debug.c in Sources */ = {isa = PBXBuildFile; fileRef = 3977E45EC41C6416E671EBEF /* wpa_debug.c */; };
+		4C0F37B5B353C6DF7062E3B7 /* crypto_internal-cipher.c in Sources */ = {isa = PBXBuildFile; fileRef = 23AD584AF7971FB1D0F87758 /* crypto_internal-cipher.c */; };
+		4F72B3525E1E046418459C4F /* aes-internal-dec.c in Sources */ = {isa = PBXBuildFile; fileRef = AA81D55F31975A0D95114CF6 /* aes-internal-dec.c */; };
+		4F8ACCA6A6E97CECC2BEA850 /* dh_groups.c in Sources */ = {isa = PBXBuildFile; fileRef = DFD0D3AA2588D6EAACDF196E /* dh_groups.c */; };
 		5013B8FB2C5C8C8D002C5006 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */; };
 		5013B8FD2C5DF244002C5006 /* NSApp+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */; };
 		5013B9002C5E1E00002C5006 /* StatusMenuBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5013B8FF2C5E1E00002C5006 /* StatusMenuBase.swift */; };
@@ -38,14 +62,58 @@
 		50F4959824BDD26D00AE4C08 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959724BDD26D00AE4C08 /* LoginItemManager.swift */; };
 		50F495A024BDEB6500AE4C08 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F4959F24BDEB6500AE4C08 /* main.swift */; };
 		50F495AC24BDEBB500AE4C08 /* HeliPort Launcher.app in Embed Launcher */ = {isa = PBXBuildFile; fileRef = 50F4959D24BDEB6500AE4C08 /* HeliPort Launcher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		531AE36CDB43616A092FD092 /* eap_tls_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 397F0AB42E149C156673C911 /* eap_tls_common.c */; };
+		57AF85D2175C80929368B5C9 /* sha1-prf.c in Sources */ = {isa = PBXBuildFile; fileRef = 430719FD4F68A15DE58ECCFF /* sha1-prf.c */; };
+		5A4F930836E09721D040E77D /* ms_funcs.c in Sources */ = {isa = PBXBuildFile; fileRef = 729A7BFE980C46FA0448F236 /* ms_funcs.c */; };
+		5ED501327CB68CD0AEB618EC /* aes-ctr.c in Sources */ = {isa = PBXBuildFile; fileRef = F0383E858691AFF62CFC7142 /* aes-ctr.c */; };
+		62022C5BA5E7DF48ABBC7EA2 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 567E373F8DE7904C9858B83F /* base64.c */; };
+		62194A4A2567129B50701A75 /* tlsv1_record.c in Sources */ = {isa = PBXBuildFile; fileRef = 057815E8BE8617EBFCC45EAD /* tlsv1_record.c */; };
+		67361E6B8BD1B729139BC2C7 /* dh_group5.c in Sources */ = {isa = PBXBuildFile; fileRef = D0483F123D056202CBBBAECF /* dh_group5.c */; };
+		69F2DCCBBD8FD8D8700D6E14 /* asn1.c in Sources */ = {isa = PBXBuildFile; fileRef = ED14E737A5BDC77B2781E28E /* asn1.c */; };
+		6BFD7C9B7040C16B74248FD8 /* eap_methods.c in Sources */ = {isa = PBXBuildFile; fileRef = A39AB94499AF46607398EF86 /* eap_methods.c */; };
+		6C26E992910965810659FBD2 /* pkcs8.c in Sources */ = {isa = PBXBuildFile; fileRef = 9C07AF3C2022F89AB052E8DE /* pkcs8.c */; };
+		6C4A6B6857C1CB63E8EEDB34 /* pkcs1.c in Sources */ = {isa = PBXBuildFile; fileRef = 3BBE3BEB539A8EA84AE6E33B /* pkcs1.c */; };
+		6D6A5E3355AD1AD2E9017962 /* tlsv1_client_ocsp.c in Sources */ = {isa = PBXBuildFile; fileRef = D15DCB98B6AF14CD48B7220F /* tlsv1_client_ocsp.c */; };
+		6FA3513F6A2E9F751A7C1052 /* aes-encblock.c in Sources */ = {isa = PBXBuildFile; fileRef = 5D1F0FF908953AB0D5C15EC3 /* aes-encblock.c */; };
+		71A4F229B617287B4E7DE1FD /* tlsv1_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 773E5A11BC58FF61DEE85B64 /* tlsv1_common.c */; };
 		7557CDF424935260000F0F71 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7557CDF324935260000F0F71 /* Credits.rtf */; };
 		7562BBE424826103008A9BD2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7562BBE324826102008A9BD2 /* README.md */; };
 		75FDF38B2481D22000B2A601 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FDF38A2481D22000B2A601 /* NetworkManager.swift */; };
 		75FDF38C2481D25A00B2A601 /* Api.c in Sources */ = {isa = PBXBuildFile; fileRef = F8F6CF0B243D675800965B43 /* Api.c */; };
+		76B5EA6F0258691F0579135C /* bignum.c in Sources */ = {isa = PBXBuildFile; fileRef = 663126AA2B692737AF915D05 /* bignum.c */; };
+		818387CECC412E1942EE4D44 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = F60F3EE30197E0ABC24B4D28 /* crc32.c */; };
+		820E3DA9674E6D50D0E77B09 /* aes-gcm.c in Sources */ = {isa = PBXBuildFile; fileRef = 752F430D8E08E990A13B8F10 /* aes-gcm.c */; };
+		852C4F1CC1EA445C2850339F /* crypto_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 0B97BD3278CB5823437FA0D8 /* crypto_internal.c */; };
+		8E971A626630BC50C4611F8A /* milenage.c in Sources */ = {isa = PBXBuildFile; fileRef = 5390A966A29481D9763F96AA /* milenage.c */; };
+		94A8DB802A0177805108CFED /* eap_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 4F13CC9081581A8B006CAE1B /* eap_common.c */; };
+		953C5A43EEE8BA88D63419FD /* md5-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 75D9864190011273414849CA /* md5-internal.c */; };
+		9989C1FB9A09B6151FEC66B6 /* sha512-prf.c in Sources */ = {isa = PBXBuildFile; fileRef = 8DF7DC3266F69333FD3A69FA /* sha512-prf.c */; };
+		9E5AE075B5AFC9FB9DB9CA19 /* aes-eax.c in Sources */ = {isa = PBXBuildFile; fileRef = 3C5103E97D00E812ADD1E4E3 /* aes-eax.c */; };
+		A67FDE8B8F4D1D4A4C1357BE /* sha512-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC266AC884C5F874DFCB611 /* sha512-internal.c */; };
+		A8A0CA0B69CB426DFA3BCD5D /* chap.c in Sources */ = {isa = PBXBuildFile; fileRef = 2B0EC4AF2D77423834744A95 /* chap.c */; };
+		A8BE106FFABE3FF19D453052 /* os_unix.c in Sources */ = {isa = PBXBuildFile; fileRef = FF92230639750FBE2837D7AD /* os_unix.c */; };
+		AACDC2C7BDDF3927011570F3 /* fips_prf_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = FD59C060BE0E0284B673B076 /* fips_prf_internal.c */; };
+		B0B1681E0A6C7A8F58CEA0D0 /* aes-internal-enc.c in Sources */ = {isa = PBXBuildFile; fileRef = D919390E70337C17AC5CC2DA /* aes-internal-enc.c */; };
+		B3231F8D2A6177102CCBB0B9 /* sha512.c in Sources */ = {isa = PBXBuildFile; fileRef = 8B12CF67099859B943E0215E /* sha512.c */; };
+		B41C977B3A095DB90072F144 /* pkcs5.c in Sources */ = {isa = PBXBuildFile; fileRef = E03736ED2FE22DD08312D176 /* pkcs5.c */; };
+		B6A9021BC5724DA907AB12EA /* sha256-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 066B8DB3CB60E2CDD9B7A539 /* sha256-internal.c */; };
+		B6E5522E6275385F82D8D164 /* sha1-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 5E58E1E147964EA3AF36CBE0 /* sha1-internal.c */; };
 		BCCB2AA4243708090005BB82 /* WiFiMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */; };
 		BCFA32EB2424D2BE00E23603 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */; };
 		BCFA32ED2424D2BF00E23603 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EC2424D2BF00E23603 /* Assets.xcassets */; };
 		BCFA32F02424D2BF00E23603 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BCFA32EE2424D2BF00E23603 /* MainMenu.xib */; };
+		C400A5964ABBF50EB919E5D7 /* aes-cbc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5E98C5F8E0406BE61CF51006 /* aes-cbc.c */; };
+		CEDFD270FA6C2C88D90FE3B9 /* aes-unwrap.c in Sources */ = {isa = PBXBuildFile; fileRef = 2199BA1E70070745E5F604DD /* aes-unwrap.c */; };
+		D436EF4E35C31D41E6A002C1 /* KextEAPOLTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E564FBA7A706B8BCD4A1465C /* KextEAPOLTransport.swift */; };
+		D76958748A1C6BA046CEF686 /* sha384.c in Sources */ = {isa = PBXBuildFile; fileRef = F5FBAF5E4781CE647C5B85A9 /* sha384.c */; };
+		DE7FB21B876C0FCC85858172 /* sha1-tlsprf.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBFD8416EBECA47833B0D3 /* sha1-tlsprf.c */; };
+		E0EBEDB12AA34DC12B8EB173 /* EAPSupplicant.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F62FEB3B3EB9F9CF41DCB1 /* EAPSupplicant.swift */; };
+		E2897CF185C7F26610CA2559 /* aes-omac1.c in Sources */ = {isa = PBXBuildFile; fileRef = B99EB1AF422F0D099789EC6A /* aes-omac1.c */; };
+		E54C823601A8B9ABEB22F213 /* aes-wrap.c in Sources */ = {isa = PBXBuildFile; fileRef = E779FF6396A99890252D8AFB /* aes-wrap.c */; };
+		EA6A33D873C0ACA850245173 /* eap.c in Sources */ = {isa = PBXBuildFile; fileRef = C87A5F94EB4B81307EAB4950 /* eap.c */; };
+		EC554EA1D22D511A2468D2E2 /* aes-ccm.c in Sources */ = {isa = PBXBuildFile; fileRef = E7B6942712D419C2E329E0B7 /* aes-ccm.c */; };
+		ECD13BEB7F2B73A85768C33C /* crypto_internal-rsa.c in Sources */ = {isa = PBXBuildFile; fileRef = 20E7F1AEC6A63988C5748EFB /* crypto_internal-rsa.c */; };
+		EE16D84847AF566E210BE417 /* x509v3.c in Sources */ = {isa = PBXBuildFile; fileRef = 07F239B0BCEB50AC108B6676 /* x509v3.c */; };
 		F336D63C24B497B6004C98C4 /* NetworkManager+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */; };
 		F336D63E24B4986C004C98C4 /* itl_phy_mode+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */; };
 		F336D64024B7B7D8004C98C4 /* itl80211_security+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */; };
@@ -55,6 +123,15 @@
 		F379276F24A0A4A50087FF2B /* CredentialsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379276E24A0A4A50087FF2B /* CredentialsManager.swift */; };
 		F379277124A0A52E0087FF2B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379277024A0A52E0087FF2B /* Log.swift */; };
 		F3915F0724AB1A1B00E6614D /* itl_80211_state+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3915F0624AB1A1B00E6614D /* itl_80211_state+Extensions.swift */; };
+		F3CEECD697E7C87A2CB2DE22 /* tlsv1_client.c in Sources */ = {isa = PBXBuildFile; fileRef = 7A4996D065890457C66212D0 /* tlsv1_client.c */; };
+		F40ECACF82DFADD46F5DCEF5 /* md4-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = B919859506ADE43EA1017067 /* md4-internal.c */; };
+		F55FF22648E570FFBCF9B882 /* sha384-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 7ECA62E25D78BD8040BE9E4D /* sha384-internal.c */; };
+		F754E227AD1A2016E3695C21 /* des-internal.c in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2DA4C80B204E947558409 /* des-internal.c */; };
+		F9BE4B4F57553237735B34B6 /* tlsv1_client_write.c in Sources */ = {isa = PBXBuildFile; fileRef = 2469E0A2DA29B58BBEF3E154 /* tlsv1_client_write.c */; };
+		FB097D41F8D4F689E1A64A55 /* sha256.c in Sources */ = {isa = PBXBuildFile; fileRef = 07F9AEB3FC0CBD68B825C7D5 /* sha256.c */; };
+		FB59B6B05F17FB91D0EF643C /* CertificatePinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A33F983916590C22B0BE60 /* CertificatePinStore.swift */; };
+		FB677D24AA1176EDB0184D37 /* sha384-prf.c in Sources */ = {isa = PBXBuildFile; fileRef = BE98F0D708CA91C5F25DAD44 /* sha384-prf.c */; };
+		FEA8CCC4601CBE561085A3CC /* tls_internal.c in Sources */ = {isa = PBXBuildFile; fileRef = B8EB6BD480D0439916782C7A /* tls_internal.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,6 +149,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		009B895D1F362616B133562B /* sha256-prf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha256-prf.c"; path = "EAPCore/crypto/sha256-prf.c"; sourceTree = "<group>"; };
+		01513E5CC50A7CED9E0B4C6D /* eap_peap_common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap_peap_common.h; path = EAPCore/eap_common/eap_peap_common.h; sourceTree = "<group>"; };
+		01604F464732E3295AA04D24 /* tlsv1_client_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tlsv1_client_i.h; path = EAPCore/tls/tlsv1_client_i.h; sourceTree = "<group>"; };
+		01D85D2D1B7D47FA38E37591 /* ext_password.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ext_password.h; path = EAPCore/utils/ext_password.h; sourceTree = "<group>"; };
+		057815E8BE8617EBFCC45EAD /* tlsv1_record.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_record.c; path = EAPCore/tls/tlsv1_record.c; sourceTree = "<group>"; };
+		066B8DB3CB60E2CDD9B7A539 /* sha256-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha256-internal.c"; path = "EAPCore/crypto/sha256-internal.c"; sourceTree = "<group>"; };
+		0757AADE2AF6C00DA705C1AD /* tlsv1_common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tlsv1_common.h; path = EAPCore/tls/tlsv1_common.h; sourceTree = "<group>"; };
+		07CF93FBA56601810201D440 /* rsa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rsa.h; path = EAPCore/tls/rsa.h; sourceTree = "<group>"; };
+		07F239B0BCEB50AC108B6676 /* x509v3.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = x509v3.c; path = EAPCore/tls/x509v3.c; sourceTree = "<group>"; };
+		07F9AEB3FC0CBD68B825C7D5 /* sha256.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = sha256.c; path = EAPCore/crypto/sha256.c; sourceTree = "<group>"; };
+		0B97BD3278CB5823437FA0D8 /* crypto_internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = crypto_internal.c; path = EAPCore/crypto/crypto_internal.c; sourceTree = "<group>"; };
+		0C0B8A2F8CDA2F0FAA3695FF /* common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = common.c; path = EAPCore/utils/common.c; sourceTree = "<group>"; };
+		0D477575876729A19FF39E35 /* sha1-tprf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha1-tprf.c"; path = "EAPCore/crypto/sha1-tprf.c"; sourceTree = "<group>"; };
+		10A21B3E5554769A8C147F2D /* md5_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = md5_i.h; path = EAPCore/crypto/md5_i.h; sourceTree = "<group>"; };
+		12EB9113C8F0BFF0DAA94837 /* list.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = list.h; path = EAPCore/utils/list.h; sourceTree = "<group>"; };
 		1317990A256986E5006957D8 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		1380C36024D54BFD00A448CF /* PrefsSavedNetworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsSavedNetworksView.swift; sourceTree = "<group>"; };
 		1380C36424D5580200A448CF /* PrefsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindow.swift; sourceTree = "<group>"; };
@@ -79,6 +171,31 @@
 		138D3CC924CE663B00793AC1 /* BugReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReporter.swift; sourceTree = "<group>"; };
 		13AB3CA724DE47D10093D283 /* WiFiConfigWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiConfigWindow.swift; sourceTree = "<group>"; };
 		13C20DF924D8B6D100B1E713 /* PrefsGeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsGeneralView.swift; sourceTree = "<group>"; };
+		14EB9A7DAE116A742D1E2E35 /* milenage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = milenage.h; path = EAPCore/crypto/milenage.h; sourceTree = "<group>"; };
+		20E7F1AEC6A63988C5748EFB /* crypto_internal-rsa.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "crypto_internal-rsa.c"; path = "EAPCore/crypto/crypto_internal-rsa.c"; sourceTree = "<group>"; };
+		2199BA1E70070745E5F604DD /* aes-unwrap.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-unwrap.c"; path = "EAPCore/crypto/aes-unwrap.c"; sourceTree = "<group>"; };
+		2242FD83CC207AF96974C0B4 /* sha1.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = EAPCore/crypto/sha1.c; sourceTree = "<group>"; };
+		23AD584AF7971FB1D0F87758 /* crypto_internal-cipher.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "crypto_internal-cipher.c"; path = "EAPCore/crypto/crypto_internal-cipher.c"; sourceTree = "<group>"; };
+		2469E0A2DA29B58BBEF3E154 /* tlsv1_client_write.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_client_write.c; path = EAPCore/tls/tlsv1_client_write.c; sourceTree = "<group>"; };
+		25CCA54A9C7CA7AA594BFBBB /* sha1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = EAPCore/crypto/sha1.h; sourceTree = "<group>"; };
+		27736E34A8ABE1DC72EF307B /* eap_peap.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap_peap.c; path = EAPCore/eap_peer/eap_peap.c; sourceTree = "<group>"; };
+		29899BBF133300A5635B6F8F /* aes-siv.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-siv.c"; path = "EAPCore/crypto/aes-siv.c"; sourceTree = "<group>"; };
+		29FDDC1A9FE256A9E03F55A0 /* wpabuf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = wpabuf.c; path = EAPCore/utils/wpabuf.c; sourceTree = "<group>"; };
+		2B0EC4AF2D77423834744A95 /* chap.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = chap.c; path = EAPCore/eap_common/chap.c; sourceTree = "<group>"; };
+		2CC266AC884C5F874DFCB611 /* sha512-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha512-internal.c"; path = "EAPCore/crypto/sha512-internal.c"; sourceTree = "<group>"; };
+		32B12DA62898335446E40F3A /* common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = common.h; path = EAPCore/utils/common.h; sourceTree = "<group>"; };
+		34D776B5871D14211E1D3790 /* mschapv2.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mschapv2.c; path = EAPCore/eap_peer/mschapv2.c; sourceTree = "<group>"; };
+		3977E45EC41C6416E671EBEF /* wpa_debug.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = wpa_debug.c; path = EAPCore/utils/wpa_debug.c; sourceTree = "<group>"; };
+		397F0AB42E149C156673C911 /* eap_tls_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap_tls_common.c; path = EAPCore/eap_peer/eap_tls_common.c; sourceTree = "<group>"; };
+		3BBE3BEB539A8EA84AE6E33B /* pkcs1.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = pkcs1.c; path = EAPCore/tls/pkcs1.c; sourceTree = "<group>"; };
+		3C5103E97D00E812ADD1E4E3 /* aes-eax.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-eax.c"; path = "EAPCore/crypto/aes-eax.c"; sourceTree = "<group>"; };
+		3ED2DA4C80B204E947558409 /* des-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "des-internal.c"; path = "EAPCore/crypto/des-internal.c"; sourceTree = "<group>"; };
+		402AB6CA96FA8AE7814DA649 /* crc32.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crc32.h; path = EAPCore/utils/crc32.h; sourceTree = "<group>"; };
+		42CCE80AF0E4463AFDD7084A /* state_machine.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = state_machine.h; path = EAPCore/utils/state_machine.h; sourceTree = "<group>"; };
+		430719FD4F68A15DE58ECCFF /* sha1-prf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha1-prf.c"; path = "EAPCore/crypto/sha1-prf.c"; sourceTree = "<group>"; };
+		4CCBFD8416EBECA47833B0D3 /* sha1-tlsprf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha1-tlsprf.c"; path = "EAPCore/crypto/sha1-tlsprf.c"; sourceTree = "<group>"; };
+		4F13CC9081581A8B006CAE1B /* eap_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap_common.c; path = EAPCore/eap_common/eap_common.c; sourceTree = "<group>"; };
+		500AABA7BEA491B218EF4EF2 /* dh_groups.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dh_groups.h; path = EAPCore/crypto/dh_groups.h; sourceTree = "<group>"; };
 		5013B8FA2C5C8C8D002C5006 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5013B8FC2C5DF244002C5006 /* NSApp+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSApp+Extensions.swift"; sourceTree = "<group>"; };
 		5013B8FF2C5E1E00002C5006 /* StatusMenuBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuBase.swift; sourceTree = "<group>"; };
@@ -104,9 +221,60 @@
 		50F4959F24BDEB6500AE4C08 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		50F495A624BDEB6700AE4C08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50F495A724BDEB6700AE4C08 /* HeliPort_Launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort_Launcher.entitlements; sourceTree = "<group>"; };
+		520921D4D30AFD10CEB32ACD /* sha512.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha512.h; path = EAPCore/crypto/sha512.h; sourceTree = "<group>"; };
+		52BDF4338F2D96C05AA81531 /* eap_common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap_common.h; path = EAPCore/eap_common/eap_common.h; sourceTree = "<group>"; };
+		5390A966A29481D9763F96AA /* milenage.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = milenage.c; path = EAPCore/crypto/milenage.c; sourceTree = "<group>"; };
+		567E373F8DE7904C9858B83F /* base64.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = base64.c; path = EAPCore/utils/base64.c; sourceTree = "<group>"; };
+		59C01BBB153EFE59B16145A8 /* random.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = random.h; path = EAPCore/crypto/random.h; sourceTree = "<group>"; };
+		5D1F0FF908953AB0D5C15EC3 /* aes-encblock.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-encblock.c"; path = "EAPCore/crypto/aes-encblock.c"; sourceTree = "<group>"; };
+		5E58E1E147964EA3AF36CBE0 /* sha1-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha1-internal.c"; path = "EAPCore/crypto/sha1-internal.c"; sourceTree = "<group>"; };
+		5E98C5F8E0406BE61CF51006 /* aes-cbc.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-cbc.c"; path = "EAPCore/crypto/aes-cbc.c"; sourceTree = "<group>"; };
+		5F5F02434F314CFFDE910E44 /* md5.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = md5.c; path = EAPCore/crypto/md5.c; sourceTree = "<group>"; };
+		629AC4C5AC381E81A0193B89 /* chap.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = chap.h; path = EAPCore/eap_common/chap.h; sourceTree = "<group>"; };
+		6437F5DB3DE06677511A0CB0 /* tlsv1_cred.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_cred.c; path = EAPCore/tls/tlsv1_cred.c; sourceTree = "<group>"; };
+		64BDEF0030858956F4E8A815 /* pkcs1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pkcs1.h; path = EAPCore/tls/pkcs1.h; sourceTree = "<group>"; };
+		663126AA2B692737AF915D05 /* bignum.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = bignum.c; path = EAPCore/tls/bignum.c; sourceTree = "<group>"; };
+		6ABBC3649FC1F52AF4D2D21B /* libtommath.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = libtommath.c; path = EAPCore/tls/libtommath.c; sourceTree = "<group>"; };
+		6D2E6351824486395E57CC81 /* includes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = includes.h; path = EAPCore/utils/includes.h; sourceTree = "<group>"; };
+		6E266BB229647EF94FE51435 /* tlsv1_client_read.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_client_read.c; path = EAPCore/tls/tlsv1_client_read.c; sourceTree = "<group>"; };
+		729A7BFE980C46FA0448F236 /* ms_funcs.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ms_funcs.c; path = EAPCore/crypto/ms_funcs.c; sourceTree = "<group>"; };
+		752F430D8E08E990A13B8F10 /* aes-gcm.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-gcm.c"; path = "EAPCore/crypto/aes-gcm.c"; sourceTree = "<group>"; };
 		7557CDF324935260000F0F71 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		7562BBE324826102008A9BD2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		75D9864190011273414849CA /* md5-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "md5-internal.c"; path = "EAPCore/crypto/md5-internal.c"; sourceTree = "<group>"; };
 		75FDF38A2481D22000B2A601 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		7684142B5511B42C98CBB114 /* dh_group5.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = dh_group5.h; path = EAPCore/crypto/dh_group5.h; sourceTree = "<group>"; };
+		773E5A11BC58FF61DEE85B64 /* tlsv1_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_common.c; path = EAPCore/tls/tlsv1_common.c; sourceTree = "<group>"; };
+		77EE9983D5CC4B2135BAD09A /* crypto_internal-modexp.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "crypto_internal-modexp.c"; path = "EAPCore/crypto/crypto_internal-modexp.c"; sourceTree = "<group>"; };
+		78212649C46893635459BF65 /* rsa.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = rsa.c; path = EAPCore/tls/rsa.c; sourceTree = "<group>"; };
+		7A4996D065890457C66212D0 /* tlsv1_client.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_client.c; path = EAPCore/tls/tlsv1_client.c; sourceTree = "<group>"; };
+		7CFA7760D1BF6A1100BEE7BD /* sha512_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha512_i.h; path = EAPCore/crypto/sha512_i.h; sourceTree = "<group>"; };
+		7ECA62E25D78BD8040BE9E4D /* sha384-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha384-internal.c"; path = "EAPCore/crypto/sha384-internal.c"; sourceTree = "<group>"; };
+		815E17AA82F5EB1F02642067 /* sha1-pbkdf2.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha1-pbkdf2.c"; path = "EAPCore/crypto/sha1-pbkdf2.c"; sourceTree = "<group>"; };
+		8517ED75944E90A781ACC123 /* eap_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap_i.h; path = EAPCore/eap_peer/eap_i.h; sourceTree = "<group>"; };
+		861DE94400B859164A31CD09 /* aes-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-internal.c"; path = "EAPCore/crypto/aes-internal.c"; sourceTree = "<group>"; };
+		8720A6B427029FC68101EA06 /* eap_mschapv2.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap_mschapv2.c; path = EAPCore/eap_peer/eap_mschapv2.c; sourceTree = "<group>"; };
+		886618131CDE552ED8F1ED35 /* build_config.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = build_config.h; path = EAPCore/build_config.h; sourceTree = "<group>"; };
+		8B12CF67099859B943E0215E /* sha512.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = sha512.c; path = EAPCore/crypto/sha512.c; sourceTree = "<group>"; };
+		8D34E431F3F31BD9372F89D0 /* x509v3.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = x509v3.h; path = EAPCore/tls/x509v3.h; sourceTree = "<group>"; };
+		8DF7DC3266F69333FD3A69FA /* sha512-prf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha512-prf.c"; path = "EAPCore/crypto/sha512-prf.c"; sourceTree = "<group>"; };
+		8E6A6581B133297359E545C5 /* eap_config.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap_config.h; path = EAPCore/eap_peer/eap_config.h; sourceTree = "<group>"; };
+		974FDE4DB0B26C46195D0DDC /* eap.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap.h; path = EAPCore/eap_peer/eap.h; sourceTree = "<group>"; };
+		9C07AF3C2022F89AB052E8DE /* pkcs8.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = pkcs8.c; path = EAPCore/tls/pkcs8.c; sourceTree = "<group>"; };
+		9CE107B5F36CEAC23B90B614 /* sha256_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha256_i.h; path = EAPCore/crypto/sha256_i.h; sourceTree = "<group>"; };
+		A39AB94499AF46607398EF86 /* eap_methods.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap_methods.c; path = EAPCore/eap_peer/eap_methods.c; sourceTree = "<group>"; };
+		A568C8B954CFA2DFA7E670CF /* EAPSupplicantBridge.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = EAPSupplicantBridge.c; path = EAPCore/EAPSupplicantBridge.c; sourceTree = "<group>"; };
+		AA81D55F31975A0D95114CF6 /* aes-internal-dec.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-internal-dec.c"; path = "EAPCore/crypto/aes-internal-dec.c"; sourceTree = "<group>"; };
+		ACDA17B5CDB51D694657C675 /* eap_peap_common.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap_peap_common.c; path = EAPCore/eap_common/eap_peap_common.c; sourceTree = "<group>"; };
+		B209ED12751B17D80E583ECC /* aes_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes_i.h; path = EAPCore/crypto/aes_i.h; sourceTree = "<group>"; };
+		B3DA0B669C9194404F2391FD /* sha1_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha1_i.h; path = EAPCore/crypto/sha1_i.h; sourceTree = "<group>"; };
+		B6FBEEFFF4815F67D170F000 /* sha384_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha384_i.h; path = EAPCore/crypto/sha384_i.h; sourceTree = "<group>"; };
+		B7D717E2F3AB70CA61D978AD /* wpabuf.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = wpabuf.h; path = EAPCore/utils/wpabuf.h; sourceTree = "<group>"; };
+		B8EB6BD480D0439916782C7A /* tls_internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tls_internal.c; path = EAPCore/crypto/tls_internal.c; sourceTree = "<group>"; };
+		B919859506ADE43EA1017067 /* md4-internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "md4-internal.c"; path = "EAPCore/crypto/md4-internal.c"; sourceTree = "<group>"; };
+		B99EB1AF422F0D099789EC6A /* aes-omac1.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-omac1.c"; path = "EAPCore/crypto/aes-omac1.c"; sourceTree = "<group>"; };
+		B9B02CD56ABBB6F1B948B40F /* eap_defs.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap_defs.h; path = EAPCore/eap_common/eap_defs.h; sourceTree = "<group>"; };
+		BC16100A9B3CF009DD40BD0F /* random.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = random.c; path = EAPCore/crypto/random.c; sourceTree = "<group>"; };
 		BCCB2AA3243708090005BB82 /* WiFiMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiMenuItemView.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		BCFA32E72424D2BE00E23603 /* HeliPort.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeliPort.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCFA32EA2424D2BE00E23603 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +282,40 @@
 		BCFA32EF2424D2BF00E23603 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		BCFA32F12424D2BF00E23603 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HeliPort.entitlements; sourceTree = "<group>"; };
+		BE98F0D708CA91C5F25DAD44 /* sha384-prf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha384-prf.c"; path = "EAPCore/crypto/sha384-prf.c"; sourceTree = "<group>"; };
+		BFB2E54CF4AEC55E3E55E6E0 /* des_i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = des_i.h; path = EAPCore/crypto/des_i.h; sourceTree = "<group>"; };
+		C028D52966337052C4C9F806 /* rc4.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = rc4.c; path = EAPCore/crypto/rc4.c; sourceTree = "<group>"; };
+		C2D54773AEEBA519F46C73CE /* const_time.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = const_time.h; path = EAPCore/utils/const_time.h; sourceTree = "<group>"; };
+		C5A0CCF83064CFBD00180C5D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C61208A343FF6249C6B82828 /* wpa_debug.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = wpa_debug.h; path = EAPCore/utils/wpa_debug.h; sourceTree = "<group>"; };
+		C861EA5634CBB243E38543DB /* aes_wrap.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes_wrap.h; path = EAPCore/crypto/aes_wrap.h; sourceTree = "<group>"; };
+		C87A5F94EB4B81307EAB4950 /* eap.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = eap.c; path = EAPCore/eap_peer/eap.c; sourceTree = "<group>"; };
+		C8A33F983916590C22B0BE60 /* CertificatePinStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CertificatePinStore.swift; path = EAPSupplicant/CertificatePinStore.swift; sourceTree = "<group>"; };
+		CCBB3D81C6D7461DF66D05A3 /* pkcs8.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pkcs8.h; path = EAPCore/tls/pkcs8.h; sourceTree = "<group>"; };
+		CED6707F591B511266625E88 /* tls.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tls.h; path = EAPCore/crypto/tls.h; sourceTree = "<group>"; };
+		D0483F123D056202CBBBAECF /* dh_group5.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = dh_group5.c; path = EAPCore/crypto/dh_group5.c; sourceTree = "<group>"; };
+		D0F62FEB3B3EB9F9CF41DCB1 /* EAPSupplicant.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EAPSupplicant.swift; path = EAPSupplicant/EAPSupplicant.swift; sourceTree = "<group>"; };
+		D156B948F3DE59DDA4E0EDEA /* tlsv1_record.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tlsv1_record.h; path = EAPCore/tls/tlsv1_record.h; sourceTree = "<group>"; };
+		D15DCB98B6AF14CD48B7220F /* tlsv1_client_ocsp.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = tlsv1_client_ocsp.c; path = EAPCore/tls/tlsv1_client_ocsp.c; sourceTree = "<group>"; };
+		D3A57396C1866713B0C92411 /* sha256-tlsprf.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "sha256-tlsprf.c"; path = "EAPCore/crypto/sha256-tlsprf.c"; sourceTree = "<group>"; };
+		D83B76E1E13EC42E527E4934 /* bignum.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = bignum.h; path = EAPCore/tls/bignum.h; sourceTree = "<group>"; };
+		D919390E70337C17AC5CC2DA /* aes-internal-enc.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-internal-enc.c"; path = "EAPCore/crypto/aes-internal-enc.c"; sourceTree = "<group>"; };
+		D9FA523D6143F742C2E8DA34 /* mschapv2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mschapv2.h; path = EAPCore/eap_peer/mschapv2.h; sourceTree = "<group>"; };
+		DB9F72313D1BECED96467A5E /* tlsv1_client.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tlsv1_client.h; path = EAPCore/tls/tlsv1_client.h; sourceTree = "<group>"; };
+		DFD0D3AA2588D6EAACDF196E /* dh_groups.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = dh_groups.c; path = EAPCore/crypto/dh_groups.c; sourceTree = "<group>"; };
+		E03736ED2FE22DD08312D176 /* pkcs5.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = pkcs5.c; path = EAPCore/tls/pkcs5.c; sourceTree = "<group>"; };
+		E3DF4ECB84048AF778C0C6CD /* EAPSupplicantBridge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = EAPSupplicantBridge.h; path = EAPCore/EAPSupplicantBridge.h; sourceTree = "<group>"; };
+		E559ED008B57384F914979BE /* sha256.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha256.h; path = EAPCore/crypto/sha256.h; sourceTree = "<group>"; };
+		E564FBA7A706B8BCD4A1465C /* KextEAPOLTransport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KextEAPOLTransport.swift; path = EAPSupplicant/KextEAPOLTransport.swift; sourceTree = "<group>"; };
+		E779FF6396A99890252D8AFB /* aes-wrap.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-wrap.c"; path = "EAPCore/crypto/aes-wrap.c"; sourceTree = "<group>"; };
+		E7B6942712D419C2E329E0B7 /* aes-ccm.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-ccm.c"; path = "EAPCore/crypto/aes-ccm.c"; sourceTree = "<group>"; };
+		EB13D4E85F917C9DDA256155 /* pkcs5.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pkcs5.h; path = EAPCore/tls/pkcs5.h; sourceTree = "<group>"; };
+		ECACC25843FF42F286C7A5D0 /* md5.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = md5.h; path = EAPCore/crypto/md5.h; sourceTree = "<group>"; };
+		ED14E737A5BDC77B2781E28E /* asn1.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = asn1.c; path = EAPCore/tls/asn1.c; sourceTree = "<group>"; };
+		EE336E2FADDE6205CDBCF54F /* base64.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = base64.h; path = EAPCore/utils/base64.h; sourceTree = "<group>"; };
+		EE73915A3098CD4F6C27CE51 /* asn1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1.h; path = EAPCore/tls/asn1.h; sourceTree = "<group>"; };
+		F0383E858691AFF62CFC7142 /* aes-ctr.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = "aes-ctr.c"; path = "EAPCore/crypto/aes-ctr.c"; sourceTree = "<group>"; };
+		F0ED93F5C2AC610ADF4F4860 /* eap_tls_common.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = eap_tls_common.h; path = EAPCore/eap_peer/eap_tls_common.h; sourceTree = "<group>"; };
 		F336D63B24B497B6004C98C4 /* NetworkManager+Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkManager+Data.swift"; sourceTree = "<group>"; };
 		F336D63D24B4986C004C98C4 /* itl_phy_mode+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_phy_mode+Description.swift"; sourceTree = "<group>"; };
 		F336D63F24B7B7D8004C98C4 /* itl80211_security+Description.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl80211_security+Description.swift"; sourceTree = "<group>"; };
@@ -123,10 +325,19 @@
 		F379276E24A0A4A50087FF2B /* CredentialsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsManager.swift; sourceTree = "<group>"; };
 		F379277024A0A52E0087FF2B /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		F3915F0624AB1A1B00E6614D /* itl_80211_state+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "itl_80211_state+Extensions.swift"; sourceTree = "<group>"; };
+		F426EA4FE6B2E6E0E23A5E96 /* crypto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto.h; path = EAPCore/crypto/crypto.h; sourceTree = "<group>"; };
+		F5FBAF5E4781CE647C5B85A9 /* sha384.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = sha384.c; path = EAPCore/crypto/sha384.c; sourceTree = "<group>"; };
+		F60F3EE30197E0ABC24B4D28 /* crc32.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = crc32.c; path = EAPCore/utils/crc32.c; sourceTree = "<group>"; };
 		F86A8972243CD40800CBABC2 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		F886ED8D68313A3EAD489A40 /* sha384.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sha384.h; path = EAPCore/crypto/sha384.h; sourceTree = "<group>"; };
 		F8F6CF0A243D675800965B43 /* Api.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Api.h; sourceTree = "<group>"; };
 		F8F6CF0B243D675800965B43 /* Api.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Api.c; sourceTree = "<group>"; };
 		F8F6CF0E243D67D800965B43 /* IoctlId.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IoctlId.h; sourceTree = "<group>"; };
+		F9B1E3FB87D924858BA24797 /* tlsv1_cred.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tlsv1_cred.h; path = EAPCore/tls/tlsv1_cred.h; sourceTree = "<group>"; };
+		FD59C060BE0E0284B673B076 /* fips_prf_internal.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = fips_prf_internal.c; path = EAPCore/crypto/fips_prf_internal.c; sourceTree = "<group>"; };
+		FDF918893DCF7F5724540040 /* aes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = aes.h; path = EAPCore/crypto/aes.h; sourceTree = "<group>"; };
+		FF92230639750FBE2837D7AD /* os_unix.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = os_unix.c; path = EAPCore/utils/os_unix.c; sourceTree = "<group>"; };
+		FFFDECF745F4879DA30DAD65 /* os.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = os.h; path = EAPCore/utils/os.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +368,16 @@
 				1380C36424D5580200A448CF /* PrefsWindow.swift */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		239D0510BE5FE472AF1D7D21 /* EAPSupplicant */ = {
+			isa = PBXGroup;
+			children = (
+				D0F62FEB3B3EB9F9CF41DCB1 /* EAPSupplicant.swift */,
+				C8A33F983916590C22B0BE60 /* CertificatePinStore.swift */,
+				E564FBA7A706B8BCD4A1465C /* KextEAPOLTransport.swift */,
+			);
+			name = EAPSupplicant;
 			sourceTree = "<group>";
 		};
 		5013B8FE2C5E1B56002C5006 /* StatusMenu */ = {
@@ -206,6 +427,165 @@
 			path = "HeliPort Launcher";
 			sourceTree = "<group>";
 		};
+		5113A9402CE0C6E67ADF0C73 /* tls */ = {
+			isa = PBXGroup;
+			children = (
+				ED14E737A5BDC77B2781E28E /* asn1.c */,
+				663126AA2B692737AF915D05 /* bignum.c */,
+				6ABBC3649FC1F52AF4D2D21B /* libtommath.c */,
+				3BBE3BEB539A8EA84AE6E33B /* pkcs1.c */,
+				E03736ED2FE22DD08312D176 /* pkcs5.c */,
+				9C07AF3C2022F89AB052E8DE /* pkcs8.c */,
+				78212649C46893635459BF65 /* rsa.c */,
+				7A4996D065890457C66212D0 /* tlsv1_client.c */,
+				D15DCB98B6AF14CD48B7220F /* tlsv1_client_ocsp.c */,
+				6E266BB229647EF94FE51435 /* tlsv1_client_read.c */,
+				2469E0A2DA29B58BBEF3E154 /* tlsv1_client_write.c */,
+				773E5A11BC58FF61DEE85B64 /* tlsv1_common.c */,
+				6437F5DB3DE06677511A0CB0 /* tlsv1_cred.c */,
+				057815E8BE8617EBFCC45EAD /* tlsv1_record.c */,
+				07F239B0BCEB50AC108B6676 /* x509v3.c */,
+				EE73915A3098CD4F6C27CE51 /* asn1.h */,
+				D83B76E1E13EC42E527E4934 /* bignum.h */,
+				64BDEF0030858956F4E8A815 /* pkcs1.h */,
+				EB13D4E85F917C9DDA256155 /* pkcs5.h */,
+				CCBB3D81C6D7461DF66D05A3 /* pkcs8.h */,
+				07CF93FBA56601810201D440 /* rsa.h */,
+				DB9F72313D1BECED96467A5E /* tlsv1_client.h */,
+				01604F464732E3295AA04D24 /* tlsv1_client_i.h */,
+				0757AADE2AF6C00DA705C1AD /* tlsv1_common.h */,
+				F9B1E3FB87D924858BA24797 /* tlsv1_cred.h */,
+				D156B948F3DE59DDA4E0EDEA /* tlsv1_record.h */,
+				8D34E431F3F31BD9372F89D0 /* x509v3.h */,
+			);
+			name = tls;
+			sourceTree = "<group>";
+		};
+		75E77F05CD8BD001EFE1A498 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				567E373F8DE7904C9858B83F /* base64.c */,
+				0C0B8A2F8CDA2F0FAA3695FF /* common.c */,
+				F60F3EE30197E0ABC24B4D28 /* crc32.c */,
+				FF92230639750FBE2837D7AD /* os_unix.c */,
+				3977E45EC41C6416E671EBEF /* wpa_debug.c */,
+				29FDDC1A9FE256A9E03F55A0 /* wpabuf.c */,
+				EE336E2FADDE6205CDBCF54F /* base64.h */,
+				32B12DA62898335446E40F3A /* common.h */,
+				C2D54773AEEBA519F46C73CE /* const_time.h */,
+				402AB6CA96FA8AE7814DA649 /* crc32.h */,
+				01D85D2D1B7D47FA38E37591 /* ext_password.h */,
+				6D2E6351824486395E57CC81 /* includes.h */,
+				12EB9113C8F0BFF0DAA94837 /* list.h */,
+				FFFDECF745F4879DA30DAD65 /* os.h */,
+				42CCE80AF0E4463AFDD7084A /* state_machine.h */,
+				C61208A343FF6249C6B82828 /* wpa_debug.h */,
+				B7D717E2F3AB70CA61D978AD /* wpabuf.h */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		7CBC80163F1C23C31C16FDCA /* crypto */ = {
+			isa = PBXGroup;
+			children = (
+				5E98C5F8E0406BE61CF51006 /* aes-cbc.c */,
+				E7B6942712D419C2E329E0B7 /* aes-ccm.c */,
+				F0383E858691AFF62CFC7142 /* aes-ctr.c */,
+				3C5103E97D00E812ADD1E4E3 /* aes-eax.c */,
+				5D1F0FF908953AB0D5C15EC3 /* aes-encblock.c */,
+				752F430D8E08E990A13B8F10 /* aes-gcm.c */,
+				AA81D55F31975A0D95114CF6 /* aes-internal-dec.c */,
+				D919390E70337C17AC5CC2DA /* aes-internal-enc.c */,
+				861DE94400B859164A31CD09 /* aes-internal.c */,
+				B99EB1AF422F0D099789EC6A /* aes-omac1.c */,
+				29899BBF133300A5635B6F8F /* aes-siv.c */,
+				2199BA1E70070745E5F604DD /* aes-unwrap.c */,
+				E779FF6396A99890252D8AFB /* aes-wrap.c */,
+				23AD584AF7971FB1D0F87758 /* crypto_internal-cipher.c */,
+				77EE9983D5CC4B2135BAD09A /* crypto_internal-modexp.c */,
+				20E7F1AEC6A63988C5748EFB /* crypto_internal-rsa.c */,
+				0B97BD3278CB5823437FA0D8 /* crypto_internal.c */,
+				3ED2DA4C80B204E947558409 /* des-internal.c */,
+				D0483F123D056202CBBBAECF /* dh_group5.c */,
+				DFD0D3AA2588D6EAACDF196E /* dh_groups.c */,
+				FD59C060BE0E0284B673B076 /* fips_prf_internal.c */,
+				B919859506ADE43EA1017067 /* md4-internal.c */,
+				75D9864190011273414849CA /* md5-internal.c */,
+				5F5F02434F314CFFDE910E44 /* md5.c */,
+				5390A966A29481D9763F96AA /* milenage.c */,
+				729A7BFE980C46FA0448F236 /* ms_funcs.c */,
+				BC16100A9B3CF009DD40BD0F /* random.c */,
+				C028D52966337052C4C9F806 /* rc4.c */,
+				5E58E1E147964EA3AF36CBE0 /* sha1-internal.c */,
+				815E17AA82F5EB1F02642067 /* sha1-pbkdf2.c */,
+				430719FD4F68A15DE58ECCFF /* sha1-prf.c */,
+				4CCBFD8416EBECA47833B0D3 /* sha1-tlsprf.c */,
+				0D477575876729A19FF39E35 /* sha1-tprf.c */,
+				2242FD83CC207AF96974C0B4 /* sha1.c */,
+				066B8DB3CB60E2CDD9B7A539 /* sha256-internal.c */,
+				009B895D1F362616B133562B /* sha256-prf.c */,
+				D3A57396C1866713B0C92411 /* sha256-tlsprf.c */,
+				07F9AEB3FC0CBD68B825C7D5 /* sha256.c */,
+				7ECA62E25D78BD8040BE9E4D /* sha384-internal.c */,
+				BE98F0D708CA91C5F25DAD44 /* sha384-prf.c */,
+				F5FBAF5E4781CE647C5B85A9 /* sha384.c */,
+				2CC266AC884C5F874DFCB611 /* sha512-internal.c */,
+				8DF7DC3266F69333FD3A69FA /* sha512-prf.c */,
+				8B12CF67099859B943E0215E /* sha512.c */,
+				B8EB6BD480D0439916782C7A /* tls_internal.c */,
+				FDF918893DCF7F5724540040 /* aes.h */,
+				B209ED12751B17D80E583ECC /* aes_i.h */,
+				C861EA5634CBB243E38543DB /* aes_wrap.h */,
+				F426EA4FE6B2E6E0E23A5E96 /* crypto.h */,
+				BFB2E54CF4AEC55E3E55E6E0 /* des_i.h */,
+				7684142B5511B42C98CBB114 /* dh_group5.h */,
+				500AABA7BEA491B218EF4EF2 /* dh_groups.h */,
+				ECACC25843FF42F286C7A5D0 /* md5.h */,
+				10A21B3E5554769A8C147F2D /* md5_i.h */,
+				14EB9A7DAE116A742D1E2E35 /* milenage.h */,
+				59C01BBB153EFE59B16145A8 /* random.h */,
+				25CCA54A9C7CA7AA594BFBBB /* sha1.h */,
+				B3DA0B669C9194404F2391FD /* sha1_i.h */,
+				E559ED008B57384F914979BE /* sha256.h */,
+				9CE107B5F36CEAC23B90B614 /* sha256_i.h */,
+				F886ED8D68313A3EAD489A40 /* sha384.h */,
+				B6FBEEFFF4815F67D170F000 /* sha384_i.h */,
+				520921D4D30AFD10CEB32ACD /* sha512.h */,
+				7CFA7760D1BF6A1100BEE7BD /* sha512_i.h */,
+				CED6707F591B511266625E88 /* tls.h */,
+			);
+			name = crypto;
+			sourceTree = "<group>";
+		};
+		8942195A3057E62A545A022B /* eap_common */ = {
+			isa = PBXGroup;
+			children = (
+				2B0EC4AF2D77423834744A95 /* chap.c */,
+				4F13CC9081581A8B006CAE1B /* eap_common.c */,
+				ACDA17B5CDB51D694657C675 /* eap_peap_common.c */,
+				629AC4C5AC381E81A0193B89 /* chap.h */,
+				52BDF4338F2D96C05AA81531 /* eap_common.h */,
+				B9B02CD56ABBB6F1B948B40F /* eap_defs.h */,
+				01513E5CC50A7CED9E0B4C6D /* eap_peap_common.h */,
+			);
+			name = eap_common;
+			sourceTree = "<group>";
+		};
+		A89E50F4C0B369C201847A61 /* EAPCore */ = {
+			isa = PBXGroup;
+			children = (
+				7CBC80163F1C23C31C16FDCA /* crypto */,
+				8942195A3057E62A545A022B /* eap_common */,
+				EE57D2C4AF2874EC83FA8D60 /* eap_peer */,
+				5113A9402CE0C6E67ADF0C73 /* tls */,
+				75E77F05CD8BD001EFE1A498 /* utils */,
+				886618131CDE552ED8F1ED35 /* build_config.h */,
+				E3DF4ECB84048AF778C0C6CD /* EAPSupplicantBridge.h */,
+				A568C8B954CFA2DFA7E670CF /* EAPSupplicantBridge.c */,
+			);
+			name = EAPCore;
+			sourceTree = "<group>";
+		};
 		BCF712FA243C9EB100BE3C05 /* Appearance */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,7 +606,9 @@
 				F86A896C243CD1B500CBABC2 /* ClientKit */,
 				BCFA32E92424D2BE00E23603 /* HeliPort */,
 				50F4959E24BDEB6500AE4C08 /* HeliPort Launcher */,
+				C5A0CCF73064CFBD00180C5D /* Frameworks */,
 				BCFA32E82424D2BE00E23603 /* Products */,
+				A89E50F4C0B369C201847A61 /* EAPCore */,
 			);
 			sourceTree = "<group>";
 		};
@@ -254,8 +636,35 @@
 				BCFA32F22424D2BF00E23603 /* HeliPort.entitlements */,
 				7557CDF324935260000F0F71 /* Credits.rtf */,
 				F34B2B8B24AA4C08009AB1BB /* Supporting files */,
+				239D0510BE5FE472AF1D7D21 /* EAPSupplicant */,
 			);
 			path = HeliPort;
+			sourceTree = "<group>";
+		};
+		C5A0CCF73064CFBD00180C5D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C5A0CCF83064CFBD00180C5D /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE57D2C4AF2874EC83FA8D60 /* eap_peer */ = {
+			isa = PBXGroup;
+			children = (
+				C87A5F94EB4B81307EAB4950 /* eap.c */,
+				A39AB94499AF46607398EF86 /* eap_methods.c */,
+				8720A6B427029FC68101EA06 /* eap_mschapv2.c */,
+				27736E34A8ABE1DC72EF307B /* eap_peap.c */,
+				397F0AB42E149C156673C911 /* eap_tls_common.c */,
+				34D776B5871D14211E1D3790 /* mschapv2.c */,
+				974FDE4DB0B26C46195D0DDC /* eap.h */,
+				8E6A6581B133297359E545C5 /* eap_config.h */,
+				8517ED75944E90A781ACC123 /* eap_i.h */,
+				F0ED93F5C2AC610ADF4F4860 /* eap_tls_common.h */,
+				D9FA523D6143F742C2E8DA34 /* mschapv2.h */,
+			);
+			name = eap_peer;
 			sourceTree = "<group>";
 		};
 		F34B2B8B24AA4C08009AB1BB /* Supporting files */ = {
@@ -340,15 +749,17 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1150;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				ORGANIZATIONNAME = OpenIntelWireless;
 				TargetAttributes = {
 					50F4959C24BDEB6500AE4C08 = {
 						CreatedOnToolsVersion = 11.5;
+						ProvisioningStyle = Automatic;
 					};
 					BCFA32E62424D2BE00E23603 = {
 						CreatedOnToolsVersion = 11.3.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -489,6 +900,83 @@
 				5013B8FD2C5DF244002C5006 /* NSApp+Extensions.swift in Sources */,
 				5013B9142C5E22F2002C5006 /* NSImage+Extensions.swift in Sources */,
 				1317990B256986E5006957D8 /* String+Extensions.swift in Sources */,
+				C400A5964ABBF50EB919E5D7 /* aes-cbc.c in Sources */,
+				EC554EA1D22D511A2468D2E2 /* aes-ccm.c in Sources */,
+				5ED501327CB68CD0AEB618EC /* aes-ctr.c in Sources */,
+				9E5AE075B5AFC9FB9DB9CA19 /* aes-eax.c in Sources */,
+				6FA3513F6A2E9F751A7C1052 /* aes-encblock.c in Sources */,
+				820E3DA9674E6D50D0E77B09 /* aes-gcm.c in Sources */,
+				4F72B3525E1E046418459C4F /* aes-internal-dec.c in Sources */,
+				B0B1681E0A6C7A8F58CEA0D0 /* aes-internal-enc.c in Sources */,
+				2AA073365EC0448F06B236D1 /* aes-internal.c in Sources */,
+				E2897CF185C7F26610CA2559 /* aes-omac1.c in Sources */,
+				1BC0F467CD93E32364043B5E /* aes-siv.c in Sources */,
+				CEDFD270FA6C2C88D90FE3B9 /* aes-unwrap.c in Sources */,
+				E54C823601A8B9ABEB22F213 /* aes-wrap.c in Sources */,
+				4C0F37B5B353C6DF7062E3B7 /* crypto_internal-cipher.c in Sources */,
+				2AA70B89ABC5B26293B70416 /* crypto_internal-modexp.c in Sources */,
+				ECD13BEB7F2B73A85768C33C /* crypto_internal-rsa.c in Sources */,
+				852C4F1CC1EA445C2850339F /* crypto_internal.c in Sources */,
+				F754E227AD1A2016E3695C21 /* des-internal.c in Sources */,
+				67361E6B8BD1B729139BC2C7 /* dh_group5.c in Sources */,
+				4F8ACCA6A6E97CECC2BEA850 /* dh_groups.c in Sources */,
+				AACDC2C7BDDF3927011570F3 /* fips_prf_internal.c in Sources */,
+				F40ECACF82DFADD46F5DCEF5 /* md4-internal.c in Sources */,
+				953C5A43EEE8BA88D63419FD /* md5-internal.c in Sources */,
+				2A0BA573ED4E81A578189CBC /* md5.c in Sources */,
+				8E971A626630BC50C4611F8A /* milenage.c in Sources */,
+				5A4F930836E09721D040E77D /* ms_funcs.c in Sources */,
+				0B51B3B709116978C2D1B2FD /* rc4.c in Sources */,
+				B6E5522E6275385F82D8D164 /* sha1-internal.c in Sources */,
+				0504C0268378E37F4D1BABF3 /* sha1-pbkdf2.c in Sources */,
+				57AF85D2175C80929368B5C9 /* sha1-prf.c in Sources */,
+				DE7FB21B876C0FCC85858172 /* sha1-tlsprf.c in Sources */,
+				16CB54E3B1772C1FF2327A46 /* sha1-tprf.c in Sources */,
+				0EE80BEC0BE973F66C4A5D4C /* sha1.c in Sources */,
+				B6A9021BC5724DA907AB12EA /* sha256-internal.c in Sources */,
+				1133F37E423F0137A6C6D781 /* sha256-prf.c in Sources */,
+				28C9E97E0238C96F0160D3AE /* sha256-tlsprf.c in Sources */,
+				FB097D41F8D4F689E1A64A55 /* sha256.c in Sources */,
+				F55FF22648E570FFBCF9B882 /* sha384-internal.c in Sources */,
+				FB677D24AA1176EDB0184D37 /* sha384-prf.c in Sources */,
+				D76958748A1C6BA046CEF686 /* sha384.c in Sources */,
+				A67FDE8B8F4D1D4A4C1357BE /* sha512-internal.c in Sources */,
+				9989C1FB9A09B6151FEC66B6 /* sha512-prf.c in Sources */,
+				B3231F8D2A6177102CCBB0B9 /* sha512.c in Sources */,
+				FEA8CCC4601CBE561085A3CC /* tls_internal.c in Sources */,
+				A8A0CA0B69CB426DFA3BCD5D /* chap.c in Sources */,
+				94A8DB802A0177805108CFED /* eap_common.c in Sources */,
+				36C8170819FB3FAB1ADB0AAC /* eap_peap_common.c in Sources */,
+				EA6A33D873C0ACA850245173 /* eap.c in Sources */,
+				6BFD7C9B7040C16B74248FD8 /* eap_methods.c in Sources */,
+				46CDE444F322CB61592ED57F /* eap_mschapv2.c in Sources */,
+				199252DF3FE3E54105E8FA7D /* eap_peap.c in Sources */,
+				531AE36CDB43616A092FD092 /* eap_tls_common.c in Sources */,
+				11052A55F4EEE4E2C48E43A6 /* mschapv2.c in Sources */,
+				69F2DCCBBD8FD8D8700D6E14 /* asn1.c in Sources */,
+				76B5EA6F0258691F0579135C /* bignum.c in Sources */,
+				6C4A6B6857C1CB63E8EEDB34 /* pkcs1.c in Sources */,
+				B41C977B3A095DB90072F144 /* pkcs5.c in Sources */,
+				6C26E992910965810659FBD2 /* pkcs8.c in Sources */,
+				00348F1155FA84E415331A65 /* rsa.c in Sources */,
+				F3CEECD697E7C87A2CB2DE22 /* tlsv1_client.c in Sources */,
+				6D6A5E3355AD1AD2E9017962 /* tlsv1_client_ocsp.c in Sources */,
+				28B2140C1A597865BC95D637 /* tlsv1_client_read.c in Sources */,
+				F9BE4B4F57553237735B34B6 /* tlsv1_client_write.c in Sources */,
+				71A4F229B617287B4E7DE1FD /* tlsv1_common.c in Sources */,
+				26F5A90F762493A8A35B02D8 /* tlsv1_cred.c in Sources */,
+				62194A4A2567129B50701A75 /* tlsv1_record.c in Sources */,
+				EE16D84847AF566E210BE417 /* x509v3.c in Sources */,
+				62022C5BA5E7DF48ABBC7EA2 /* base64.c in Sources */,
+				0B1589DC1A81DF4036BAC095 /* common.c in Sources */,
+				818387CECC412E1942EE4D44 /* crc32.c in Sources */,
+				A8BE106FFABE3FF19D453052 /* os_unix.c in Sources */,
+				4B7FCAA18E519E5ACEA5495E /* wpa_debug.c in Sources */,
+				0BF63A6E07A34318B210F61B /* wpabuf.c in Sources */,
+				E0EBEDB12AA34DC12B8EB173 /* EAPSupplicant.swift in Sources */,
+				365813FF7A7E645FD9419B1D /* EAPSupplicantBridge.c in Sources */,
+				FB59B6B05F17FB91D0EF643C /* CertificatePinStore.swift in Sources */,
+				D436EF4E35C31D41E6A002C1 /* KextEAPOLTransport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,14 +1164,30 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEAD_CODE_STRIPPING = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EAPCore",
+					"$(PROJECT_DIR)/EAPCore/eap_peer",
+					"$(PROJECT_DIR)/EAPCore/eap_common",
+					"$(PROJECT_DIR)/EAPCore/crypto",
+					"$(PROJECT_DIR)/EAPCore/tls",
+					"$(PROJECT_DIR)/EAPCore/utils",
+				);
 				INFOPLIST_FILE = HeliPort/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-include",
+					"$(PROJECT_DIR)/EAPCore/build_config.h",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = HeliPort/Bridge.h;
 				SWIFT_VERSION = 5.0;
@@ -698,14 +1202,30 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(MARKETING_VERSION)";
 				DEAD_CODE_STRIPPING = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EAPCore",
+					"$(PROJECT_DIR)/EAPCore/eap_peer",
+					"$(PROJECT_DIR)/EAPCore/eap_common",
+					"$(PROJECT_DIR)/EAPCore/crypto",
+					"$(PROJECT_DIR)/EAPCore/tls",
+					"$(PROJECT_DIR)/EAPCore/utils",
+				);
 				INFOPLIST_FILE = HeliPort/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2.0.0;
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-include",
+					"$(PROJECT_DIR)/EAPCore/build_config.h",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.OpenIntelWireless.HeliPort;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = HeliPort/Bridge.h;
 				SWIFT_VERSION = 5.0;
