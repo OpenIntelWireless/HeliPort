@@ -87,16 +87,16 @@ class WiFiConfigWindow: NSWindow {
             .wpa2Personal
             //,.wpa3Personal
         ])
-        /*
+
         pop.menu?.addItem(.separator())
         pop.addItems(withTitles: [
-            .dynamicWEP,
+            // Only the modes the EAP supplicant actually implements are
+            // exposed here. WPA3-Enterprise (192-bit Suite B) and Dynamic
+            // WEP are deliberately left out until/unless there's an engine
+            // behind them — an unimplemented menu item just confuses users.
             .wpa_1_2_Enterprise,
-            .wpa_2_3_Enterprise,
-            .wpa2Enterprise,
-            .wpa3Enterprise
+            .wpa2Enterprise
         ])
-         */
         // swiftlint:enable comment_spacing
 
         pop.action = #selector(security(_:))
@@ -237,6 +237,7 @@ class WiFiConfigWindow: NSWindow {
         networkBox.delegate = self
         securityPop.target = self
         usernameBox.target = self
+        usernameBox.delegate = self
         passwdInputBox.delegate = self
         passwdSecureBox.delegate = self
         isShowPasswd.target = self
@@ -398,6 +399,13 @@ extension WiFiConfigWindow: NSTextFieldDelegate {
             passwdInputBox.stringValue = passwdSecureBox.stringValue
         }
 
+        // WPA passphrases max out at 63/64 characters; enterprise (RADIUS)
+        // passwords have no such limit, so don't truncate those.
+        guard !isEnterpriseSelected else {
+            controlJoinButton()
+            return
+        }
+
         // trim secure box to 64 characters
         if passwdSecureBox.stringValue.count > 64 {
             passwdSecureBox.stringValue = String(passwdSecureBox.stringValue[..<passwdSecureBox.stringValue.index(
@@ -424,28 +432,53 @@ extension WiFiConfigWindow: NSTextFieldDelegate {
             return
         }
 
-        // no password used, both password inputs are hidden
-        if passwdInputBox.isHidden, passwdSecureBox.isHidden {
+        // Visibility is controlled per grid row (see security(_:)), not on
+        // the boxes themselves, so the rows are the source of truth here.
+        let passwordShown = !gridView.row(at: .passwordRow).isHidden
+        let usernameShown = !gridView.row(at: .usernameRow).isHidden
+
+        // no password used (open network)
+        guard passwordShown else {
             rightButton.isEnabled = true
             return
         }
 
-        // password is too short, less than 8 characters
-        guard !passwdInputBox.isHidden || !passwdSecureBox.isHidden,
-            passwdSecureBox.stringValue.count >= 8,
-            passwdInputBox.stringValue.count >= 8  else {
-            rightButton.isEnabled = false
-            return
+        let password = currentPassword
+        if isEnterpriseSelected {
+            // RADIUS passwords have no WPA passphrase length rules.
+            guard !password.isEmpty else {
+                rightButton.isEnabled = false
+                return
+            }
+        } else {
+            // WPA passphrase is too short, less than 8 characters
+            guard password.count >= 8 else {
+                rightButton.isEnabled = false
+                return
+            }
         }
 
         // user name input shown but not filled in
-        if !usernameBox.isHidden, usernameBox.stringValue.isEmpty {
+        if usernameShown, trimmedUsername.isEmpty {
             rightButton.isEnabled = false
             return
         }
 
         // everything is OK
         rightButton.isEnabled = true
+    }
+
+    private var isEnterpriseSelected: Bool {
+        [String.wpa_1_2_Enterprise, .wpa_2_3_Enterprise, .wpa2Enterprise, .wpa3Enterprise]
+            .contains(securityPop.title)
+    }
+
+    private var currentPassword: String {
+        passwdInputBox.isHidden ? passwdSecureBox.stringValue : passwdInputBox.stringValue
+    }
+
+    private var trimmedUsername: String {
+        usernameBox.stringValue.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
@@ -535,14 +568,43 @@ extension WiFiConfigWindow {
 
     private func connect() {
         guard let network = networkInfo else { return }
-        network.auth.password = passwdInputBox.stringValue
+        guard credentialsComplete(for: network.ssid) else { return }
+        network.auth.password = currentPassword
+        network.auth.username = trimmedUsername
         getAuthInfoCallback?(network.auth, isSave.state == .on)
         close()
     }
 
+    /// Belt-and-braces for the Join button: refuses (and logs) instead of
+    /// handing an enterprise attempt an empty identity.
+    private func credentialsComplete(for ssid: String) -> Bool {
+        let usernameShown = !gridView.row(at: .usernameRow).isHidden
+        Log.debug("WiFiConfigWindow: join \(ssid) security=\(securityPop.title) " +
+                  "enterprise=\(isEnterpriseSelected) usernameShown=\(usernameShown) " +
+                  "usernameLength=\(trimmedUsername.count) passwordLength=\(currentPassword.count) " +
+                  "remember=\(isSave.state == .on)")
+        if isEnterpriseSelected, trimmedUsername.isEmpty || currentPassword.isEmpty {
+            Log.error("WiFiConfigWindow: refusing to join \(ssid) with an empty username or password")
+            NSSound.beep()
+            let field: NSTextField
+            if trimmedUsername.isEmpty {
+                field = usernameBox
+            } else if passwdInputBox.isHidden {
+                field = passwdSecureBox
+            } else {
+                field = passwdInputBox
+            }
+            field.becomeFirstResponder()
+            return false
+        }
+        return true
+    }
+
     private func joinWiFi() {
         let network = NetworkInfo(ssid: networkBox.stringValue)
-        network.auth.password = passwdInputBox.stringValue
+        guard credentialsComplete(for: network.ssid) else { return }
+        network.auth.password = currentPassword
+        network.auth.username = trimmedUsername
 
         switch securityPop.title {
         case .none:

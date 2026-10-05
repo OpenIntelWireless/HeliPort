@@ -76,7 +76,27 @@ kern_return_t join_ssid(const char *ssid, const char *pwd);
 
 kern_return_t associate_ssid(const char *ssid, const char *pwd);
 
+// WPA2/WPA-Enterprise: must be called before starting the userspace EAP
+// handshake — locks the driver's ic_des_essid onto `ssid` so a PMK
+// delivered later via set_eap_pmk() isn't rejected for an SSID mismatch.
+kern_return_t associate_ssid_enterprise(const char *ssid);
+
 kern_return_t dis_associate_ssid(const char *ssid);
+
+// Delivers a PEAP/MSCHAPv2-derived PMK (or an EAP failure status) for `ssid`
+// down to itlwm via IOCTL_80211_WPA_KEY. `pmk`/`pmk_len` are only consulted
+// when status == ITL_EAP_STATUS_SUCCESS; pass NULL/0 for any other status.
+kern_return_t set_eap_pmk(const char *ssid, enum itl80211_eap_status status,
+                           const unsigned char *pmk, unsigned int pmk_len);
+
+// Transmits a complete Ethernet II EAPOL frame (EtherType 0x888E) through
+// itlwm's send queue (IOCTL_80211_TX_EAPOL).
+kern_return_t send_eapol_frame(const unsigned char *frame, unsigned int len);
+
+// Fetches the next EAPOL frame itlwm queued for userspace
+// (IOCTL_80211_RX_EAPOL). *len is 0 when none is waiting. Fails on itlwm
+// builds without 802.1X support, so it doubles as a capability probe.
+kern_return_t receive_eapol_frame(unsigned char *frame, unsigned int capacity, unsigned int *len);
 
 void api_terminate(void);
 

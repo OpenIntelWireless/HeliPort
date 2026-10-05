@@ -295,6 +295,11 @@ class StatusMenuBase: NSMenu, NSMenuDelegate {
             if get_80211_state(&state) && power &&
                 (state != ITL80211_S_RUN.rawValue || get_station_info(&stationInfo) != KERN_SUCCESS) {
                 NetworkManager.scanSavedNetworks()
+            } else {
+                // Already connected (e.g. HeliPort relaunched while itlwm
+                // stayed associated): if it's a saved enterprise network,
+                // re-arm reauthentication handling.
+                EAPSupplicantManager.shared.attachIfOnEnterpriseNetwork()
             }
         }
     }

@@ -18,3 +18,6 @@
 
 // MARK: itlwm API
 #include "../ClientKit/Api.h"
+
+// MARK: Vendored hostap EAP-PEAP/MSCHAPv2 supplicant bridge
+#include "EAPSupplicantBridge.h"
