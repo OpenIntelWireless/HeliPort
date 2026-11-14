@@ -2001,6 +2001,12 @@
             "state" : "translated",
             "value" : "外观:"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aspetto:"
+          }
         }
       }
     },
@@ -2499,6 +2505,12 @@
             "state" : "translated",
             "value" : "选择输出诊断报告的文件夹"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scegli una cartella in cui salvare la segnalazione"
+          }
         }
       }
     },
@@ -2605,6 +2617,12 @@
             "state" : "translated",
             "value" : "命令无法获取 Heliport 的诊断报告。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il comando per raccogliere i log di HeliPort non è riuscito."
+          }
         }
       }
     },
@@ -2633,6 +2651,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法生成诊断报告的压缩文件。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile creare il file zip dei log generati."
           }
         }
       }
@@ -2663,6 +2687,12 @@
             "state" : "translated",
             "value" : "无法生成 Heliport 的诊断报告"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile generare la segnalazione per HeliPort."
+          }
         }
       }
     },
@@ -2692,6 +2722,12 @@
             "state" : "translated",
             "value" : "无法获取生成诊断报告的路径"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile ottenere il percorso per generare la segnalazione."
+          }
         }
       }
     },
@@ -2720,6 +2756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法读取 itlwm 的日志。请确保在提示时允许 `HeliPort` 读取日志。"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile leggere i log di `itlwm`. Assicurati di consentire a `HeliPort` di leggere i log quando richiesto."
           }
         }
       }
@@ -3635,6 +3677,12 @@
             "state" : "translated",
             "value" : "生成诊断报告时发生错误"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si è verificato un errore durante la generazione della segnalazione."
+          }
         }
       }
     },
@@ -4043,6 +4091,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HeliPort 需要重启"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "È necessario riavviare HeliPort"
           }
         }
       }
@@ -4756,6 +4810,12 @@
             "state" : "translated",
             "value" : "已知网络"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rete conosciuta"
+          }
         }
       }
     },
@@ -4766,6 +4826,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已知网络"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reti conosciute"
           }
         }
       }
@@ -4783,6 +4849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "稍后"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Più tardi"
           }
         }
       }
@@ -4925,6 +4997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请确保您在为 itlwm 获取诊断报告之前已经安装了 `DebugEnhancer.kext`"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assicurati di aver installato `DebugEnhancer.kext` prima di raccogliere i log di itlwm."
           }
         }
       }
@@ -5727,6 +5805,12 @@
             "state" : "translated",
             "value" : "打开文档"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri documentazione"
+          }
         }
       }
     },
@@ -5952,6 +6036,12 @@
             "state" : "translated",
             "value" : "其他网络"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altre reti"
+          }
         }
       }
     },
@@ -5962,6 +6052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "其他..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Altro…"
           }
         }
       }
@@ -6705,6 +6801,12 @@
             "state" : "translated",
             "value" : "重启"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riavvia"
+          }
         }
       }
     },
@@ -7138,6 +7240,12 @@
             "state" : "translated",
             "value" : "切换外观需要重新启动应用程序才能生效。"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Per applicare il nuovo aspetto è necessario riavviare l'applicazione."
+          }
         }
       }
     },
@@ -7166,6 +7274,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "诊断报告将在所选目录生成"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La segnalazione verrà generata nella cartella selezionata"
           }
         }
       }
@@ -7825,6 +7939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用传统界面"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa interfaccia classica"
           }
         }
       }
@@ -8716,6 +8836,12 @@
             "state" : "translated",
             "value" : "Wi-Fi设置..."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni Wi-Fi…"
+          }
         }
       }
     },
@@ -9471,6 +9597,12 @@
             "state" : "translated",
             "value" : "WPA/WPA2企业级"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA/WPA2 Enterprise"
+          }
         }
       }
     },
@@ -9547,6 +9679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA/WPA2个人级"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA/WPA2 Personal"
           }
         }
       }
@@ -9625,6 +9763,12 @@
             "state" : "translated",
             "value" : "WPA2企业级"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2 Enterprise"
+          }
         }
       }
     },
@@ -9701,6 +9845,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA2个人级"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2 Personal"
           }
         }
       }
@@ -9779,6 +9929,12 @@
             "state" : "translated",
             "value" : "WPA2/WPA3企业级"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2/WPA3 Enterprise"
+          }
         }
       }
     },
@@ -9855,6 +10011,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA2/WPA3个人级"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA2/WPA3 Personal"
           }
         }
       }
@@ -9933,6 +10095,12 @@
             "state" : "translated",
             "value" : "WPA3企业级"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA3 Enterprise"
+          }
         }
       }
     },
@@ -10009,6 +10177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WPA3个人级"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WPA3 Personal"
           }
         }
       }
